@@ -1,10 +1,8 @@
 const knex = require("knex");
 const { Model } = require("objection");
-const knexfile = require("../knexfile");
+const { development } = require("../knexfile");
 
-function bootstrap() {
-	const db = knex(knexfile.development);
+module.exports = () => {
+	const db = knex(development);
 	Model.knex(db);
-}
-
-module.exports = bootstrap;
+};
