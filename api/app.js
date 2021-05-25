@@ -6,6 +6,7 @@ const session = require("express-session");
 const { PORT, SESSION_SECRET } = process.env;
 
 const usersRoutes = require("./routes/usersRoutes");
+const postsRoutes = require("./routes/postsRoutes");
 
 // Middlewares
 app.use(express.json());
@@ -19,5 +20,6 @@ app.use(
 
 // Routes
 app.use("/api/users", usersRoutes);
+app.use("/api/posts", postsRoutes);
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
