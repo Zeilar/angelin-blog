@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 
-function errorLog(error) {
+function errorlog(error) {
 	console.error(error);
 
 	const filePath = path.join(__dirname, "../../errorlog.txt");
@@ -14,4 +14,4 @@ function errorLog(error) {
 	}
 }
 
-module.exports = errorLog;
+module.exports = errorlog;

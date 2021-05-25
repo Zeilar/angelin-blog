@@ -1,19 +1,28 @@
 const { Post } = require("../../db/models/Post");
+const errorlog = require("../utils/errorlog");
 
 async function create(req, res) {}
 
-async function getPostsFromAuthorId(req, res) {
-	const { user_id } = req.body;
+async function getAllPosts(req, res) {
 	try {
-		const posts = await Post.query().where("user_id", user_id);
-		res.status(200).json(posts);
+		res.status(200).json(await Post.query());
 	} catch (e) {
-		console.log(e);
+		errorlog(e);
+		res.status(500).end();
+	}
+}
+
+async function getPostsFromUserId(req, res) {
+	try {
+		res.status(200).json(await Post.query().where("user_id", req.params.id));
+	} catch (e) {
+		errorlog(e);
 		res.status(500).end();
 	}
 }
 
 module.exports = {
 	create,
-	getPostsFromAuthorId,
+	getPostsFromUserId,
+	getAllPosts,
 };
