@@ -3,7 +3,7 @@ const { User } = require("../../db/models/User");
 
 function authenticate(req, res) {
 	const { user } = req.session;
-	if (user) return res.status(200).json(user);
+	if (user) return res.status(200).json({ id: user });
 	res.status(401).end();
 }
 
