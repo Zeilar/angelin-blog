@@ -1,18 +1,12 @@
 const bcrypt = require("bcrypt");
 const { User } = require("../../db/models/User");
 const errorlog = require("../utils/errorlog");
+const { userExists } = require("../utils/user");
 
 function authenticate(req, res) {
 	const { user } = req.session;
 	if (user) return res.status(200).json({ id: user });
 	res.status(401).end();
-}
-
-async function userExists(column = "email", value = "") {
-	// Knex as of now has no .exists() method, and the count return is in a horrible format
-	// This was done to optimize the query, albeit in this project it's irrelevant in the grand scheme of things
-	const result = await User.query().where(column, value).count();
-	return Object.values(result[0])[0] > 0;
 }
 
 async function register(req, res) {
