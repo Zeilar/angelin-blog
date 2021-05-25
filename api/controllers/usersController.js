@@ -56,6 +56,7 @@ async function login(req, res) {
 		res.status(200).json(user);
 	} catch (e) {
 		errorlog(e);
+		res.status(500).end();
 	}
 }
 
