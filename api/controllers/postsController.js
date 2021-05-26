@@ -1,6 +1,11 @@
 const { Post } = require("../../db/models/Post");
 const errorlog = require("../utils/errorlog");
 
+function sanitizePost(post) {
+	if (!post.author) return;
+	post.author.password = undefined;
+}
+
 async function createPost(req, res) {
 	const { user } = req.session;
 	const { body, title } = req.body;
@@ -10,7 +15,11 @@ async function createPost(req, res) {
 	}
 
 	try {
-		const post = await Post.query().insert({ user_id: user, title, body });
+		const post = await Post.query()
+			.insert({ user_id: user, title, body })
+			.withGraphFetched("author")
+			.first();
+		sanitizePost(post);
 		res.status(200).json(post);
 	} catch (e) {
 		errorlog(e);
@@ -20,7 +29,9 @@ async function createPost(req, res) {
 
 async function getAllPosts(req, res) {
 	try {
-		res.status(200).json(await Post.query());
+		const post = await Post.query().withGraphFetched("author").first();
+		sanitizePost(post);
+		res.status(200).json(post);
 	} catch (e) {
 		errorlog(e);
 		res.status(500).end();
@@ -29,7 +40,7 @@ async function getAllPosts(req, res) {
 
 async function getPostById(req, res) {
 	try {
-		res.status(200).json(await Post.query().findById(req.params.id));
+		res.status(200).json(await Post.query().findById(req.params.id).withGraphFetched("author"));
 	} catch (e) {
 		errorlog(e);
 		res.status(500).end();
