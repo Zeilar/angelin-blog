@@ -1,10 +1,6 @@
 const { Post } = require("../../db/models/Post");
 const errorlog = require("../utils/errorlog");
-
-function sanitizePost(post) {
-	if (!post.author) return;
-	post.author.password = undefined;
-}
+const { sanitizePost } = require("../utils/post");
 
 async function createPost(req, res) {
 	const { user } = req.session;
