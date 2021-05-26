@@ -13,6 +13,7 @@
 		"objection": "^2.2.15"
 	},
 	"scripts": {
-		"migrate": "knex migrate:latest --knexfile ./knexfile.js"
+		"migrate": "npx knex migrate:latest --knexfile ./knexfile.js",
+		"migrate:fresh": "npx knex migrate:down --knexfile ./knexfile.js && npm run migrate"
 	}
 }
