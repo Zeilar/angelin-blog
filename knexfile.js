@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const { knexSnakeCaseMappers } = require("objection");
 
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_CLIENT } = process.env;
