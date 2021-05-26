@@ -1,4 +1,4 @@
-exports.up = function (knex) {
+exports.up = knex => {
 	return knex.schema
 		.createTable("users", table => {
 			table.increments();
@@ -9,11 +9,12 @@ exports.up = function (knex) {
 		.createTable("posts", table => {
 			table.increments();
 			table.integer("user_id").references("id").inTable("users");
-			table.string("body", 5000).unique().notNullable();
+			table.string("title").notNullable();
+			table.string("body", 5000).notNullable();
 			table.timestamps(true, true);
 		});
 };
 
-exports.down = function (knex) {
-	return knex.schema.dropTableifExists("users").dropTableifExists("posts");
+exports.down = knex => {
+	return knex.schema.dropTableIfExists("users").dropTableIfExists("posts");
 };
