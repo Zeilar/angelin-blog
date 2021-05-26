@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const { User } = require("../../db/models/User");
 const errorlog = require("../utils/errorlog");
-const { userExists } = require("../utils/user");
+const { userCount } = require("../utils/user");
 
 function authenticate(req, res) {
 	const { user } = req.session;
@@ -17,7 +17,7 @@ async function register(req, res) {
 	}
 
 	try {
-		if (await userExists("email", email)) {
+		if ((await userCount({ where: { email } })) > 0) {
 			return res.status(422).json({ error: "User already exists" });
 		}
 
