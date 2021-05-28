@@ -6,17 +6,15 @@ const { userCount } = require("../utils/user");
 async function authenticate(req, res) {
 	const { user: id } = req.session;
 
-	if (!id) {
-		return res.status(401).end();
-	}
+	if (!id) return res.status(401).end();
 
 	try {
 		const user = await User.query().findById(id);
 		user.password = undefined;
-		return res.status(200).json(user);
+		res.status(200).json(user);
 	} catch (e) {
 		errorlog(e);
-		return res.status(500).end();
+		res.status(500).end();
 	}
 }
 
@@ -60,9 +58,7 @@ async function login(req, res) {
 
 	try {
 		const user = await User.query().findOne("email", email);
-		if (!user) {
-			return res.status(404).json({ error: "User does not exist." });
-		}
+		if (!user) return res.status(404).json({ error: "User does not exist." });
 
 		if (!(await compare(password, user.password))) {
 			return res.status(422).json({ error: "Incorrect password." });
@@ -70,6 +66,7 @@ async function login(req, res) {
 
 		user.password = undefined;
 		req.session.user = user.id;
+
 		res.status(200).json(user);
 	} catch (e) {
 		errorlog(e);
