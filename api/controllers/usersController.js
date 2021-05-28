@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const { hash, compare } = require("bcrypt");
 const { User } = require("../../db/models/User");
 const errorlog = require("../utils/errorlog");
 const { userCount } = require("../utils/user");
@@ -35,7 +35,7 @@ async function register(req, res) {
 		// TODO: Validation
 		const { id } = await User.query().insert({
 			email,
-			password: await bcrypt.hash(password, 10),
+			password: await hash(password, 10),
 		});
 
 		req.session.user = id;
@@ -64,7 +64,7 @@ async function login(req, res) {
 			return res.status(404).json({ error: "User does not exist." });
 		}
 
-		if (!(await bcrypt.compare(password, user.password))) {
+		if (!(await compare(password, user.password))) {
 			return res.status(422).json({ error: "Incorrect password." });
 		}
 
