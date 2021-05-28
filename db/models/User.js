@@ -6,7 +6,9 @@ class User extends Model {
 	}
 
 	static get relationMappings() {
-		const Post = require("./Post");
+		const { Post } = require("./Post");
+		const { Comment } = require("./Comment");
+
 		return {
 			posts: {
 				relation: Model.HasManyRelation,
@@ -14,6 +16,14 @@ class User extends Model {
 				join: {
 					from: "users.id",
 					to: "posts.user_id",
+				},
+			},
+			comments: {
+				relation: Model.HasManyRelation,
+				modelClass: Comment,
+				join: {
+					from: "users.id",
+					to: "comments.user_id",
 				},
 			},
 		};
