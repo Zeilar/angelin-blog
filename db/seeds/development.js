@@ -6,6 +6,7 @@ exports.seed = async knex => {
 		{
 			id: 1,
 			email: "philip@angelin.dev",
+			is_admin: true,
 			password: await hash("123", 10),
 		},
 		{

@@ -50,8 +50,11 @@ async function getPostById(req, res) {
 	}
 }
 
+async function editPost(req, res) {}
+
 module.exports = {
 	createPost,
 	getPostById,
 	getAllPosts,
+	editPost,
 };

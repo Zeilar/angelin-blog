@@ -3,6 +3,5 @@ const { Model } = require("objection");
 const { development } = require("../knexfile");
 
 module.exports = () => {
-	const db = knex(development);
-	Model.knex(db);
+	Model.knex(knex(development));
 };
