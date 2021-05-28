@@ -17,19 +17,9 @@ export const GlobalStyles = createGlobalStyle`
 
     html,
     body {
-        font-family: Roboto;
+        font-family: Open Sans;
         color: rgb(225, 225, 225);
         background-color: rgb(30, 30, 30);
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        font-weight: 700;
-        font-family: Heebo;
     }
 
     a {

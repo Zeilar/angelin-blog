@@ -1,4 +1,20 @@
-export const theme: object = {
+interface Theme {
+	color: {
+		body: string;
+		brand: string;
+		bodyLight: string;
+		bodyDark: string;
+		primary: string;
+		secondary: string;
+		textPrimary: string;
+		textMuted: string;
+		textSecondary: string;
+		link: string;
+	};
+	borderRadius: number;
+}
+
+export const theme: Theme = {
 	color: {
 		body: "30, 30, 30",
 		brand: "123, 234, 123",

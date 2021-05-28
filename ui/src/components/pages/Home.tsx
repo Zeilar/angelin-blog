@@ -1,6 +1,7 @@
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import styled from "styled-components";
+import { H1 } from "../styles/font";
 
 export default function Home() {
 	return (
@@ -8,7 +9,7 @@ export default function Home() {
 			<Helmet>
 				<title>Angelin Blog</title>
 			</Helmet>
-			<h1>Home</h1>
+			<H1>Angelin Blog</H1>
 		</div>
 	);
 }
