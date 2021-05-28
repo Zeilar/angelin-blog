@@ -1,7 +1,7 @@
 const { hash, compare } = require("bcrypt");
 const { User } = require("../../db/models/User");
 const errorlog = require("../utils/errorlog");
-const { userCount } = require("../utils/user");
+const { userCount, sanitizeUser } = require("../utils/user");
 
 async function authenticate(req, res) {
 	const { user: id } = req.session;
@@ -10,8 +10,7 @@ async function authenticate(req, res) {
 
 	try {
 		const user = await User.query().findById(id);
-		user.password = undefined;
-		res.status(200).json(user);
+		res.status(200).json(sanitizeUser(user));
 	} catch (e) {
 		errorlog(e);
 		res.status(500).end();
@@ -25,16 +24,17 @@ async function register(req, res) {
 		return res.status(400).json({ error: "Missing email or password" });
 	}
 
+	if (req.session.user) {
+		return res.status(405).json({ error: "You are already logged in." });
+	}
+
 	try {
 		if ((await userCount({ where: { email } })) > 0) {
 			return res.status(422).json({ error: "User already exists" });
 		}
 
 		// TODO: Validation
-		const { id } = await User.query().insert({
-			email,
-			password: await hash(password, 10),
-		});
+		const { id } = await User.query().insert({ email, password: await hash(password, 10) });
 
 		req.session.user = id;
 
@@ -64,10 +64,9 @@ async function login(req, res) {
 			return res.status(422).json({ error: "Incorrect password." });
 		}
 
-		user.password = undefined;
 		req.session.user = user.id;
 
-		res.status(200).json(user);
+		res.status(200).json(sanitizeUser(user));
 	} catch (e) {
 		errorlog(e);
 		res.status(500).end();

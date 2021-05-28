@@ -15,6 +15,12 @@ async function userCount(options) {
 	}
 }
 
+function sanitizeUser(user) {
+	user.password = undefined;
+	return user;
+}
+
 module.exports = {
 	userCount,
+	sanitizeUser,
 };
