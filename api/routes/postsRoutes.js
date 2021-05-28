@@ -6,5 +6,7 @@ const { loggedIn } = require("../middlewares/auth");
 router.get("", postsController.getAllPosts);
 router.get("/:id", postsController.getPostById);
 router.post("", loggedIn, postsController.createPost);
+router.put("/:id", loggedIn, postsController.editPost);
+router.delete("/:id", loggedIn, postsController.deletePost);
 
 module.exports = router;

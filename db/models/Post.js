@@ -34,8 +34,8 @@ class Post extends Model {
 				relation: Model.HasManyRelation,
 				modelClass: Comment,
 				join: {
-					from: "comments.id",
-					to: "posts.id",
+					from: "posts.id",
+					to: "comments.post_id",
 				},
 			},
 		};

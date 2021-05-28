@@ -15,7 +15,7 @@ async function createComment(req, res) {
 		res.status(200).json(comment);
 	} catch (e) {
 		errorlog(e);
-		res.status(500);
+		res.status(500).end();
 	}
 }
 

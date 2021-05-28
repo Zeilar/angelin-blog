@@ -52,9 +52,28 @@ async function getPostById(req, res) {
 
 async function editPost(req, res) {}
 
+async function deletePost(req, res) {
+	const { id } = req.params;
+
+	try {
+		const post = await Post.query().findById(id);
+
+		if (!post) return res.status(404).end();
+
+		await post.$relatedQuery("comments").delete();
+		await post.$query().delete();
+
+		res.status(200).end();
+	} catch (e) {
+		errorlog(e);
+		res.status(500).end();
+	}
+}
+
 module.exports = {
 	createPost,
 	getPostById,
 	getAllPosts,
 	editPost,
+	deletePost,
 };

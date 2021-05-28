@@ -1,14 +1,12 @@
 const { User } = require("../../db/models/User");
 
 function loggedIn(req, res, next) {
-	if (!req.session.user) {
-		return res.status(401).end();
-	}
-	next();
+	if (req.session.user) return next();
+	res.status(401).end();
 }
 
 async function admin(req, res, next) {
-	const { id } = req.session;
+	const { user: id } = req.session;
 
 	if (!id) return res.status(401);
 

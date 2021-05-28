@@ -17,20 +17,42 @@ exports.seed = async knex => {
 	]);
 
 	await knex("posts").del();
-	await knex("posts").insert({
-		id: 1,
-		user_id: 1,
-		title: "A test post",
-		body: "This is the body of the post",
-	});
+	await knex("posts").insert([
+		{
+			id: 1,
+			user_id: 1,
+			title: "A test post",
+			body: "This is the body of the post",
+		},
+		{
+			id: 2,
+			user_id: 1,
+			title: "Another test post",
+			body: "This is the body of the post",
+		},
+	]);
 
 	await knex("comments").del();
-	await knex("comments").insert({
-		id: 1,
-		user_id: 2,
-		post_id: 1,
-		body: "Very nice post!",
-	});
+	await knex("comments").insert([
+		{
+			id: 1,
+			user_id: 2,
+			post_id: 1,
+			body: "Very nice post!",
+		},
+		{
+			id: 2,
+			user_id: 1,
+			post_id: 1,
+			body: "Hello world!",
+		},
+		{
+			id: 3,
+			user_id: 2,
+			post_id: 2,
+			body: "Agree.",
+		},
+	]);
 
 	await knex("tags").del();
 	await knex("tags").insert([
