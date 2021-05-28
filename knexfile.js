@@ -13,7 +13,7 @@ module.exports = {
 			password: DB_PASSWORD,
 		},
 		migrations: {
-			tableName: "knex_migrations",
+			tableName: "_knex_migrations",
 			directory: "./db/migrations",
 		},
 		seeds: {

@@ -16,6 +16,7 @@ exports.up = knex => {
 		})
 		.createTable("comments", table => {
 			table.increments();
+			table.integer("post_id").references("id").inTable("posts").notNullable();
 			table.integer("user_id").references("id").inTable("users").notNullable();
 			table.string("body", 1000).notNullable();
 			table.timestamps(true, true);
