@@ -1,5 +1,5 @@
-exports.up = knex => {
-	return knex.schema
+exports.up = knex =>
+	knex.schema
 		.createTable("users", table => {
 			table.increments();
 			table.string("email").unique().notNullable();
@@ -32,13 +32,11 @@ exports.up = knex => {
 			table.integer("tag_id").references("id").inTable("tags").notNullable();
 			table.timestamps(true, true);
 		});
-};
 
-exports.down = knex => {
-	return knex.schema
+exports.down = knex =>
+	knex.schema
 		.dropTableIfExists("users")
 		.dropTableIfExists("posts")
 		.dropTableIfExists("comments")
 		.dropTableIfExists("tags")
 		.dropTableIfExists("posts_tags");
-};
