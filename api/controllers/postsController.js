@@ -12,11 +12,10 @@ async function createPost(req, res) {
 
 	try {
 		const post = await Post.query()
-			.insert({ user_id: user, title, body })
+			.insert({ user_id: user, title, body }) // TODO: add tags
 			.withGraphFetched("author")
 			.first();
-		sanitizePost(post);
-		res.status(200).json(post);
+		res.status(200).json(sanitizePost(post));
 	} catch (e) {
 		errorlog(e);
 		res.status(500).end();
@@ -25,9 +24,12 @@ async function createPost(req, res) {
 
 async function getAllPosts(req, res) {
 	try {
-		const post = await Post.query().withGraphFetched("author").first();
-		sanitizePost(post);
-		res.status(200).json(post);
+		const posts = await Post.query().withGraphFetched({
+			author: true,
+			comments: true,
+			tags: true,
+		});
+		res.status(200).json(posts.map(post => sanitizePost(post)));
 	} catch (e) {
 		errorlog(e);
 		res.status(500).end();
@@ -36,7 +38,12 @@ async function getAllPosts(req, res) {
 
 async function getPostById(req, res) {
 	try {
-		res.status(200).json(await Post.query().findById(req.params.id).withGraphFetched("author"));
+		const post = await Post.query().findById(req.params.id).withGraphFetched({
+			author: true,
+			comments: true,
+			tags: true,
+		});
+		res.status(200).json(sanitizePost(post));
 	} catch (e) {
 		errorlog(e);
 		res.status(500).end();
