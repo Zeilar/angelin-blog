@@ -1,12 +1,13 @@
 const { Post } = require("../../db/models/Post");
 const errorlog = require("../utils/errorlog");
 const { sanitizePost } = require("../utils/post");
+const { validateBody } = require("../utils/request");
 
 async function createPost(req, res) {
 	const { user } = req.session;
 	const { body, title } = req.body;
 
-	if (!body || !title) {
+	if (!validateBody(["body", "title"])) {
 		return res.status(400).json({ error: "Please provide a body and title." });
 	}
 

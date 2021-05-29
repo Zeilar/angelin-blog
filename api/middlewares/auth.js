@@ -6,17 +6,13 @@ function loggedIn(req, res, next) {
 }
 
 async function admin(req, res, next) {
-	const { user: id } = req.session;
-
-	if (!id) return res.status(401);
-
-	const user = await User.query().findById(id);
+	const user = await User.query().findById(req.session.user);
 
 	if (Number(user.is_admin) !== 1) {
-		return res.status(403);
+		return res.status(403).end();
 	}
 
-	next();
+	return next();
 }
 
 module.exports = {

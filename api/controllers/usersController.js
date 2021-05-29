@@ -2,6 +2,7 @@ const { hash, compare } = require("bcrypt");
 const { User } = require("../../db/models/User");
 const { count } = require("../../db/utils/query");
 const errorlog = require("../utils/errorlog");
+const { validateBody } = require("../utils/request");
 const { sanitizeUser } = require("../utils/user");
 
 async function authenticate(req, res) {
@@ -21,7 +22,7 @@ async function authenticate(req, res) {
 async function register(req, res) {
 	const { email, password } = req.body;
 
-	if (!email || !password) {
+	if (!validateBody(["email", "password"])) {
 		return res.status(400).json({ error: "Missing email or password." });
 	}
 
@@ -49,7 +50,7 @@ async function register(req, res) {
 async function login(req, res) {
 	const { email, password } = req.body;
 
-	if (!email || !password) {
+	if (!validateBody(["email", "password"])) {
 		return res.status(400).json({ error: "Missing email or password." });
 	}
 
@@ -79,6 +80,7 @@ function logout(req, res) {
 		return res.status(405).json({ error: "You are already logged out." });
 	}
 	req.session.user = undefined;
+	res.status(200).end();
 }
 
 module.exports = {
