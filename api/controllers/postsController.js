@@ -1,21 +1,39 @@
+const { Tag } = require("../../db/models/Tag");
 const { Post } = require("../../db/models/Post");
 const errorlog = require("../utils/errorlog");
 const { sanitizePost } = require("../utils/post");
 const { validateBody } = require("../utils/request");
 
 async function createPost(req, res) {
-	const { user } = req.session;
-	const { body, title } = req.body;
-
-	if (!validateBody(["body", "title"])) {
+	if (!validateBody(req.body, ["body", "title"])) {
 		return res.status(400).json({ error: "Please provide a body and title." });
 	}
 
+	const { user } = req.session;
+	const { body, title, tags } = req.body;
+
 	try {
+		let query = Tag.query();
+
+		tags.forEach((tag, i) => {
+			query = i === 0 ? query.where("name", tag) : query.orWhere("name", tag);
+		});
+		const result = await query.execute();
+
 		const post = await Post.query()
-			.insert({ user_id: user, title, body }) // TODO: add tags, maybe graph upsert?
-			.withGraphFetched("author")
+			.insertGraphAndFetch({
+				user_id: user,
+				title,
+				body,
+			})
 			.first();
+
+		for (let i = 0; i < result.length; i++) {
+			await post.$relatedQuery("tags").relate(result[i]);
+		}
+		// TODO: add tags, maybe graph upsert?
+
+		console.log(post);
 		res.status(200).json(sanitizePost(post));
 	} catch (e) {
 		errorlog(e);

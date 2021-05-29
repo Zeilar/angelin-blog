@@ -20,11 +20,11 @@ async function authenticate(req, res) {
 }
 
 async function register(req, res) {
-	const { email, password } = req.body;
-
-	if (!validateBody(["email", "password"])) {
+	if (!validateBody(req.body, ["email", "password"])) {
 		return res.status(400).json({ error: "Missing email or password." });
 	}
+
+	const { email, password } = req.body;
 
 	if (req.session.user) {
 		return res.status(405).json({ error: "You are already logged in." });
@@ -48,11 +48,11 @@ async function register(req, res) {
 }
 
 async function login(req, res) {
-	const { email, password } = req.body;
-
-	if (!validateBody(["email", "password"])) {
+	if (!validateBody(req.body, ["email", "password"])) {
 		return res.status(400).json({ error: "Missing email or password." });
 	}
+
+	const { email, password } = req.body;
 
 	if (req.session.user) {
 		return res.status(405).json({ error: "You are already logged in." });
