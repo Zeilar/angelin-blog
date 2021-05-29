@@ -20,17 +20,14 @@ async function createComment(req, res) {
 }
 
 async function editComment(req, res) {
-	const { body } = req.body;
+	const { title, body } = req.body;
 	const { id } = req.params;
 
 	try {
-		if ((await count(Comment.query().findById(id))) === 0) {
-			return res.status(404).end();
-		}
+		const comment = await Comment.query().findById(id);
+		if (!comment) return res.status(404).end();
 
-		const comment = await Comment.query().patchAndFetchById(id, { body });
-
-		res.status(200).json(comment);
+		res.status(200).json(await comment.$query().patchAndFetch({ body, title }));
 	} catch (e) {
 		errorlog(e);
 		res.status(500).end();

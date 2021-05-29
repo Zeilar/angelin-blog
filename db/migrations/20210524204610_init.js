@@ -5,7 +5,11 @@ exports.up = knex =>
 			table.boolean("is_admin").notNullable().defaultTo(false);
 			table.string("email").unique().notNullable();
 			table.string("password").notNullable();
-			table.timestamps(true, true);
+			table.dateTime("created_at").notNullable().defaultTo(knex.raw("CURRENT_TIMESTAMP"));
+			table
+				.dateTime("updated_at")
+				.notNullable()
+				.defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
 		})
 		.createTable("posts", table => {
 			table.increments();
@@ -13,7 +17,11 @@ exports.up = knex =>
 			table.foreign("user_id").references("id").inTable("users").onDelete("CASCADE");
 			table.string("title").notNullable();
 			table.string("body", 5000).notNullable();
-			table.timestamps(true, true);
+			table.dateTime("created_at").notNullable().defaultTo(knex.raw("CURRENT_TIMESTAMP"));
+			table
+				.dateTime("updated_at")
+				.notNullable()
+				.defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
 		})
 		.createTable("comments", table => {
 			table.increments();
@@ -22,12 +30,20 @@ exports.up = knex =>
 			table.integer("post_id").notNullable();
 			table.integer("user_id").notNullable();
 			table.string("body", 1000).notNullable();
-			table.timestamps(true, true);
+			table.dateTime("created_at").notNullable().defaultTo(knex.raw("CURRENT_TIMESTAMP"));
+			table
+				.dateTime("updated_at")
+				.notNullable()
+				.defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
 		})
 		.createTable("tags", table => {
 			table.increments();
 			table.string("name").notNullable();
-			table.timestamps(true, true);
+			table.dateTime("created_at").notNullable().defaultTo(knex.raw("CURRENT_TIMESTAMP"));
+			table
+				.dateTime("updated_at")
+				.notNullable()
+				.defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
 		})
 		.createTable("posts_tags", table => {
 			table.increments();
@@ -35,7 +51,11 @@ exports.up = knex =>
 			table.foreign("tag_id").references("id").inTable("tags").onDelete("CASCADE");
 			table.integer("post_id").notNullable();
 			table.integer("tag_id").notNullable();
-			table.timestamps(true, true);
+			table.dateTime("created_at").notNullable().defaultTo(knex.raw("CURRENT_TIMESTAMP"));
+			table
+				.dateTime("updated_at")
+				.notNullable()
+				.defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
 		});
 
 exports.down = knex =>

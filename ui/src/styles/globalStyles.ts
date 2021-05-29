@@ -19,7 +19,7 @@ export const GlobalStyles = createGlobalStyle`
     body {
         font-family: Open Sans;
         color: rgb(225, 225, 225);
-        background-color: rgb(30, 30, 30);
+        background-color: rgb(15, 15, 15);
     }
 
     a {

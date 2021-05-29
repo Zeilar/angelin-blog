@@ -16,7 +16,7 @@ interface Theme {
 
 export const theme: Theme = {
 	color: {
-		body: "30, 30, 30",
+		body: "15, 15, 15",
 		brand: "123, 234, 123",
 		bodyLight: "125, 90, 60",
 		bodyDark: "35, 15, 5",

@@ -21,7 +21,7 @@ async function authenticate(req, res) {
 
 async function register(req, res) {
 	if (!validateBody(req.body, ["email", "password"])) {
-		return res.status(400).json({ error: "Missing email or password." });
+		return res.status(400).json({ error: "Please provide an email and password." });
 	}
 
 	const { email, password } = req.body;
@@ -49,7 +49,7 @@ async function register(req, res) {
 
 async function login(req, res) {
 	if (!validateBody(req.body, ["email", "password"])) {
-		return res.status(400).json({ error: "Missing email or password." });
+		return res.status(400).json({ error: "Please provide an email and password." });
 	}
 
 	const { email, password } = req.body;

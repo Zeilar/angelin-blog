@@ -69,7 +69,20 @@ async function getPostById(req, res) {
 	}
 }
 
-async function editPost(req, res) {}
+async function editPost(req, res) {
+	const { title, body } = req.body;
+	const { id } = req.params;
+
+	try {
+		const post = await Post.query().findById(id);
+		if (!post) return res.status(404).end();
+
+		res.status(200).json(await post.$query().patchAndFetch({ body, title }));
+	} catch (e) {
+		errorlog(e);
+		res.status(500).end();
+	}
+}
 
 async function deletePost(req, res) {
 	const { id } = req.params;
