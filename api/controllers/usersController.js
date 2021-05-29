@@ -36,11 +36,11 @@ async function register(req, res) {
 		}
 
 		// TODO: Validation
-		const { id } = await User.query().insert({ email, password: await hash(password, 10) });
+		const user = await User.query().insert({ email, password: await hash(password, 10) });
 
-		req.session.user = id;
+		req.session.user = user.id;
 
-		res.status(200).end();
+		res.status(200).json(sanitizeUser(user));
 	} catch (e) {
 		errorlog(e);
 		res.status(500).end();
