@@ -22,12 +22,12 @@ class Post extends Model {
 				relation: Model.ManyToManyRelation,
 				modelClass: Tag,
 				join: {
-					from: "tags.id",
+					from: "posts.id",
 					through: {
-						from: "posts_tags.tag_id",
-						to: "posts_tags.post_id",
+						from: "posts_tags.post_id",
+						to: "posts_tags.tag_id",
 					},
-					to: "posts.id",
+					to: "tags.id",
 				},
 			},
 			comments: {

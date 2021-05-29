@@ -12,7 +12,7 @@ async function createPost(req, res) {
 
 	try {
 		const post = await Post.query()
-			.insert({ user_id: user, title, body }) // TODO: add tags
+			.insert({ user_id: user, title, body }) // TODO: add tags, maybe graph upsert?
 			.withGraphFetched("author")
 			.first();
 		res.status(200).json(sanitizePost(post));
@@ -61,6 +61,7 @@ async function deletePost(req, res) {
 		if (!post) return res.status(404).end();
 
 		await post.$relatedQuery("comments").delete();
+		await post.$relatedQuery("tags").unrelate();
 		await post.$query().delete();
 
 		res.status(200).end();
