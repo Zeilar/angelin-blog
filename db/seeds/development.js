@@ -53,12 +53,10 @@ exports.seed = async knex => {
 	await knex("posts_tags").truncate();
 	await knex("posts_tags").insert([
 		{
-			id: 1,
 			tag_id: 1,
 			post_id: 1,
 		},
 		{
-			id: 2,
 			tag_id: 2,
 			post_id: 1,
 		},
