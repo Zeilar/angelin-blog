@@ -2,7 +2,7 @@ const { Tag } = require("../../db/models/Tag");
 const { Post } = require("../../db/models/Post");
 const errorlog = require("../utils/errorlog");
 const { sanitizePost } = require("../utils/post");
-const { validateBody } = require("../utils/request");
+const { validateBody, idsMatch } = require("../utils/request");
 
 async function createPost(req, res) {
 	if (!validateBody(req.body, ["body", "title"])) {
@@ -86,6 +86,10 @@ async function editPost(req, res) {
 
 async function deletePost(req, res) {
 	const { id } = req.params;
+
+	if (!idsMatch(req.session.user, id)) {
+		return res.status(403).end();
+	}
 
 	try {
 		const post = await Post.query().findById(id);

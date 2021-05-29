@@ -8,6 +8,12 @@ function validateBody(body, keys) {
 	return _.difference(keys, Object.keys(body)).length === 0;
 }
 
+function idsMatch(first, second) {
+	if (!first || !second) return false;
+	return Number(first) === Number(second);
+}
+
 module.exports = {
 	validateBody,
+	idsMatch,
 };
