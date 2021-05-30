@@ -1,8 +1,9 @@
+import { Request, Response } from "express";
 import { Comment } from "../../db/models/Comment";
 import { count } from "../../db/utils/query";
 import errorlog from "../../utils/errorlog";
 
-export async function createComment(req, res) {
+export async function createComment(req: Request, res: Response) {
 	const { post_id, body } = req.body;
 	const { user } = req.session;
 
@@ -19,7 +20,7 @@ export async function createComment(req, res) {
 	}
 }
 
-export async function editComment(req, res) {
+export async function editComment(req: Request, res: Response) {
 	const { body } = req.body;
 	const { id } = req.params;
 
@@ -34,7 +35,7 @@ export async function editComment(req, res) {
 	}
 }
 
-export async function deleteComment(req, res) {
+export async function deleteComment(req: Request, res: Response) {
 	const { id } = req.params;
 
 	try {

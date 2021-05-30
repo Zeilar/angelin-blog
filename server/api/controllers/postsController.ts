@@ -1,10 +1,11 @@
+import { Request, Response } from "express";
 import { Post } from "../../db/models/Post";
 import { Tag } from "../../db/models/Tag";
 import errorlog from "../../utils/errorlog";
 import { sanitizePost } from "../utils/post";
 import { validateBody, idsMatch } from "../utils/request";
 
-export async function createPost(req, res) {
+export async function createPost(req: Request, res: Response) {
 	if (!validateBody(req.body, ["body", "title"])) {
 		return res.status(400).json({ error: "Please provide a body and title." });
 	}
@@ -36,7 +37,7 @@ export async function createPost(req, res) {
 	}
 }
 
-export async function getAllPosts(req, res) {
+export async function getAllPosts(req: Request, res: Response) {
 	try {
 		const posts: Post[] = await Post.query().withGraphFetched({
 			author: true,
@@ -50,7 +51,7 @@ export async function getAllPosts(req, res) {
 	}
 }
 
-export async function getPostById(req, res) {
+export async function getPostById(req: Request, res: Response) {
 	try {
 		const post: Post = await Post.query().findById(req.params.id).withGraphFetched({
 			author: true,
@@ -64,7 +65,7 @@ export async function getPostById(req, res) {
 	}
 }
 
-export async function editPost(req, res) {
+export async function editPost(req: Request, res: Response) {
 	const { title, body } = req.body;
 	const { id } = req.params;
 
@@ -79,10 +80,10 @@ export async function editPost(req, res) {
 	}
 }
 
-export async function deletePost(req, res) {
+export async function deletePost(req: Request, res: Response) {
 	const { id } = req.params;
 
-	if (!idsMatch(res.user.id, id)) {
+	if (!idsMatch(res.user.id, Number(id))) {
 		return res.status(403).end();
 	}
 
