@@ -4,10 +4,11 @@ import express from "express";
 import { Express } from "express";
 import { loggedIn } from "./middlewares/auth";
 import session from "express-session";
+import { ENV } from "../../types/env";
 
 bootstrap();
 const app: Express = express();
-const { PORT, SESSION_SECRET } = process.env;
+const { PORT, SESSION_SECRET }: ENV = process.env;
 
 import usersRoutes from "./routes/usersRoutes";
 import postsRoutes from "./routes/postsRoutes";

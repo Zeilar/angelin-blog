@@ -1,4 +1,5 @@
 import { User } from "./server/db/models/User";
+import { ENV } from "./types/env";
 
 export {};
 
@@ -15,5 +16,9 @@ declare global {
 		interface Request {
 			session: Session;
 		}
+	}
+
+	namespace NodeJS {
+		interface ProcessEnv extends ENV {}
 	}
 }
