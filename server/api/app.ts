@@ -30,10 +30,6 @@ app.use(
 	})
 );
 
-app.get("/test", async (req, res: any) => {
-	res.json(await User.query().findById(1));
-});
-
 // Routes
 app.use("/api/users", usersRoutes);
 app.use("/api/posts", postsRoutes);
