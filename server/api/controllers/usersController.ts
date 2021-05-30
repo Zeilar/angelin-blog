@@ -6,7 +6,7 @@ import errorlog from "../../utils/errorlog";
 import { validateBody } from "../utils/request";
 import { sanitizeUser } from "../utils/user";
 
-export async function authenticate(req: Request, res: Response) {
+export async function authenticate(req: Request, res: Response): Promise<void> {
 	try {
 		res.status(200).json(sanitizeUser(res.user));
 	} catch (error) {
@@ -15,7 +15,7 @@ export async function authenticate(req: Request, res: Response) {
 	}
 }
 
-export async function register(req: Request, res: Response) {
+export async function register(req: Request, res: Response): Promise<void | Response> {
 	if (!validateBody(req.body, ["email", "password"])) {
 		return res.status(400).json({ error: "Please provide an email and password." });
 	}
@@ -43,7 +43,7 @@ export async function register(req: Request, res: Response) {
 	}
 }
 
-export async function login(req: Request, res: Response) {
+export async function login(req: Request, res: Response): Promise<void | Response> {
 	if (!validateBody(req.body, ["email", "password"])) {
 		return res.status(400).json({ error: "Please provide an email and password." });
 	}
@@ -71,7 +71,7 @@ export async function login(req: Request, res: Response) {
 	}
 }
 
-export function logout(req: Request, res: Response) {
+export function logout(req: Request, res: Response): void | Response {
 	if (!req.session.user) {
 		return res.status(405).json({ error: "You are already logged out." });
 	}

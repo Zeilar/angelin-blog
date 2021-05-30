@@ -5,7 +5,7 @@ import errorlog from "../../utils/errorlog";
 import { sanitizePost } from "../utils/post";
 import { validateBody, idsMatch } from "../utils/request";
 
-export async function createPost(req: Request, res: Response) {
+export async function createPost(req: Request, res: Response): Promise<void | Response> {
 	if (!validateBody(req.body, ["body", "title"])) {
 		return res.status(400).json({ error: "Please provide a body and title." });
 	}
@@ -36,7 +36,7 @@ export async function createPost(req: Request, res: Response) {
 	}
 }
 
-export async function getAllPosts(req: Request, res: Response) {
+export async function getAllPosts(req: Request, res: Response): Promise<void> {
 	try {
 		const posts: Post[] = await Post.query().withGraphFetched({
 			author: true,
@@ -50,7 +50,7 @@ export async function getAllPosts(req: Request, res: Response) {
 	}
 }
 
-export async function getPostById(req: Request, res: Response) {
+export async function getPostById(req: Request, res: Response): Promise<void> {
 	try {
 		const post: Post = await Post.query().findById(req.params.id).withGraphFetched({
 			author: true,
@@ -64,7 +64,7 @@ export async function getPostById(req: Request, res: Response) {
 	}
 }
 
-export async function editPost(req: Request, res: Response) {
+export async function editPost(req: Request, res: Response): Promise<void> {
 	const { title, body } = req.body;
 	const { id } = req.params;
 
@@ -79,7 +79,7 @@ export async function editPost(req: Request, res: Response) {
 	}
 }
 
-export async function deletePost(req: Request, res: Response) {
+export async function deletePost(req: Request, res: Response): Promise<void> {
 	const { id } = req.params;
 
 	if (!idsMatch(res.user.id, Number(id))) {
