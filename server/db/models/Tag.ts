@@ -1,13 +1,15 @@
 import { Model, RelationMappings } from "objection";
 import { Post } from "./Post";
+import * as ModelTypes from "../types/models";
 
-export class Tag extends Model {
+export class Tag extends Model implements ModelTypes.Tag {
 	public static tableName: string = "tags";
 
 	public readonly id: number;
 	public name: string;
 	public readonly created_at: string;
 	public updated_at: string;
+	public posts?: ModelTypes.Post[];
 
 	public static relationMappings(): RelationMappings {
 		return {

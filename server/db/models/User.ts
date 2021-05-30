@@ -1,16 +1,19 @@
 import { Model, RelationMappings } from "objection";
 import { Post } from "./Post";
 import { Comment } from "./Comment";
+import * as ModelTypes from "../types/models";
 
-export class User extends Model {
+export class User extends Model implements ModelTypes.User {
 	public static tableName: string = "users";
 
 	public readonly id: number;
 	public email: string;
-	public is_admin: boolean = false;
+	public is_admin: number = 0;
 	public password: string;
 	public readonly created_at: string;
 	public updated_at: string;
+	public posts?: ModelTypes.Post[];
+	public comments?: ModelTypes.Comment[];
 
 	// public static jsonSchema = {
 	// 	type: "object",

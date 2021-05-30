@@ -2,12 +2,13 @@ import { User } from "../../db/models/User";
 import { Post } from "../../db/models/Post";
 import Policy from "./Policy";
 
-class PostPolicy extends Policy {
+export default class PostPolicy extends Policy {
 	public authorized = false;
-	public user: User;
-	public post: Post;
 
-	policies = {
+	protected user: User;
+	protected post: Post;
+
+	protected policies = {
 		edit: () => this.editOrDelete(),
 		delete: () => this.editOrDelete(),
 		create: () => this.create(),
@@ -33,11 +34,3 @@ class PostPolicy extends Policy {
 		return this;
 	}
 }
-
-const p = new PostPolicy({ id: 1, is_admin: false }, { author: { id: 2 } });
-
-console.log(p.can("create", "delete"));
-
-module.exports = {
-	PostPolicy,
-};

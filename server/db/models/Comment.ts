@@ -1,8 +1,9 @@
 import { Model, RelationMappings } from "objection";
 import { Post } from "./Post";
 import { User } from "./User";
+import * as ModelTypes from "../types/models";
 
-export class Comment extends Model {
+export class Comment extends Model implements ModelTypes.Comment {
 	public static tableName: string = "comments";
 
 	public readonly id: number;
@@ -11,6 +12,8 @@ export class Comment extends Model {
 	public body: string;
 	public readonly created_at: string;
 	public updated_at: string;
+	public post?: ModelTypes.Post;
+	public author?: ModelTypes.User;
 
 	public static relationMappings(): RelationMappings {
 		return {

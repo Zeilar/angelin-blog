@@ -4,7 +4,8 @@ interface Policies {
 
 export default class Policy {
 	public authorized: boolean = false;
-	public policies: Policies = {};
+
+	protected policies: Policies = {};
 
 	can(...actions: string[]) {
 		actions.forEach(action => {
