@@ -9,8 +9,10 @@ function validateBody(body, keys) {
 }
 
 function idsMatch(first, second) {
+	first = Number(first);
+	second = Number(second);
 	if (!first || !second) return false;
-	return Number(first) === Number(second);
+	return first === second;
 }
 
 module.exports = {
