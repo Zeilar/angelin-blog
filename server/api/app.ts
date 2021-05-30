@@ -1,7 +1,6 @@
 import "dotenv/config";
 import bootstrap from "../db/bootstrap";
-import express from "express";
-import { Express } from "express";
+import express, { Express } from "express";
 import { loggedIn } from "./middlewares/auth";
 import session from "express-session";
 import { ENV } from "../../types/env";
