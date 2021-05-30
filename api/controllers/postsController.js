@@ -33,7 +33,6 @@ async function createPost(req, res) {
 		}
 		// TODO: add tags, maybe graph upsert?
 
-		console.log(post);
 		res.status(200).json(sanitizePost(post));
 	} catch (e) {
 		errorlog(e);
@@ -87,7 +86,7 @@ async function editPost(req, res) {
 async function deletePost(req, res) {
 	const { id } = req.params;
 
-	if (!idsMatch(req.session.user, id)) {
+	if (!idsMatch(res.user.id, id)) {
 		return res.status(403).end();
 	}
 

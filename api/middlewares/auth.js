@@ -1,8 +1,16 @@
 const { User } = require("../../db/models/User");
 
-function loggedIn(req, res, next) {
-	if (req.session.user) return next();
-	res.status(401).end();
+async function loggedIn(req, res, next) {
+	const { user: id } = req.session;
+	try {
+		if (id) {
+			res.user = await User.query().findById(id);
+			return next();
+		}
+		res.status(401).end();
+	} catch (e) {
+		res.status(500).end();
+	}
 }
 
 async function admin(req, res, next) {

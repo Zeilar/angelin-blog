@@ -6,13 +6,8 @@ const { validateBody } = require("../utils/request");
 const { sanitizeUser } = require("../utils/user");
 
 async function authenticate(req, res) {
-	const { user: id } = req.session;
-
-	if (!id) return res.status(401).end();
-
 	try {
-		const user = await User.query().findById(id);
-		res.status(200).json(sanitizeUser(user));
+		res.status(200).json(sanitizeUser(res.user));
 	} catch (e) {
 		errorlog(e);
 		res.status(500).end();
