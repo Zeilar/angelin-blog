@@ -30,8 +30,8 @@ export async function createPost(req: Request, res: Response) {
 		}
 
 		res.status(200).json(post);
-	} catch (e) {
-		errorlog(e);
+	} catch (error) {
+		errorlog(error);
 		res.status(500).end();
 	}
 }
@@ -44,8 +44,8 @@ export async function getAllPosts(req: Request, res: Response) {
 			tags: true,
 		});
 		res.status(200).json(posts.map(post => sanitizePost(post)));
-	} catch (e) {
-		errorlog(e);
+	} catch (error) {
+		errorlog(error);
 		res.status(500).end();
 	}
 }
@@ -58,8 +58,8 @@ export async function getPostById(req: Request, res: Response) {
 			tags: true,
 		});
 		res.status(200).json(sanitizePost(post));
-	} catch (e) {
-		errorlog(e);
+	} catch (error) {
+		errorlog(error);
 		res.status(500).end();
 	}
 }
@@ -73,8 +73,8 @@ export async function editPost(req: Request, res: Response) {
 		if (!post) return res.status(404).end();
 
 		res.status(200).json(await post.$query().patchAndFetch({ body, title }));
-	} catch (e) {
-		errorlog(e);
+	} catch (error) {
+		errorlog(error);
 		res.status(500).end();
 	}
 }
@@ -96,8 +96,8 @@ export async function deletePost(req: Request, res: Response) {
 		await post.$query().delete();
 
 		res.status(200).end();
-	} catch (e) {
-		errorlog(e);
+	} catch (error) {
+		errorlog(error);
 		res.status(500).end();
 	}
 }

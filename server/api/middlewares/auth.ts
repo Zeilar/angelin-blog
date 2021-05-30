@@ -9,7 +9,7 @@ export async function loggedIn(req: Request, res: Response, next: NextFunction) 
 			return next();
 		}
 		res.status(401).end();
-	} catch (e) {
+	} catch (error) {
 		res.status(500).end();
 	}
 }

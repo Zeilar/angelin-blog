@@ -14,8 +14,8 @@ export async function createComment(req: Request, res: Response) {
 			body,
 		});
 		res.status(200).json(comment);
-	} catch (e) {
-		errorlog(e);
+	} catch (error) {
+		errorlog(error);
 		res.status(500).end();
 	}
 }
@@ -29,8 +29,8 @@ export async function editComment(req: Request, res: Response) {
 		if (!comment) return res.status(404).end();
 
 		res.status(200).json(await comment.$query().patchAndFetch({ body }));
-	} catch (e) {
-		errorlog(e);
+	} catch (error) {
+		errorlog(error);
 		res.status(500).end();
 	}
 }
@@ -46,8 +46,8 @@ export async function deleteComment(req: Request, res: Response) {
 		await Comment.query().deleteById(id);
 
 		res.status(200).json();
-	} catch (e) {
-		errorlog(e);
+	} catch (error) {
+		errorlog(error);
 		res.status(500).end();
 	}
 }
