@@ -28,9 +28,8 @@ export async function createPost(req: Request, res: Response) {
 		for (let i: number = 0; i < result.length; i++) {
 			await post.$relatedQuery("tags").relate(result[i]);
 		}
-		// TODO: add tags, maybe graph upsert?
 
-		res.status(200).json(sanitizePost(post));
+		res.status(200).json(post);
 	} catch (e) {
 		errorlog(e);
 		res.status(500).end();

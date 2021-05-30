@@ -1,5 +1,12 @@
-export function sanitizePost(post) {
-	if (!post.author) return;
-	post.author.password = undefined;
-	return post;
+import { Post } from "../../db/models/Post";
+import errorlog from "../../utils/errorlog";
+
+export function sanitizePost(post: Post) {
+	try {
+		post.author.password = undefined;
+		return post;
+	} catch (error) {
+		errorlog(error);
+		return post;
+	}
 }
