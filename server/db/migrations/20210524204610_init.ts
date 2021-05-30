@@ -1,6 +1,6 @@
 import Knex from "knex";
 
-export function up(knex: Knex) {
+export function up(knex: Knex): Knex.SchemaBuilder {
 	return knex.schema
 		.createTable("users", table => {
 			table.increments();
@@ -61,7 +61,7 @@ export function up(knex: Knex) {
 		});
 }
 
-export function down(knex: Knex) {
+export function down(knex: Knex): Knex.SchemaBuilder {
 	return knex.schema
 		.dropTableIfExists("users")
 		.dropTableIfExists("posts")

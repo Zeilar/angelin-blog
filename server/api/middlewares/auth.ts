@@ -1,7 +1,11 @@
 import { User } from "../../db/models/User";
 import { Request, Response, NextFunction } from "express";
 
-export async function loggedIn(req: Request, res: Response, next: NextFunction) {
+export async function loggedIn(
+	req: Request,
+	res: Response,
+	next: NextFunction
+): Promise<void | NextFunction> {
 	const { user: id } = req.session;
 	try {
 		if (id) {
@@ -14,7 +18,11 @@ export async function loggedIn(req: Request, res: Response, next: NextFunction) 
 	}
 }
 
-export async function admin(req: Request, res: Response, next: NextFunction) {
+export async function admin(
+	req: Request,
+	res: Response,
+	next: NextFunction
+): Promise<void | Response | NextFunction> {
 	const user: User = await User.query().findById(req.session.user);
 
 	if (!Boolean(Number(user.is_admin))) {

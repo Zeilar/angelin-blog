@@ -9,7 +9,7 @@ export class User extends Model implements ModelTypes.User {
 	public readonly id: number;
 	public email: string;
 	public is_admin: number = 0;
-	public password: string;
+	public password?: string;
 	public readonly created_at: string;
 	public updated_at: string;
 	public posts?: ModelTypes.Post[];

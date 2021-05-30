@@ -7,7 +7,7 @@ export default class Policy {
 
 	protected policies: Policies = {};
 
-	can(...actions: string[]) {
+	can(...actions: string[]): boolean {
 		actions.forEach(action => {
 			this.policies[action]();
 		});

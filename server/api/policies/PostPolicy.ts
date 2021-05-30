@@ -20,12 +20,12 @@ export default class PostPolicy extends Policy {
 		this.post = post;
 	}
 
-	create() {
+	protected create(): this {
 		if (this.user) this.authorized = true;
 		return this;
 	}
 
-	editOrDelete() {
+	protected editOrDelete(): this {
 		if (this.user.is_admin) {
 			this.authorized = true;
 		} else {
