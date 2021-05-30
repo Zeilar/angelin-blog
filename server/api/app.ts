@@ -12,7 +12,6 @@ const { PORT, SESSION_SECRET } = process.env;
 import usersRoutes from "./routes/usersRoutes";
 import postsRoutes from "./routes/postsRoutes";
 import commentsRoutes from "./routes/commentsRoutes";
-import { User } from "../db/models/User";
 
 const WEEK_IN_MILLISECONDS = 1000 * 60 * 60 * 24 * 7;
 const oneWeekFromNow: Date = new Date(new Date().getTime() + WEEK_IN_MILLISECONDS);
