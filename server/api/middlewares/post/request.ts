@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { Post } from "../../../db/models/Post";
+import { Post } from "../../../db/models";
 import errorlog from "../../../utils/errorlog";
 import { sanitizePost } from "../../utils/post";
 
@@ -10,22 +10,16 @@ export async function getPostOrFail(
 ): Promise<void> {
 	const { id } = req.params;
 
-	const relationships: object = {
-		author: true,
-		comments: true,
-		tags: true,
-	};
-
 	try {
 		if (id) {
 			const post: Post | null = await Post.query()
 				.findById(id)
-				.withGraphFetched(relationships);
+				.withGraphFetched(Post.relationships);
 			if (!post) return res.status(404).end();
 
 			res.post = sanitizePost(post);
 		} else {
-			const posts: Post[] | [] = await Post.query().withGraphFetched(relationships);
+			const posts: Post[] | [] = await Post.query().withGraphFetched(Post.relationships);
 			res.posts = posts.map(post => sanitizePost(post));
 		}
 

@@ -1,5 +1,4 @@
-import { User } from "../../db/models/User";
-import { Post } from "../../db/models/Post";
+import { User, Post } from "../../db/models";
 import Policy from "./Policy";
 
 interface Policies {

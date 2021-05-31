@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Comment } from "../../db/models/Comment";
+import { Comment } from "../../db/models";
 import { count } from "../../db/utils/query";
 import errorlog from "../../utils/errorlog";
 

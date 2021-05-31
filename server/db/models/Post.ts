@@ -16,6 +16,12 @@ export class Post extends Model implements ModelTypes.Post {
 	public author?: ModelTypes.User;
 	public comments?: ModelTypes.Comment[];
 
+	public static relationships = {
+		author: true,
+		comments: true,
+		tags: true,
+	};
+
 	public static relationMappings(): RelationMappings {
 		return {
 			author: {

@@ -1,10 +1,7 @@
 import { Request, Response } from "express";
-import { Post } from "../../db/models/Post";
-import { Tag } from "../../db/models/Tag";
-import { User } from "../../db/models/User";
+import { Post, Tag, User } from "../../db/models";
 import errorlog from "../../utils/errorlog";
 import PostPolicy from "../policies/PostPolicy";
-import { sanitizePost } from "../utils/post";
 import { validateBody, idsMatch } from "../utils/request";
 
 export async function createPost(req: Request, res: Response): Promise<void | Response> {
@@ -23,15 +20,13 @@ export async function createPost(req: Request, res: Response): Promise<void | Re
 		});
 		const dbTags: Tag[] = await query.execute();
 
-		const post: Post = await Post.query()
-			.insertGraphAndFetch({ user_id: user, title, body })
-			.first();
+		const post: Post = await Post.query().insert({ user_id: user, title, body });
 
 		for (let i: number = 0; i < dbTags.length; i++) {
 			await post.$relatedQuery("tags").relate(dbTags[i]);
 		}
 
-		res.status(200).json(post);
+		res.status(200).json({ ...post, tags });
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();

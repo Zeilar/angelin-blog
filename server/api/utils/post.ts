@@ -1,4 +1,4 @@
-import { Post } from "../../db/models/Post";
+import { Post } from "../../db/models";
 import errorlog from "../../utils/errorlog";
 
 export function sanitizePost(post: Post): Post {

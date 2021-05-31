@@ -1,6 +1,6 @@
 import { hash, compare } from "bcrypt";
 import { Request, Response } from "express";
-import { User } from "../../db/models/User";
+import { User } from "../../db/models";
 import { count } from "../../db/utils/query";
 import errorlog from "../../utils/errorlog";
 import { validateBody } from "../utils/request";

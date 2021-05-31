@@ -15,17 +15,10 @@ export class User extends Model implements ModelTypes.User {
 	public posts?: ModelTypes.Post[];
 	public comments?: ModelTypes.Comment[];
 
-	// public static jsonSchema = {
-	// 	type: "object",
-	// 	properties: {
-	// 		id: { type: "integer" },
-	// 		email: { type: "string" },
-	// 		password: { type: "string" },
-	// 		is_admin: { type: "boolean" },
-	// 		created_at: { type: "timestamp" },
-	// 		updated_at: { type: "timestamp" },
-	// 	},
-	// };
+	public static relationships = {
+		posts: true,
+		comments: true,
+	};
 
 	public static relationMappings(): RelationMappings {
 		return {

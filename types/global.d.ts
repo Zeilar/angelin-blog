@@ -1,5 +1,4 @@
-import { Post } from "../server/db/models/Post";
-import { User } from "../server/db/models/User";
+import { Post, User } from "../server/db/models";
 
 export {};
 
