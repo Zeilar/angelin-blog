@@ -13,7 +13,7 @@ export class Post extends Model implements ModelTypes.Post {
 	public body: string;
 	public readonly created_at: string;
 	public updated_at: string;
-	public author?: ModelTypes.User;
+	public author: ModelTypes.User;
 	public comments?: ModelTypes.Comment[];
 
 	public static relationships: object = {

@@ -54,15 +54,7 @@ export async function editPost(req: Request, res: Response): Promise<void> {
 export async function deletePost(req: Request, res: Response): Promise<void> {
 	const { id } = req.params;
 
-	const user = await User.query().findById(2);
-	const post = await Post.query().findById(1);
-
-	console.log(user, post);
-
-	// return console.log(new PostPolicy(user, post).can("create"));
-	return console.log(new PostPolicy(user, null));
-
-	if (!idsMatch(res.user.id, Number(id))) {
+	if (!idsMatch(req.session.user, Number(id))) {
 		return res.status(403).end();
 	}
 
