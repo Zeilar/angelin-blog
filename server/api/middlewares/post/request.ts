@@ -20,7 +20,7 @@ export async function getPostOrFail(
 			res.post = sanitizePost(post);
 		} else {
 			const posts: Post[] | [] = await Post.query().withGraphFetched(Post.relationships);
-			res.posts = posts.map(post => sanitizePost(post));
+			res.posts = posts.map((post: Post) => sanitizePost(post));
 		}
 
 		next();
