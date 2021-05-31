@@ -38,7 +38,7 @@ export async function createPost(req: Request, res: Response): Promise<void | Re
 
 export async function getAllPosts(req: Request, res: Response): Promise<void> {
 	try {
-		const posts: Post[] = await Post.query().withGraphFetched({
+		const posts: Post[] | [] = await Post.query().withGraphFetched({
 			author: true,
 			comments: true,
 			tags: true,
@@ -52,7 +52,7 @@ export async function getAllPosts(req: Request, res: Response): Promise<void> {
 
 export async function getPostById(req: Request, res: Response): Promise<void> {
 	try {
-		const post: Post = await Post.query().findById(req.params.id).withGraphFetched({
+		const post: Post | null = await Post.query().findById(req.params.id).withGraphFetched({
 			author: true,
 			comments: true,
 			tags: true,
@@ -69,7 +69,7 @@ export async function editPost(req: Request, res: Response): Promise<void> {
 	const { id } = req.params;
 
 	try {
-		const post: Post = await Post.query().findById(id);
+		const post: Post | null = await Post.query().findById(id);
 		if (!post) return res.status(404).end();
 
 		res.status(200).json(await post.$query().patchAndFetch({ body, title }));
@@ -87,7 +87,7 @@ export async function deletePost(req: Request, res: Response): Promise<void> {
 	}
 
 	try {
-		const post: Post = await Post.query().findById(id);
+		const post: Post | null = await Post.query().findById(id);
 
 		if (!post) return res.status(404).end();
 

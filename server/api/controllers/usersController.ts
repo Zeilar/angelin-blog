@@ -32,7 +32,10 @@ export async function register(req: Request, res: Response): Promise<void | Resp
 		}
 
 		// TODO: Validation
-		const user: User = await User.query().insert({ email, password: await hash(password, 10) });
+		const user: User | null = await User.query().insert({
+			email,
+			password: await hash(password, 10),
+		});
 
 		req.session.user = user.id;
 
@@ -55,7 +58,7 @@ export async function login(req: Request, res: Response): Promise<void | Respons
 	}
 
 	try {
-		const user: User = await User.query().findOne("email", email);
+		const user: User | null = await User.query().findOne("email", email);
 		if (!user) return res.status(404).json({ error: "User does not exist." });
 
 		if (!(await compare(password, user.password))) {

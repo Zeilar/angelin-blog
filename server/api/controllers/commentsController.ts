@@ -8,7 +8,7 @@ export async function createComment(req: Request, res: Response): Promise<void> 
 	const { user } = req.session;
 
 	try {
-		const comment: Comment = await Comment.query().insert({
+		const comment: Comment | null = await Comment.query().insert({
 			post_id,
 			user_id: user,
 			body,
@@ -25,7 +25,7 @@ export async function editComment(req: Request, res: Response): Promise<void> {
 	const { id } = req.params;
 
 	try {
-		const comment: Comment = await Comment.query().findById(id);
+		const comment: Comment | null = await Comment.query().findById(id);
 		if (!comment) return res.status(404).end();
 
 		res.status(200).json(await comment.$query().patchAndFetch({ body }));
