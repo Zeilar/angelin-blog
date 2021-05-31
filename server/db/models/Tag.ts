@@ -11,7 +11,7 @@ export class Tag extends Model implements ModelTypes.Tag {
 	public updated_at: string;
 	public posts?: ModelTypes.Post[];
 
-	public static relationships = {
+	public static relationships: object = {
 		posts: true,
 	};
 

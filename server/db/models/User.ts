@@ -15,7 +15,7 @@ export class User extends Model implements ModelTypes.User {
 	public posts?: ModelTypes.Post[];
 	public comments?: ModelTypes.Comment[];
 
-	public static relationships = {
+	public static relationships: object = {
 		posts: true,
 		comments: true,
 	};
