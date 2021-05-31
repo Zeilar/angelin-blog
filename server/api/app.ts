@@ -30,10 +30,6 @@ app.use(
 	})
 );
 
-app.get("/test/:id", getPostOrFail, async (req: any, res: Response) => {
-	res.json(res.post);
-});
-
 // Routes
 app.use("/api/users", usersRoutes);
 app.use("/api/posts", postsRoutes);
