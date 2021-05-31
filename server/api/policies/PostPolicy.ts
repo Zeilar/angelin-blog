@@ -2,13 +2,15 @@ import { User } from "../../db/models/User";
 import { Post } from "../../db/models/Post";
 import Policy from "./Policy";
 
+interface Policies {
+	[key: string]: Function;
+}
+
 export default class PostPolicy extends Policy {
-	public authorized = false;
+	protected readonly user: User;
+	protected readonly post: Post;
 
-	protected user: User;
-	protected post: Post;
-
-	protected policies = {
+	protected readonly policies: Policies = {
 		edit: () => this.editOrDelete(),
 		delete: () => this.editOrDelete(),
 		create: () => this.create(),

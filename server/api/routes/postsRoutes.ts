@@ -1,4 +1,5 @@
 import { loggedIn } from "../middlewares/auth";
+import { getPostOrFail } from "../middlewares/post/request";
 import express from "express";
 import {
 	getAllPosts,
@@ -10,10 +11,10 @@ import {
 
 const router = express.Router();
 
-router.get("", getAllPosts);
-router.get("/:id", getPostById);
+router.get("", getPostOrFail, getAllPosts);
+router.get("/:id", getPostOrFail, getPostById);
 router.post("", loggedIn, createPost);
-router.put("/:id", loggedIn, editPost);
-router.delete("/:id", loggedIn, deletePost);
+router.put("/:id", loggedIn, getPostOrFail, editPost);
+router.delete("/:id", loggedIn, getPostOrFail, deletePost);
 
 export default router;

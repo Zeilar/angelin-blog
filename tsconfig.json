@@ -1,6 +1,12 @@
 {
 	"compilerOptions": {
 		"esModuleInterop": true,
-		"noImplicitAny": true
-	}
+		"noImplicitAny": true,
+		"outDir": "build",
+		"declaration": true,
+		"module": "commonjs",
+		"moduleResolution": "node"
+	},
+	"exclude": ["ui"]
+	// "files": ["./server/**/.ts"]
 }

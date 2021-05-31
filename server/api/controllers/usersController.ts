@@ -78,6 +78,6 @@ export function logout(req: Request, res: Response): void | Response {
 	if (!req.session.user) {
 		return res.status(405).json({ error: "You are already logged out." });
 	}
-	req.session.user = undefined;
+	delete req.session.user;
 	res.status(200).end();
 }

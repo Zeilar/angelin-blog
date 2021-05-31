@@ -1,5 +1,5 @@
 export interface ENV {
-	PORT?: number;
+	PORT?: string;
 	SESSION_SECRET?: string;
 	DB_NAME?: string;
 	DB_USER?: string;

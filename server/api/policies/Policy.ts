@@ -1,3 +1,5 @@
+import errorlog from "../../utils/errorlog";
+
 interface Policies {
 	[key: string]: Function;
 }
@@ -5,12 +7,17 @@ interface Policies {
 export default class Policy {
 	public authorized: boolean = false;
 
-	protected policies: Policies = {};
+	protected readonly policies: Policies;
 
 	can(...actions: string[]): boolean {
-		actions.forEach(action => {
-			this.policies[action]();
-		});
-		return this.authorized;
+		try {
+			actions.forEach(action => {
+				this.policies[action]();
+			});
+		} catch (error) {
+			errorlog(error);
+		} finally {
+			return this.authorized;
+		}
 	}
 }
