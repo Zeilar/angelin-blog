@@ -1,4 +1,4 @@
-import { Comment, Post, Tag, User } from "../server/db/models";
+import { Comment, Post, Tag, User } from "../db/models";
 
 export {};
 

@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { knexSnakeCaseMappers } from "objection";
-import { ENV } from "./types/env";
+import { ENV } from "./server/types/env";
 
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_CLIENT }: ENV = process.env;
 
