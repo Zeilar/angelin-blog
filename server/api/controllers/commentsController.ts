@@ -22,13 +22,8 @@ export async function createComment(req: Request, res: Response): Promise<void> 
 
 export async function editComment(req: Request, res: Response): Promise<void> {
 	const { body } = req.body;
-	const { id } = req.params;
-
 	try {
-		const comment: Comment | null = await Comment.query().findById(id);
-		if (!comment) return res.status(404).end();
-
-		res.status(200).json(await comment.$query().patchAndFetch({ body }));
+		res.status(200).json(await res.comment.$query().patchAndFetch({ body }));
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();
@@ -36,15 +31,8 @@ export async function editComment(req: Request, res: Response): Promise<void> {
 }
 
 export async function deleteComment(req: Request, res: Response): Promise<void> {
-	const { id } = req.params;
-
 	try {
-		if ((await count(Comment.query().findById(id))) === 0) {
-			return res.status(404).end();
-		}
-
-		await Comment.query().deleteById(id);
-
+		await res.comment.$query().delete();
 		res.status(200).json();
 	} catch (error) {
 		errorlog(error);
