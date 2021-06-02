@@ -1,24 +1,9 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import styled from "styled-components";
-import { H1, H2, H6 } from "../styles/font";
-
-interface Post {
-	id: number;
-	user_id: number;
-	title: string;
-	body: string;
-	created_at: string;
-	updated_at: string;
-	tags?: Tag[];
-}
-
-interface Tag {
-	id: number;
-	name: string;
-	created_at: string;
-	updated_at: string;
-}
+import { H1, H2, H6 } from "../styles/typography";
+import { Post, Tag } from "../../types/models";
+import { Link } from "react-router-dom";
+import useClickOutside from "../hooks/useClickOutside";
 
 export default function Home() {
 	const [posts, setPosts] = useState<Post[] | []>([]);
@@ -34,23 +19,27 @@ export default function Home() {
 		})();
 	}, []);
 
+	const element = useClickOutside<HTMLHeadingElement>(() => console.log("clicked outside"), {
+		onError: error => console.warn(error),
+	});
+
 	return (
 		<div>
 			<Helmet>
 				<title>Angelin Blog</title>
 			</Helmet>
-			<H1>Angelin Blog</H1>
+			<H1 ref={element}>Blog</H1>
 			{posts.map((post: Post) => (
-				<pre key={post.id}>
+				<Link key={post.id} to={`/post/${post.id}/${post.title}`}>
 					<H2>{post.title}</H2>
 					<H6>{post.body}</H6>
 					<p>
-						{post.tags?.map((tag: Tag, i) => (
-							<span>{tag.name} </span>
+						{post.tags?.map((tag: Tag) => (
+							<span key={tag.id}>{tag.name} </span>
 						))}
 					</p>
 					<br />
-				</pre>
+				</Link>
 			))}
 		</div>
 	);

@@ -24,6 +24,7 @@ export const GlobalStyles = createGlobalStyle`
 
     a {
         color: rgb(0, 127, 255);
+        text-decoration: none;
     }
 
     a,
