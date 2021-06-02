@@ -7,7 +7,7 @@ export interface Model {
 export interface User extends Model {
 	email: string;
 	password?: string;
-	is_admin: number;
+	is_admin: number | boolean;
 }
 
 export interface Post extends Model {
