@@ -1,9 +1,9 @@
+import { UserSchema, PostSchema, CommentSchema } from "../types/modelSchemas";
 import { Model, RelationMappings } from "objection";
 import { Post } from "./Post";
 import { Comment } from "./Comment";
-import * as ModelTypes from "../types/models";
 
-export class User extends Model implements ModelTypes.User {
+export class User extends Model implements UserSchema {
 	public static tableName: string = "users";
 
 	public readonly id: number;
@@ -12,8 +12,8 @@ export class User extends Model implements ModelTypes.User {
 	public password?: string;
 	public readonly created_at: string;
 	public readonly updated_at: string;
-	public posts?: ModelTypes.Post[];
-	public comments?: ModelTypes.Comment[];
+	public posts?: PostSchema[];
+	public comments?: CommentSchema[];
 
 	public static relationships: object = {
 		posts: true,

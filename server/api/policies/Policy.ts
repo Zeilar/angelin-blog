@@ -1,4 +1,4 @@
-import { User } from "../../db/types/models";
+import { User } from "../../db/types/modelSchemas";
 import errorlog from "../../utils/errorlog";
 
 export interface Policies {

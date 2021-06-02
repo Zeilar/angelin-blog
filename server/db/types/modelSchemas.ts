@@ -4,24 +4,24 @@ export interface Model {
 	updated_at: string;
 }
 
-export interface User extends Model {
+export interface UserSchema extends Model {
 	email: string;
 	password?: string;
 	is_admin: number | boolean;
 }
 
-export interface Post extends Model {
+export interface PostSchema extends Model {
 	user_id: number;
 	title: string;
 	body: string;
 }
 
-export interface Comment extends Model {
+export interface CommentSchema extends Model {
 	post_id: number;
 	user_id: number;
 	body: string;
 }
 
-export interface Tag extends Model {
+export interface TagSchema extends Model {
 	name: string;
 }

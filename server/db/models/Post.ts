@@ -1,10 +1,10 @@
+import { UserSchema, CommentSchema, PostSchema } from "../types/modelSchemas";
 import { Model, RelationMappings } from "objection";
 import { Comment } from "./Comment";
 import { Tag } from "./Tag";
 import { User } from "./User";
-import * as ModelTypes from "../types/models";
 
-export class Post extends Model implements ModelTypes.Post {
+export class Post extends Model implements PostSchema {
 	public static tableName: string = "posts";
 
 	public readonly id: number;
@@ -13,8 +13,8 @@ export class Post extends Model implements ModelTypes.Post {
 	public body: string;
 	public readonly created_at: string;
 	public readonly updated_at: string;
-	public author: ModelTypes.User;
-	public comments?: ModelTypes.Comment[];
+	public author: UserSchema;
+	public comments?: CommentSchema[];
 
 	public static relationships: object = {
 		author: true,
