@@ -1,19 +1,27 @@
+import { User } from "../../db/types/models";
 import errorlog from "../../utils/errorlog";
 
-interface Policies {
-	[key: string]: Function;
+export interface Policies {
+	[key: string]: () => boolean;
 }
 
-export default class Policy {
+export interface PolicyChild {
+	constructor: Function;
+	policies: Policies;
+	readonly user: User;
+}
+
+export default class Policy<Action extends string> {
 	public authorized: boolean = false;
 
 	protected readonly policies: Policies;
 
-	can(...actions: string[]): boolean {
+	can(...actions: Action[]): boolean {
 		try {
-			actions.forEach((action: string) => {
-				this.policies[action]();
-			});
+			for (let i: number = 0; i < actions.length; i++) {
+				this.authorized = this.policies[actions[i]]();
+				if (!this.authorized) break;
+			}
 		} catch (error) {
 			errorlog(error);
 		} finally {

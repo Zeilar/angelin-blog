@@ -12,7 +12,7 @@ export class Post extends Model implements ModelTypes.Post {
 	public title: string;
 	public body: string;
 	public readonly created_at: string;
-	public updated_at: string;
+	public readonly updated_at: string;
 	public author: ModelTypes.User;
 	public comments?: ModelTypes.Comment[];
 

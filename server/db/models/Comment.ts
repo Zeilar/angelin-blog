@@ -11,7 +11,7 @@ export class Comment extends Model implements ModelTypes.Comment {
 	public user_id: number;
 	public body: string;
 	public readonly created_at: string;
-	public updated_at: string;
+	public readonly updated_at: string;
 	public post?: ModelTypes.Post;
 	public author?: ModelTypes.User;
 

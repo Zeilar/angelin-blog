@@ -1,11 +1,11 @@
-import { User, Post } from "../../db/models";
+import { Comment, User } from "../../db/models";
 import Policy, { PolicyChild, Policies } from "./Policy";
 
 type Actions = "create" | "delete" | "edit";
 
-export default class PostPolicy extends Policy<Actions> implements PolicyChild {
+export default class CommentPolicy extends Policy<Actions> implements PolicyChild {
 	public readonly user: User;
-	public readonly post: Post;
+	public readonly comment: Comment;
 
 	public readonly policies: Policies = {
 		edit: () => this.editOrDelete(),
@@ -13,10 +13,10 @@ export default class PostPolicy extends Policy<Actions> implements PolicyChild {
 		create: () => this.create(),
 	};
 
-	constructor(user: User, post: Post) {
+	constructor(user: User, comment: Comment) {
 		super();
 		this.user = user;
-		this.post = post;
+		this.comment = comment;
 	}
 
 	protected create(): boolean {
@@ -25,6 +25,6 @@ export default class PostPolicy extends Policy<Actions> implements PolicyChild {
 
 	protected editOrDelete(): boolean {
 		if (this.user.is_admin) return true;
-		return this.user.id === this.post.author.id;
+		return this.user.id === this.comment.author.id;
 	}
 }

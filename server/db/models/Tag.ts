@@ -8,7 +8,7 @@ export class Tag extends Model implements ModelTypes.Tag {
 	public readonly id: number;
 	public name: string;
 	public readonly created_at: string;
-	public updated_at: string;
+	public readonly updated_at: string;
 	public posts?: ModelTypes.Post[];
 
 	public static relationships: object = {

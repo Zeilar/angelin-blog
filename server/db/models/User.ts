@@ -11,7 +11,7 @@ export class User extends Model implements ModelTypes.User {
 	public is_admin: number | boolean;
 	public password?: string;
 	public readonly created_at: string;
-	public updated_at: string;
+	public readonly updated_at: string;
 	public posts?: ModelTypes.Post[];
 	public comments?: ModelTypes.Comment[];
 
