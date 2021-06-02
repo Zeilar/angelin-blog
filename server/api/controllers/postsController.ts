@@ -52,20 +52,13 @@ export async function editPost(req: Request, res: Response): Promise<void> {
 }
 
 export async function deletePost(req: Request, res: Response): Promise<void> {
-	const { id } = req.params;
-
 	if (!new PostPolicy(res.user, res.post).can("delete")) {
 		return res.status(403).end();
 	}
 
 	try {
-		const post: Post | null = await Post.query().findById(id);
-
-		if (!post) return res.status(404).end();
-
-		await post.$relatedQuery("tags").unrelate();
-		await post.$query().delete();
-
+		await res.post.$relatedQuery("tags").unrelate();
+		await res.post.$query().delete();
 		res.status(200).end();
 	} catch (error) {
 		errorlog(error);
