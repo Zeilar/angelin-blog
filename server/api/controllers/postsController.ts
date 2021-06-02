@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { Post, Tag, User } from "../../db/models";
+import { Post, Tag } from "../../db/models";
 import errorlog from "../../utils/errorlog";
 import PostPolicy from "../policies/PostPolicy";
-import { validateBody, idsMatch } from "../utils/request";
+import { validateBody } from "../utils/request";
 
 export async function createPost(req: Request, res: Response): Promise<void | Response> {
 	if (!validateBody(req.body, ["body", "title"])) {
@@ -54,7 +54,7 @@ export async function editPost(req: Request, res: Response): Promise<void> {
 export async function deletePost(req: Request, res: Response): Promise<void> {
 	const { id } = req.params;
 
-	if (!idsMatch(req.session.user, Number(id))) {
+	if (!new PostPolicy(res.user, res.post).can("delete")) {
 		return res.status(403).end();
 	}
 

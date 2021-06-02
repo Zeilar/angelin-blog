@@ -16,7 +16,7 @@ export async function admin(req: Request, res: Response, next: NextFunction): Pr
 	const user: User = await User.query().findById(req.session.user);
 
 	// Just in case, sometimes the number returned from MySQL turns into a string
-	if (!Boolean(Number(user.is_admin))) {
+	if (!Boolean(user.is_admin)) {
 		return res.status(403).end();
 	}
 

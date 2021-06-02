@@ -3,3 +3,4 @@ build
 build-ui
 errorlog.txt
 .env
+.env.production
