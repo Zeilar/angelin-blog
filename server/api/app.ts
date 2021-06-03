@@ -1,6 +1,6 @@
 import "dotenv/config";
 import bootstrap from "../db/bootstrap";
-import express, { Express, Request, Response } from "express";
+import express, { Express } from "express";
 import { loggedIn } from "./middlewares/auth";
 import session from "express-session";
 import { ENV } from "../types/env";
@@ -21,14 +21,14 @@ const oneWeekFromNow: Date = new Date(new Date().getTime() + WEEK_IN_MILLISECOND
 // Middlewares
 app.use(
 	cors({
-		origin: "*",
+		origin: "*", // TODO: change in production?
 		credentials: true,
 	})
 );
 app.use(express.json());
 app.use(
 	session({
-		secret: SESSION_SECRET,
+		secret: SESSION_SECRET!,
 		resave: false,
 		saveUninitialized: true,
 		cookie: {

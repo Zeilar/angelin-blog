@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		// "strict": true,
+		"strict": true,
 		"esModuleInterop": true,
 		"noImplicitAny": true,
 		"outDir": "build",

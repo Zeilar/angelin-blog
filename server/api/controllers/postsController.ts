@@ -44,7 +44,7 @@ export function getPostById(req: Request, res: Response): void {
 export async function editPost(req: Request, res: Response): Promise<void> {
 	const { title, body } = req.body;
 	try {
-		res.status(200).json(await res.post.$query().patchAndFetch({ body, title }));
+		res.status(200).json(await res.post!.$query().patchAndFetch({ body, title }));
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();
@@ -52,13 +52,13 @@ export async function editPost(req: Request, res: Response): Promise<void> {
 }
 
 export async function deletePost(req: Request, res: Response): Promise<void> {
-	if (!new PostPolicy(res.user, res.post).can("delete")) {
+	if (!new PostPolicy(res.user!, res.post!).can("delete")) {
 		return res.status(403).end();
 	}
 
 	try {
-		await res.post.$relatedQuery("tags").unrelate();
-		await res.post.$query().delete();
+		await res.post!.$relatedQuery("tags").unrelate();
+		await res.post!.$query().delete();
 		res.status(200).end();
 	} catch (error) {
 		errorlog(error);

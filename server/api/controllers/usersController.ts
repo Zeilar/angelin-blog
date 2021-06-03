@@ -8,7 +8,7 @@ import { sanitizeUser } from "../utils/user";
 
 export async function authenticate(req: Request, res: Response): Promise<void> {
 	try {
-		res.status(200).json(sanitizeUser(res.user));
+		res.status(200).json(sanitizeUser(res.user!));
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();
@@ -61,7 +61,7 @@ export async function login(req: Request, res: Response): Promise<void | Respons
 		const user: User | null = await User.query().findOne("email", email);
 		if (!user) return res.status(404).json({ error: "User does not exist." });
 
-		if (!(await compare(password, user.password))) {
+		if (!(await compare(password, user.password!))) {
 			return res.status(422).json({ error: "Incorrect password." });
 		}
 
