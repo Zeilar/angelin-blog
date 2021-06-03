@@ -1,5 +1,4 @@
-import { useState, useEffect, ReactNode } from "react";
-import styled from "styled-components";
+import { useState, useEffect } from "react";
 import { RouteComponentProps } from "../../types/props";
 import * as Types from "../../types/models";
 import { SERVER_URL } from "../../utils/constants";
@@ -11,9 +10,7 @@ interface MatchParams {
 	title?: string;
 }
 
-interface Props extends RouteComponentProps<MatchParams> {}
-
-export default function SinglePost({ match }: Props) {
+export default function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 	const [post, setPost] = useState<Types.Post>();
 
 	useEffect(() => {

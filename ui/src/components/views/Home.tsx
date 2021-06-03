@@ -20,7 +20,7 @@ export default function Home() {
 	}, []);
 
 	const element = useClickOutside<HTMLHeadingElement>(() => console.log("clicked outside"), {
-		onError: error => console.warn(error),
+		onError: error => console.log(error),
 	});
 
 	return (
