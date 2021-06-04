@@ -7,13 +7,13 @@ import { User } from "./User";
 export class Post extends Model implements PostSchema {
 	public static tableName: string = "posts";
 
-	public readonly id: number;
-	public user_id: number;
-	public title: string;
-	public body: string;
-	public readonly created_at: string;
-	public readonly updated_at: string;
-	public author: UserSchema;
+	public readonly id!: number;
+	public user_id!: number;
+	public title!: string;
+	public body!: string;
+	public readonly created_at!: string;
+	public readonly updated_at!: string;
+	public author!: UserSchema;
 	public comments?: CommentSchema[];
 
 	public static relationships: object = {

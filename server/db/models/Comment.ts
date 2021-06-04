@@ -6,14 +6,14 @@ import { User } from "./User";
 export class Comment extends Model implements CommentSchema {
 	public static tableName: string = "comments";
 
-	public readonly id: number;
-	public post_id: number;
-	public user_id: number;
-	public body: string;
-	public readonly created_at: string;
-	public readonly updated_at: string;
+	public readonly id!: number;
+	public post_id!: number;
+	public user_id!: number;
+	public body!: string;
+	public readonly created_at!: string;
+	public readonly updated_at!: string;
 	public post?: PostSchema;
-	public author?: UserSchema;
+	public author!: UserSchema;
 
 	public static relationships: object = {
 		author: true,

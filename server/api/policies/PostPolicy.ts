@@ -21,6 +21,7 @@ export default class PostPolicy extends Policy<Actions> implements PolicyChild {
 
 	protected create(): boolean {
 		if (this.user) return true;
+		return false;
 	}
 
 	protected editOrDelete(): boolean {

@@ -21,6 +21,7 @@ export default class CommentPolicy extends Policy<Actions> implements PolicyChil
 
 	protected create(): boolean {
 		if (this.user) return true;
+		return false;
 	}
 
 	protected editOrDelete(): boolean {

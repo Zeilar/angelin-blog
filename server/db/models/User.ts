@@ -6,12 +6,12 @@ import { Comment } from "./Comment";
 export class User extends Model implements UserSchema {
 	public static tableName: string = "users";
 
-	public readonly id: number;
-	public email: string;
-	public is_admin: number | boolean;
+	public readonly id!: number;
+	public email!: string;
+	public is_admin!: number | boolean;
 	public password?: string;
-	public readonly created_at: string;
-	public readonly updated_at: string;
+	public readonly created_at!: string;
+	public readonly updated_at!: string;
 	public posts?: PostSchema[];
 	public comments?: CommentSchema[];
 

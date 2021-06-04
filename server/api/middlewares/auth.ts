@@ -13,7 +13,7 @@ export async function loggedIn(req: Request, res: Response, next: NextFunction):
 }
 
 export async function admin(req: Request, res: Response, next: NextFunction): Promise<void> {
-	const user: User = await User.query().findById(req.session.user);
+	const user: User = await User.query().findById(req.session.user!);
 
 	// Just in case, sometimes the number returned from MySQL turns into a string
 	if (!Boolean(user.is_admin)) {

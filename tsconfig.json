@@ -10,5 +10,4 @@
 		"moduleResolution": "node"
 	},
 	"exclude": ["ui"]
-	// "files": ["./server/**/.ts"]
 }

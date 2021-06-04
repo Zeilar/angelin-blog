@@ -1,4 +1,4 @@
-import { User } from "../../db/types/modelSchemas";
+import { UserSchema } from "../../db/types/modelSchemas";
 import errorlog from "../../utils/errorlog";
 
 export interface Policies {
@@ -8,13 +8,13 @@ export interface Policies {
 export interface PolicyChild {
 	constructor: Function;
 	policies: Policies;
-	readonly user: User;
+	readonly user: UserSchema;
 }
 
 export default class Policy<Action extends string> {
 	public authorized: boolean = false;
 
-	protected readonly policies: Policies;
+	protected readonly policies: Policies = {};
 
 	can(...actions: Action[]): boolean {
 		try {

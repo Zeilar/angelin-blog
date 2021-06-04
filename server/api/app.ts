@@ -42,10 +42,10 @@ app.use("/api/users", usersRoutes);
 app.use("/api/posts", postsRoutes);
 app.use("/api/comments", loggedIn, commentsRoutes);
 
-app.use(express.static(path.join(__dirname, "../../build/ui")));
+app.use(express.static(path.join(__dirname, "../../ui")));
 
 app.get("/*", (req: Request, res: Response): void => {
-	res.sendFile(path.join(__dirname, "../../build/ui/index.html"));
+	res.sendFile(path.join(__dirname, "../../ui/index.html"));
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
