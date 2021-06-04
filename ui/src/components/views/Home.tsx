@@ -4,9 +4,12 @@ import { H1, H2, H6 } from "../styles/typography";
 import { Post, Tag } from "../../types/models";
 import { Link } from "react-router-dom";
 import useClickOutside from "../hooks/useClickOutside";
+import useFetch from "../hooks/useFetch/useFetch";
 
-export default function Home() {
-	const [posts, setPosts] = useState<Post[] | []>([]);
+export default function Home(): JSX.Element {
+	const [posts, setPosts] = useState<Post[]>([]);
+
+	const {} = useFetch("http://localhost:3030/api/posts", { params: { test: "helloworld" } });
 
 	useEffect(() => {
 		(async () => {

@@ -7,28 +7,25 @@ interface Args {
 }
 
 export default function useClickOutside<T extends HTMLElement>(
-	callback: () => void,
-	args: Args = {}
+	callback: (element?: T) => void,
+	args?: Args
 ): RefObject<T> {
 	if (!callback) throw new Error(`Expected callback function, got ${JSON.stringify(callback)}`);
 
 	const ref: RefObject<T> = useRef<T>(null);
 
 	useEffect(() => {
-		// Some of these variables may feel like bloat, but they help the useEffect dependencies and make the code more readable
 		const element = ref.current;
-		const event = args.mousedown ? "mousedown" : "mouseup";
-		const condition = args.condition ?? true;
-		const onError = args.onError;
+		const event = args?.mousedown ? "mousedown" : "mouseup";
 
 		function clickHandler(e: MouseEvent): void {
 			try {
 				if (!element) throw new Error("Ref must be assigned to an element.");
-				if (!condition) return;
-				if (!element.contains(e.target as Node)) callback();
+				if (args?.condition === false) return;
+				if (!element.contains(e.target as Node)) callback(element);
 			} catch (error) {
 				console.error(error);
-				if (onError) onError(error);
+				if (args?.onError) args.onError(error);
 			}
 		}
 
@@ -37,7 +34,7 @@ export default function useClickOutside<T extends HTMLElement>(
 		return () => {
 			document.removeEventListener(event, clickHandler);
 		};
-	}, [callback, args.condition, args.mousedown, args.onError]);
+	}, [callback, args?.condition, args?.mousedown, args?.onError]);
 
 	return ref;
 }

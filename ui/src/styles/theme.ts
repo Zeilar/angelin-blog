@@ -18,8 +18,8 @@ export const theme: Theme = {
 	color: {
 		body: "15, 15, 15",
 		brand: "123, 234, 123",
-		bodyLight: "125, 90, 60",
-		bodyDark: "35, 15, 5",
+		bodyLight: "20, 20, 20",
+		bodyDark: "10, 10, 10",
 		primary: "100, 100, 100",
 		secondary: "10 , 10, 10",
 		textPrimary: "225, 225, 225",

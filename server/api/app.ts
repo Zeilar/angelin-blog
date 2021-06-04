@@ -1,6 +1,6 @@
 import "dotenv/config";
 import bootstrap from "../db/bootstrap";
-import express, { Express } from "express";
+import express, { Express, Request, Response } from "express";
 import { loggedIn } from "./middlewares/auth";
 import session from "express-session";
 import { ENV } from "../types/env";
@@ -42,10 +42,10 @@ app.use("/api/users", usersRoutes);
 app.use("/api/posts", postsRoutes);
 app.use("/api/comments", loggedIn, commentsRoutes);
 
-// app.use(express.static(path.join(__dirname, "../../build/ui")));
+app.use(express.static(path.join(__dirname, "../../build/ui")));
 
-// app.get("/*", (req: Request, res: Response) => {
-// 	res.sendFile(path.join(__dirname, "../../build/ui/index.html"));
-// });
+app.get("/*", (req: Request, res: Response): void => {
+	res.sendFile(path.join(__dirname, "../../build/ui/index.html"));
+});
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
