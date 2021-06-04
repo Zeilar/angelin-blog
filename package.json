@@ -31,6 +31,8 @@
 	},
 	"scripts": {
 		"dev": "nodemon --transpile-only -P tsconfig.json server/api/app.ts",
+		"production": "nodemon build/server/api/app.js",
+		"prod": "npm run production",
 		"build": "rm -rf build && npm run build:ui && npm run build:server",
 		"build:server": "rm -rf build/server build/knexfile.* && tsc",
 		"build:ui": "rm -rf build && mkdir build\\ui && cd ui && npm run build && cd .. && mv ui/build/* build/ui && rm -rf ui/build",
