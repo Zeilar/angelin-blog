@@ -1,12 +1,11 @@
 import { useContext } from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { UserContext } from "../contexts/UserContext";
-import { Row, phone } from "../styled-components/layout";
+import { Row } from "../styled-components/layout";
 import { header } from "../styled-components/typography";
-
-type Modal = "login" | "register" | null;
+import Modals, { Modal } from "./modals/Modals";
 
 export default function Navbar() {
 	const context = useContext(UserContext);
@@ -21,8 +20,6 @@ export default function Navbar() {
 	function openModal(modal: Modal) {
 		setActiveModal(modal);
 	}
-
-	useEffect(() => {}, []);
 
 	return (
 		<Wrapper>
@@ -39,6 +36,7 @@ export default function Navbar() {
 					</Item>
 				</List>
 			</Nav>
+			<Modals active={activeModal} closeAll={closeModals} open={openModal} />
 		</Wrapper>
 	);
 }
