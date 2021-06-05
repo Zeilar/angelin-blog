@@ -59,7 +59,7 @@ export async function login(req: Request, res: Response): Promise<void | Respons
 
 	try {
 		const user: User | null = await User.query().findOne("email", email);
-		if (!user) return res.status(404).json({ error: "User does not exist." });
+		if (!user) return res.status(422).json({ error: "User does not exist." });
 
 		if (!(await compare(password, user.password!))) {
 			return res.status(422).json({ error: "Incorrect password." });

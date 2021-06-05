@@ -3,7 +3,7 @@ import { Home, Post } from "./views";
 import { Helmet } from "react-helmet";
 import Navbar from "./partials/Navbar";
 
-export default function Router(): JSX.Element {
+export default function Router() {
 	return (
 		<BrowserRouter>
 			<Navbar />

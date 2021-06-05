@@ -12,6 +12,10 @@ interface Theme {
 		link: string;
 	};
 	borderRadius: number;
+	breakpoints: {
+		phone: number;
+		tablet: 1200;
+	};
 }
 
 export const theme: Theme = {
@@ -28,4 +32,8 @@ export const theme: Theme = {
 		link: "0, 127, 255",
 	},
 	borderRadius: 3,
+	breakpoints: {
+		phone: 768,
+		tablet: 1200,
+	},
 };

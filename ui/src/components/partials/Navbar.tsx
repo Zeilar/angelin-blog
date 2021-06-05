@@ -1,16 +1,41 @@
-import { useState, useEffect, ReactNode } from "react";
+import { useContext } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import { theme } from "../../styles/theme";
-import { header } from "../styles/typography";
+import styled, { css } from "styled-components";
+import { UserContext } from "../contexts/UserContext";
+import { Row, phone } from "../styled-components/layout";
+import { header } from "../styled-components/typography";
 
-export default function Navbar(): JSX.Element {
+type Modal = "login" | "register" | null;
+
+export default function Navbar() {
+	const context = useContext(UserContext);
+	if (!context) throw new Error("Context must not be null");
+
+	const [activeModal, setActiveModal] = useState<Modal>(null);
+
+	function closeModals() {
+		setActiveModal(null);
+	}
+
+	function openModal(modal: Modal) {
+		setActiveModal(modal);
+	}
+
+	useEffect(() => {}, []);
+
 	return (
 		<Wrapper>
 			<Nav>
-				<List>
+				<List as="ul">
 					<Item>
 						<Link to="/">Home</Link>
+					</Item>
+					<Item>
+						<ModalLink onClick={() => openModal("login")}>Login</ModalLink>
+					</Item>
+					<Item>
+						<ModalLink onClick={() => openModal("register")}>Register</ModalLink>
 					</Item>
 				</List>
 			</Nav>
@@ -22,10 +47,18 @@ const Wrapper = styled.header``;
 
 const Nav = styled.nav``;
 
-const List = styled.ul``;
+const List = styled(Row)``;
 
 const Item = styled.li``;
 
-const Link = styled(NavLink)`
+const link = css`
 	${header}
+`;
+
+const Link = styled(NavLink)`
+	${link}
+`;
+
+const ModalLink = styled.a`
+	${link}
 `;

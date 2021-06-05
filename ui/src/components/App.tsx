@@ -1,7 +1,7 @@
 import Provider from "./Provider";
 import Router from "./Router";
 
-export default function App(): JSX.Element {
+export default function App() {
 	return (
 		<Provider>
 			<Router />

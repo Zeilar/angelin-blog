@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { theme } from "../../styles/theme";
 
 interface Flexbox {
 	justify?: string;
@@ -37,3 +38,11 @@ export const Col = styled.div`
 export const Grid = styled.div`
 	${grid}
 `;
+
+export const Container = styled.div`
+	${flexbox}
+`;
+
+export const mediaQuery = (size: number) => `@media(max-width: ${size}px)`;
+export const phone = mediaQuery(theme.breakpoints.phone);
+export const tablet = mediaQuery(theme.breakpoints.tablet);
