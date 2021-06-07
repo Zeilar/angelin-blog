@@ -1,9 +1,9 @@
-import * as History from "history";
+import { Location, History } from "history";
 
 export interface RouteComponentProps<Params> {
 	match: Match<Params>;
-	location: History.Location;
-	history: History.History;
+	location: Location;
+	history: History;
 	staticContext?: any;
 }
 
