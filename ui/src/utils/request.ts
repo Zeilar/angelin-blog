@@ -2,7 +2,7 @@ import { Args, QueryParams } from "../types/request";
 import { SERVER_URL } from "./constants";
 
 export default class Request {
-	private static parseQueryParams(params?: QueryParams): string {
+	private static parseQueryParams(params?: QueryParams) {
 		if (!params || !Object.keys(params).length) {
 			return "";
 		}

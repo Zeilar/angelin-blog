@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Args, Options, Status, QueryParams } from "./types";
 
-export function parseQueryParams(params?: QueryParams): string {
+export function parseQueryParams(params?: QueryParams) {
 	if (!params || !Object.keys(params).length) {
 		return "";
 	}
