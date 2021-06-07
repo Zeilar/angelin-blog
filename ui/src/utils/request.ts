@@ -31,7 +31,6 @@ export default class Request {
 
 			if (args.withResponse) data = await response.json();
 		} catch (error) {
-			code = 500;
 			console.error(error);
 		} finally {
 			return { data, code };
