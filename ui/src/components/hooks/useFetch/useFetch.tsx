@@ -6,7 +6,7 @@ export function parseQueryParams(params?: QueryParams) {
 		return "";
 	}
 
-	// Parse { key: value } to `key=value` strings
+	// Parse { key: value } to `&key=value` strings
 	const queries = Object.entries(params)
 		.map(([key, val]) => `${key}=${val}`)
 		.join("&");
