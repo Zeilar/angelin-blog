@@ -7,7 +7,7 @@ export default class Request {
 			return "";
 		}
 
-		// Parse { key: value } to `&key=value` strings
+		// Parse { key: value } to `&key=value` strings pairs and combine them
 		const queries = Object.entries(params)
 			.map(([key, val]) => `${key}=${val}`)
 			.join("&");
