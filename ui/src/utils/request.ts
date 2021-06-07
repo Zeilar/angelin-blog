@@ -17,9 +17,9 @@ export default class Request {
 
 	private static async request<T>(args: Args) {
 		const queries = Request.parseQueryParams(args.params);
-
 		let data: T | null = null;
 		let code: number = 200;
+
 		try {
 			const response = await fetch(`${args.url}${queries}`, {
 				method: args.method,
