@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Args, Return, Options, Status, QueryParams } from "./types";
+import { Args, Options, Status, QueryParams } from "./types";
 
 export function parseQueryParams(params?: QueryParams): string {
 	if (!params || !Object.keys(params).length) {
@@ -14,11 +14,7 @@ export function parseQueryParams(params?: QueryParams): string {
 	return `?${queries}`;
 }
 
-export default function useFetch<Data>(
-	url: string,
-	args?: Args,
-	callback?: (data: Data) => void
-): Return<Data> {
+export default function useFetch<Data>(url: string, args?: Args, callback?: (data: Data) => void) {
 	const [data, setData] = useState<Data>();
 	const [status, setStatus] = useState<Status>("loading");
 

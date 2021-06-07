@@ -1,27 +1,30 @@
 import { Args } from "../types/request";
 import { SERVER_URL } from "./constants";
 
-export async function request(args: Args) {
-	let data = null;
-	let code: number = 200;
-	try {
-		const response = await fetch(args.url, {
-			method: args?.method ?? "GET",
-			body: JSON.stringify(args?.body),
-			headers: { "Content-Type": "application/json" },
-		});
+export default class Request {
+	private static async request<T>(args: Args) {
+		let data: T | null = null;
+		let code: number = 200;
+		try {
+			const response = await fetch(args.url, {
+				method: args.method,
+				body: JSON.stringify(args.body),
+				headers: { "Content-Type": "application/json" },
+			});
 
-		code = response.status;
+			code = response.status;
 
-		if (args.withResponse) data = await response.json();
-	} catch (error) {
-		console.error(error);
-	} finally {
-		return { data, code };
+			if (args.withResponse) data = await response.json();
+		} catch (error) {
+			code = 500;
+			console.error(error);
+		} finally {
+			return { data, code };
+		}
 	}
-}
 
-export async function authRequest(args: Args) {
-	args.url = `${SERVER_URL}/api/users/${args.url}`;
-	return await request({ ...args, url: args.url, withResponse: true });
+	public static async auth<T>(args: Args) {
+		const url = `${SERVER_URL}/api/users/${args.url}`;
+		return await Request.request<T>({ ...args, url, withResponse: true });
+	}
 }

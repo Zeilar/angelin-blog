@@ -22,16 +22,12 @@ export default function Home() {
 		})();
 	}, []);
 
-	const element = useClickOutside<HTMLHeadingElement>(() => console.log("clicked outside"), {
-		onError: error => console.log(error),
-	});
-
 	return (
 		<div>
 			<Helmet>
 				<title>Angelin Blog</title>
 			</Helmet>
-			<H1 ref={element}>Blog</H1>
+			<H1>Blog</H1>
 			{posts.map((post: Post) => (
 				<Link key={post.id} to={`/post/${post.id}/${post.title}`}>
 					<H2>{post.title}</H2>

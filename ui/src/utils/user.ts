@@ -1,10 +1,12 @@
 import { UserCredentials } from "../types/request";
-import { authRequest } from "./request";
+import Request from "./Request";
 
-export async function login(user: UserCredentials) {
-	return await authRequest({ url: "login", method: "POST", body: user });
-}
+export default class UserHelpers {
+	public static async login<T>(user: UserCredentials) {
+		return await Request.auth<T>({ url: "login", method: "POST", body: user });
+	}
 
-export async function authenticate() {
-	return await authRequest({ url: "authenticate" });
+	public static async authenticate<T>() {
+		return await Request.auth<T>({ url: "authenticate" });
+	}
 }

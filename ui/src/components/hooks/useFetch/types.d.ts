@@ -22,14 +22,6 @@ export interface Options extends HeadersInit, Args {
 	signal: AbortSignal;
 }
 
-export interface Return<T> {
-	data?: T;
-	status: Status;
-	isLoading: boolean;
-	isError: boolean;
-	isSuccess: boolean;
-}
-
 export type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 export type MimeTypes =
 	| "application/json"

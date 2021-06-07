@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
 import { User } from "../../types/models";
 import { UserCredentials } from "../../types/request";
-import { authenticate, login } from "../../utils/user";
+import UserHelpers from "../../utils/User";
 
 interface Props {
 	children: ReactNode;
@@ -19,14 +19,14 @@ export function UserContextProvider({ children }: Props) {
 
 	useEffect(() => {
 		(async () => {
-			const { code, data } = await authenticate();
+			const { code, data } = await UserHelpers.authenticate<User>();
 			if (code === 200) return setUser(data);
 			setUser(null);
 		})();
 	}, []);
 
 	async function handleLogin(user: UserCredentials) {
-		const { code, data } = await login(user);
+		const { code, data } = await UserHelpers.login<User>(user);
 
 		if (code === 200) {
 			setUser(data);

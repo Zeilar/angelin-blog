@@ -12,14 +12,16 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     ::selection {
-        color: rgb(123, 234, 123);
+        color: rgb(0, 200, 0);
     }
 
     html,
-    body {
+    body,
+    #root {
         font-family: Open Sans;
         color: rgb(225, 225, 225);
         background-color: rgb(15, 15, 15);
+        min-height: 100vh;
     }
 
     a {

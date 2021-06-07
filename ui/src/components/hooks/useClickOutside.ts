@@ -9,7 +9,7 @@ interface Args {
 export default function useClickOutside<T extends HTMLElement>(
 	callback: (element?: T) => void,
 	args?: Args
-): RefObject<T> {
+) {
 	if (!callback) throw new Error(`Expected callback function, got ${JSON.stringify(callback)}`);
 
 	const ref: RefObject<T> = useRef<T>(null);

@@ -13,15 +13,10 @@ interface Props {
 }
 
 export default function Modals({ active, open, closeAll }: Props) {
-	const loginWrapper = useClickOutside<HTMLDivElement>(closeAll);
-	const registerWrapper = useClickOutside<HTMLDivElement>(closeAll);
-
-	console.log(loginWrapper, active);
-
 	return (
 		<Background active={active !== null}>
-			<Login active={active === "login"} forwardRef={loginWrapper} />
-			<Register active={active === "register"} forwardRef={registerWrapper} />
+			<Login active={active === "login"} open={open} closeAll={closeAll} />
+			<Register active={active === "register"} open={open} closeAll={closeAll} />
 		</Background>
 	);
 }

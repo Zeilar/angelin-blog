@@ -4,6 +4,7 @@ export const header = css`
 	font-weight: 700;
 	font-family: Heebo;
 	color: white;
+	letter-spacing: 1px;
 `;
 
 export const text = css`

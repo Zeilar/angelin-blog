@@ -1,11 +1,29 @@
-import { useState, useEffect, RefObject } from "react";
-import styled from "styled-components";
+import { useState, useEffect } from "react";
+import useClickOutside from "../../hooks/useClickOutside";
+import { Modal } from "./Modals";
+import { Close, Title, Wrapper } from "./_styles";
+import { mdiClose } from "@mdi/js";
+import Icon from "@mdi/react";
 
 interface Props {
-	forwardRef: RefObject<HTMLDivElement>;
 	active: boolean;
+	open: (modal: Modal) => void;
+	closeAll: () => void;
 }
 
-export default function Register({ active, forwardRef }: Props) {
-	return <div ref={forwardRef}>Register here!</div>;
+export default function Register({ active, open, closeAll }: Props) {
+	const wrapper = useClickOutside<HTMLDivElement>(() => {
+		if (active) closeAll();
+	});
+
+	return (
+		<Wrapper ref={wrapper} active={active}>
+			<Close onClick={closeAll}>
+				<Icon path={mdiClose} />
+			</Close>
+			<Title>Register</Title>
+			Register here!
+			<button onClick={() => open("login")}>Login</button>
+		</Wrapper>
+	);
 }

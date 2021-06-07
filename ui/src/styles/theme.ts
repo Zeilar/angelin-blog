@@ -10,6 +10,7 @@ interface Theme {
 		textMuted: string;
 		textSecondary: string;
 		link: string;
+		border: string;
 	};
 	borderRadius: number;
 	breakpoints: {
@@ -30,8 +31,9 @@ export const theme: Theme = {
 		textMuted: "150, 150, 150",
 		textSecondary: "15, 15, 15",
 		link: "0, 127, 255",
+		border: "40, 40, 40",
 	},
-	borderRadius: 3,
+	borderRadius: 2,
 	breakpoints: {
 		phone: 768,
 		tablet: 1200,
