@@ -15,7 +15,7 @@ export default class Request {
 		return `?${queries}`;
 	}
 
-	public static async request<T>(args: Args) {
+	public static async query<T>(args: Args) {
 		const queries = Request.parseQueryParams(args.params);
 		let data: T | null = null;
 		let code: number = 200;
@@ -40,6 +40,6 @@ export default class Request {
 
 	public static async auth<T>(args: Args) {
 		const url = `${SERVER_URL}/api/users/${args.url}`;
-		return await Request.request<T>({ ...args, url, withResponse: true });
+		return await Request.query<T>({ ...args, url, withResponse: true });
 	}
 }
