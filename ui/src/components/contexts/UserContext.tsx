@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useState, useEffect, ReactNode, useContext } from "react";
 import { User } from "../../types/models";
 import { UserCredentials } from "../../types/request";
 import UserHelpers from "../../utils/User";
@@ -9,7 +9,17 @@ interface Props {
 
 interface Context {
 	user: User | null;
-	handleLogin: (user: UserCredentials) => Promise<boolean | object[]>;
+	loggedIn: boolean;
+	login: (
+		credentials: UserCredentials
+	) => Promise<{ code: number; data?: User; errors?: object[] | null }>;
+	register: (credentials: UserCredentials) => Promise<boolean | {}>;
+	logout: () => Promise<boolean>;
+}
+
+interface UserEditable {
+	email?: string;
+	password?: string;
 }
 
 export const UserContext = createContext<Context | null>(null);
@@ -25,8 +35,23 @@ export function UserContextProvider({ children }: Props) {
 		})();
 	}, []);
 
-	async function handleLogin(user: UserCredentials) {
-		const { code, data } = await UserHelpers.login<User>(user);
+	async function update() {}
+
+	async function login(credentials: UserCredentials) {
+		const { code, data } = await UserHelpers.login<User>(credentials);
+
+		if (code === 200) {
+			setUser(data);
+			return { data, code };
+		}
+
+		const errors: object[] = [];
+		// validation
+		return { errors, code };
+	}
+
+	async function register(credentials: UserCredentials) {
+		const { code, data } = await UserHelpers.register<User>(credentials);
 
 		if (code === 200) {
 			setUser(data);
@@ -38,10 +63,32 @@ export function UserContextProvider({ children }: Props) {
 		return errors;
 	}
 
-	const values: Context = {
+	async function logout() {
+		const { code } = await UserHelpers.logout();
+		if (code === 200) {
+			setUser(null);
+			return true;
+		}
+		return false;
+	}
+
+	const values: any = {
+		loggedIn: Boolean(user),
 		user,
-		handleLogin,
+		login,
+		logout,
+		register,
 	};
 
 	return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 }
+
+export const useAuth = () => {
+	const context = useContext(UserContext);
+
+	if (!context) {
+		throw new Error();
+	}
+
+	return context;
+};

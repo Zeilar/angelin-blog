@@ -1,5 +1,3 @@
-import { useState, useEffect, ReactNode } from "react";
-import useClickOutside from "../../hooks/useClickOutside";
 import Login from "./Login";
 import Register from "./Register";
 import { Background } from "./_styles";

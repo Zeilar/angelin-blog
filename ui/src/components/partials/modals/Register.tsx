@@ -22,7 +22,6 @@ export default function Register({ active, open, closeAll }: Props) {
 				<Icon path={mdiClose} />
 			</Close>
 			<Title>Register</Title>
-			Register here!
 			<button onClick={() => open("login")}>Login</button>
 		</Wrapper>
 	);

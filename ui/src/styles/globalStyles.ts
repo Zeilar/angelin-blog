@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import "./fonts.css";
+import { theme } from "./theme";
 
 export const GlobalStyles = createGlobalStyle`
     *,
@@ -12,20 +13,20 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     ::selection {
-        color: rgb(0, 200, 0);
+        color: rgb(0, 225, 225);
     }
 
     html,
-    body,
+    primary,
     #root {
         font-family: Open Sans;
-        color: rgb(225, 225, 225);
-        background-color: rgb(15, 15, 15);
+        color: rgb(${theme.color.text});
+        background-color: rgb(${theme.color.body});
         min-height: 100vh;
     }
 
     a {
-        color: rgb(0, 127, 255);
+        color: rgb(${theme.color.link});
         text-decoration: none;
     }
 
@@ -34,9 +35,24 @@ export const GlobalStyles = createGlobalStyle`
         cursor: pointer;
     }
 
+    input,
+    textarea {
+        font: inherit;
+    }
+
+    ::placeholder {
+        color: rgb(${theme.color.textMuted});
+    }
+
     img,
     svg {
         max-width: 100%;
         height: auto;
+    }
+
+    img,
+    svg,
+    ::placeholder {
+        user-select: none;
     }
 `;

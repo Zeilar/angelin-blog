@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { FormEvent, useContext, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { Modal } from "./Modals";
-import { Close, Title, Wrapper } from "./_styles";
+import { Close, Title, Wrapper, Inputs } from "./_styles";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
-import { Input } from "../../styled-components/interactive";
+import { Button, Input } from "../../styled-components/interactive";
 import useForm from "../../hooks/useForm";
+import { useAuth, UserContext } from "../../contexts/UserContext";
 
 interface Props {
 	active: boolean;
@@ -14,37 +15,57 @@ interface Props {
 }
 
 export default function Login({ active, open, closeAll }: Props) {
-	const wrapper = useClickOutside<HTMLDivElement>(() => {
+	const context = useAuth();
+
+	const wrapper = useClickOutside<HTMLFormElement>(() => {
 		if (active) closeAll();
 	});
 
-	const { onSubmit, onChange, inputs } = useForm({
-		email: {},
-		password: {},
+	const { onChange, inputs, validate } = useForm({
+		email: { value: "" },
+		password: { value: "" },
 	});
 
-	// console.log(inputs);
+	const [queryingLogin, setQueryingLogin] = useState(false);
+
+	async function submit(e: FormEvent<HTMLFormElement>) {
+		e.preventDefault();
+		const validated = validate();
+		if (!validated) return;
+		setQueryingLogin(true);
+		const { code, data } = await context.login({
+			email: inputs.email.value,
+			password: inputs.password.value,
+		});
+		setQueryingLogin(false);
+		if (code === 200) {
+			closeAll();
+		}
+	}
 
 	return (
-		<Wrapper ref={wrapper} active={active}>
+		<Wrapper ref={wrapper} active={active} as="form" onSubmit={submit}>
 			<Close onClick={closeAll}>
 				<Icon path={mdiClose} />
 			</Close>
 			<Title>Login</Title>
-			Login here!
-			<form onSubmit={onSubmit}>
+			<Inputs>
 				<Input
 					value={inputs.email.value}
 					onChange={e => onChange(e, "email")}
 					type="text"
+					placeholder="john.smith@gmail.com"
+					style={{ marginBottom: 10 }}
 				/>
 				<Input
 					value={inputs.password.value}
 					onChange={e => onChange(e, "password")}
-					type="text"
+					type="password"
+					placeholder="*******"
 				/>
-			</form>
-			<button onClick={() => open("register")}>Register</button>
+			</Inputs>
+			<Button type="submit">Login</Button>
+			{/* <Button onClick={() => open("register")}>Register</Button> */}
 		</Wrapper>
 	);
 }

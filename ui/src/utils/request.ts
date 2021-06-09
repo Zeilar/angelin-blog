@@ -37,8 +37,23 @@ export default class Request {
 		}
 	}
 
+	public static async tag<T>(args: Args) {
+		args.url = `${SERVER_URL}/api/tags/${args.url}`;
+		return await Request.query<T>({ ...args });
+	}
+
+	public static async comment<T>(args: Args) {
+		args.url = `${SERVER_URL}/api/comments/${args.url}`;
+		return await Request.query<T>({ ...args, withResponse: true });
+	}
+
+	public static async post<T>(args: Args) {
+		args.url = `${SERVER_URL}/api/posts/${args.url}`;
+		return await Request.query<T>({ ...args, withResponse: true });
+	}
+
 	public static async auth<T>(args: Args) {
-		const url = `${SERVER_URL}/api/users/${args.url}`;
-		return await Request.query<T>({ ...args, url, withResponse: true });
+		args.url = `${SERVER_URL}/api/users/${args.url}`;
+		return await Request.query<T>({ ...args, withResponse: true });
 	}
 }

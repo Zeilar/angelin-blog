@@ -1,5 +1,5 @@
 export interface FormField {
-	value?: string;
+	value: string;
 	validations?: FieldValidations;
 	errors?: string[];
 }

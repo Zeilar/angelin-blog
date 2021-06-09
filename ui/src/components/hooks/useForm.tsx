@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState } from "react";
 import { ChangeEvent } from "react";
 import { FormField } from "../../types/forms";
 import Validator from "../../utils/validator/Validator";
@@ -8,12 +8,13 @@ interface FieldArg {
 }
 
 export default function useForm(fields: FieldArg) {
-	// Set empty string on all the fields, don't want undefined
-	for (const property in fields) {
-		fields[property].value = "";
-	}
-
-	const [inputs, setInputs] = useState(fields);
+	const [inputs, setInputs] = useState(() => {
+		// Set empty string on all the fields, don't want undefined
+		for (const property in fields) {
+			fields[property].value = "";
+		}
+		return fields;
+	});
 
 	new Validator({
 		email: {
@@ -34,10 +35,10 @@ export default function useForm(fields: FieldArg) {
 		updateInput(field, { value: e.target.value });
 	}
 
-	function onSubmit(e: FormEvent<HTMLFormElement>) {
-		e.preventDefault();
+	function validate() {
 		// validation
+		return true;
 	}
 
-	return { inputs, onSubmit, onChange };
+	return { inputs, onChange, validate };
 }
