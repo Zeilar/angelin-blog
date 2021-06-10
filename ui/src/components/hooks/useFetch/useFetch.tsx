@@ -1,3 +1,4 @@
+import { isEqual } from "lodash";
 import { useState, useEffect } from "react";
 import { Args, Options, Status, QueryParams } from "./types";
 
@@ -17,22 +18,30 @@ export function parseQueryParams(params?: QueryParams) {
 export default function useFetch<Data>(url: string, args?: Args, callback?: (data: Data) => void) {
 	const [data, setData] = useState<Data>();
 	const [status, setStatus] = useState<Status>("loading");
+	const [memoArgs, setMemoArgs] = useState<Args>();
+
+	// This is to avoid infinite loops as args contains nested objects
+	useEffect(() => {
+		if (!isEqual(memoArgs, args)) {
+			setMemoArgs(args);
+		}
+	}, [args, memoArgs]);
 
 	useEffect(() => {
 		const abortController: AbortController = new AbortController();
 
 		(async () => {
-			const method = args?.method ?? "GET";
+			const method = memoArgs?.method ?? "GET";
 			try {
 				const options: Options = {
 					method,
-					body: args?.body,
-					headers: args?.headers,
+					body: memoArgs?.body,
+					headers: memoArgs?.headers,
 					signal: abortController.signal,
 				};
 
 				const response: Response = await fetch(
-					`${url}${parseQueryParams(args?.params)}`,
+					`${url}${parseQueryParams(memoArgs?.params)}`,
 					options
 				);
 
@@ -58,7 +67,7 @@ export default function useFetch<Data>(url: string, args?: Args, callback?: (dat
 		return (): void => {
 			abortController.abort();
 		};
-	}, [url, callback, args?.body, args?.method]); // Since args.params and args.headers are objects, they will cause an infinite loop if they are included.
+	}, [url, callback, memoArgs]);
 
 	return {
 		data,

@@ -18,6 +18,10 @@ interface Theme {
 		elevateUnder: string;
 		spread: string;
 	};
+	durations: {
+		modalsAfterResponse: number;
+		modalsFade: number;
+	};
 	borderRadius: number;
 	breakpoints: {
 		phone: number;
@@ -44,6 +48,11 @@ export const theme: Theme = {
 		elevate: "0 0 3px 0 rgba(0, 0, 0, 0.85)",
 		elevateUnder: "0 1px 3px rgba(0, 0, 0, 0.85), 0 0 5px rgba(0, 0, 0, 0.25)",
 		spread: "0 0 8px 0 rgba(0, 0, 0, 0.85)",
+	},
+	durations: {
+		// In milliseconds
+		modalsAfterResponse: 500,
+		modalsFade: 250,
 	},
 	borderRadius: 3,
 	breakpoints: {

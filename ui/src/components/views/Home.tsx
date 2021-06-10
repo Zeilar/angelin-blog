@@ -7,7 +7,9 @@ import useFetch from "../hooks/useFetch/useFetch";
 import { UserContext } from "../contexts/UserContext";
 
 export default function Home() {
-	const { data: posts, isSuccess } = useFetch<Post[]>("http://localhost:3030/api/posts");
+	const { data: posts, isSuccess } = useFetch<Post[]>("http://localhost:3030/api/posts", {
+		headers: {},
+	});
 
 	return (
 		<div>

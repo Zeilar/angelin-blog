@@ -1,44 +1,34 @@
 import { useState } from "react";
 import { ChangeEvent } from "react";
-import { FormField } from "../../types/forms";
-import Validator from "../../utils/validator/Validator";
+import { ValidationError } from "validate";
+import { getMessage, userSchema } from "../../utils/validator";
 
 interface FieldArg {
-	[key: string]: FormField;
+	[key: string]: any;
 }
 
 export default function useForm(fields: FieldArg) {
 	const [inputs, setInputs] = useState(() => {
-		// Set empty string on all the fields, don't want undefined
-		for (const property in fields) {
-			fields[property].value = "";
-		}
-		return fields;
+		const fieldsObject: FieldArg = {};
+		fields.forEach((field: any) => {
+			fieldsObject[field] = "";
+		});
+		return fieldsObject;
 	});
-
-	new Validator({
-		email: {
-			input: inputs.email.value ?? "",
-			rules: {
-				required: true,
-				min: 3,
-				max: 10,
-			},
-		},
-	});
+	const [errors, setErrors] = useState<ValidationError[]>([]);
 
 	function updateInput(field: string, data: any) {
-		setInputs(inputs => ({ ...inputs, [field]: { ...inputs[field], ...data } }));
+		setInputs((inputs: any) => ({ ...inputs, [field]: data }));
 	}
 
 	function onChange(e: ChangeEvent<HTMLInputElement>, field: string) {
-		updateInput(field, { value: e.target.value });
+		updateInput(field, e.target.value);
 	}
 
 	function validate() {
-		// validation
-		return true;
+		const errors = userSchema.validate(inputs);
+		setErrors(errors);
 	}
 
-	return { inputs, onChange, validate };
+	return { inputs, onChange, validate, errors };
 }

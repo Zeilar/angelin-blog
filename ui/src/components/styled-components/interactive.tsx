@@ -9,6 +9,11 @@ export const button = css`
 	box-shadow: ${theme.shadow.elevate};
 	font-weight: bold;
 	color: rgb(${theme.color.text});
+	&[disabled] {
+		box-shadow: none;
+		background-color: rgba(0, 0, 0, 0.1);
+		cursor: default;
+	}
 `;
 
 export const Button = styled.button`
@@ -18,11 +23,13 @@ export const Button = styled.button`
 	min-width: 5rem;
 	box-shadow: ${theme.shadow.elevateUnder};
 	transition: transform 0.25s, background-color 0.05s;
-	&:hover {
-		box-shadow: ${theme.shadow.spread};
-	}
-	&:active {
-		background-color: rgb(${theme.color.brandDark});
+	&:not([disabled]) {
+		&:hover {
+			box-shadow: ${theme.shadow.spread};
+		}
+		&:active {
+			background-color: rgb(${theme.color.brandDark});
+		}
 	}
 `;
 
@@ -32,9 +39,11 @@ export const ButtonSmall = styled.button`
 	border-radius: ${theme.borderRadius}px;
 	background-color: rgb(${theme.color.primary});
 	border: 1px solid transparent;
-	&:hover,
-	&:active {
-		background-color: rgb(${theme.color.body});
+	&:not([disabled]) {
+		&:hover,
+		&:active {
+			background-color: rgb(${theme.color.body});
+		}
 	}
 `;
 

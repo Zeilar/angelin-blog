@@ -1,12 +1,15 @@
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, RefObject, useEffect, useRef, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { Modal } from "./Modals";
 import { Close, Title, Wrapper, Inputs } from "./_styles";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
-import { Button, Input } from "../../styled-components/interactive";
+import { Input } from "../../styled-components/interactive";
 import useForm from "../../hooks/useForm";
-import { useAuth, UserContext } from "../../contexts/UserContext";
+import { useAuth } from "../../contexts/UserContext";
+import ButtonLoading from "../../misc/ButtonLoading";
+import { theme } from "../../../styles/theme";
+import { getMessage } from "../../../utils/validator";
 
 interface Props {
 	active: boolean;
@@ -15,32 +18,52 @@ interface Props {
 }
 
 export default function Login({ active, open, closeAll }: Props) {
-	const context = useAuth();
+	const { login, loggedIn } = useAuth();
 
 	const wrapper = useClickOutside<HTMLFormElement>(() => {
 		if (active) closeAll();
 	});
 
-	const { onChange, inputs, validate } = useForm({
-		email: { value: "" },
-		password: { value: "" },
-	});
+	const [status, setStatus] = useState<"error" | "loading" | "success" | "done">();
+	const firstInput = useRef<HTMLInputElement | null>(null);
+	const { onChange, inputs, validate, errors } = useForm(["email", "password"]);
 
-	const [queryingLogin, setQueryingLogin] = useState(false);
+	useEffect(() => {
+		if (active && firstInput.current) {
+			firstInput.current.focus();
+		}
+	}, [active]);
 
 	async function submit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
-		const validated = validate();
-		if (!validated) return;
-		setQueryingLogin(true);
-		const { code, data } = await context.login({
-			email: inputs.email.value,
-			password: inputs.password.value,
+
+		if (loggedIn) return;
+
+		validate();
+		console.log(errors[0]);
+		// if (validation !== true) return console.log(validation[0].path);
+
+		setStatus("loading");
+
+		const { code } = await login({
+			email: inputs.email,
+			password: inputs.password,
 		});
-		setQueryingLogin(false);
+
 		if (code === 200) {
-			closeAll();
+			setStatus("success");
+
+			setTimeout(() => {
+				closeAll();
+				setStatus("done");
+			}, theme.durations.modalsAfterResponse);
+		} else {
+			setStatus("error");
 		}
+
+		setTimeout(() => {
+			setStatus(undefined);
+		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 
 	return (
@@ -51,6 +74,7 @@ export default function Login({ active, open, closeAll }: Props) {
 			<Title>Login</Title>
 			<Inputs>
 				<Input
+					ref={firstInput}
 					value={inputs.email.value}
 					onChange={e => onChange(e, "email")}
 					type="text"
@@ -64,7 +88,9 @@ export default function Login({ active, open, closeAll }: Props) {
 					placeholder="*******"
 				/>
 			</Inputs>
-			<Button type="submit">Login</Button>
+			<ButtonLoading type="submit" status={status}>
+				Login
+			</ButtonLoading>
 			{/* <Button onClick={() => open("register")}>Register</Button> */}
 		</Wrapper>
 	);
