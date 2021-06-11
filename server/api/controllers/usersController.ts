@@ -67,9 +67,7 @@ export async function login(req: Request, res: Response): Promise<void | Respons
 
 		req.session.user = user.id;
 
-		setTimeout(() => {
-			res.status(200).json(sanitizeUser(user)); // TODO: undo
-		}, 2000);
+		res.status(200).json(sanitizeUser(user));
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();

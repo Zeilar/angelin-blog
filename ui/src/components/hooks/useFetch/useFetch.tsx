@@ -20,7 +20,7 @@ export default function useFetch<Data>(url: string, args?: Args, callback?: (dat
 	const [status, setStatus] = useState<Status>("loading");
 	const [memoArgs, setMemoArgs] = useState<Args>();
 
-	// This is to avoid infinite loops as args contains nested objects
+	// This is to avoid infinite loops in the useEffect as args contains nested objects
 	useEffect(() => {
 		if (!isEqual(memoArgs, args)) {
 			setMemoArgs(args);

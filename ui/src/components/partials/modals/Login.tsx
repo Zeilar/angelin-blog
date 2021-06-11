@@ -1,4 +1,4 @@
-import { FormEvent, RefObject, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { Modal } from "./Modals";
 import { Close, Title, Wrapper, Inputs } from "./_styles";
@@ -9,7 +9,7 @@ import useForm from "../../hooks/useForm";
 import { useAuth } from "../../contexts/UserContext";
 import ButtonLoading from "../../misc/ButtonLoading";
 import { theme } from "../../../styles/theme";
-import { getMessage } from "../../../utils/validator";
+import { userLoginSchema, getMessage } from "../../../utils/validation";
 
 interface Props {
 	active: boolean;
@@ -26,7 +26,7 @@ export default function Login({ active, open, closeAll }: Props) {
 
 	const [status, setStatus] = useState<"error" | "loading" | "success" | "done">();
 	const firstInput = useRef<HTMLInputElement | null>(null);
-	const { onChange, inputs, validate, errors } = useForm(["email", "password"]);
+	const { onChange, inputs, validate, errors } = useForm(["email", "password"], userLoginSchema);
 
 	useEffect(() => {
 		if (active && firstInput.current) {
@@ -34,13 +34,14 @@ export default function Login({ active, open, closeAll }: Props) {
 		}
 	}, [active]);
 
+	console.log(errors);
+
 	async function submit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 
 		if (loggedIn) return;
 
 		validate();
-		console.log(errors[0]);
 		// if (validation !== true) return console.log(validation[0].path);
 
 		setStatus("loading");
@@ -79,13 +80,15 @@ export default function Login({ active, open, closeAll }: Props) {
 					onChange={e => onChange(e, "email")}
 					type="text"
 					placeholder="john.smith@gmail.com"
+					title="Email"
 					style={{ marginBottom: 10 }}
 				/>
 				<Input
 					value={inputs.password.value}
 					onChange={e => onChange(e, "password")}
 					type="password"
-					placeholder="*******"
+					placeholder="••••••••••"
+					title="Password"
 				/>
 			</Inputs>
 			<ButtonLoading type="submit" status={status}>

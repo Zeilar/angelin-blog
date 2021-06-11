@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { ChangeEvent } from "react";
-import { ValidationError } from "validate";
-import { getMessage, userSchema } from "../../utils/validator";
+import Schema, { ValidationError } from "validate";
 
 interface FieldArg {
 	[key: string]: any;
 }
 
-export default function useForm(fields: FieldArg) {
+export default function useForm(fields: FieldArg, validateSchema: Schema) {
 	const [inputs, setInputs] = useState(() => {
 		const fieldsObject: FieldArg = {};
 		fields.forEach((field: any) => {
@@ -17,16 +16,13 @@ export default function useForm(fields: FieldArg) {
 	});
 	const [errors, setErrors] = useState<ValidationError[]>([]);
 
-	function updateInput(field: string, data: any) {
-		setInputs((inputs: any) => ({ ...inputs, [field]: data }));
-	}
-
 	function onChange(e: ChangeEvent<HTMLInputElement>, field: string) {
-		updateInput(field, e.target.value);
+		setInputs((inputs: any) => ({ ...inputs, [field]: e.target.value }));
 	}
 
 	function validate() {
-		const errors = userSchema.validate(inputs);
+		const errors = validateSchema.validate(inputs);
+		console.log(errors[0]?.constructor.name);
 		setErrors(errors);
 	}
 

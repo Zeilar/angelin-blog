@@ -2,7 +2,7 @@ import { Args, QueryParams } from "../types/request";
 import { SERVER_URL } from "./constants";
 
 export default class Request {
-	private static parseQueryParams(params?: QueryParams) {
+	public static parseQueryParams(params?: QueryParams) {
 		if (!params || !Object.keys(params).length) {
 			return "";
 		}
@@ -27,9 +27,14 @@ export default class Request {
 				headers: { "Content-Type": "application/json", ...args.headers },
 			});
 
-			code = response.status;
+			if (
+				args.withResponse &&
+				response.headers.get("Content-Type")?.includes("application/json")
+			) {
+				data = await response.json();
+			}
 
-			if (args.withResponse) data = await response.json();
+			code = response.status;
 		} catch (error) {
 			console.error(error);
 		} finally {

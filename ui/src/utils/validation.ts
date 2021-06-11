@@ -4,7 +4,7 @@ export function getMessage(errors: ValidationError[], key: string) {
 	return errors.find((error: ValidationError) => error.path === key);
 }
 
-export const userSchema = new Schema({
+export const userLoginSchema = new Schema({
 	email: {
 		type: String,
 		required: true,

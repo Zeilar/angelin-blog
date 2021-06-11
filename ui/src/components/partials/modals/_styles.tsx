@@ -30,6 +30,7 @@ export const Wrapper = styled(Col)`
 	opacity: 0;
 	transition: 0.25s;
 	padding: 30px;
+	border-radius: ${theme.borderRadius}px;
 	background-color: rgb(${theme.color.primary});
 	box-shadow: ${theme.shadow.elevate};
 	${({ active }: { active: boolean }) =>

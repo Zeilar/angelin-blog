@@ -7,6 +7,7 @@ export const button = css`
 	padding: 10px 14px;
 	user-select: none;
 	box-shadow: ${theme.shadow.elevate};
+	border-radius: ${theme.borderRadius}px;
 	font-weight: bold;
 	color: rgb(${theme.color.text});
 	&[disabled] {
@@ -48,14 +49,24 @@ export const ButtonSmall = styled.button`
 `;
 
 export const Input = styled.input`
-	background-color: rgb(${theme.color.secondary});
+	background-color: rgb(${theme.color.body});
 	outline: 0;
 	border: 0;
 	min-width: 15rem;
 	color: inherit;
 	padding: 10px;
 	box-shadow: ${theme.shadow.elevate};
-	&:focus {
-		box-shadow: ${theme.shadow.elevate}, 0 0 2px 0 rgba(0, 0, 0, 0.75) inset;
+	border-radius: ${theme.borderRadius}px;
+	&:focus,
+	&:hover {
+		box-shadow: ${theme.shadow.elevate}, 0 0 5px 0 rgba(0, 0, 0, 0.5);
 	}
+	&:focus {
+		background-color: rgb(${theme.color.secondary});
+	}
+	${({ error }: { error?: boolean }) =>
+		error &&
+		css`
+			box-shadow: ${theme.shadow.elevate}, 0 0 5px 0 ${theme.color.error} !important;
+		`}
 `;
