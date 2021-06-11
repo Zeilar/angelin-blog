@@ -9,7 +9,6 @@ import useForm from "../../hooks/useForm";
 import { useAuth } from "../../contexts/UserContext";
 import ButtonLoading from "../../misc/ButtonLoading";
 import { theme } from "../../../styles/theme";
-import { userLoginSchema, getMessage } from "../../../utils/validation";
 
 interface Props {
 	active: boolean;
@@ -26,7 +25,10 @@ export default function Login({ active, open, closeAll }: Props) {
 
 	const [status, setStatus] = useState<"error" | "loading" | "success" | "done">();
 	const firstInput = useRef<HTMLInputElement | null>(null);
-	const { onChange, inputs, validate, errors } = useForm(["email", "password"], userLoginSchema);
+	const { onChange, inputs, validate, errors } = useForm(["email", "password"], z => ({
+		email: z.string().min(3).max(30).email(),
+		password: z.string().min(3).max(30),
+	}));
 
 	useEffect(() => {
 		if (active && firstInput.current) {
@@ -34,18 +36,13 @@ export default function Login({ active, open, closeAll }: Props) {
 		}
 	}, [active]);
 
-	console.log(errors);
-
 	async function submit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
-
 		if (loggedIn) return;
 
 		validate();
-		// if (validation !== true) return console.log(validation[0].path);
 
 		setStatus("loading");
-
 		const { code } = await login({
 			email: inputs.email,
 			password: inputs.password,
