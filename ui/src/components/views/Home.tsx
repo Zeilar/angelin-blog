@@ -5,9 +5,7 @@ import { Link } from "react-router-dom";
 import useFetch from "../hooks/useFetch/useFetch";
 
 export default function Home() {
-	const { data: posts, isSuccess } = useFetch<Post[]>("http://localhost:3030/api/posts", {
-		headers: {},
-	});
+	const query = useFetch<{ data: Post[] }>("http://localhost:3030/api/posts");
 
 	return (
 		<div>
@@ -15,9 +13,9 @@ export default function Home() {
 				<title>Angelin Blog</title>
 			</Helmet>
 			<H1>Blog</H1>
-			{isSuccess &&
-				posts &&
-				posts.map((post: Post) => (
+			{query.isSuccess &&
+				query.data &&
+				query.data.data.map((post: Post) => (
 					<Link key={post.id} to={`/post/${post.id}/${post.title}`}>
 						<H2>{post.title}</H2>
 						<H6>{post.body}</H6>

@@ -10,9 +10,7 @@ interface Props {
 interface Context {
 	user: User | null;
 	loggedIn: boolean;
-	login: (
-		credentials: UserCredentials
-	) => Promise<{ code: number; data?: Response<User>; error?: string }>;
+	login: (credentials: UserCredentials) => Promise<Response<User>>;
 	register: (credentials: UserCredentials) => Promise<boolean | {}>;
 	logout: () => Promise<boolean>;
 }

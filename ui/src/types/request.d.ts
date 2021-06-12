@@ -9,9 +9,15 @@ export interface Args {
 	withResponse?: boolean;
 }
 
+export interface Body<T> {
+	data?: T;
+	error?: string;
+}
+
 export interface Response<T> {
 	data?: T;
 	error?: string;
+	code?: number;
 }
 
 export interface QueryParams {

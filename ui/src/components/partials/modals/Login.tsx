@@ -9,6 +9,8 @@ import { useAuth } from "../../contexts/UserContext";
 import ButtonLoading from "../../misc/ButtonLoading";
 import { theme } from "../../../styles/theme";
 import Input from "../../misc/Input";
+import { Helmet } from "react-helmet";
+import { FormError } from "../../styled-components/interactive";
 
 interface Props {
 	active: boolean;
@@ -22,7 +24,7 @@ export default function Login({ active, open, closeAll }: Props) {
 	const wrapper = useClickOutside<HTMLFormElement>(() => active && closeAll());
 
 	const [status, setStatus] = useState<"error" | "loading" | "success" | "done">();
-	const [error, setError] = useState<any>();
+	const [error, setError] = useState<string | null>(null);
 
 	const firstInput = useRef<HTMLInputElement | null>(null);
 	const { onChange, inputs, validate, errors } = useForm(["email", "password"], z => ({
@@ -57,6 +59,7 @@ export default function Login({ active, open, closeAll }: Props) {
 		});
 
 		if (code === 200) {
+			setError(null);
 			setStatus("success");
 
 			setTimeout(() => {
@@ -73,12 +76,20 @@ export default function Login({ active, open, closeAll }: Props) {
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 
+	useEffect(() => {
+		if (active) document.title = "Angelin Blog | Login";
+		return () => {
+			document.title = "Angelin Blog";
+		};
+	}, [active]);
+
 	return (
 		<Wrapper ref={wrapper} active={active} as="form" onSubmit={submit}>
 			<Close onClick={closeAll}>
 				<Icon path={mdiClose} />
 			</Close>
 			<Title>Login</Title>
+			{error && <FormError>{error}</FormError>}
 			<Inputs>
 				<Input
 					errors={errors.email}

@@ -15,19 +15,19 @@ interface MatchParams {
 }
 
 export default function SinglePost({ match }: RouteComponentProps<MatchParams>) {
-	const { data: post } = useFetch<Post>(`${SERVER_URL}/api/posts/${match.params.id}`);
+	const query = useFetch<{ data: Post }>(`${SERVER_URL}/api/posts/${match.params.id}`);
 
-	if (!post) {
+	if (!query.data) {
 		return null;
 	}
 
 	return (
 		<Wrapper as="article">
 			<Helmet>
-				<title>{post.title}</title>
+				<title>{query.data.data.title}</title>
 			</Helmet>
-			<H1>{post.title}</H1>
-			<H2>{post.body}</H2>
+			<H1>{query.data.data.title}</H1>
+			<H2>{query.data.data.body}</H2>
 		</Wrapper>
 	);
 }

@@ -15,8 +15,8 @@ export function parseQueryParams(params?: QueryParams) {
 	return `?${queries}`;
 }
 
-export default function useFetch<Data>(url: string, args?: Args, callback?: (data: Data) => void) {
-	const [data, setData] = useState<Data>();
+export default function useFetch<T>(url: string, args?: Args, callback?: (data: T) => void) {
+	const [data, setData] = useState<T>();
 	const [status, setStatus] = useState<Status>("loading");
 	const [memoArgs, setMemoArgs] = useState<Args>();
 
@@ -50,7 +50,7 @@ export default function useFetch<Data>(url: string, args?: Args, callback?: (dat
 						`Failed to ${method} ${url} ${response.status} ${response.statusText}`
 					);
 
-				const data: Data = await response.json();
+				const data: T = await response.json();
 
 				if (callback) callback(data);
 

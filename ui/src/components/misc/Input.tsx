@@ -1,7 +1,7 @@
 import { CSSProperties, RefObject } from "react";
 import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
-import { Input as StyledInput } from "../styled-components/interactive";
+import { Input as StyledInput, FormError } from "../styled-components/interactive";
 import { Col, Grid } from "../styled-components/layout";
 
 interface Props<T> {
@@ -25,7 +25,7 @@ export default function Input<T>(props: Props<T>) {
 			{hasErrors && (
 				<Errors>
 					{props.errors?.map((error, i: number) => (
-						<Error key={i}>{error}</Error>
+						<FormError key={i}>{error}</FormError>
 					))}
 				</Errors>
 			)}
@@ -56,13 +56,4 @@ const Errors = styled(Grid)`
 	justify-items: flex-start;
 	margin: 15px 0;
 	grid-gap: 5px;
-`;
-
-const Error = styled.p`
-	background-color: rgb(${theme.color.brand});
-	border-radius: ${theme.borderRadius}px;
-	box-shadow: ${theme.shadow.elevate};
-	color: rgb(${theme.color.textSecondary});
-	font-weight: bold;
-	padding: 8px;
 `;

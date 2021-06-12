@@ -71,3 +71,12 @@ export const Input = styled.input`
 			box-shadow: ${theme.shadow.elevate}, 0 0 2px 2px rgb(${theme.color.brand}) !important;
 		`}
 `;
+
+export const FormError = styled.p`
+	background-color: rgb(${theme.color.brand});
+	border-radius: ${theme.borderRadius}px;
+	box-shadow: ${theme.shadow.elevate};
+	color: rgb(${theme.color.textSecondary});
+	font-weight: bold;
+	padding: 8px;
+`;
