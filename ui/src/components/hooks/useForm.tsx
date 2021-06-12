@@ -27,6 +27,8 @@ export default function useForm(fields: Fields, rules: (zod: typeof z) => z.ZodR
 	});
 	const [errors, setErrors] = useState<Fields>({});
 
+	const hasErrors = Object.keys(errors).length > 0;
+
 	function onChange(e: ChangeEvent<HTMLInputElement>, field: string) {
 		setInputs((inputs: any) => ({ ...inputs, [field]: e.target.value }));
 	}
@@ -35,7 +37,8 @@ export default function useForm(fields: Fields, rules: (zod: typeof z) => z.ZodR
 		const validation = rules(z);
 		const result = z.object(validation).safeParse(inputs);
 		setErrors(!result.success ? flattenErrors(result.error) : {});
+		return result.success;
 	}
 
-	return { inputs, onChange, validate, errors };
+	return { inputs, onChange, validate, errors, hasErrors };
 }

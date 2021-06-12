@@ -2,7 +2,7 @@ import { RefObject, useEffect, useRef } from "react";
 
 interface Args {
 	condition?: boolean;
-	mousedown?: boolean;
+	mouseup?: boolean;
 	onError?: (error: Error) => void;
 }
 
@@ -16,7 +16,7 @@ export default function useClickOutside<T extends HTMLElement>(
 
 	useEffect(() => {
 		const element = ref.current;
-		const event = args?.mousedown ? "mousedown" : "mouseup";
+		const event = args?.mouseup ? "mouseup" : "mousedown";
 
 		function clickHandler(e: MouseEvent): void {
 			try {
@@ -34,7 +34,7 @@ export default function useClickOutside<T extends HTMLElement>(
 		return () => {
 			document.removeEventListener(event, clickHandler);
 		};
-	}, [callback, args?.condition, args?.mousedown, args?.onError]);
+	}, [callback, args?.condition, args?.mouseup, args?.onError]);
 
 	return ref;
 }

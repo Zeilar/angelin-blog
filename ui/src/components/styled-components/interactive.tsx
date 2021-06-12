@@ -14,6 +14,7 @@ export const button = css`
 		box-shadow: none;
 		background-color: rgba(0, 0, 0, 0.1);
 		cursor: default;
+		color: rgb(${theme.color.textMuted});
 	}
 `;
 
@@ -67,6 +68,6 @@ export const Input = styled.input`
 	${({ error }: { error?: boolean }) =>
 		error &&
 		css`
-			box-shadow: ${theme.shadow.elevate}, 0 0 5px 0 ${theme.color.error} !important;
+			box-shadow: ${theme.shadow.elevate}, 0 0 2px 2px rgb(${theme.color.error}) !important;
 		`}
 `;

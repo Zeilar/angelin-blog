@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import styled, { css } from "styled-components";
-import { ButtonSmall, Button } from "../styled-components/interactive";
+import { Button } from "../styled-components/interactive";
 import { mdiLoading, mdiClose, mdiCheck } from "@mdi/js";
 import Icon from "@mdi/react";
 import { theme } from "../../styles/theme";
@@ -12,6 +12,7 @@ interface Props {
 	size?: "small" | "big";
 	status?: Status;
 	type?: "submit" | "button";
+	disabled?: boolean;
 }
 
 interface ButtonAttributes {
@@ -19,7 +20,7 @@ interface ButtonAttributes {
 	iconActive: boolean;
 }
 
-export default function ButtonLoading({ children, size, status }: Props) {
+export default function ButtonLoading({ children, size, status, ...props }: Props) {
 	function renderIcon() {
 		switch (status) {
 			case "error":
@@ -39,7 +40,7 @@ export default function ButtonLoading({ children, size, status }: Props) {
 	}
 
 	return (
-		<StyledButton status={status} iconActive={status != null} disabled={status === "loading"}>
+		<StyledButton status={status} iconActive={status != null} {...props}>
 			{renderIcon()} {children}
 		</StyledButton>
 	);

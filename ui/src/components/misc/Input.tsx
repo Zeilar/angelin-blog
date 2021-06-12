@@ -1,24 +1,66 @@
-import styled from "styled-components";
+import { CSSProperties, RefObject } from "react";
+import styled, { css } from "styled-components";
+import { theme } from "../../styles/theme";
 import { Input as StyledInput } from "../styled-components/interactive";
-import { Col } from "../styled-components/layout";
+import { Col, Grid } from "../styled-components/layout";
 
-interface Props {
+interface Props<T> {
 	label?: string;
 	errors?: string[];
+	value: string;
+	type?: string;
+	placeholder?: string;
+	title?: string;
+	style?: CSSProperties;
+	forwardRef?: RefObject<T>;
+	[key: string]: any;
 }
 
-export default function Input({ label, errors }: Props) {
+export default function Input<T>(props: Props<T>) {
+	const hasErrors = props.errors && props.errors?.length > 0;
+	const labelId = `input-${Math.ceil(Math.random() * 100)}`;
+
 	return (
-		<Col>
-			{errors?.map(error => (
-				<Error>{error}</Error>
-			))}
-			{label && <Label>{label}</Label>}
-			<StyledInput error={errors?.length ? true : false} />
+		<Col align="flex-start">
+			{hasErrors && (
+				<Errors>
+					{props.errors?.map((error, i: number) => (
+						<Error key={i}>{error}</Error>
+					))}
+				</Errors>
+			)}
+			{props.label && <Label htmlFor={labelId}>{props.label}</Label>}
+			<InputField error={hasErrors} id={labelId} {...props} />
 		</Col>
 	);
 }
 
-const Label = styled.label``;
+const InputField = styled(StyledInput)`
+	width: 100%;
+	${({ label }: any) =>
+		label &&
+		css`
+			border-top-left-radius: 0;
+		`}
+`;
 
-const Error = styled.p``;
+const Label = styled.label`
+	background-color: rgb(${theme.color.body});
+	box-shadow: ${theme.shadow.elevate};
+	display: inline;
+	padding: 3px 6px;
+	cursor: text;
+`;
+
+const Errors = styled(Grid)`
+	justify-items: flex-start;
+	margin: 15px 0;
+	grid-gap: 5px;
+`;
+
+const Error = styled.p`
+	background-color: rgb(${theme.color.error});
+	border-radius: ${theme.borderRadius}px;
+	box-shadow: ${theme.shadow.elevate};
+	padding: 5px;
+`;
