@@ -12,7 +12,7 @@ export async function createComment(req: Request, res: Response): Promise<void> 
 			user_id: user,
 			body,
 		});
-		res.status(200).json(comment);
+		res.status(200).json({ data: comment });
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();
@@ -22,7 +22,7 @@ export async function createComment(req: Request, res: Response): Promise<void> 
 export async function editComment(req: Request, res: Response): Promise<void> {
 	const { body } = req.body;
 	try {
-		res.status(200).json(await res.comment!.$query().patchAndFetch({ body }));
+		res.status(200).json({ data: await res.comment!.$query().patchAndFetch({ body }) });
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();
@@ -32,7 +32,7 @@ export async function editComment(req: Request, res: Response): Promise<void> {
 export async function deleteComment(req: Request, res: Response): Promise<void> {
 	try {
 		await res.comment!.$query().delete();
-		res.status(200).json();
+		res.status(200).end();
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();

@@ -26,7 +26,7 @@ export async function createPost(req: Request, res: Response): Promise<void | Re
 			await post.$relatedQuery("tags").relate(dbTags[i]);
 		}
 
-		res.status(200).json({ ...post, tags });
+		res.status(200).json({ data: { ...post, tags } });
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();
@@ -34,11 +34,11 @@ export async function createPost(req: Request, res: Response): Promise<void | Re
 }
 
 export function getAllPosts(req: Request, res: Response): void {
-	res.status(200).json(res.posts);
+	res.status(200).json({ data: res.posts });
 }
 
 export function getPostById(req: Request, res: Response): void {
-	res.status(200).json(res.post);
+	res.status(200).json({ data: res.post });
 }
 
 export async function editPost(req: Request, res: Response): Promise<void> {

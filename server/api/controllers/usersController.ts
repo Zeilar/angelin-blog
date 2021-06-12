@@ -8,7 +8,7 @@ import { sanitizeUser } from "../utils/user";
 
 export async function authenticate(req: Request, res: Response): Promise<void> {
 	try {
-		res.status(200).json(sanitizeUser(res.user!));
+		res.status(200).json({ data: sanitizeUser(res.user!) });
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();
@@ -39,7 +39,7 @@ export async function register(req: Request, res: Response): Promise<void | Resp
 
 		req.session.user = user.id;
 
-		res.status(200).json(sanitizeUser(user));
+		res.status(200).json({ data: sanitizeUser(user) });
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();
