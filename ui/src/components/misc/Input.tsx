@@ -59,8 +59,10 @@ const Errors = styled(Grid)`
 `;
 
 const Error = styled.p`
-	background-color: rgb(${theme.color.error});
+	background-color: rgb(${theme.color.brand});
 	border-radius: ${theme.borderRadius}px;
 	box-shadow: ${theme.shadow.elevate};
-	padding: 5px;
+	color: rgb(${theme.color.textSecondary});
+	font-weight: bold;
+	padding: 8px;
 `;

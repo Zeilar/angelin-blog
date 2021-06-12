@@ -9,6 +9,11 @@ export interface Args {
 	withResponse?: boolean;
 }
 
+export interface Response<T> {
+	data?: T;
+	error?: string;
+}
+
 export interface QueryParams {
 	[key: string]: string;
 }

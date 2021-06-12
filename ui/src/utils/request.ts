@@ -1,4 +1,4 @@
-import { Args, QueryParams } from "../types/request";
+import { Args, QueryParams, Response } from "../types/request";
 import { SERVER_URL } from "./constants";
 
 export default class Request {
@@ -17,7 +17,7 @@ export default class Request {
 
 	public static async query<T>(args: Args) {
 		const queries = Request.parseQueryParams(args.params);
-		let data: T | null = null;
+		let data: Response<T> | null = null;
 		let code: number = 200;
 
 		try {
@@ -38,7 +38,7 @@ export default class Request {
 		} catch (error) {
 			console.error(error);
 		} finally {
-			return { data, code };
+			return { data: data?.data, error: data?.error, code };
 		}
 	}
 

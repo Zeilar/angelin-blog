@@ -13,7 +13,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     ::selection {
-        color: rgb(0, 225, 225);
+        color: rgb(0, 255, 0);
     }
 
     html,

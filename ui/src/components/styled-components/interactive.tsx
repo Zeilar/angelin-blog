@@ -68,6 +68,6 @@ export const Input = styled.input`
 	${({ error }: { error?: boolean }) =>
 		error &&
 		css`
-			box-shadow: ${theme.shadow.elevate}, 0 0 2px 2px rgb(${theme.color.error}) !important;
+			box-shadow: ${theme.shadow.elevate}, 0 0 2px 2px rgb(${theme.color.brand}) !important;
 		`}
 `;

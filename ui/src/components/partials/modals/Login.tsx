@@ -22,6 +22,8 @@ export default function Login({ active, open, closeAll }: Props) {
 	const wrapper = useClickOutside<HTMLFormElement>(() => active && closeAll());
 
 	const [status, setStatus] = useState<"error" | "loading" | "success" | "done">();
+	const [error, setError] = useState<any>();
+
 	const firstInput = useRef<HTMLInputElement | null>(null);
 	const { onChange, inputs, validate, errors } = useForm(["email", "password"], z => ({
 		email: z.string().min(3).max(30).email(),
@@ -49,7 +51,7 @@ export default function Login({ active, open, closeAll }: Props) {
 
 	async function send() {
 		setStatus("loading");
-		const { code } = await login({
+		const { code, error } = await login({
 			email: inputs.email,
 			password: inputs.password,
 		});
@@ -62,6 +64,7 @@ export default function Login({ active, open, closeAll }: Props) {
 				setStatus("done");
 			}, theme.durations.modalsAfterResponse);
 		} else {
+			if (error) setError(error);
 			setStatus("error");
 		}
 

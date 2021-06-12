@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, ReactNode, useContext } from "react";
 import { User } from "../../types/models";
-import { UserCredentials } from "../../types/request";
+import { UserCredentials, Response } from "../../types/request";
 import UserHelpers from "../../utils/User";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Context {
 	loggedIn: boolean;
 	login: (
 		credentials: UserCredentials
-	) => Promise<{ code: number; data?: User; errors?: object[] | null }>;
+	) => Promise<{ code: number; data?: Response<User>; error?: string }>;
 	register: (credentials: UserCredentials) => Promise<boolean | {}>;
 	logout: () => Promise<boolean>;
 }
@@ -30,7 +30,7 @@ export function UserContextProvider({ children }: Props) {
 	useEffect(() => {
 		(async () => {
 			const { code, data } = await UserHelpers.authenticate<User>();
-			if (code === 200) return setUser(data);
+			if (code === 200 && data) return setUser(data);
 			setUser(null);
 		})();
 	}, []);
@@ -38,29 +38,15 @@ export function UserContextProvider({ children }: Props) {
 	async function update() {}
 
 	async function login(credentials: UserCredentials) {
-		const { code, data } = await UserHelpers.login<User>(credentials);
-
-		if (code === 200) {
-			setUser(data);
-			return { data, code };
-		}
-
-		const errors: object[] = [];
-		// validation
-		return { errors, code };
+		const { data, code, error } = await UserHelpers.login<User>(credentials);
+		if (code === 200 && data) setUser(data);
+		return { data, code, error };
 	}
 
 	async function register(credentials: UserCredentials) {
-		const { code, data } = await UserHelpers.register<User>(credentials);
-
-		if (code === 200) {
-			setUser(data);
-			return true;
-		}
-
-		const errors: object[] = [];
-		// validation
-		return errors;
+		const { code, data, error } = await UserHelpers.register<User>(credentials);
+		if (code === 200 && data) setUser(data);
+		return { data, code, error };
 	}
 
 	async function logout() {
