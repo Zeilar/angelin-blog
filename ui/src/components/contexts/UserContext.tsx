@@ -13,6 +13,7 @@ interface Context {
 	login: (credentials: UserCredentials) => Promise<Response<User>>;
 	register: (credentials: UserCredentials) => Promise<boolean | {}>;
 	logout: () => Promise<boolean>;
+	loading: boolean;
 }
 
 interface UserEditable {
@@ -24,10 +25,12 @@ export const UserContext = createContext<Context | null>(null);
 
 export function UserContextProvider({ children }: Props) {
 	const [user, setUser] = useState<User | null>(null);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		(async () => {
 			const { code, data } = await UserHelpers.authenticate<User>();
+			setLoading(false);
 			if (code === 200 && data) return setUser(data);
 			setUser(null);
 		})();
@@ -62,6 +65,7 @@ export function UserContextProvider({ children }: Props) {
 		login,
 		logout,
 		register,
+		loading,
 	};
 
 	return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
