@@ -4,7 +4,6 @@ import { Modal } from "./Modals";
 import { Close, Wrapper } from "./_styles";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
-import useForm from "../../hooks/useForm";
 import { useAuth } from "../../contexts/UserContext";
 import ButtonLoading from "../../misc/ButtonLoading";
 import { theme } from "../../../styles/theme";
@@ -26,13 +25,15 @@ export default function Login({ active, open, closeAll }: Props) {
 	const wrapper = useClickOutside<HTMLFormElement>(() => active && closeAll());
 
 	const [status, setStatus] = useState<"error" | "loading" | "success" | "done">();
+	const [inputs, setInputs] = useState({ email: "", password: "" });
 	const [error, setError] = useState<string | null>(null);
 
 	const firstInput = useRef<HTMLInputElement | null>(null);
-	const { onChange, inputs, validate, errors } = useForm(["email", "password"], z => ({
-		email: z.string().min(3).max(30).email(),
-		password: z.string().min(3).max(30),
-	}));
+
+	// const { onChange, inputs, validate, errors } = useForm(["email", "password"], z => ({
+	// 	email: z.string().min(3).max(30).email(),
+	// 	password: z.string().min(3).max(30),
+	// }));
 
 	useEffect(() => {
 		if (active && firstInput.current) {
@@ -45,18 +46,14 @@ export default function Login({ active, open, closeAll }: Props) {
 		};
 	}, [active]);
 
-	function blurHandler() {
-		if (!inputs.email || !inputs.password) return;
-		validate();
+	function onChange(e: ChangeEvent<HTMLInputElement>, input: string) {
+		setInputs(inputs => ({ ...inputs, [input]: e.target.value }));
 	}
 
 	async function submit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
-		if (loggedIn || !validate()) return;
-		await send();
-	}
+		if (loggedIn) return;
 
-	async function send() {
 		setStatus("loading");
 		const { code, error } = await login({
 			email: inputs.email,
@@ -90,24 +87,20 @@ export default function Login({ active, open, closeAll }: Props) {
 			{error && <FormError>{error}</FormError>}
 			<Col className={classnames("mb-7")}>
 				<Input
-					errors={errors.email}
 					forwardRef={firstInput}
 					value={inputs.email}
 					onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "email")}
 					type="text"
 					placeholder="john.smith@gmail.com"
 					title="Email"
-					onBlur={blurHandler}
 					label="Email"
 				/>
 				<Input
-					errors={errors.password}
 					value={inputs.password}
 					onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "password")}
 					type="password"
 					placeholder="••••••••••"
 					title="Password"
-					onBlur={blurHandler}
 					label="Password"
 				/>
 			</Col>

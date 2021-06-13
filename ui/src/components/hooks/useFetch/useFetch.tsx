@@ -70,7 +70,7 @@ export default function useFetch<T>(url: string, args?: Args, callback?: (data: 
 	}, [url, callback, memoArgs]);
 
 	return {
-		data,
+		body: data,
 		status,
 		isLoading: status === "loading",
 		isError: status === "error",

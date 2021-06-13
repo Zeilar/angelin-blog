@@ -64,7 +64,7 @@ const StyledButton = styled(Button)`
 			${(status === "success" || status === "done") && "background-color: rgb(0, 150, 0);"}
             ${iconActive &&
 			css`
-				color: transparent;
+				color: transparent !important;
 				pointer-events: none;
 			`}
 		`}

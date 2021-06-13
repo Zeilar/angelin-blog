@@ -1,4 +1,5 @@
-import { RefObject, useEffect, useRef } from "react";
+import { isEqual } from "lodash";
+import { RefObject, useEffect, useRef, useState } from "react";
 
 interface Args {
 	condition?: boolean;
@@ -12,20 +13,28 @@ export default function useClickOutside<T extends HTMLElement>(
 ) {
 	if (!callback) throw new Error(`Expected callback function, got ${JSON.stringify(callback)}`);
 
+	const [memoArgs, setMemoArgs] = useState<Args>();
 	const ref: RefObject<T> = useRef<T>(null);
+
+	// This is to avoid infinite loops in the useEffect as args contains nested objects
+	useEffect(() => {
+		if (!isEqual(memoArgs, args)) {
+			setMemoArgs(args);
+		}
+	}, [args, memoArgs]);
 
 	useEffect(() => {
 		const element = ref.current;
-		const event = args?.mouseup ? "mouseup" : "mousedown";
+		const event = memoArgs?.mouseup ? "mouseup" : "mousedown";
 
 		function clickHandler(e: MouseEvent): void {
 			try {
 				if (!element) throw new Error("Ref must be assigned to an element.");
-				if (args?.condition === false) return;
+				if (memoArgs?.condition === false) return;
 				if (!element.contains(e.target as Node)) callback(element);
 			} catch (error) {
 				console.error(error);
-				if (args?.onError) args.onError(error);
+				if (memoArgs?.onError) memoArgs.onError(error);
 			}
 		}
 
@@ -34,7 +43,7 @@ export default function useClickOutside<T extends HTMLElement>(
 		return () => {
 			document.removeEventListener(event, clickHandler);
 		};
-	}, [callback, args?.condition, args?.mouseup, args?.onError]);
+	}, [callback, memoArgs]);
 
 	return ref;
 }

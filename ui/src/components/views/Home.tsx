@@ -14,8 +14,7 @@ export default function Home() {
 			</Helmet>
 			<H1>Blog</H1>
 			{query.isSuccess &&
-				query.data &&
-				query.data.data.map((post: Post) => (
+				query.body?.data.map((post: Post) => (
 					<Link key={post.id} to={`/post/${post.id}/${post.title}`}>
 						<H2>{post.title}</H2>
 						<H6>{post.body}</H6>
