@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, ReactNode, useContext } from "react";
 import { User } from "../../types/models";
-import { UserCredentials, Response } from "../../types/request";
+import { LoginCredentials, RegisterCredentials, Response } from "../../types/request";
 import UserHelpers from "../../utils/User";
 
 interface Props {
@@ -10,8 +10,8 @@ interface Props {
 interface Context {
 	user: User | null;
 	loggedIn: boolean;
-	login: (credentials: UserCredentials) => Promise<Response<User>>;
-	register: (credentials: UserCredentials) => Promise<boolean | {}>;
+	login: (credentials: LoginCredentials) => Promise<Response<User>>;
+	register: (credentials: RegisterCredentials) => Promise<Response<User>>;
 	logout: () => Promise<boolean>;
 	loading: boolean;
 }
@@ -38,13 +38,13 @@ export function UserContextProvider({ children }: Props) {
 
 	async function update() {}
 
-	async function login(credentials: UserCredentials) {
+	async function login(credentials: LoginCredentials) {
 		const { data, code, error } = await UserHelpers.login<User>(credentials);
 		if (code === 200 && data) setUser(data);
 		return { data, code, error };
 	}
 
-	async function register(credentials: UserCredentials) {
+	async function register(credentials: LoginCredentials) {
 		const { code, data, error } = await UserHelpers.register<User>(credentials);
 		if (code === 200 && data) setUser(data);
 		return { data, code, error };

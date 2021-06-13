@@ -46,3 +46,12 @@ export const H6 = styled.h6`
 export const P = styled.p`
 	${text}
 `;
+
+export const A = styled.span`
+	${text}
+	cursor: pointer;
+	color: white;
+	&:hover {
+		text-decoration: underline;
+	}
+`;

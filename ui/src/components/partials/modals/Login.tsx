@@ -9,9 +9,8 @@ import ButtonLoading from "../../misc/ButtonLoading";
 import { theme } from "../../../styles/theme";
 import Input from "../../misc/Input";
 import { FormError } from "../../styled-components/interactive";
-import classnames from "classnames";
 import { Col } from "../../styled-components/layout";
-import { H3 } from "../../styled-components/typography";
+import { A, H3, P } from "../../styled-components/typography";
 
 interface Props {
 	active: boolean;
@@ -105,10 +104,12 @@ export default function Login({ active, open, closeAll }: Props) {
 					label="Password"
 				/>
 			</Col>
+			<P className="mb-5">
+				Not a member? <A onClick={() => open("register")}>Register</A>
+			</P>
 			<ButtonLoading type="submit" status={status} disabled={status === "loading"}>
 				Login
 			</ButtonLoading>
-			{/* <Button onClick={() => open("register")}>Register</Button> */}
 		</Wrapper>
 	);
 }

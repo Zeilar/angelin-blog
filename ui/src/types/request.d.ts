@@ -50,7 +50,13 @@ export type MimeTypes =
 	| "audio/mpeg"
 	| "audio/x-wav";
 
-export interface UserCredentials {
+export interface LoginCredentials {
 	email: string;
 	password: string;
+}
+
+export interface RegisterCredentials {
+	email: string;
+	password: string;
+	passwordConfirm: string;
 }

@@ -1,12 +1,12 @@
-import { UserCredentials } from "../types/request";
+import { LoginCredentials } from "../types/request";
 import Request from "./Request";
 
 export default class UserHelpers {
-	public static async login<T>(user: UserCredentials) {
+	public static async login<T>(user: LoginCredentials) {
 		return await Request.auth<T>({ url: "login", method: "POST", body: user });
 	}
 
-	public static async register<T>(user: UserCredentials) {
+	public static async register<T>(user: LoginCredentials) {
 		return await Request.auth<T>({ url: "register", method: "POST", body: user });
 	}
 
