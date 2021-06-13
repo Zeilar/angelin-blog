@@ -4,10 +4,12 @@ import { Button } from "../styled-components/interactive";
 import { mdiLoading, mdiClose, mdiCheck } from "@mdi/js";
 import Icon from "@mdi/react";
 import { theme } from "../../styles/theme";
+import classnames from "classnames";
 
 type Status = "loading" | "success" | "error" | "done";
 
 interface Props {
+	className?: string;
 	children: ReactNode;
 	size?: "small" | "big";
 	status?: Status;
@@ -20,7 +22,7 @@ interface ButtonAttributes {
 	iconActive: boolean;
 }
 
-export default function ButtonLoading({ children, size, status, ...props }: Props) {
+export default function ButtonLoading({ className, children, size, status, ...props }: Props) {
 	function renderIcon() {
 		switch (status) {
 			case "error":
@@ -39,8 +41,14 @@ export default function ButtonLoading({ children, size, status, ...props }: Prop
 		return null;
 	}
 
+	const classes = classnames(className, {
+		iconActive: status != null,
+		error: status === "error",
+		success: status === "success" || status === "done",
+	});
+
 	return (
-		<StyledButton status={status} iconActive={status != null} {...props}>
+		<StyledButton className={classes} {...props}>
 			{renderIcon()} {children}
 		</StyledButton>
 	);
@@ -58,16 +66,18 @@ const StyledButton = styled(Button)`
 		height: 2rem;
 	}
 
-	${({ iconActive, status }: ButtonAttributes) =>
-		css`
-			${status === "error" && "background-color: rgb(150, 0, 0);"}
-			${(status === "success" || status === "done") && "background-color: rgb(0, 150, 0);"}
-            ${iconActive &&
-			css`
-				color: transparent !important;
-				pointer-events: none;
-			`}
-		`}
+	&.success {
+		background-color: rgb(0, 150, 0);
+	}
+
+	&.error {
+		background-color: rgb(150, 0, 0);
+	}
+
+	&.iconActive {
+		color: transparent !important;
+		pointer-events: none;
+	}
 `;
 
 const Loading = styled(Icon)`

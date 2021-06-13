@@ -55,6 +55,7 @@ export default function Login({ active, open, closeAll }: Props) {
 		if (loggedIn) return;
 
 		setStatus("loading");
+
 		const { code, error } = await login({
 			email: inputs.email,
 			password: inputs.password,
@@ -83,9 +84,9 @@ export default function Login({ active, open, closeAll }: Props) {
 			<Close onClick={closeAll}>
 				<Icon path={mdiClose} />
 			</Close>
-			<H3 className={classnames("mb-2")}>Login</H3>
+			<H3 className="mb-2">Login</H3>
 			{error && <FormError>{error}</FormError>}
-			<Col className={classnames("mb-7")}>
+			<Col className="mb-7">
 				<Input
 					forwardRef={firstInput}
 					value={inputs.email}
