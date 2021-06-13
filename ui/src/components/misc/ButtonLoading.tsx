@@ -17,14 +17,9 @@ interface Props {
 	disabled?: boolean;
 }
 
-interface ButtonAttributes {
-	status?: Status;
-	iconActive: boolean;
-}
-
-export default function ButtonLoading({ className, children, size, status, ...props }: Props) {
+export default function ButtonLoading(props: Props) {
 	function renderIcon() {
-		switch (status) {
+		switch (props.status) {
 			case "error":
 				return <Error path={mdiClose} />;
 			case "done":
@@ -37,19 +32,19 @@ export default function ButtonLoading({ className, children, size, status, ...pr
 		}
 	}
 
-	if (size === "small") {
+	if (props.size === "small") {
 		return null;
 	}
 
-	const classes = classnames(className, {
-		iconActive: status != null,
-		error: status === "error",
-		success: status === "success" || status === "done",
+	const classes = classnames(props.className, {
+		iconActive: props.status != null,
+		error: props.status === "error",
+		success: props.status === "success" || props.status === "done",
 	});
 
 	return (
-		<StyledButton className={classes} {...props}>
-			{renderIcon()} {children}
+		<StyledButton className={classes} disabled={props.disabled} {...props}>
+			{renderIcon()} {props.children}
 		</StyledButton>
 	);
 }
