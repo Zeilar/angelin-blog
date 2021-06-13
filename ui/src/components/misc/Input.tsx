@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
 import { Input as StyledInput, FormError } from "../styled-components/interactive";
 import { Col, Grid } from "../styled-components/layout";
+import classnames from "classnames";
 
 interface Props<T> {
 	label?: string;
@@ -12,16 +13,17 @@ interface Props<T> {
 	placeholder?: string;
 	title?: string;
 	style?: CSSProperties;
+	containerClass?: string;
 	forwardRef?: RefObject<T>;
 	[key: string]: any;
 }
 
 export default function Input<T>(props: Props<T>) {
-	const hasErrors = props.errors && props.errors?.length > 0;
+	const hasErrors = props.errors && props.errors.length > 0;
 	const labelId = `input-${Math.ceil(Math.random() * 100)}`;
 
 	return (
-		<Col align="flex-start">
+		<Col align="flex-start" className={classnames(props.containerClass, "mt-5")}>
 			{hasErrors && (
 				<Errors>
 					{props.errors?.map((error, i: number) => (
@@ -54,6 +56,6 @@ const Label = styled.label`
 
 const Errors = styled(Grid)`
 	justify-items: flex-start;
-	margin: 15px 0;
+	margin-bottom: 15px;
 	grid-gap: 5px;
 `;

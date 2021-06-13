@@ -73,10 +73,6 @@ export function UserContextProvider({ children }: Props) {
 
 export const useAuth = () => {
 	const context = useContext(UserContext);
-
-	if (!context) {
-		throw new Error();
-	}
-
+	if (!context) throw new Error();
 	return context;
 };

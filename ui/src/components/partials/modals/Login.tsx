@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { Modal } from "./Modals";
-import { Close, Title, Wrapper, Inputs } from "./_styles";
+import { Close, Wrapper } from "./_styles";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
 import useForm from "../../hooks/useForm";
@@ -9,8 +9,10 @@ import { useAuth } from "../../contexts/UserContext";
 import ButtonLoading from "../../misc/ButtonLoading";
 import { theme } from "../../../styles/theme";
 import Input from "../../misc/Input";
-import { Helmet } from "react-helmet";
 import { FormError } from "../../styled-components/interactive";
+import classnames from "classnames";
+import { Col } from "../../styled-components/layout";
+import { H3 } from "../../styled-components/typography";
 
 interface Props {
 	active: boolean;
@@ -36,12 +38,15 @@ export default function Login({ active, open, closeAll }: Props) {
 		if (active && firstInput.current) {
 			firstInput.current.focus();
 		}
+
+		if (active) document.title = "Angelin Blog | Login";
+		return () => {
+			document.title = "Angelin Blog";
+		};
 	}, [active]);
 
 	function blurHandler() {
-		if (!inputs.email || !inputs.password) {
-			return;
-		}
+		if (!inputs.email || !inputs.password) return;
 		validate();
 	}
 
@@ -76,21 +81,14 @@ export default function Login({ active, open, closeAll }: Props) {
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 
-	useEffect(() => {
-		if (active) document.title = "Angelin Blog | Login";
-		return () => {
-			document.title = "Angelin Blog";
-		};
-	}, [active]);
-
 	return (
 		<Wrapper ref={wrapper} active={active} as="form" onSubmit={submit}>
 			<Close onClick={closeAll}>
 				<Icon path={mdiClose} />
 			</Close>
-			<Title>Login</Title>
+			<H3 className={classnames("mb-2")}>Login</H3>
 			{error && <FormError>{error}</FormError>}
-			<Inputs>
+			<Col className={classnames("mb-7")}>
 				<Input
 					errors={errors.email}
 					forwardRef={firstInput}
@@ -99,7 +97,6 @@ export default function Login({ active, open, closeAll }: Props) {
 					type="text"
 					placeholder="john.smith@gmail.com"
 					title="Email"
-					style={{ marginBottom: 15 }}
 					onBlur={blurHandler}
 					label="Email"
 				/>
@@ -113,7 +110,7 @@ export default function Login({ active, open, closeAll }: Props) {
 					onBlur={blurHandler}
 					label="Password"
 				/>
-			</Inputs>
+			</Col>
 			<ButtonLoading type="submit" status={status} disabled={status === "loading"}>
 				Login
 			</ButtonLoading>

@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 import { theme } from "../../../styles/theme";
 import { Col } from "../../styled-components/layout";
-import { H3 } from "../../styled-components/typography";
 
 export const Background = styled.div`
 	position: fixed;
@@ -58,12 +57,7 @@ export const Close = styled.button.attrs({ type: "button" })`
 	&:hover {
 		background-color: rgb(${theme.color.secondary});
 	}
-`;
-
-export const Title = styled(H3)`
-	margin-bottom: 15px;
-`;
-
-export const Inputs = styled(Col)`
-	margin: 30px 0;
+	&:focus {
+		outline: 0;
+	}
 `;

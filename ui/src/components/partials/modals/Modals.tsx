@@ -14,7 +14,7 @@ export default function Modals({ active, open, closeAll }: Props) {
 	return (
 		<Background active={active !== null}>
 			<Login active={active === "login"} open={open} closeAll={closeAll} />
-			<Register active={active === "register"} open={open} closeAll={closeAll} />
+			{/* <Register active={active === "register"} open={open} closeAll={closeAll} /> */}
 		</Background>
 	);
 }

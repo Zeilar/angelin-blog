@@ -10,6 +10,9 @@ export const button = css`
 	border-radius: ${theme.borderRadius}px;
 	font-weight: bold;
 	color: rgb(${theme.color.text});
+	&:focus {
+		outline: 0;
+	}
 	&[disabled] {
 		box-shadow: none;
 		background-color: rgba(0, 0, 0, 0.1);

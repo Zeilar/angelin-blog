@@ -72,7 +72,3 @@ const link = css`
 const Link = styled(NavLink)`
 	${link}
 `;
-
-const ModalLink = styled.a`
-	${link}
-`;
