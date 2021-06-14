@@ -1,10 +1,19 @@
 import { Request, Response } from "express";
 import { Comment } from "../../db/models";
 import errorlog from "../../utils/errorlog";
+import { validateBody } from "../middlewares/validateBody";
+import { ErrorMessages } from "../utils/constants";
 
-export async function createComment(req: Request, res: Response): Promise<void> {
+export async function createComment(req: Request, res: Response) {
 	const { post_id, body } = req.body;
 	const { user } = req.session;
+
+	if (!validateBody("body", req.body)) {
+		res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
+		return;
+	}
+
+	// TODO: validate
 
 	try {
 		const comment: Comment | null = await Comment.query().insert({

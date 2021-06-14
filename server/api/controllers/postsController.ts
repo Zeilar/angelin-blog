@@ -2,11 +2,13 @@ import { Request, Response } from "express";
 import { Post, Tag } from "../../db/models";
 import errorlog from "../../utils/errorlog";
 import PostPolicy from "../policies/PostPolicy";
-import { validateBody } from "../utils/request";
+import { ErrorMessages } from "../utils/constants";
+import { validateBody } from "../middlewares/validateBody";
 
-export async function createPost(req: Request, res: Response): Promise<void | Response> {
-	if (!validateBody(req.body, ["body", "title"])) {
-		return res.status(400).json({ error: "Please provide a body and title." });
+export async function createPost(req: Request, res: Response) {
+	if (!validateBody(["body", "title"], req.body)) {
+		res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
+		return;
 	}
 
 	const { user } = req.session;
@@ -33,15 +35,15 @@ export async function createPost(req: Request, res: Response): Promise<void | Re
 	}
 }
 
-export function getAllPosts(req: Request, res: Response): void {
+export function getAllPosts(req: Request, res: Response) {
 	res.status(200).json({ data: res.posts });
 }
 
-export function getPostById(req: Request, res: Response): void {
+export function getPostById(req: Request, res: Response) {
 	res.status(200).json({ data: res.post });
 }
 
-export async function editPost(req: Request, res: Response): Promise<void> {
+export async function editPost(req: Request, res: Response) {
 	const { title, body } = req.body;
 	try {
 		res.status(200).json(await res.post!.$query().patchAndFetch({ body, title }));
@@ -51,7 +53,7 @@ export async function editPost(req: Request, res: Response): Promise<void> {
 	}
 }
 
-export async function deletePost(req: Request, res: Response): Promise<void> {
+export async function deletePost(req: Request, res: Response) {
 	if (!new PostPolicy(res.user!, res.post!).can("delete")) {
 		return res.status(403).end();
 	}

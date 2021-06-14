@@ -1,22 +1,21 @@
 import "dotenv/config";
 import bootstrap from "../db/bootstrap";
-import express, { Express, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import { loggedIn } from "./middlewares/auth";
 import session from "express-session";
-import { ENV } from "../types/env";
 import path from "path";
 import cors from "cors";
 
 bootstrap();
-const app: Express = express();
-const { PORT, SESSION_SECRET }: ENV = process.env;
+const app = express();
+const { PORT, SESSION_SECRET } = process.env;
 
 import usersRoutes from "./routes/usersRoutes";
 import postsRoutes from "./routes/postsRoutes";
 import commentsRoutes from "./routes/commentsRoutes";
 
 const WEEK_IN_MILLISECONDS = 1000 * 60 * 60 * 24 * 7;
-const oneWeekFromNow: Date = new Date(new Date().getTime() + WEEK_IN_MILLISECONDS);
+const oneWeekFromNow = new Date(new Date().getTime() + WEEK_IN_MILLISECONDS);
 
 // Middlewares
 app.use(
@@ -44,7 +43,7 @@ app.use("/api/comments", loggedIn, commentsRoutes);
 
 app.use(express.static(path.join(__dirname, "../../ui")));
 
-app.get("/*", (req: Request, res: Response): void => {
+app.get("/*", (req: Request, res: Response) => {
 	res.sendFile(path.join(__dirname, "../../ui/index.html"));
 });
 
