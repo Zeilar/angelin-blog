@@ -23,12 +23,12 @@ export async function register(req: Request, res: Response) {
 		return;
 	}
 
-	const { email, password, passwordConfirm } = req.body;
-
 	if (req.session.user) {
 		res.status(405).json({ error: ErrorMessages.LOGGED_IN });
 		return;
 	}
+
+	const { email, password, passwordConfirm } = req.body;
 
 	try {
 		if ((await count(User.query().where({ email }))) > 0) {
@@ -53,7 +53,9 @@ export async function register(req: Request, res: Response) {
 }
 
 export async function login(req: Request, res: Response) {
-	if (!validateBody(["email", "password", "passwordConfirm"], req.body)) {
+	console.log(req.body.email, req.body.password, validateBody(["email", "password"], req.body));
+
+	if (!validateBody(["email", "password"], req.body)) {
 		res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
 		return;
 	}
