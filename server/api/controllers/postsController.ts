@@ -20,9 +20,9 @@ export async function createPost(req: Request, res: Response) {
 		tags.forEach((tag: string, i: number) => {
 			query = i === 0 ? query.where("name", tag) : query.orWhere("name", tag);
 		});
-		const dbTags: Tag[] = await query.execute();
+		const dbTags = await query.execute();
 
-		const post: Post = await Post.query().insert({ user_id: user, title, body });
+		const post = await Post.query().insert({ user_id: user, title, body });
 
 		for (let i: number = 0; i < dbTags.length; i++) {
 			await post.$relatedQuery("tags").relate(dbTags[i]);

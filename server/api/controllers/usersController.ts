@@ -8,7 +8,7 @@ import { sanitizeUser } from "../utils/user";
 import { ErrorMessages } from "../utils/constants";
 import { z } from "zod";
 
-export async function authenticate(req: Request, res: Response): Promise<void> {
+export async function authenticate(req: Request, res: Response) {
 	try {
 		res.status(200).json({ data: sanitizeUser(res.user!) });
 	} catch (error) {
@@ -17,25 +17,28 @@ export async function authenticate(req: Request, res: Response): Promise<void> {
 	}
 }
 
-export async function register(req: Request, res: Response): Promise<void | Response> {
+export async function register(req: Request, res: Response) {
 	if (!validateBody(["email", "password", "passwordConfirm"], req.body)) {
-		return res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
+		res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
+		return;
 	}
 
 	const { email, password, passwordConfirm } = req.body;
 
 	if (req.session.user) {
-		return res.status(405).json({ error: ErrorMessages.LOGGED_IN });
+		res.status(405).json({ error: ErrorMessages.LOGGED_IN });
+		return;
 	}
 
 	try {
 		if ((await count(User.query().where({ email }))) > 0) {
-			return res.status(422).json({ error: ErrorMessages.USER_TAKEN });
+			res.status(422).json({ error: ErrorMessages.USER_TAKEN });
+			return;
 		}
 
 		// TODO: Validation
 
-		const user: User | null = await User.query().insert({
+		const user = await User.query().insert({
 			email,
 			password: await hash(password, 10),
 		});
@@ -49,23 +52,29 @@ export async function register(req: Request, res: Response): Promise<void | Resp
 	}
 }
 
-export async function login(req: Request, res: Response): Promise<void | Response> {
+export async function login(req: Request, res: Response) {
 	if (!validateBody(["email", "password", "passwordConfirm"], req.body)) {
-		return res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
+		res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
+		return;
 	}
 
 	const { email, password } = req.body;
 
 	if (req.session.user) {
-		return res.status(405).json({ error: ErrorMessages.LOGGED_IN });
+		res.status(405).json({ error: ErrorMessages.LOGGED_IN });
+		return;
 	}
 
 	try {
-		const user: User | null = await User.query().findOne("email", email);
-		if (!user) return res.status(422).json({ error: ErrorMessages.USER_NOT_EXISTS });
+		const user = await User.query().findOne("email", email);
+		if (!user) {
+			res.status(422).json({ error: ErrorMessages.USER_NOT_EXISTS });
+			return;
+		}
 
 		if (!(await compare(password, user.password!))) {
-			return res.status(422).json({ error: ErrorMessages.INCORRECT_CREDENTIALS });
+			res.status(422).json({ error: ErrorMessages.INCORRECT_CREDENTIALS });
+			return;
 		}
 
 		req.session.user = user.id;
@@ -77,9 +86,10 @@ export async function login(req: Request, res: Response): Promise<void | Respons
 	}
 }
 
-export function logout(req: Request, res: Response): void | Response {
+export function logout(req: Request, res: Response) {
 	if (!req.session.user) {
-		return res.status(405).json({ error: ErrorMessages.LOGGED_OUT });
+		res.status(405).json({ error: ErrorMessages.LOGGED_OUT });
+		return;
 	}
 	delete req.session.user;
 	res.status(200).end();
