@@ -11,6 +11,7 @@ import Input from "../../misc/Input";
 import { FormError } from "../../styled-components/interactive";
 import { Col } from "../../styled-components/layout";
 import { A, H3, P } from "../../styled-components/typography";
+import useInputs from "../../hooks/useInputs";
 
 interface Props {
 	active: boolean;
@@ -24,7 +25,7 @@ export default function Login({ active, open, closeAll }: Props) {
 	const wrapper = useClickOutside<HTMLFormElement>(() => active && closeAll());
 
 	const [status, setStatus] = useState<"error" | "loading" | "success" | "done">();
-	const [inputs, setInputs] = useState({ email: "", password: "" });
+	const { inputs, onChange } = useInputs({ email: "", password: "" });
 	const [error, setError] = useState<string | null>(null);
 
 	const firstInput = useRef<HTMLInputElement | null>(null);
@@ -44,10 +45,6 @@ export default function Login({ active, open, closeAll }: Props) {
 			document.title = "Angelin Blog";
 		};
 	}, [active]);
-
-	function onChange(e: ChangeEvent<HTMLInputElement>, input: string) {
-		setInputs(inputs => ({ ...inputs, [input]: e.target.value }));
-	}
 
 	async function submit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();

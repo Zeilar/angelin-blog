@@ -53,8 +53,6 @@ export async function register(req: Request, res: Response) {
 }
 
 export async function login(req: Request, res: Response) {
-	console.log(req.body.email, req.body.password, validateBody(["email", "password"], req.body));
-
 	if (!validateBody(["email", "password"], req.body)) {
 		res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
 		return;

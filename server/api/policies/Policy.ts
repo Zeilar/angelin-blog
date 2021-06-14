@@ -8,17 +8,17 @@ export interface Policies {
 export interface PolicyChild {
 	constructor: Function;
 	policies: Policies;
-	readonly user: UserSchema;
+	readonly user?: UserSchema;
 }
 
 export default class Policy<Action extends string> {
-	public authorized: boolean = false;
+	public authorized = false;
 
 	protected readonly policies: Policies = {};
 
-	can(...actions: Action[]): boolean {
+	public can(...actions: Action[]) {
 		try {
-			for (let i: number = 0; i < actions.length; i++) {
+			for (let i = 0; i < actions.length; i++) {
 				this.authorized = this.policies[actions[i]]();
 				if (!this.authorized) break;
 			}

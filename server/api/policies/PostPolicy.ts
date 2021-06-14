@@ -4,8 +4,8 @@ import Policy, { PolicyChild, Policies } from "./Policy";
 type Actions = "create" | "delete" | "edit";
 
 export default class PostPolicy extends Policy<Actions> implements PolicyChild {
-	public readonly user: User;
-	public readonly post: Post;
+	public readonly user;
+	public readonly post;
 
 	public readonly policies: Policies = {
 		edit: () => this.editOrDelete(),
@@ -13,18 +13,19 @@ export default class PostPolicy extends Policy<Actions> implements PolicyChild {
 		create: () => this.create(),
 	};
 
-	constructor(user: User, post: Post) {
+	constructor(user?: User, post?: Post) {
 		super();
 		this.user = user;
 		this.post = post;
 	}
 
-	protected create(): boolean {
+	protected create() {
 		if (this.user) return true;
 		return false;
 	}
 
-	protected editOrDelete(): boolean {
+	protected editOrDelete() {
+		if (!this.user || !this.post) return false;
 		if (this.user.is_admin) return true;
 		return this.user.id === this.post.author.id;
 	}

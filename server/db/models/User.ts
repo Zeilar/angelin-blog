@@ -1,26 +1,26 @@
 import { UserSchema, PostSchema, CommentSchema } from "../types/modelSchemas";
-import { Model, RelationMappings } from "objection";
+import { Model } from "objection";
 import { Post } from "./Post";
 import { Comment } from "./Comment";
 
 export class User extends Model implements UserSchema {
-	public static tableName: string = "users";
+	public static tableName = "users";
 
-	public readonly id!: number;
-	public email!: string;
-	public is_admin!: number | boolean;
+	public readonly id = 0;
+	public email = "";
+	public is_admin: number | boolean = 0;
 	public password?: string;
-	public readonly created_at!: string;
-	public readonly updated_at!: string;
+	public readonly created_at = "";
+	public readonly updated_at = "";
 	public posts?: PostSchema[];
 	public comments?: CommentSchema[];
 
-	public static relationships: object = {
+	public static relationships = {
 		posts: true,
 		comments: true,
 	};
 
-	public static relationMappings(): RelationMappings {
+	public static relationMappings() {
 		return {
 			posts: {
 				relation: Model.HasManyRelation,

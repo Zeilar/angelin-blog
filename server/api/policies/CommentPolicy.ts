@@ -4,8 +4,8 @@ import Policy, { PolicyChild, Policies } from "./Policy";
 type Actions = "create" | "delete" | "edit";
 
 export default class CommentPolicy extends Policy<Actions> implements PolicyChild {
-	public readonly user: User;
-	public readonly comment: Comment;
+	public readonly user;
+	public readonly comment;
 
 	public readonly policies: Policies = {
 		edit: () => this.editOrDelete(),
@@ -13,18 +13,19 @@ export default class CommentPolicy extends Policy<Actions> implements PolicyChil
 		create: () => this.create(),
 	};
 
-	constructor(user: User, comment: Comment) {
+	constructor(user?: User, comment?: Comment) {
 		super();
 		this.user = user;
 		this.comment = comment;
 	}
 
-	protected create(): boolean {
+	protected create() {
 		if (this.user) return true;
 		return false;
 	}
 
-	protected editOrDelete(): boolean {
+	protected editOrDelete() {
+		if (!this.user || !this.comment) return false;
 		if (this.user.is_admin) return true;
 		return this.user.id === this.comment.author.id;
 	}
