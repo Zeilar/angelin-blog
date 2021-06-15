@@ -5,7 +5,7 @@ import { useAuth, useAuthModals } from "../contexts";
 import { header, ButtonSmall, Row } from "../styled-components";
 import Modals from "./modals/Modals";
 
-export default function Navbar() {
+export function Navbar() {
 	const { loggedIn, loading, logout } = useAuth();
 	const { openModal } = useAuthModals();
 
