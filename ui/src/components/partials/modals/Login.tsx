@@ -8,6 +8,8 @@ import { FormError, Col, A, H3, P } from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { useAuthModals, useAuth } from "../../contexts";
 
+type Status = "error" | "loading" | "success" | "done";
+
 export function Login() {
 	const { login, loggedIn } = useAuth();
 	const { activeModal, closeModals, openModal } = useAuthModals();
@@ -16,16 +18,11 @@ export function Login() {
 
 	const wrapper = useClickOutside<HTMLFormElement>(() => active && closeModals());
 
-	const [status, setStatus] = useState<"error" | "loading" | "success" | "done">();
+	const [status, setStatus] = useState<Status>();
 	const { inputs, onChange } = useInputs({ email: "", password: "" });
 	const [error, setError] = useState<string | null>(null);
 
 	const firstInput = useRef<HTMLInputElement | null>(null);
-
-	// const { onChange, inputs, validate, errors } = useForm(["email", "password"], z => ({
-	// 	email: z.string().min(3).max(30).email(),
-	// 	password: z.string().min(3).max(30),
-	// }));
 
 	useEffect(() => {
 		if (active && firstInput.current) {

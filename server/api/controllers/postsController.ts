@@ -15,17 +15,14 @@ export async function createPost(req: Request, res: Response) {
 	const { body, title, tags } = req.body;
 
 	try {
-		let query = Tag.query();
-
-		tags.forEach((tag: string, i: number) => {
-			query = i === 0 ? query.where("name", tag) : query.orWhere("name", tag);
-		});
-		const dbTags = await query.execute();
-
 		const post = await Post.query().insert({ user_id: user, title, body });
 
-		for (let i: number = 0; i < dbTags.length; i++) {
-			await post.$relatedQuery("tags").relate(dbTags[i]);
+		for (let i = 0; i < tags?.length; i++) {
+			let tag = await Tag.query().where({ name: tags[i] }).first();
+			if (!tag) {
+				tag = await Tag.query().insertAndFetch({ name: tags[i] });
+			}
+			await post.$relatedQuery("tags").relate(tag);
 		}
 
 		res.status(200).json({ data: { ...post, tags } });
