@@ -1,30 +1,36 @@
 import { Model } from "objection";
 import { Post } from "./Post";
+import { Tag } from "./Tag";
 
 export class PostTag extends Model {
-	public static tableName = "tags";
+	public static tableName = "posts_tags";
 
 	public readonly id!: number;
-	public name!: string;
+	public readonly post_id!: number;
+	public readonly tag_id!: number;
 	public readonly created_at!: string;
 	public readonly updated_at!: string;
-	public posts?: Post[];
 
 	public static relationships = {
-		posts: true,
+		post: true,
+		tag: true,
 	};
 
 	public static relationMappings() {
 		return {
-			posts: {
-				relation: Model.ManyToManyRelation,
+			post: {
+				relation: Model.BelongsToOneRelation,
 				modelClass: Post,
 				join: {
-					from: "posts.id",
-					through: {
-						from: "posts_tags.tag_id",
-						to: "posts_tags.post_id",
-					},
+					from: "posts_tags.post_id",
+					to: "posts.id",
+				},
+			},
+			tag: {
+				relation: Model.BelongsToOneRelation,
+				modelClass: Tag,
+				join: {
+					from: "posts_tags.tag_id",
 					to: "tags.id",
 				},
 			},

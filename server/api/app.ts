@@ -6,13 +6,13 @@ import session from "express-session";
 import path from "path";
 import cors from "cors";
 
-bootstrap();
-const app = express();
-const { PORT, SESSION_SECRET } = process.env;
-
 import usersRoutes from "./routes/usersRoutes";
 import postsRoutes from "./routes/postsRoutes";
 import commentsRoutes from "./routes/commentsRoutes";
+
+bootstrap();
+const app = express();
+const { PORT, SESSION_SECRET } = process.env;
 
 const WEEK_IN_MILLISECONDS = 1000 * 60 * 60 * 24 * 7;
 const oneWeekFromNow = new Date(new Date().getTime() + WEEK_IN_MILLISECONDS);

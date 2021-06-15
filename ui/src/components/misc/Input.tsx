@@ -1,4 +1,4 @@
-import { CSSProperties, RefObject } from "react";
+import { RefObject } from "react";
 import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
 import { Input as StyledInput, FormError } from "../styled-components/interactive";
@@ -9,10 +9,6 @@ interface Props<T> {
 	label?: string;
 	errors?: string[];
 	value: string;
-	type?: string;
-	placeholder?: string;
-	title?: string;
-	style?: CSSProperties;
 	containerClass?: string;
 	forwardRef?: RefObject<T>;
 	[key: string]: any;
