@@ -5,22 +5,18 @@ import { sanitizeComment } from "../../utils/comment";
 
 export async function getCommentOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;
-
 	try {
 		if (id) {
-			const comment: Comment | null = await Comment.query()
+			const comment = await Comment.query()
 				.findById(id)
 				.withGraphFetched(Comment.relationships);
 			if (!comment) return res.status(404).end();
 
 			res.comment = sanitizeComment(comment);
 		} else {
-			const comments: Comment[] | [] = await Comment.query().withGraphFetched(
-				Comment.relationships
-			);
-			res.comments = comments.map((comment: Comment) => sanitizeComment(comment));
+			const comments = await Comment.query().withGraphFetched(Comment.relationships);
+			res.comments = comments;
 		}
-
 		next();
 	} catch (error) {
 		errorlog(error);
