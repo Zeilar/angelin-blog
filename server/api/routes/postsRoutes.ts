@@ -1,20 +1,15 @@
-import { loggedIn } from "../middlewares/auth";
-import { getPostOrFail } from "../middlewares/post/request";
 import express from "express";
-import {
-	getAllPosts,
-	getPostById,
-	createPost,
-	editPost,
-	deletePost,
-} from "../controllers/postsController";
+import * as Controller from "../controllers/postsController";
+import { loggedIn } from "../middlewares/auth";
+import * as Access from "../middlewares/post/access";
+import { getPostOrFail } from "../middlewares/post";
 
 const router = express.Router();
 
-router.get("", getPostOrFail, getAllPosts);
-router.get("/:id", getPostOrFail, getPostById);
-router.post("", loggedIn, createPost);
-router.put("/:id", loggedIn, getPostOrFail, editPost);
-router.delete("/:id", loggedIn, getPostOrFail, deletePost);
+router.get("", getPostOrFail, Controller.getAllPosts);
+router.get("/:id", getPostOrFail, Controller.getPostById);
+router.post("", loggedIn, Access.canCreatePost, Controller.createPost);
+router.put("/:id", loggedIn, getPostOrFail, Access.canEditPost, Controller.editPost);
+router.delete("/:id", loggedIn, getPostOrFail, Access.canDeletePost, Controller.deletePost);
 
 export default router;

@@ -1,14 +1,14 @@
-import { UserSchema } from "../../db/types/modelSchemas";
+import { User } from "../../db/models";
 import errorlog from "../../utils/errorlog";
 
 export interface Policies {
-	[key: string]: () => boolean;
+	[key: string]: () => boolean | Promise<boolean>;
 }
 
 export interface PolicyChild {
 	constructor: Function;
 	policies: Policies;
-	readonly user?: UserSchema;
+	readonly user?: User;
 }
 
 export default class Policy<Action extends string> {
@@ -16,10 +16,10 @@ export default class Policy<Action extends string> {
 
 	protected readonly policies: Policies = {};
 
-	public can(...actions: Action[]) {
+	public async can(...actions: Action[]) {
 		try {
 			for (let i = 0; i < actions.length; i++) {
-				this.authorized = this.policies[actions[i]]();
+				this.authorized = await this.policies[actions[i]]();
 				if (!this.authorized) break;
 			}
 		} catch (error) {

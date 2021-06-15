@@ -1,7 +1,7 @@
 import { hash } from "bcrypt";
 import Knex from "knex";
 
-export async function seed(knex: Knex): Promise<void> {
+export async function seed(knex: Knex) {
 	await knex("users").truncate();
 	await knex("users").insert([
 		{

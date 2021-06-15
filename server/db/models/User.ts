@@ -1,9 +1,8 @@
-import { UserSchema, PostSchema, CommentSchema } from "../types/modelSchemas";
-import { Model, RelationMappings } from "objection";
+import { Model } from "objection";
 import { Post } from "./Post";
 import { Comment } from "./Comment";
 
-export class User extends Model implements UserSchema {
+export class User extends Model {
 	public static tableName = "users";
 
 	public readonly id!: number;
@@ -12,8 +11,8 @@ export class User extends Model implements UserSchema {
 	public password?: string;
 	public readonly created_at!: string;
 	public readonly updated_at!: string;
-	public posts?: PostSchema[];
-	public comments?: CommentSchema[];
+	public posts?: Post[];
+	public comments?: Comment[];
 
 	public static relationships = {
 		posts: true,

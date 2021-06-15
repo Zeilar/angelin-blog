@@ -51,12 +51,9 @@ export function UserContextProvider({ children }: Props) {
 	}
 
 	async function logout() {
-		const { code } = await UserHelpers.logout();
-		if (code === 200) {
-			setUser(null);
-			return true;
-		}
-		return false;
+		const { code, error } = await UserHelpers.logout();
+		setUser(null);
+		return { code, error };
 	}
 
 	const values: any = {

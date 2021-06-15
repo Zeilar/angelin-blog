@@ -1,7 +1,7 @@
 import { User } from "../../db/models";
 import { Request, Response, NextFunction } from "express";
 
-export async function loggedIn(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function loggedIn(req: Request, res: Response, next: NextFunction) {
 	const { user: id } = req.session;
 	try {
 		if (!id) return res.status(401).end();
@@ -12,10 +12,9 @@ export async function loggedIn(req: Request, res: Response, next: NextFunction):
 	}
 }
 
-export async function admin(req: Request, res: Response, next: NextFunction): Promise<void> {
-	const user: User = await User.query().findById(req.session.user!);
+export async function admin(req: Request, res: Response, next: NextFunction) {
+	const user = await User.query().findById(req.session.user!);
 
-	// Just in case, sometimes the number returned from MySQL turns into a string
 	if (!Boolean(user.is_admin)) {
 		return res.status(403).end();
 	}

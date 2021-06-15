@@ -9,7 +9,7 @@ import { header } from "../styled-components/typography";
 import Modals, { Modal } from "./modals/Modals";
 
 export default function Navbar() {
-	const { loggedIn, loading } = useAuth();
+	const { loggedIn, loading, logout } = useAuth();
 
 	const [activeModal, setActiveModal] = useState<Modal>(null);
 
@@ -39,6 +39,11 @@ export default function Navbar() {
 								</ButtonSmall>
 							</Item>
 						</>
+					)}
+					{!loading && loggedIn && (
+						<Item>
+							<ButtonSmall onClick={logout}>Logout</ButtonSmall>
+						</Item>
 					)}
 				</List>
 			</Nav>

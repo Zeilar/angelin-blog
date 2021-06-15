@@ -1,9 +1,9 @@
 import { Comment, User } from "../../db/models";
 import Policy, { PolicyChild, Policies } from "./Policy";
 
-type Actions = "create" | "delete" | "edit";
+export type Action = "create" | "delete" | "edit";
 
-export default class CommentPolicy extends Policy<Actions> implements PolicyChild {
+export default class CommentPolicy extends Policy<Action> implements PolicyChild {
 	public readonly user;
 	public readonly comment;
 

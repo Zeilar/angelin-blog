@@ -1,7 +1,7 @@
 import { Model } from "objection";
 import { Post } from "./Post";
 
-export class Tag extends Model {
+export class PostTag extends Model {
 	public static tableName = "tags";
 
 	public readonly id!: number;
