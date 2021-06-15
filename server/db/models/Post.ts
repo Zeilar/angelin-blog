@@ -1,5 +1,5 @@
-import { CommentSchema, PostSchema } from "../types/modelSchemas";
-import { Model } from "objection";
+import { UserSchema, CommentSchema, PostSchema } from "../types/modelSchemas";
+import { Model, RelationMappings } from "objection";
 import { Comment } from "./Comment";
 import { Tag } from "./Tag";
 import { User } from "./User";
@@ -7,13 +7,13 @@ import { User } from "./User";
 export class Post extends Model implements PostSchema {
 	public static tableName = "posts";
 
-	public readonly id = 0;
-	public user_id = 0;
-	public title = "";
-	public body = "";
-	public readonly created_at = "";
-	public readonly updated_at = "";
-	public author = {};
+	public readonly id!: number;
+	public user_id!: number;
+	public title!: string;
+	public body!: string;
+	public readonly created_at!: string;
+	public readonly updated_at!: string;
+	public author!: UserSchema;
 	public comments?: CommentSchema[];
 
 	public static relationships = {

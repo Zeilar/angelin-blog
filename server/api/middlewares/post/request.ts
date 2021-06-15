@@ -3,11 +3,7 @@ import { Post } from "../../../db/models";
 import errorlog from "../../../utils/errorlog";
 import { sanitizePost } from "../../utils/post";
 
-export async function getPostOrFail(
-	req: Request,
-	res: Response,
-	next: NextFunction
-): Promise<void> {
+export async function getPostOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;
 
 	try {

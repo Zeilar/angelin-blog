@@ -1,14 +1,14 @@
 import { PostSchema, TagSchema } from "../types/modelSchemas";
-import { Model } from "objection";
+import { Model, RelationMappings } from "objection";
 import { Post } from "./Post";
 
 export class Tag extends Model implements TagSchema {
 	public static tableName = "tags";
 
-	public readonly id = 0;
-	public name = "";
-	public readonly created_at = "";
-	public readonly updated_at = "";
+	public readonly id!: number;
+	public name!: string;
+	public readonly created_at!: string;
+	public readonly updated_at!: string;
 	public posts?: PostSchema[];
 
 	public static relationships = {

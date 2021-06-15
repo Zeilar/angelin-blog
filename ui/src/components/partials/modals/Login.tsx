@@ -66,7 +66,7 @@ export default function Login({ active, open, closeAll }: Props) {
 				setStatus("done");
 			}, theme.durations.modalsAfterResponse);
 		} else {
-			setError(error ?? null);
+			if (error) setError(error);
 			setStatus("error");
 		}
 

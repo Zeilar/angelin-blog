@@ -1,19 +1,19 @@
-import { CommentSchema } from "../types/modelSchemas";
-import { Model } from "objection";
+import { CommentSchema, PostSchema, UserSchema } from "../types/modelSchemas";
+import { Model, RelationMappings } from "objection";
 import { Post } from "./Post";
 import { User } from "./User";
 
 export class Comment extends Model implements CommentSchema {
 	public static tableName = "comments";
 
-	public readonly id = 0;
-	public post_id = 0;
-	public user_id = 0;
-	public body = "";
-	public readonly created_at = "";
-	public readonly updated_at = "";
-	public post = {};
-	public author = {};
+	public readonly id!: number;
+	public post_id!: number;
+	public user_id!: number;
+	public body!: string;
+	public readonly created_at!: string;
+	public readonly updated_at!: string;
+	public post?: PostSchema;
+	public author!: UserSchema;
 
 	public static relationships = {
 		author: true,

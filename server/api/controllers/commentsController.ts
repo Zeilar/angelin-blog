@@ -31,6 +31,7 @@ export async function createComment(req: Request, res: Response) {
 export async function editComment(req: Request, res: Response) {
 	const { body } = req.body;
 	try {
+		// TODO: policy
 		res.status(200).json({ data: await res.comment!.$query().patchAndFetch({ body }) });
 	} catch (error) {
 		errorlog(error);

@@ -1,17 +1,17 @@
 import { UserSchema, PostSchema, CommentSchema } from "../types/modelSchemas";
-import { Model } from "objection";
+import { Model, RelationMappings } from "objection";
 import { Post } from "./Post";
 import { Comment } from "./Comment";
 
 export class User extends Model implements UserSchema {
 	public static tableName = "users";
 
-	public readonly id = 0;
-	public email = "";
-	public is_admin: number | boolean = 0;
+	public readonly id!: number;
+	public email!: string;
+	public is_admin!: number | boolean;
 	public password?: string;
-	public readonly created_at = "";
-	public readonly updated_at = "";
+	public readonly created_at!: string;
+	public readonly updated_at!: string;
 	public posts?: PostSchema[];
 	public comments?: CommentSchema[];
 

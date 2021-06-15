@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { Tag } from "../../../db/models";
 import errorlog from "../../../utils/errorlog";
 
-export async function getTagOrFail(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function getTagOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;
 
 	try {

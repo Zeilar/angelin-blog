@@ -3,11 +3,7 @@ import { User } from "../../../db/models";
 import errorlog from "../../../utils/errorlog";
 import { sanitizeUser } from "../../utils/user";
 
-export async function getUserOrFail(
-	req: Request,
-	res: Response,
-	next: NextFunction
-): Promise<void> {
+export async function getUserOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;
 
 	try {

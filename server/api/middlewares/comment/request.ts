@@ -3,11 +3,7 @@ import { Comment } from "../../../db/models";
 import errorlog from "../../../utils/errorlog";
 import { sanitizeComment } from "../../utils/comment";
 
-export async function getCommentOrFail(
-	req: Request,
-	res: Response,
-	next: NextFunction
-): Promise<void> {
+export async function getCommentOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;
 
 	try {
