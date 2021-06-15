@@ -13,7 +13,7 @@ interface Props<T> {
 	[key: string]: any;
 }
 
-export default function Input<T>(props: Props<T>) {
+export function Input<T>(props: Props<T>) {
 	const hasErrors = props.errors && props.errors.length > 0;
 	const labelId = `input-${Math.ceil(Math.random() * 100)}`;
 

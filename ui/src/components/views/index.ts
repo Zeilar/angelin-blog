@@ -1,4 +1,2 @@
-import Home from "./Home";
-import Post from "./SinglePost";
-
-export { Home, Post };
+export * from "./Home";
+export * from "./SinglePost";

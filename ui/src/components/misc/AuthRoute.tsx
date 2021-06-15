@@ -6,7 +6,7 @@ interface Props {
 	children: ReactNode;
 }
 
-export default function AuthRoute({ children }: Props) {
+export function AuthRoute({ children }: Props) {
 	const { loggedIn, loading } = useAuth();
 
 	if (loading) {

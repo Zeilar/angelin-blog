@@ -4,7 +4,7 @@ import { Post, Tag } from "../../types/models";
 import { Link } from "react-router-dom";
 import { useFetch } from "../hooks";
 
-export default function Home() {
+export function Home() {
 	const query = useFetch<{ data: Post[] }>("http://localhost:3030/api/posts");
 
 	return (

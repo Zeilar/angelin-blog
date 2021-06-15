@@ -8,7 +8,7 @@ import { A, H3, P, Col, FormError } from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { useAuthModals, useAuth } from "../../contexts";
 
-export default function Register() {
+export function Register() {
 	const { register, loggedIn } = useAuth();
 	const { activeModal, closeModals, openModal } = useAuthModals();
 

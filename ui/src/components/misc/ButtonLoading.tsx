@@ -17,7 +17,7 @@ interface Props {
 	disabled?: boolean;
 }
 
-export default function ButtonLoading(props: Props) {
+export function ButtonLoading(props: Props) {
 	function renderIcon() {
 		switch (props.status) {
 			case "error":

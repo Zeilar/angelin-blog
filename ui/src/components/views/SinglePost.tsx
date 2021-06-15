@@ -12,7 +12,7 @@ interface MatchParams {
 	title?: string;
 }
 
-export default function SinglePost({ match }: RouteComponentProps<MatchParams>) {
+export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 	const query = useFetch<{ data: Post }>(`${SERVER_URL}/api/posts/${match.params.id}`, {
 		headers: {},
 	});

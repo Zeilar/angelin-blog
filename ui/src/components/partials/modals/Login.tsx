@@ -8,7 +8,7 @@ import { FormError, Col, A, H3, P } from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { useAuthModals, useAuth } from "../../contexts";
 
-export default function Login() {
+export function Login() {
 	const { login, loggedIn } = useAuth();
 	const { activeModal, closeModals, openModal } = useAuthModals();
 
