@@ -1,6 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
-import { Modal } from "./Modals";
 import { Close, Wrapper } from "./_styles";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
@@ -12,17 +11,15 @@ import { FormError } from "../../styled-components/interactive";
 import { Col } from "../../styled-components/layout";
 import { A, H3, P } from "../../styled-components/typography";
 import useInputs from "../../hooks/useInputs";
+import { useAuthModals } from "../../contexts/AuthModalContext";
 
-interface Props {
-	active: boolean;
-	open: (modal: Modal) => void;
-	closeAll: () => void;
-}
-
-export default function Register({ active, open, closeAll }: Props) {
+export default function Register() {
 	const { register, loggedIn } = useAuth();
+	const { activeModal, closeModals, openModal } = useAuthModals();
 
-	const wrapper = useClickOutside<HTMLFormElement>(() => active && closeAll());
+	const active = activeModal === "register";
+
+	const wrapper = useClickOutside<HTMLFormElement>(() => active && closeModals());
 
 	const [status, setStatus] = useState<"error" | "loading" | "success" | "done">();
 	const { inputs, onChange } = useInputs({ email: "", password: "", passwordConfirm: "" });
@@ -58,7 +55,7 @@ export default function Register({ active, open, closeAll }: Props) {
 			setStatus("success");
 
 			setTimeout(() => {
-				closeAll();
+				closeModals();
 				setStatus("done");
 			}, theme.durations.modalsAfterResponse);
 		} else {
@@ -73,7 +70,7 @@ export default function Register({ active, open, closeAll }: Props) {
 
 	return (
 		<Wrapper ref={wrapper} active={active} as="form" onSubmit={submit}>
-			<Close onClick={closeAll}>
+			<Close onClick={closeModals}>
 				<Icon path={mdiClose} />
 			</Close>
 			<H3 className="mb-2">Register</H3>
@@ -106,7 +103,7 @@ export default function Register({ active, open, closeAll }: Props) {
 				/>
 			</Col>
 			<P className="mb-5">
-				Already a member? <A onClick={() => open("login")}>Login</A>
+				Already a member? <A onClick={() => openModal("login")}>Login</A>
 			</P>
 			<ButtonLoading type="submit" status={status} disabled={status === "loading"}>
 				Register

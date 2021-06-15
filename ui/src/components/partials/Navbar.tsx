@@ -1,25 +1,16 @@
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
+import { useAuthModals } from "../contexts/AuthModalContext";
 import { useAuth } from "../contexts/UserContext";
 import { ButtonSmall } from "../styled-components/interactive";
 import { Row } from "../styled-components/layout";
 import { header } from "../styled-components/typography";
-import Modals, { Modal } from "./modals/Modals";
+import Modals from "./modals/Modals";
 
 export default function Navbar() {
 	const { loggedIn, loading, logout } = useAuth();
-
-	const [activeModal, setActiveModal] = useState<Modal>(null);
-
-	function closeModals() {
-		setActiveModal(null);
-	}
-
-	function openModal(modal: Modal) {
-		setActiveModal(modal);
-	}
+	const { openModal } = useAuthModals();
 
 	return (
 		<Wrapper>
@@ -47,7 +38,7 @@ export default function Navbar() {
 					)}
 				</List>
 			</Nav>
-			<Modals active={activeModal} closeAll={closeModals} open={openModal} />
+			<Modals />
 		</Wrapper>
 	);
 }

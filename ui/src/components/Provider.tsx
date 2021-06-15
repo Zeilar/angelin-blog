@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "../styles/globalStyles";
 import { theme } from "../styles/theme";
+import { AuthModalContextProvider } from "./contexts/AuthModalContext";
 import { UserContextProvider } from "./contexts/UserContext";
 
 interface Props {
@@ -12,8 +13,10 @@ export default function Provider({ children }: Props) {
 	return (
 		<ThemeProvider theme={theme}>
 			<UserContextProvider>
-				<GlobalStyles />
-				{children}
+				<AuthModalContextProvider>
+					<GlobalStyles />
+					{children}
+				</AuthModalContextProvider>
 			</UserContextProvider>
 		</ThemeProvider>
 	);

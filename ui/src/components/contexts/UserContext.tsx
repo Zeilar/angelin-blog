@@ -12,7 +12,7 @@ interface Context {
 	loggedIn: boolean;
 	login: (credentials: LoginCredentials) => Promise<Response<User>>;
 	register: (credentials: RegisterCredentials) => Promise<Response<User>>;
-	logout: () => Promise<boolean>;
+	logout: () => Promise<Response<User>>;
 	loading: boolean;
 }
 
@@ -56,7 +56,7 @@ export function UserContextProvider({ children }: Props) {
 		return { code, error };
 	}
 
-	const values: any = {
+	const values: Context = {
 		loggedIn: Boolean(user),
 		user,
 		login,

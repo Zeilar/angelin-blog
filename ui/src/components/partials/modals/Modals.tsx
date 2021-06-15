@@ -1,20 +1,15 @@
 import Login from "./Login";
 import Register from "./Register";
 import { Background } from "./_styles";
+import { useAuthModals } from "../../contexts/AuthModalContext";
 
-export type Modal = "login" | "register" | null;
+export default function Modals() {
+	const { activeModal } = useAuthModals();
 
-interface Props {
-	active: Modal;
-	open: (modal: Modal) => void;
-	closeAll: () => void;
-}
-
-export default function Modals({ active, open, closeAll }: Props) {
 	return (
-		<Background active={active !== null}>
-			<Login active={active === "login"} open={open} closeAll={closeAll} />
-			<Register active={active === "register"} open={open} closeAll={closeAll} />
+		<Background active={activeModal !== null}>
+			<Login />
+			<Register />
 		</Background>
 	);
 }
