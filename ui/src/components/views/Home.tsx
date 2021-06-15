@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import { H1, H2, H6 } from "../styled-components/typography";
+import { H1, H2, H6 } from "../styled-components";
 import { Post, Tag } from "../../types/models";
 import { Link } from "react-router-dom";
 import { useFetch } from "../hooks";

@@ -2,12 +2,9 @@ import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { Close, Wrapper } from "./_styles";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
-import ButtonLoading from "../../misc/ButtonLoading";
 import { theme } from "../../../styles/theme";
-import Input from "../../misc/Input";
-import { FormError } from "../../styled-components/interactive";
-import { Col } from "../../styled-components/layout";
-import { A, H3, P } from "../../styled-components/typography";
+import { Input, ButtonLoading } from "../../misc";
+import { A, H3, P, Col, FormError } from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { useAuthModals, useAuth } from "../../contexts";
 
