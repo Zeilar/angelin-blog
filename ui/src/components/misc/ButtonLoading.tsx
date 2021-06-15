@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import styled, { css } from "styled-components";
-import { Button } from "../styled-components/interactive";
+import styled from "styled-components";
+import { Button } from "../styled-components";
 import { mdiLoading, mdiClose, mdiCheck } from "@mdi/js";
 import Icon from "@mdi/react";
 import { theme } from "../../styles/theme";

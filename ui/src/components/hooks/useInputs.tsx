@@ -1,6 +1,6 @@
 import { useState, ChangeEvent } from "react";
 
-export default function useInputs(inputsArg: { [key: string]: string }) {
+export function useInputs(inputsArg: { [key: string]: string }) {
 	if (!inputsArg) throw new Error(`Expected inputs object, got ${JSON.stringify(inputsArg)}`);
 
 	const [inputs, setInputs] = useState(inputsArg);

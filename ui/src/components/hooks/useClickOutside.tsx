@@ -7,7 +7,7 @@ interface Args {
 	onError?: (error: Error) => void;
 }
 
-export default function useClickOutside<T extends HTMLElement>(
+export function useClickOutside<T extends HTMLElement>(
 	callback: (element?: T) => void,
 	args?: Args
 ) {

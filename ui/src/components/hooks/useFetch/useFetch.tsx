@@ -15,7 +15,7 @@ export function parseQueryParams(params?: QueryParams) {
 	return `?${queries}`;
 }
 
-export default function useFetch<T>(url: string, args?: Args, callback?: (data: T) => void) {
+export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => void) {
 	const [data, setData] = useState<T>();
 	const [status, setStatus] = useState<Status>("loading");
 	const [memoArgs, setMemoArgs] = useState<Args>();

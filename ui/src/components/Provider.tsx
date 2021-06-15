@@ -2,8 +2,7 @@ import { ReactNode } from "react";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "../styles/globalStyles";
 import { theme } from "../styles/theme";
-import { AuthModalContextProvider } from "./contexts/AuthModalContext";
-import { UserContextProvider } from "./contexts/UserContext";
+import { AuthModalContextProvider, UserContextProvider } from "./contexts";
 
 interface Props {
 	children: ReactNode;

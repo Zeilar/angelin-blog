@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet";
 import { H1, H2, H6 } from "../styled-components/typography";
 import { Post, Tag } from "../../types/models";
 import { Link } from "react-router-dom";
-import useFetch from "../hooks/useFetch/useFetch";
+import { useFetch } from "../hooks";
 
 export default function Home() {
 	const query = useFetch<{ data: Post[] }>("http://localhost:3030/api/posts");

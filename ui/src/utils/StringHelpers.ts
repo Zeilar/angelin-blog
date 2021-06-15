@@ -1,5 +1,5 @@
 export default class StringHelpers {
-	public string: string = "";
+	public string = "";
 
 	constructor(string: string) {
 		this.string = string;

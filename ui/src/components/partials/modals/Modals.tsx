@@ -1,7 +1,6 @@
-import Login from "./Login";
-import Register from "./Register";
+import { Register, Login } from "./";
 import { Background } from "./_styles";
-import { useAuthModals } from "../../contexts/AuthModalContext";
+import { useAuthModals } from "../../contexts";
 
 export default function Modals() {
 	const { activeModal } = useAuthModals();

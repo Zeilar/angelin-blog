@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Redirect } from "react-router";
-import { useAuth } from "../contexts/UserContext";
+import { useAuth } from "../contexts";
 
 interface Props {
 	children: ReactNode;

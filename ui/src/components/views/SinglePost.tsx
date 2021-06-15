@@ -1,12 +1,10 @@
-import { useState, useEffect } from "react";
 import { RouteComponentProps } from "../../types/props";
 import { Post } from "../../types/models";
-import { SERVER_URL } from "../../utils/constants";
-import { H1, H2 } from "../styled-components/typography";
+import { SERVER_URL } from "../../utils";
 import { Helmet } from "react-helmet";
-import useFetch from "../hooks/useFetch/useFetch";
+import { useFetch } from "../hooks";
 import styled from "styled-components";
-import { Col } from "../styled-components/layout";
+import { Col, H1, H2 } from "../styled-components";
 import { theme } from "../../styles/theme";
 
 interface MatchParams {

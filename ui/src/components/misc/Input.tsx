@@ -1,8 +1,7 @@
 import { RefObject } from "react";
 import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
-import { Input as StyledInput, FormError } from "../styled-components/interactive";
-import { Col, Grid } from "../styled-components/layout";
+import { Input as StyledInput, FormError, Col, Grid } from "../styled-components";
 import classnames from "classnames";
 
 interface Props<T> {

@@ -1,17 +1,15 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
-import useClickOutside from "../../hooks/useClickOutside";
 import { Close, Wrapper } from "./_styles";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
-import { useAuth } from "../../contexts/UserContext";
 import ButtonLoading from "../../misc/ButtonLoading";
 import { theme } from "../../../styles/theme";
 import Input from "../../misc/Input";
 import { FormError } from "../../styled-components/interactive";
 import { Col } from "../../styled-components/layout";
 import { A, H3, P } from "../../styled-components/typography";
-import useInputs from "../../hooks/useInputs";
-import { useAuthModals } from "../../contexts/AuthModalContext";
+import { useInputs, useClickOutside } from "../../hooks";
+import { useAuthModals, useAuth } from "../../contexts";
 
 export default function Register() {
 	const { register, loggedIn } = useAuth();

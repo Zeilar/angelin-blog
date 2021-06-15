@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, ReactNode, useContext } from "react";
 import { User } from "../../types/models";
 import { LoginCredentials, RegisterCredentials, Response } from "../../types/request";
-import UserHelpers from "../../utils/User";
+import { UserHelpers } from "../../utils";
 
 interface Props {
 	children: ReactNode;
