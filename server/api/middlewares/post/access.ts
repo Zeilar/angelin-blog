@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import errorlog from "../../../utils/errorlog";
-import PostPolicy, { Action } from "../../policies/PostPolicy";
+import { PostPolicy, PostAction } from "../../policies";
 
-function can(res: Response, action: Action) {
+function can(res: Response, action: PostAction) {
 	try {
 		const authorized = new PostPolicy(res.user, res.post).can(action);
 

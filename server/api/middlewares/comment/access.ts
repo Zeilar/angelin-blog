@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import errorlog from "../../../utils/errorlog";
-import CommentPolicy, { Action } from "../../policies/CommentPolicy";
+import { CommentPolicy, CommentAction } from "../../policies";
 
-function can(res: Response, action: Action) {
+function can(res: Response, action: CommentAction) {
 	try {
 		const authorized = new CommentPolicy(res.user, res.comment).can(action);
 
