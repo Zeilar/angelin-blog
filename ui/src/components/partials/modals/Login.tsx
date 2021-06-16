@@ -7,6 +7,7 @@ import { theme } from "../../../styles/theme";
 import { FormError, Col, A, H3, P } from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { useAuthModals, useAuth } from "../../contexts";
+import classnames from "classnames";
 
 type Status = "error" | "loading" | "success" | "done";
 
@@ -65,7 +66,7 @@ export function Login() {
 	}
 
 	return (
-		<Wrapper ref={wrapper} active={active} as="form" onSubmit={submit}>
+		<Wrapper className={classnames({ active })} ref={wrapper} as="form" onSubmit={submit}>
 			<Close onClick={closeModals}>
 				<Icon path={mdiClose} />
 			</Close>

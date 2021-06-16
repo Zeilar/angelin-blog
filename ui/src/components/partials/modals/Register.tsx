@@ -7,6 +7,7 @@ import { Input, ButtonLoading } from "../../misc";
 import { A, H3, P, Col, FormError } from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { useAuthModals, useAuth } from "../../contexts";
+import classnames from "classnames";
 
 export function Register() {
 	const { register, loggedIn } = useAuth();
@@ -64,7 +65,7 @@ export function Register() {
 	}
 
 	return (
-		<Wrapper ref={wrapper} active={active} as="form" onSubmit={submit}>
+		<Wrapper className={classnames({ active })} ref={wrapper} as="form" onSubmit={submit}>
 			<Close onClick={closeModals}>
 				<Icon path={mdiClose} />
 			</Close>

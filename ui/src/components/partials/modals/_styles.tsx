@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { theme } from "../../../styles/theme";
 import { Col } from "../../styled-components/layout";
 
@@ -11,12 +11,10 @@ export const Background = styled.div`
 	left: 0;
 	transition: 0.25s;
 	pointer-events: none;
-	${({ active }: { active: boolean }) =>
-		active &&
-		css`
-			pointer-events: all;
-			background-color: rgba(0, 0, 0, 0.35);
-		`}
+	&.active {
+		pointer-events: all;
+		background-color: rgba(0, 0, 0, 0.35);
+	}
 `;
 
 export const Wrapper = styled(Col)`
@@ -32,13 +30,11 @@ export const Wrapper = styled(Col)`
 	border-radius: ${theme.borderRadius}px;
 	background-color: rgb(${theme.color.primary});
 	box-shadow: ${theme.shadow.elevate};
-	${({ active }: { active: boolean }) =>
-		active &&
-		css`
-			pointer-events: all;
-			opacity: 1;
-			transform: translateX(-50%) scale(1);
-		`}
+	&.active {
+		pointer-events: all;
+		opacity: 1;
+		transform: translateX(-50%) scale(1);
+	}
 `;
 
 export const Close = styled.button.attrs({ type: "button" })`
