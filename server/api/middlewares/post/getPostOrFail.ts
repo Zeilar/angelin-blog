@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { Post } from "../../../db/models";
 import errorlog from "../../../utils/errorlog";
-import { sanitizePost } from "../../utils/post";
+import { sanitizePost } from "../../utils";
 
 export async function getPostOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;

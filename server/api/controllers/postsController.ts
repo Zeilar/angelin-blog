@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import { Post } from "../../db/models";
 import errorlog from "../../utils/errorlog";
-import { ErrorMessages } from "../utils/constants";
 import { validateBody } from "../middlewares/validateBody";
-import { fetchTags } from "../utils/tag";
+import { fetchTags, ErrorMessages } from "../utils";
 
 export async function createPost(req: Request, res: Response) {
 	if (!validateBody(["body", "title"], req.body)) {

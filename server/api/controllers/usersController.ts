@@ -4,8 +4,7 @@ import { User } from "../../db/models";
 import { count } from "../../db/utils/query";
 import errorlog from "../../utils/errorlog";
 import { validateBody } from "../middlewares/validateBody";
-import { sanitizeUser } from "../utils/user";
-import { ErrorMessages } from "../utils/constants";
+import { sanitizeUser, ErrorMessages } from "../utils";
 import { z } from "zod";
 
 export async function authenticate(req: Request, res: Response) {

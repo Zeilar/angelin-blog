@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { Comment } from "../../../db/models";
 import errorlog from "../../../utils/errorlog";
-import { sanitizeComment } from "../../utils/comment";
+import { sanitizeComment } from "../../utils";
 
 export async function getCommentOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;

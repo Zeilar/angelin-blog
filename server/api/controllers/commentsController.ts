@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Comment } from "../../db/models";
 import errorlog from "../../utils/errorlog";
 import { validateBody } from "../middlewares/validateBody";
-import { ErrorMessages } from "../utils/constants";
+import { ErrorMessages } from "../utils";
 
 export async function createComment(req: Request, res: Response) {
 	const { post_id, body } = req.body;
