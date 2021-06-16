@@ -53,7 +53,9 @@ export async function editPost(req: Request, res: Response) {
 			await res.post!.$relatedQuery("tags").unrelate();
 
 			for (let i = 0; i < tags?.length; i++) {
-				const tag = await Tag.query().where({ name: tags[i] }).first();
+				let tag = await Tag.query().where({ name: tags[i] }).first();
+				if (!tag) tag = await Tag.query().insertAndFetch({ name: tags[i] });
+				if (!tag) throw new Error(`Could not create or find tag: ${tags[i]}`);
 				await res.post!.$relatedQuery("tags").relate(tag);
 			}
 		}
