@@ -10,8 +10,7 @@ export async function getUserOrFail(req: Request, res: Response, next: NextFunct
 			if (!user) return res.status(404).end();
 			res.user = user;
 		} else {
-			const users = await User.query().withGraphFetched(User.relationships);
-			res.users = users;
+			res.users = await User.query().withGraphFetched(User.relationships);
 		}
 		next();
 	} catch (error) {

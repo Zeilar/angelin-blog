@@ -1,5 +1,5 @@
 import { Model } from "objection";
-import { Post } from "./Post";
+import { Post } from "./";
 
 export class Tag extends Model {
 	public static tableName = "tags";

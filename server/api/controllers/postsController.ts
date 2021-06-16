@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Post } from "../../db/models";
 import errorlog from "../../utils/errorlog";
 import { validateBody } from "../middlewares/validateBody";
-import { fetchTags, ErrorMessages } from "../utils";
+import { fetchTags, ErrorMessages, sanitizePost } from "../utils";
 
 export async function createPost(req: Request, res: Response) {
 	if (!validateBody(["body", "title"], req.body)) {
@@ -27,11 +27,11 @@ export async function createPost(req: Request, res: Response) {
 }
 
 export function getAllPosts(req: Request, res: Response) {
-	res.status(200).json({ data: res.posts });
+	res.status(200).json({ data: res.posts!.map(post => sanitizePost(post)) });
 }
 
 export function getPostById(req: Request, res: Response) {
-	res.status(200).json({ data: res.post });
+	res.status(200).json({ data: sanitizePost(res.post!) });
 }
 
 export async function editPost(req: Request, res: Response) {
@@ -45,11 +45,7 @@ export async function editPost(req: Request, res: Response) {
 	try {
 		if (tags) {
 			await res.post!.$relatedQuery("tags").unrelate();
-
 			const fetchedTags = await fetchTags(tags);
-
-			console.log(fetchedTags);
-
 			for (let i = 0; i < fetchedTags.length; i++) {
 				await res.post!.$relatedQuery("tags").relate(fetchedTags[i]);
 			}

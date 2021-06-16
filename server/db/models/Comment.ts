@@ -1,6 +1,5 @@
 import { Model } from "objection";
-import { Post } from "./Post";
-import { User } from "./User";
+import { Post, User } from "./";
 
 export class Comment extends Model {
 	public static tableName = "comments";

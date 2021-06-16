@@ -1,7 +1,5 @@
 import { Model } from "objection";
-import { Comment } from "./Comment";
-import { Tag } from "./Tag";
-import { User } from "./User";
+import { Tag, User, Comment } from "./";
 
 export class Post extends Model {
 	public static tableName = "posts";

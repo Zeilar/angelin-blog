@@ -37,10 +37,7 @@ export async function register(req: Request, res: Response) {
 
 		// TODO: Validation
 
-		const user = await User.query().insert({
-			email,
-			password: await hash(password, 10),
-		});
+		const user = await User.query().insert({ email, password: await hash(password, 10) });
 
 		req.session.user = user.id;
 

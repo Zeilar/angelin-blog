@@ -28,9 +28,7 @@ app.use(
 		secret: SESSION_SECRET!,
 		resave: false,
 		saveUninitialized: true,
-		cookie: {
-			expires: oneWeekFromNow,
-		},
+		cookie: { expires: oneWeekFromNow },
 	})
 );
 

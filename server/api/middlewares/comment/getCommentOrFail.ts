@@ -11,11 +11,9 @@ export async function getCommentOrFail(req: Request, res: Response, next: NextFu
 				.findById(id)
 				.withGraphFetched(Comment.relationships);
 			if (!comment) return res.status(404).end();
-
 			res.comment = sanitizeComment(comment);
 		} else {
-			const comments = await Comment.query().withGraphFetched(Comment.relationships);
-			res.comments = comments;
+			res.comments = await Comment.query().withGraphFetched(Comment.relationships);
 		}
 		next();
 	} catch (error) {

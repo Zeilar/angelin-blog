@@ -6,3 +6,5 @@ export enum ErrorMessages {
 	INCORRECT_CREDENTIALS = "Incorrect credentials.",
 	MISSING_INPUT = "Missing input.",
 }
+
+export const PAGE_SIZE = 20;
