@@ -14,6 +14,7 @@ export class Post extends Model {
 	public readonly updated_at!: string;
 	public author!: User;
 	public comments?: Comment[];
+	public tags?: Tag[];
 
 	public static relationships = {
 		author: true,

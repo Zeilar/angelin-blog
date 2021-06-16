@@ -41,9 +41,25 @@ export function getPostById(req: Request, res: Response) {
 }
 
 export async function editPost(req: Request, res: Response) {
-	const { title, body } = req.body;
+	if (!validateBody(["body", "title"], req.body)) {
+		res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
+		return;
+	}
+
+	const { title, body, tags } = req.body;
+
 	try {
-		res.status(200).json(await res.post!.$query().patchAndFetch({ body, title }));
+		if (tags) {
+			await res.post!.$relatedQuery("tags").unrelate();
+
+			for (let i = 0; i < tags?.length; i++) {
+				const tag = await Tag.query().where({ name: tags[i] }).first();
+				await res.post!.$relatedQuery("tags").relate(tag);
+			}
+		}
+		res.status(200).json(
+			await res.post!.$query().patchAndFetch({ body, title }).withGraphFetched("tags")
+		);
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();
