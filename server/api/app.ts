@@ -6,9 +6,7 @@ import session from "express-session";
 import path from "path";
 import cors from "cors";
 
-import usersRoutes from "./routes/usersRoutes";
-import postsRoutes from "./routes/postsRoutes";
-import commentsRoutes from "./routes/commentsRoutes";
+import { usersRoutes, postsRoutes, commentsRoutes } from "./routes";
 
 bootstrap();
 const app = express();
