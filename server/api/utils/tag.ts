@@ -1,5 +1,9 @@
 import { Tag } from "../../db/models";
 
+/**
+ * @example const fetchedTags = await fetchTags(tags);
+ * @description Takes an array of tag names, then upserts and fetches them
+ */
 export async function fetchTags(tagsArg: string[]) {
 	const tags = [];
 	for (let i = 0; i < tagsArg?.length; i++) {

@@ -44,11 +44,4 @@ app.get("/*", (req: Request, res: Response) => {
 	res.sendFile(path.join(__dirname, "../../ui/index.html"));
 });
 
-try {
-	app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
-} catch (error) {
-	console.log("ERRORRRRRRRRRRRRRRR");
-
-	errorlog(error);
-	process.exit(1);
-}
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

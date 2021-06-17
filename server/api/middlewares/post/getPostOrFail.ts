@@ -6,8 +6,6 @@ import { PAGE_SIZE, sanitizePost, NumberHelpers } from "../../utils";
 export async function getPostOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;
 	const { page, perPage } = req.query;
-	console.log(page, Number(page), NumberHelpers.clamp(Number(page) - 1));
-
 	try {
 		if (id) {
 			const post = await Post.query().findById(id).withGraphFetched(Post.relationships);

@@ -1,10 +1,13 @@
 import { difference } from "lodash";
 import errorlog from "../../utils/errorlog";
 
+/**
+ * @description Compares keys input to body object keys, and return whether they match or not
+ * @example const result = validateBody(["username", "password"], req.body);
+ */
 export function validateBody(keys: string[], body: object): boolean;
 export function validateBody(keys: string, body: object): boolean;
 export function validateBody(keys: { [key: string]: true }, body: object): boolean;
-
 export function validateBody(keys: unknown, body: object) {
 	let keysArr;
 	try {
