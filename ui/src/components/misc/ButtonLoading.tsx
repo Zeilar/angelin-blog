@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
-import { Button } from "../styled-components";
+import { ButtonPrimary } from "../styled-components";
 import { mdiLoading, mdiClose, mdiCheck } from "@mdi/js";
 import Icon from "@mdi/react";
 import { theme } from "../../styles/theme";
@@ -49,7 +49,7 @@ export function ButtonLoading(props: Props) {
 	);
 }
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(ButtonPrimary)`
 	position: relative;
 	transition: 0.05s;
 	& svg {

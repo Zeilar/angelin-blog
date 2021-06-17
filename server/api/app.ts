@@ -7,6 +7,7 @@ import path from "path";
 import cors from "cors";
 
 import { usersRoutes, postsRoutes, commentsRoutes } from "./routes";
+import errorlog from "../utils/errorlog";
 
 bootstrap();
 const app = express();
@@ -43,4 +44,11 @@ app.get("/*", (req: Request, res: Response) => {
 	res.sendFile(path.join(__dirname, "../../ui/index.html"));
 });
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+try {
+	app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+} catch (error) {
+	console.log("ERRORRRRRRRRRRRRRRR");
+
+	errorlog(error);
+	process.exit(1);
+}

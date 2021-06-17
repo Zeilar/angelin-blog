@@ -65,9 +65,9 @@ export function Register() {
 			<Close onClick={closeModals}>
 				<Icon path={mdiClose} />
 			</Close>
-			<H3 className="mb-2">Register</H3>
+			<H3 className="mb-4">Register</H3>
 			{error && <FormError>{error}</FormError>}
-			<Col className="mb-7">
+			<Col className="mb-10">
 				<Input
 					forwardRef={firstInput}
 					value={inputs.email}

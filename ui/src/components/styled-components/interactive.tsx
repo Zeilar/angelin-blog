@@ -22,7 +22,7 @@ export const button = css`
 	}
 `;
 
-export const Button = styled.button`
+export const ButtonPrimary = styled.button`
 	${button}
 	background-color: rgba(${theme.color.body});
 	color: rgb(${theme.color.text});
@@ -39,6 +39,10 @@ export const Button = styled.button`
 			background-color: rgba(${theme.color.brand}, 0.05);
 		}
 	}
+`;
+
+export const ButtonSecondary = styled(ButtonPrimary)`
+	/* */
 `;
 
 export const ButtonSmall = styled.button`

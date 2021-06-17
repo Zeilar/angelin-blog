@@ -1,11 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import { Post } from "../../../db/models";
 import errorlog from "../../../utils/errorlog";
-import { PAGE_SIZE, sanitizePost } from "../../utils";
+import { PAGE_SIZE, sanitizePost, NumberHelpers } from "../../utils";
 
 export async function getPostOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;
 	const { page, perPage } = req.query;
+	console.log(page, Number(page), NumberHelpers.clamp(Number(page) - 1));
+
 	try {
 		if (id) {
 			const post = await Post.query().findById(id).withGraphFetched(Post.relationships);
@@ -15,7 +17,10 @@ export async function getPostOrFail(req: Request, res: Response, next: NextFunct
 			res.posts = (
 				await Post.query()
 					.withGraphFetched(Post.relationships)
-					.page(Number(page) || 0, Number(perPage) || PAGE_SIZE)
+					.page(
+						NumberHelpers.clamp(Number(page) - 1),
+						NumberHelpers.clamp(Number(perPage)) || PAGE_SIZE
+					)
 			).results;
 		}
 		next();
