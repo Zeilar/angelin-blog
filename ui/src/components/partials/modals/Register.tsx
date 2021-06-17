@@ -8,6 +8,7 @@ import { A, H3, P, Col, FormError } from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { useAuthModals, useAuth } from "../../contexts";
 import classnames from "classnames";
+import { ModalStatus } from "./";
 
 export function Register() {
 	const { register, loggedIn } = useAuth();
@@ -17,9 +18,9 @@ export function Register() {
 
 	const wrapper = useClickOutside<HTMLFormElement>(() => active && closeModals());
 
-	const [status, setStatus] = useState<"error" | "loading" | "success" | "done">();
+	const [status, setStatus] = useState<ModalStatus>(null);
 	const { inputs, onChange } = useInputs({ email: "", password: "", passwordConfirm: "" });
-	const [error, setError] = useState<string | null>(null);
+	const [error, setError] = useState<string | string[] | null>(null);
 
 	const firstInput = useRef<HTMLInputElement | null>(null);
 
@@ -27,11 +28,6 @@ export function Register() {
 		if (active && firstInput.current) {
 			firstInput.current.focus();
 		}
-
-		if (active) document.title = "Angelin Blog | Register";
-		return () => {
-			document.title = "Angelin Blog";
-		};
 	}, [active]);
 
 	async function submit(e: FormEvent<HTMLFormElement>) {
@@ -60,7 +56,7 @@ export function Register() {
 		}
 
 		setTimeout(() => {
-			setStatus(undefined);
+			setStatus(null);
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 
@@ -99,7 +95,10 @@ export function Register() {
 				/>
 			</Col>
 			<P className="mb-5">
-				Already a member? <A onClick={() => openModal("login")}>Login</A>
+				Already a member?{" "}
+				<A className="font-bold" onClick={() => openModal("login")}>
+					Login
+				</A>
 			</P>
 			<ButtonLoading type="submit" status={status} disabled={status === "loading"}>
 				Register

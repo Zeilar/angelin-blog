@@ -8,8 +8,7 @@ import { FormError, Col, A, H3, P } from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { useAuthModals, useAuth } from "../../contexts";
 import classnames from "classnames";
-
-type Status = "error" | "loading" | "success" | "done";
+import { ModalStatus } from "./";
 
 export function Login() {
 	const { login, loggedIn } = useAuth();
@@ -19,9 +18,9 @@ export function Login() {
 
 	const wrapper = useClickOutside<HTMLFormElement>(() => active && closeModals());
 
-	const [status, setStatus] = useState<Status>();
+	const [status, setStatus] = useState<ModalStatus>(null);
 	const { inputs, onChange } = useInputs({ email: "", password: "" });
-	const [error, setError] = useState<string | null>(null);
+	const [error, setError] = useState<string | string[] | null>(null);
 
 	const firstInput = useRef<HTMLInputElement | null>(null);
 
@@ -29,11 +28,6 @@ export function Login() {
 		if (active && firstInput.current) {
 			firstInput.current.focus();
 		}
-
-		if (active) document.title = "Angelin Blog | Login";
-		return () => {
-			document.title = "Angelin Blog";
-		};
 	}, [active]);
 
 	async function submit(e: FormEvent<HTMLFormElement>) {
@@ -61,7 +55,7 @@ export function Login() {
 		}
 
 		setTimeout(() => {
-			setStatus(undefined);
+			setStatus(null);
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 
@@ -92,7 +86,10 @@ export function Login() {
 				/>
 			</Col>
 			<P className="mb-5">
-				Not a member? <A onClick={() => openModal("register")}>Register</A>
+				Not a member?{" "}
+				<A className="font-bold" onClick={() => openModal("register")}>
+					Register
+				</A>
 			</P>
 			<ButtonLoading type="submit" status={status} disabled={status === "loading"}>
 				Login

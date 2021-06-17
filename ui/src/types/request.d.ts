@@ -16,7 +16,7 @@ export interface Body<T> {
 
 export interface Response<T> {
 	data?: T;
-	error?: string;
+	error?: string | string[];
 	code?: number;
 }
 

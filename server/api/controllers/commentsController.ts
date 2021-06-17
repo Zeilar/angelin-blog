@@ -16,7 +16,7 @@ export async function createComment(req: Request, res: Response) {
 	// TODO: validate
 
 	try {
-		const comment: Comment | null = await Comment.query().insert({
+		const comment = await Comment.query().insert({
 			post_id,
 			user_id: user,
 			body,

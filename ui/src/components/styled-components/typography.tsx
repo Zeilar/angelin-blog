@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { theme } from "../../styles/theme";
 
 export const header = css`
 	font-weight: 700;
@@ -47,10 +48,10 @@ export const P = styled.p`
 	${text}
 `;
 
-export const A = styled.span`
+export const A = styled.a`
 	${text}
 	cursor: pointer;
-	color: white;
+	color: rgb(${theme.color.link});
 	&:hover {
 		text-decoration: underline;
 	}

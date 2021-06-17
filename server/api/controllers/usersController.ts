@@ -36,6 +36,7 @@ export async function register(req: Request, res: Response) {
 		}
 
 		// TODO: Validation
+		// email required and type email, and password min/max
 
 		const user = await User.query().insert({ email, password: await hash(password, 10) });
 

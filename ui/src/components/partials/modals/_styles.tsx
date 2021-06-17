@@ -9,7 +9,7 @@ export const Background = styled.div`
 	height: 100vh;
 	top: 0;
 	left: 0;
-	transition: 0.25s;
+	transition: 0.5s;
 	pointer-events: none;
 	&.active {
 		pointer-events: all;

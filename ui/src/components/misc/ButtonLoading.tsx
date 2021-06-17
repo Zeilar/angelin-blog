@@ -6,7 +6,7 @@ import Icon from "@mdi/react";
 import { theme } from "../../styles/theme";
 import classnames from "classnames";
 
-type Status = "loading" | "success" | "error" | "done";
+type Status = "loading" | "success" | "error" | "done" | null;
 
 interface Props {
 	className?: string;

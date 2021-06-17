@@ -26,12 +26,13 @@ interface Theme {
 	borderRadius: number;
 	breakpoints: {
 		phone: number;
-		tablet: 1200;
+		tablet: number;
 	};
 }
 
 export const theme: Theme = {
 	color: {
+		// Must be kept in rgb format
 		body: "27, 39, 53",
 		primary: "32, 43, 57",
 		secondary: "24, 34, 47",
@@ -43,7 +44,7 @@ export const theme: Theme = {
 		textMuted: "75, 85, 90",
 		border: "50, 50, 50",
 		borderSecondary: "75, 75, 75",
-		link: "0, 100, 255",
+		link: "0, 150, 255",
 		error: "200, 0, 0",
 	},
 	shadow: {
@@ -58,6 +59,7 @@ export const theme: Theme = {
 	},
 	borderRadius: 3,
 	breakpoints: {
+		// In pixels
 		phone: 768,
 		tablet: 1200,
 	},

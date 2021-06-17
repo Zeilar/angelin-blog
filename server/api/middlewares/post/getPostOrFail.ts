@@ -5,7 +5,7 @@ import { PAGE_SIZE, sanitizePost } from "../../utils";
 
 export async function getPostOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;
-	const { page } = req.query;
+	const { page, perPage } = req.query;
 	try {
 		if (id) {
 			const post = await Post.query().findById(id).withGraphFetched(Post.relationships);
@@ -15,7 +15,7 @@ export async function getPostOrFail(req: Request, res: Response, next: NextFunct
 			res.posts = (
 				await Post.query()
 					.withGraphFetched(Post.relationships)
-					.page(Number(page), PAGE_SIZE)
+					.page(Number(page), Number(perPage) ?? PAGE_SIZE)
 			).results;
 		}
 		next();
