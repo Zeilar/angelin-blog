@@ -13,6 +13,7 @@ interface Theme {
 		borderSecondary: string;
 		link: string;
 		error: string;
+		success: string;
 	};
 	shadow: {
 		elevate: string;
@@ -45,7 +46,8 @@ export const theme: Theme = {
 		border: "50, 50, 50",
 		borderSecondary: "75, 75, 75",
 		link: "0, 150, 255",
-		error: "200, 0, 0",
+		error: "175, 0, 0",
+		success: "0, 175, 0",
 	},
 	shadow: {
 		elevate: "0 0 3px 0 rgba(0, 0, 0, 0.85)",

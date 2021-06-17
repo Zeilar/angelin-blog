@@ -15,7 +15,7 @@ export async function getPostOrFail(req: Request, res: Response, next: NextFunct
 			res.posts = (
 				await Post.query()
 					.withGraphFetched(Post.relationships)
-					.page(Number(page), Number(perPage) ?? PAGE_SIZE)
+					.page(Number(page) || 0, Number(perPage) || PAGE_SIZE)
 			).results;
 		}
 		next();

@@ -1,6 +1,6 @@
 node_modules
 build
 build-ui
-errorlog.txt
+errors
 .env
 .env.production

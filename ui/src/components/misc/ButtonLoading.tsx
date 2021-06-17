@@ -62,11 +62,13 @@ const StyledButton = styled(Button)`
 	}
 
 	&.success {
-		background-color: rgb(0, 150, 0);
+		background-color: rgb(${theme.color.success});
+		border-color: rgb(${theme.color.success});
 	}
 
 	&.error {
-		background-color: rgb(150, 0, 0);
+		background-color: rgb(${theme.color.error});
+		border-color: rgb(${theme.color.error});
 	}
 
 	&.iconActive {

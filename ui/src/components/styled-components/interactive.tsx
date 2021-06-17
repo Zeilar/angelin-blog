@@ -6,6 +6,7 @@ export const button = css`
 	border: 0;
 	padding: 10px 14px;
 	user-select: none;
+	font-family: Heebo;
 	box-shadow: ${theme.shadow.elevate};
 	border-radius: ${theme.borderRadius}px;
 	font-weight: bold;
@@ -23,17 +24,19 @@ export const button = css`
 
 export const Button = styled.button`
 	${button}
-	background-color: rgb(${theme.color.brand});
-	color: rgb(${theme.color.textSecondary});
+	background-color: rgba(${theme.color.body});
+	color: rgb(${theme.color.text});
 	min-width: 5rem;
+	font-size: 1.2rem;
 	box-shadow: ${theme.shadow.elevateUnder};
-	transition: transform 0.25s, background-color 0.05s;
+	transition: transform 0.25s;
+	border: 1px solid rgb(${theme.color.brand});
 	&:not([disabled]) {
 		&:hover {
 			box-shadow: ${theme.shadow.spread};
 		}
 		&:active {
-			background-color: rgb(${theme.color.brandDark});
+			background-color: rgba(${theme.color.brand}, 0.05);
 		}
 	}
 `;
