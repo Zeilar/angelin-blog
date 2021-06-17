@@ -21,7 +21,7 @@ export const Wrapper = styled(Col)`
 	position: absolute;
 	transform: translateX(-50%) scale(0.5);
 	left: 50%;
-	top: 30%;
+	top: 20%;
 	min-width: 400px;
 	pointer-events: none;
 	opacity: 0;
