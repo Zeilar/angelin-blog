@@ -26,7 +26,11 @@ export function Input<T>(props: Props<T>) {
 					))}
 				</Errors>
 			)}
-			{props.label && <Label htmlFor={labelId}>{props.label}</Label>}
+			{props.label && (
+				<Label className="mb-2" htmlFor={labelId}>
+					{props.label}
+				</Label>
+			)}
 			<InputField error={hasErrors} id={labelId} {...props} />
 		</Col>
 	);
@@ -42,10 +46,7 @@ const InputField = styled(StyledInput)`
 `;
 
 const Label = styled.label`
-	background-color: rgb(${theme.color.body});
-	box-shadow: ${theme.shadow.elevate};
 	display: inline;
-	padding: 3px 6px;
 	cursor: text;
 `;
 

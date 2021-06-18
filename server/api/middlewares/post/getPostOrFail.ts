@@ -16,7 +16,7 @@ export async function getPostOrFail(req: Request, res: Response, next: NextFunct
 				await Post.query()
 					.withGraphFetched(Post.relationships)
 					.page(
-						NumberHelpers.clamp(Number(page) - 1),
+						NumberHelpers.clamp(Number(page) - 1) || 0,
 						NumberHelpers.clamp(Number(perPage)) || PAGE_SIZE
 					)
 			).results;

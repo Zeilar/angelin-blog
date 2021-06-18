@@ -41,11 +41,7 @@ export const ButtonPrimary = styled.button`
 	}
 `;
 
-export const ButtonSecondary = styled(ButtonPrimary)`
-	/* */
-`;
-
-export const ButtonSmall = styled.button`
+export const ButtonSecondary = styled.button`
 	${button}
 	width: fit-content;
 	border-radius: ${theme.borderRadius}px;

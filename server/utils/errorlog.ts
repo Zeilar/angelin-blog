@@ -2,6 +2,9 @@ import path from "path";
 import fs from "fs";
 import dayjs from "dayjs";
 
+/**
+ * @description Writes caught errors to .txt files, sorted by date
+ */
 export default function errorlog(error: Error) {
 	console.error(error); // TODO: remove in production
 

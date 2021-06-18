@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
 import { useAuth, useAuthModals } from "../contexts";
-import { header, ButtonSmall, Row } from "../styled-components";
+import { header, ButtonSecondary, Row } from "../styled-components";
 import Modals from "./modals/Modals";
 
 export function Navbar() {
@@ -19,18 +19,20 @@ export function Navbar() {
 					{!loading && !loggedIn && (
 						<>
 							<Item>
-								<ButtonSmall onClick={() => openModal("login")}>Login</ButtonSmall>
+								<ButtonSecondary onClick={() => openModal("login")}>
+									Login
+								</ButtonSecondary>
 							</Item>
 							<Item>
-								<ButtonSmall onClick={() => openModal("register")}>
+								<ButtonSecondary onClick={() => openModal("register")}>
 									Register
-								</ButtonSmall>
+								</ButtonSecondary>
 							</Item>
 						</>
 					)}
 					{!loading && loggedIn && (
 						<Item>
-							<ButtonSmall onClick={logout}>Logout</ButtonSmall>
+							<ButtonSecondary onClick={logout}>Logout</ButtonSecondary>
 						</Item>
 					)}
 				</List>
