@@ -22,7 +22,7 @@ export function Login() {
 	const { inputs, onChange } = useInputs({ email: "", password: "" });
 	const [error, setError] = useState<string | string[] | null>(null);
 
-	const firstInput = useRef<HTMLInputElement | null>(null);
+	const firstInput = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		if (active && firstInput.current) {

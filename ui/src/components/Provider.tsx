@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { ThemeProvider } from "styled-components";
-import { GlobalStyles } from "../styles/globalStyles";
+import { GlobalStyles } from "../styles/GlobalStyles";
 import { theme } from "../styles/theme";
 import { AuthModalContextProvider, UserContextProvider } from "./contexts";
 

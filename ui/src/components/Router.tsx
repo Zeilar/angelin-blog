@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Home, SinglePost } from "./views";
+import { Home, SinglePost, CreatePost } from "./views";
 import { Helmet } from "react-helmet";
 import { Navbar } from "./partials";
 
@@ -9,6 +9,7 @@ export default function Router() {
 			<Navbar />
 			<Switch>
 				<Route component={Home} path="/" exact />
+				<Route component={CreatePost} path="/post/new" exact />
 				<Route component={SinglePost} path="/post/:id/:title?" exact />
 				<Route>
 					<Helmet>

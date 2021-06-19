@@ -11,6 +11,7 @@ export const Background = styled.div`
 	left: 0;
 	transition: 0.5s;
 	pointer-events: none;
+	z-index: 1000;
 	&.active {
 		pointer-events: all;
 		background-color: rgba(0, 0, 0, 0.35);

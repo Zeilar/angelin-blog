@@ -1,23 +1,16 @@
 import { createGlobalStyle } from "styled-components";
 import "./fonts.css";
 import { theme } from "./theme";
+import { editor } from "./tiptap";
 
 export const GlobalStyles = createGlobalStyle`
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
+    ${editor}
 
     ::selection {
         color: rgb(0, 255, 0);
     }
 
     html,
-    primary,
     #root {
         font-family: Open Sans;
         color: rgb(${theme.color.text});
@@ -54,5 +47,9 @@ export const GlobalStyles = createGlobalStyle`
     svg,
     ::placeholder {
         user-select: none;
+    }
+
+    code {
+        font-family: JetBrains Mono, monospace;
     }
 `;
