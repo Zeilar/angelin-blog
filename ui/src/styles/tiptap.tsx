@@ -2,7 +2,8 @@ import { css } from "styled-components";
 import { theme } from "./theme";
 
 export const editor = css`
-	.ProseMirror {
+	.ProseMirror,
+	.tiptap {
 		background-color: rgb(${theme.color.secondary});
 		outline: 0;
 		padding: 15px;
@@ -35,7 +36,7 @@ export const editor = css`
 		}
 
 		pre {
-			background: #0d0d0d;
+			background-color: rgba(0, 0, 0, 0.35);
 			color: #fff;
 			padding: 0.75rem 1rem;
 			border-radius: 0.5rem;

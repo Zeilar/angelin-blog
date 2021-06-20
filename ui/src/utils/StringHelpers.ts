@@ -1,4 +1,4 @@
-export default class StringHelpers {
+export class StringHelpers {
 	public string = "";
 
 	constructor(string: string) {

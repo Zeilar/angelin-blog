@@ -1,16 +1,21 @@
-import { useState, useEffect, FormEvent } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Toolbar from "./Toolbar";
+import { Post } from "../../../types/models";
+import { PostHelpers } from "../../../utils";
+import { Toolbar } from "./";
 
 export default function Editor() {
 	const editor = useEditor({
 		extensions: [StarterKit],
-		content: "<p>Hello World! 🌎️</p>",
 	});
 
 	async function submit() {
-		// editor.getHTML()
+		if (!editor) return;
+		const { code, data, error } = await PostHelpers.create<Post>({
+			title: "My post",
+			body: editor.getHTML(),
+		});
+		console.log(code, data, error);
 		// create post
 	}
 
@@ -18,6 +23,7 @@ export default function Editor() {
 		<div>
 			<Toolbar editor={editor} />
 			<EditorContent editor={editor} />
+			<button onClick={submit}>Submit</button>
 		</div>
 	);
 }

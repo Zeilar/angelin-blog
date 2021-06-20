@@ -1,7 +1,7 @@
 import { Args, QueryParams, Body } from "../types/request";
 import { SERVER_URL } from "./constants";
 
-export default class Request {
+export class Request {
 	public static parseQueryParams(params?: QueryParams) {
 		if (!params || !Object.keys(params).length) {
 			return "";
@@ -18,7 +18,7 @@ export default class Request {
 	public static async query<T>(args: Args) {
 		const queries = Request.parseQueryParams(args.params);
 		let data: Body<T> | null = null;
-		let code: number = 200;
+		let code = 200;
 
 		try {
 			const response = await fetch(`${args.url}${queries}`, {

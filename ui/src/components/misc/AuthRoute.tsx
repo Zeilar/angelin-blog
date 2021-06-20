@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Redirect } from "react-router";
-import { useAuth } from "../contexts";
+import { useAuth, useAuthModals } from "../contexts";
 
 interface Props {
 	children: ReactNode;
@@ -8,6 +8,7 @@ interface Props {
 
 export function AuthRoute({ children }: Props) {
 	const { loggedIn, loading } = useAuth();
+	const { openModal } = useAuthModals();
 
 	if (loading) {
 		return null;
@@ -15,6 +16,7 @@ export function AuthRoute({ children }: Props) {
 
 	if (!loggedIn) {
 		// make modal state context and fire it here
+		openModal("login");
 		return <Redirect to="/" />;
 	}
 

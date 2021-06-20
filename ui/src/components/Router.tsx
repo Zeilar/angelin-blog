@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Home, SinglePost, CreatePost } from "./views";
 import { Helmet } from "react-helmet";
 import { Navbar } from "./partials";
+import { AuthRoute } from "./misc";
 
 export default function Router() {
 	return (

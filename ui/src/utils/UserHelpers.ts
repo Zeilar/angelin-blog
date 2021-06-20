@@ -1,7 +1,7 @@
 import { LoginCredentials } from "../types/request";
-import Request from "./Request";
+import { Request } from "./";
 
-export default class UserHelpers {
+export class UserHelpers {
 	public static async login<T>(user: LoginCredentials) {
 		return await Request.auth<T>({ url: "login", method: "POST", body: user });
 	}

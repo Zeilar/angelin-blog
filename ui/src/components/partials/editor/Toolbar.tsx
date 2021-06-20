@@ -9,7 +9,7 @@ interface Props {
 	editor: Editor | null;
 }
 
-export default function Toolbar({ editor }: Props) {
+export function Toolbar({ editor }: Props) {
 	if (!editor) return null;
 
 	return (
