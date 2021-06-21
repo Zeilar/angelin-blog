@@ -18,6 +18,7 @@ export const button = css`
 		box-shadow: none;
 		background-color: rgba(0, 0, 0, 0.1);
 		cursor: default;
+		border-color: transparent;
 		color: rgb(${theme.color.textMuted});
 	}
 `;

@@ -6,7 +6,7 @@ import { header, ButtonSecondary, Row } from "../styled-components";
 import Modals from "./modals/Modals";
 
 export function Navbar() {
-	const { loggedIn, loading, logout } = useAuth();
+	const { loggedIn, loading, logout, user } = useAuth();
 	const { openModal } = useAuthModals();
 
 	return (
@@ -31,9 +31,16 @@ export function Navbar() {
 						</>
 					)}
 					{!loading && loggedIn && (
-						<Item>
-							<ButtonSecondary onClick={logout}>Logout</ButtonSecondary>
-						</Item>
+						<>
+							<Item>
+								<ButtonSecondary onClick={logout}>Logout</ButtonSecondary>
+							</Item>
+							{user?.is_admin && (
+								<Item>
+									<Link to="/post/new">Create post</Link>
+								</Item>
+							)}
+						</>
 					)}
 				</List>
 			</Nav>

@@ -13,9 +13,7 @@ export async function loggedIn(req: Request, res: Response, next: NextFunction) 
 }
 
 export async function admin(req: Request, res: Response, next: NextFunction) {
-	const user = await User.query().findById(req.session.user!);
-
-	if (!Boolean(user.is_admin)) {
+	if (!Boolean(res.user!.is_admin)) {
 		return res.status(403).end();
 	}
 
