@@ -14,7 +14,7 @@ export function AdminRoute({ children }: Props) {
 
 	if (!loggedIn || !user?.is_admin) {
 		openModal("login");
-		return <Redirect to={`/?rUrl=${pathname}`} />;
+		return <Redirect to={{ pathname: "/", state: { loginPrompt: true, url: pathname } }} />;
 	}
 
 	return children;
