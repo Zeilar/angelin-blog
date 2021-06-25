@@ -2,13 +2,14 @@ import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { Close, Wrapper } from "./_styles";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
-import { ButtonLoading, Input } from "../../misc";
+import { ButtonStatus, Input } from "../../misc";
 import { theme } from "../../../styles/theme";
 import { FormError, Col, A, H3, P } from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { useAuthModals, useAuth } from "../../contexts";
 import classnames from "classnames";
 import { ModalStatus } from "./";
+import ContainerLoader from "../../misc/ContainerLoader";
 
 export function Login() {
 	const { login, loggedIn } = useAuth();
@@ -19,7 +20,7 @@ export function Login() {
 	const wrapper = useClickOutside<HTMLFormElement>(() => active && closeModals());
 
 	const [status, setStatus] = useState<ModalStatus>(null);
-	const { inputs, onChange } = useInputs({ email: "", password: "" });
+	const { inputs, onChange, empty } = useInputs({ email: "", password: "" });
 	const [error, setError] = useState<string | string[] | null>(null);
 
 	const firstInput = useRef<HTMLInputElement>(null);
@@ -56,11 +57,13 @@ export function Login() {
 
 		setTimeout(() => {
 			setStatus(null);
+			empty();
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 
 	return (
 		<Wrapper className={classnames({ active })} ref={wrapper} as="form" onSubmit={submit}>
+			<ContainerLoader loading={status === "loading"} />
 			<Close onClick={closeModals}>
 				<Icon path={mdiClose} />
 			</Close>
@@ -91,9 +94,9 @@ export function Login() {
 					Register
 				</A>
 			</P>
-			<ButtonLoading type="submit" status={status} disabled={status === "loading"}>
+			<ButtonStatus type="submit" status={status}>
 				Login
-			</ButtonLoading>
+			</ButtonStatus>
 		</Wrapper>
 	);
 }

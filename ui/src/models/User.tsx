@@ -43,7 +43,7 @@ export class User implements UserSchema {
 		return query;
 	}
 
-	public update({ email, password }: UserEditable) {}
+	public async update({ email, password }: UserEditable) {}
 
 	public static async login(user: LoginCredentials) {
 		const query = await Request.auth<User>({

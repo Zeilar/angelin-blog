@@ -3,7 +3,7 @@ import { Close, Wrapper } from "./_styles";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
 import { theme } from "../../../styles/theme";
-import { Input, ButtonLoading } from "../../misc";
+import { Input, ButtonStatus } from "../../misc";
 import { A, H3, P, Col, FormError } from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { useAuthModals, useAuth } from "../../contexts";
@@ -100,9 +100,9 @@ export function Register() {
 					Login
 				</A>
 			</P>
-			<ButtonLoading type="submit" status={status} disabled={status === "loading"}>
+			<ButtonStatus type="submit" status={status} disabled={status === "loading"}>
 				Register
-			</ButtonLoading>
+			</ButtonStatus>
 		</Wrapper>
 	);
 }

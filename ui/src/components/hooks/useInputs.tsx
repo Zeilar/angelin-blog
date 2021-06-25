@@ -9,5 +9,13 @@ export function useInputs(inputsArg: { [key: string]: string }) {
 		setInputs(inputs => ({ ...inputs, [input]: e.target.value }));
 	}
 
-	return { inputs, onChange };
+	function empty() {
+		const emptyInputs = { ...inputs };
+		for (const property in emptyInputs) {
+			emptyInputs[property] = "";
+		}
+		setInputs(emptyInputs);
+	}
+
+	return { inputs, onChange, empty };
 }

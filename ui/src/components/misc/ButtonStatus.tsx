@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
 import { ButtonPrimary } from "../styled-components";
-import { mdiLoading, mdiClose, mdiCheck } from "@mdi/js";
+import { mdiClose, mdiCheck } from "@mdi/js";
 import Icon from "@mdi/react";
 import { theme } from "../../styles/theme";
 import classnames from "classnames";
@@ -17,7 +17,7 @@ interface Props {
 	disabled?: boolean;
 }
 
-export function ButtonLoading(props: Props) {
+export function ButtonStatus(props: Props) {
 	function renderIcon() {
 		switch (props.status) {
 			case "error":
@@ -25,8 +25,6 @@ export function ButtonLoading(props: Props) {
 			case "done":
 			case "success":
 				return <Success path={mdiCheck} />;
-			case "loading":
-				return <Loading path={mdiLoading} spin={1} />;
 			default:
 				return null;
 		}
@@ -37,7 +35,7 @@ export function ButtonLoading(props: Props) {
 	}
 
 	const classes = classnames(props.className, {
-		iconActive: props.status != null,
+		active: props.status != null,
 		error: props.status === "error",
 		success: props.status === "success" || props.status === "done",
 	});
@@ -71,14 +69,10 @@ const StyledButton = styled(ButtonPrimary)`
 		border-color: rgb(${theme.color.error});
 	}
 
-	&.iconActive {
+	&.active {
 		color: transparent !important;
 		pointer-events: none;
 	}
-`;
-
-const Loading = styled(Icon)`
-	color: rgb(${theme.color.text});
 `;
 
 const Error = styled(Icon)`
