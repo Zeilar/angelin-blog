@@ -1,6 +1,7 @@
 import { Request } from "../utils";
 import { Response } from "../types/request";
 import { User, Tag } from "./";
+import { Comment } from "./Comment";
 
 interface PostCredentials {
 	title: string;
@@ -16,6 +17,7 @@ interface PostSchema {
 	updated_at: string;
 	author: User;
 	tags?: Tag[];
+	comments?: Comment[];
 }
 
 export class Post implements PostSchema {
@@ -27,6 +29,7 @@ export class Post implements PostSchema {
 	public updated_at: string;
 	public author: User;
 	public tags?: Tag[];
+	public comments?: Comment[];
 
 	constructor(post: PostSchema) {
 		this.id = post.id;
@@ -36,6 +39,7 @@ export class Post implements PostSchema {
 		this.updated_at = post.updated_at;
 		this.author = post.author;
 		this.tags = post.tags;
+		this.comments = post.comments;
 	}
 
 	private static queryHandler(query: Response<Post>) {
