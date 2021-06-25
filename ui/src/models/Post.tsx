@@ -14,7 +14,7 @@ interface PostSchema {
 	body: string;
 	created_at: string;
 	updated_at: string;
-	author?: User;
+	author: User;
 	tags?: Tag[];
 }
 
@@ -25,7 +25,7 @@ export class Post implements PostSchema {
 	public body: string;
 	public created_at: string;
 	public updated_at: string;
-	public author?: User;
+	public author: User;
 	public tags?: Tag[];
 
 	constructor(post: PostSchema) {
@@ -34,6 +34,8 @@ export class Post implements PostSchema {
 		this.body = post.body;
 		this.created_at = post.created_at;
 		this.updated_at = post.updated_at;
+		this.author = post.author;
+		this.tags = post.tags;
 	}
 
 	private static queryHandler(query: Response<Post>) {

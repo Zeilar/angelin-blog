@@ -9,6 +9,7 @@ interface UserSchema {
 	created_at: string;
 	updated_at: string;
 	posts?: Post[];
+	comments?: Comment[];
 }
 
 interface UserEditable {
@@ -23,6 +24,7 @@ export class User implements UserSchema {
 	public created_at: string;
 	public updated_at: string;
 	public posts?: Post[];
+	public comments?: Comment[];
 
 	constructor(user: UserSchema) {
 		this.id = user.id;
@@ -31,6 +33,7 @@ export class User implements UserSchema {
 		this.created_at = user.created_at;
 		this.updated_at = user.updated_at;
 		this.posts = user.posts;
+		this.comments = user.comments;
 	}
 
 	private static queryHandler(query: Response<User>) {
