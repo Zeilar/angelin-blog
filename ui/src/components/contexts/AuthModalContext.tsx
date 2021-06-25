@@ -17,10 +17,7 @@ interface Context {
 export const AuthModalContext = createContext<Context | null>(null);
 
 export function AuthModalContextProvider({ children }: Props) {
-	const { state } = useLocation<RedirectState>();
-	const [activeModal, setActiveModal] = useState<ActiveModal>(
-		state?.loginPrompt ? "login" : null
-	);
+	const [activeModal, setActiveModal] = useState<ActiveModal>(null);
 	const { loggedIn } = useAuth();
 
 	function openModal(modal: ActiveModal) {

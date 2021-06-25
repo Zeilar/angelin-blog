@@ -8,20 +8,13 @@ interface Props {
 export function AdminRoute({ children }: Props) {
 	const { loggedIn, loading, user } = useAuth();
 	const { openModal } = useAuthModals();
-	const location = useLocation();
+	const { pathname } = useLocation();
 
 	if (loading) return null;
 
 	if (!loggedIn || !user?.is_admin) {
 		openModal("login");
-		return (
-			<Redirect
-				to={{
-					pathname: "/",
-					state: { loginPrompt: true, url: location.pathname },
-				}}
-			/>
-		);
+		return <Redirect to={`/?rUrl=${pathname}`} />;
 	}
 
 	return children;

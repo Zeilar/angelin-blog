@@ -11,12 +11,11 @@ import classnames from "classnames";
 import { ModalStatus } from "./";
 import ContainerLoader from "../../misc/ContainerLoader";
 import { useHistory, useLocation } from "react-router";
-import { RedirectState } from "../../../types/modals";
 
 export function Login() {
 	const { login, loggedIn } = useAuth();
 	const { activeModal, closeModals, openModal } = useAuthModals();
-	const { state } = useLocation<RedirectState>();
+	const { search } = useLocation();
 	const { push } = useHistory();
 
 	const active = activeModal === "login";
@@ -50,7 +49,8 @@ export function Login() {
 			setError(null);
 			setStatus("success");
 
-			if (state.url) push(state.url);
+			const url = new URLSearchParams(search).get("rUrl");
+			if (url) push(url);
 
 			setTimeout(() => {
 				closeModals();
@@ -64,7 +64,6 @@ export function Login() {
 		setTimeout(() => {
 			setStatus(null);
 			if (code === 200) empty();
-			console.log(state);
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 

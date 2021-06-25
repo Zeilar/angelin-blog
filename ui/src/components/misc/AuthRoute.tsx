@@ -12,7 +12,6 @@ export function AuthRoute({ children }: Props) {
 	if (loading) return null;
 
 	if (!loggedIn) {
-		// make modal state context and fire it here
 		openModal("login");
 		return <Redirect to="/" />;
 	}
