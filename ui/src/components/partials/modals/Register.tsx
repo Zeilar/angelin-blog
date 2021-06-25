@@ -10,10 +10,14 @@ import { useAuthModals, useAuth } from "../../contexts";
 import classnames from "classnames";
 import { ModalStatus } from "./";
 import ContainerLoader from "../../misc/ContainerLoader";
+import { useHistory, useLocation } from "react-router";
+import { RedirectState } from "../../../types/modals";
 
 export function Register() {
 	const { register, loggedIn } = useAuth();
 	const { activeModal, closeModals, openModal } = useAuthModals();
+	const { state } = useLocation<RedirectState>();
+	const { push } = useHistory();
 
 	const active = activeModal === "register";
 
@@ -46,6 +50,8 @@ export function Register() {
 		if (code === 200) {
 			setError(null);
 			setStatus("success");
+
+			if (state.url) push(state.url);
 
 			setTimeout(() => {
 				closeModals();
@@ -106,8 +112,8 @@ export function Register() {
 						Login
 					</A>
 				</P>
-				<ButtonStatus type="submit" status={status}>
-					Login
+				<ButtonStatus className="w-full" type="submit" status={status}>
+					Register
 				</ButtonStatus>
 			</form>
 		</Wrapper>

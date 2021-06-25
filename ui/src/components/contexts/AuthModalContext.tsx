@@ -2,12 +2,11 @@ import { useEffect } from "react";
 import { createContext, useState, ReactNode, useContext } from "react";
 import { useHistory, useLocation } from "react-router";
 import { useAuth } from "./UserContext";
+import { ActiveModal, RedirectState } from "../../types/modals";
 
 interface Props {
 	children: ReactNode;
 }
-
-export type ActiveModal = "login" | "register" | null;
 
 interface Context {
 	activeModal: ActiveModal;
@@ -15,31 +14,14 @@ interface Context {
 	closeModals: () => void;
 }
 
-interface State {
-	loginPrompt?: boolean;
-	url?: string;
-}
-
 export const AuthModalContext = createContext<Context | null>(null);
 
 export function AuthModalContextProvider({ children }: Props) {
-	const { state } = useLocation<State>();
-	const { push } = useHistory();
+	const { state } = useLocation<RedirectState>();
 	const [activeModal, setActiveModal] = useState<ActiveModal>(
 		state?.loginPrompt ? "login" : null
 	);
 	const { loggedIn } = useAuth();
-
-	useEffect(() => {
-		// Reset the state so if browser reloads the page, the login does not prompt again
-		if (state?.loginPrompt) {
-			push("", {});
-		}
-	}, [state?.loginPrompt, push]);
-
-	useEffect(() => {
-		return () => {};
-	}, [activeModal]);
 
 	function openModal(modal: ActiveModal) {
 		if (loggedIn) return;

@@ -10,12 +10,14 @@ import { useAuthModals, useAuth } from "../../contexts";
 import classnames from "classnames";
 import { ModalStatus } from "./";
 import ContainerLoader from "../../misc/ContainerLoader";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router";
+import { RedirectState } from "../../../types/modals";
 
 export function Login() {
 	const { login, loggedIn } = useAuth();
 	const { activeModal, closeModals, openModal } = useAuthModals();
-	// const history = useHistory();
+	const { state } = useLocation<RedirectState>();
+	const { push } = useHistory();
 
 	const active = activeModal === "login";
 
@@ -48,6 +50,8 @@ export function Login() {
 			setError(null);
 			setStatus("success");
 
+			if (state.url) push(state.url);
+
 			setTimeout(() => {
 				closeModals();
 				setStatus("done");
@@ -60,7 +64,7 @@ export function Login() {
 		setTimeout(() => {
 			setStatus(null);
 			if (code === 200) empty();
-			window.history.pushState({ loginPrompt: false }, "");
+			console.log(state);
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 
