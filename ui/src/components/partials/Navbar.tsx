@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
 import { useAuth, useAuthModals } from "../contexts";
@@ -8,6 +8,12 @@ import Modals from "./modals/Modals";
 export function Navbar() {
 	const { loggedIn, loading, logout, user } = useAuth();
 	const { openModal } = useAuthModals();
+	const { push } = useHistory();
+
+	function logoutHandler() {
+		push("/");
+		logout();
+	}
 
 	return (
 		<Wrapper>
@@ -33,7 +39,7 @@ export function Navbar() {
 					{!loading && loggedIn && (
 						<>
 							<Item>
-								<ButtonSecondary onClick={logout}>Logout</ButtonSecondary>
+								<ButtonSecondary onClick={logoutHandler}>Logout</ButtonSecondary>
 							</Item>
 							{user?.is_admin && (
 								<Item>
@@ -66,9 +72,6 @@ const Item = styled.li`
 const link = css`
 	${header}
 	padding: 10px;
-	&:hover {
-		/* background-color: rgba(${theme.color.primary}, 0.75); */
-	}
 `;
 
 const Link = styled(NavLink)`
