@@ -49,8 +49,8 @@ export function UserContextProvider({ children }: Props) {
 	}
 
 	async function logout() {
-		const { code, error } = await User.logout();
 		setUser(null);
+		const { code, error } = await User.logout();
 		return { code, error };
 	}
 
