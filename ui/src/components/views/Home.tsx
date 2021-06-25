@@ -1,15 +1,12 @@
 import { Helmet } from "react-helmet";
 import { H1 } from "../styled-components";
 import { Post, Tag } from "../../models";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useFetch } from "../hooks";
 import { ReadOnlyEditor } from "../partials/editor";
 
 export function Home() {
-	const history = useHistory();
 	const query = useFetch<{ data: Post[] }>("http://localhost:3030/api/posts");
-
-	// console.log("home", history);
 
 	return (
 		<div>

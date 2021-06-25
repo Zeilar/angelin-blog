@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { Home, SinglePost, CreatePost } from "./views";
 import { Helmet } from "react-helmet";
 import { AdminRoute } from "./misc";
@@ -6,7 +6,7 @@ import { Navbar } from "./partials";
 
 export default function Router() {
 	return (
-		<BrowserRouter>
+		<>
 			<Navbar />
 			<Switch>
 				<Route component={Home} path="/" exact />
@@ -21,6 +21,6 @@ export default function Router() {
 					<h1>404</h1>
 				</Route>
 			</Switch>
-		</BrowserRouter>
+		</>
 	);
 }

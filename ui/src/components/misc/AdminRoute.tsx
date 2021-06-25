@@ -8,6 +8,7 @@ interface Props {
 export function AdminRoute({ children }: Props) {
 	const { loggedIn, loading, user } = useAuth();
 	const { openModal } = useAuthModals();
+	const location = useLocation();
 
 	if (loading) return null;
 
@@ -17,7 +18,7 @@ export function AdminRoute({ children }: Props) {
 			<Redirect
 				to={{
 					pathname: "/",
-					state: { loginPrompt: true, url: window.location.href },
+					state: { loginPrompt: true, url: location.pathname },
 				}}
 			/>
 		);

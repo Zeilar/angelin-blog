@@ -1,11 +1,14 @@
 import Provider from "./Provider";
 import Router from "./Router";
 import "../styles/index.css";
+import { BrowserRouter } from "react-router-dom";
 
 export default function App() {
 	return (
-		<Provider>
-			<Router />
-		</Provider>
+		<BrowserRouter>
+			<Provider>
+				<Router />
+			</Provider>
+		</BrowserRouter>
 	);
 }
