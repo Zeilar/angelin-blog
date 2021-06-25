@@ -1,7 +1,6 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Post } from "../../../types/models";
-import { PostHelpers } from "../../../utils";
+import { Post } from "../../../models/Post";
 import { Toolbar } from "./";
 
 export default function Editor() {
@@ -11,7 +10,7 @@ export default function Editor() {
 
 	async function submit() {
 		if (!editor) return;
-		const { code, data, error } = await PostHelpers.create<Post>({
+		const { code, data, error } = await Post.create({
 			title: "My post",
 			body: editor.getHTML(),
 		});

@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect, ReactNode, useContext } from "react";
-import { User } from "../../types/models";
 import { LoginCredentials, RegisterCredentials, Response } from "../../types/request";
-import { UserHelpers } from "../../utils";
+import { User } from "../../models/User";
 
 interface Props {
 	children: ReactNode;
@@ -29,29 +28,28 @@ export function UserContextProvider({ children }: Props) {
 
 	useEffect(() => {
 		(async () => {
-			const { code, data } = await UserHelpers.authenticate<User>();
+			const { code, data } = await User.authenticate();
 			setLoading(false);
-			if (code === 200 && data) return setUser(data);
-			setUser(null);
+			if (code === 200 && data) setUser(data);
 		})();
 	}, []);
 
 	async function update() {}
 
 	async function login(credentials: LoginCredentials) {
-		const { data, code, error } = await UserHelpers.login<User>(credentials);
+		const { data, code, error } = await User.login(credentials);
 		if (code === 200 && data) setUser(data);
 		return { data, code, error };
 	}
 
 	async function register(credentials: LoginCredentials) {
-		const { code, data, error } = await UserHelpers.register<User>(credentials);
+		const { code, data, error } = await User.register(credentials);
 		if (code === 200 && data) setUser(data);
 		return { data, code, error };
 	}
 
 	async function logout() {
-		const { code, error } = await UserHelpers.logout();
+		const { code, error } = await User.logout();
 		setUser(null);
 		return { code, error };
 	}

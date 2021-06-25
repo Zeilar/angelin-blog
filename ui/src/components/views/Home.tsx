@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
-import { H1, H2 } from "../styled-components";
-import { Post, Tag } from "../../types/models";
+import { H1 } from "../styled-components";
+import { Post, Tag } from "../../models";
 import { Link } from "react-router-dom";
 import { useFetch } from "../hooks";
 import { ReadOnlyEditor } from "../partials/editor";

@@ -1,11 +1,10 @@
 import { RouteComponentProps } from "../../types/props";
-import { Post } from "../../types/models";
+import { Post } from "../../models";
 import { SERVER_URL } from "../../utils";
 import { Helmet } from "react-helmet";
 import { useFetch } from "../hooks";
 import styled from "styled-components";
 import { Col, H1, H2 } from "../styled-components";
-import { theme } from "../../styles/theme";
 
 interface MatchParams {
 	id: string;
