@@ -10,14 +10,16 @@ import { useAuthModals, useAuth } from "../../contexts";
 import classnames from "classnames";
 import { ModalStatus } from "./";
 import ContainerLoader from "../../misc/ContainerLoader";
+import { useHistory } from "react-router-dom";
 
 export function Login() {
 	const { login, loggedIn } = useAuth();
 	const { activeModal, closeModals, openModal } = useAuthModals();
+	// const history = useHistory();
 
 	const active = activeModal === "login";
 
-	const wrapper = useClickOutside<HTMLFormElement>(() => active && closeModals());
+	const wrapper = useClickOutside<HTMLDivElement>(() => active && closeModals());
 
 	const [status, setStatus] = useState<ModalStatus>(null);
 	const { inputs, onChange, empty } = useInputs({ email: "", password: "" });
@@ -57,46 +59,49 @@ export function Login() {
 
 		setTimeout(() => {
 			setStatus(null);
-			empty();
+			if (code === 200) empty();
+			window.history.pushState({ loginPrompt: false }, "");
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 
 	return (
-		<Wrapper className={classnames({ active })} ref={wrapper} as="form" onSubmit={submit}>
-			<ContainerLoader loading={status === "loading"} />
-			<Close onClick={closeModals}>
-				<Icon path={mdiClose} />
-			</Close>
-			<H3 className="mb-4">Login</H3>
-			{error && <FormError>{error}</FormError>}
-			<Col className="mb-10">
-				<Input
-					forwardRef={firstInput}
-					value={inputs.email}
-					onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "email")}
-					type="text"
-					placeholder="john.smith@gmail.com"
-					title="Email"
-					label="Email"
-				/>
-				<Input
-					value={inputs.password}
-					onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "password")}
-					type="password"
-					placeholder="••••••••••"
-					title="Password"
-					label="Password"
-				/>
-			</Col>
-			<P className="mb-5">
-				Not a member?{" "}
-				<A className="font-bold" onClick={() => openModal("register")}>
-					Register
-				</A>
-			</P>
-			<ButtonStatus type="submit" status={status}>
-				Login
-			</ButtonStatus>
+		<Wrapper className={classnames({ active })} ref={wrapper}>
+			<form onSubmit={submit}>
+				<ContainerLoader loading={status === "loading"} />
+				<Close onClick={closeModals}>
+					<Icon path={mdiClose} />
+				</Close>
+				<H3 className="mb-4">Login</H3>
+				{error && <FormError>{error}</FormError>}
+				<Col className="mb-10">
+					<Input
+						forwardRef={firstInput}
+						value={inputs.email}
+						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "email")}
+						type="text"
+						placeholder="john.smith@gmail.com"
+						title="Email"
+						label="Email"
+					/>
+					<Input
+						value={inputs.password}
+						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "password")}
+						type="password"
+						placeholder="••••••••••"
+						title="Password"
+						label="Password"
+					/>
+				</Col>
+				<P className="mb-5">
+					Not a member?{" "}
+					<A className="font-bold" onClick={() => openModal("register")}>
+						Register
+					</A>
+				</P>
+				<ButtonStatus className="w-full" type="submit" status={status}>
+					Login
+				</ButtonStatus>
+			</form>
 		</Wrapper>
 	);
 }

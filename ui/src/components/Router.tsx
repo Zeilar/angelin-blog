@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Home, SinglePost, CreatePost } from "./views";
 import { Helmet } from "react-helmet";
-import { Navbar } from "./partials";
 import { AdminRoute } from "./misc";
+import { Navbar } from "./partials";
 
 export default function Router() {
 	return (
@@ -10,10 +10,10 @@ export default function Router() {
 			<Navbar />
 			<Switch>
 				<Route component={Home} path="/" exact />
-				<AdminRoute>
-					<Route component={CreatePost} path="/post/new" exact />
-				</AdminRoute>
 				<Route component={SinglePost} path="/post/:id/:title?" exact />
+				<AdminRoute>
+					<Route component={CreatePost} path="/new-post" exact />
+				</AdminRoute>
 				<Route>
 					<Helmet>
 						<title>404</title>

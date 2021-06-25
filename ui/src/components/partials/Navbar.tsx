@@ -37,7 +37,7 @@ export function Navbar() {
 							</Item>
 							{user?.is_admin && (
 								<Item>
-									<Link to="/post/new">Create post</Link>
+									<Link to="/new-post">Create post</Link>
 								</Item>
 							)}
 						</>

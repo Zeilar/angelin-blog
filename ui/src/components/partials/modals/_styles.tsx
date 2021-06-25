@@ -17,7 +17,6 @@ export const Background = styled.div`
 		background-color: rgba(0, 0, 0, 0.35);
 	}
 `;
-
 export const Wrapper = styled(Col)`
 	position: absolute;
 	transform: translateX(-50%) scale(0.5);

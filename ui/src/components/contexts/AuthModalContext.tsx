@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createContext, useState, ReactNode, useContext } from "react";
 import { useAuth } from "./UserContext";
 
@@ -18,6 +19,10 @@ export const AuthModalContext = createContext<Context | null>(null);
 export function AuthModalContextProvider({ children }: Props) {
 	const [activeModal, setActiveModal] = useState<ActiveModal>(null);
 	const { loggedIn } = useAuth();
+
+	useEffect(() => {
+		return () => {};
+	}, [activeModal]);
 
 	function openModal(modal: ActiveModal) {
 		if (loggedIn) return;

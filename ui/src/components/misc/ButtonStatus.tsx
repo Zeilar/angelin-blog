@@ -41,7 +41,7 @@ export function ButtonStatus(props: Props) {
 	});
 
 	return (
-		<StyledButton className={classes} disabled={props.disabled} {...props}>
+		<StyledButton {...props} className={classes}>
 			{renderIcon()} {props.children}
 		</StyledButton>
 	);

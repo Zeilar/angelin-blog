@@ -17,7 +17,7 @@ export function Register() {
 
 	const active = activeModal === "register";
 
-	const wrapper = useClickOutside<HTMLFormElement>(() => active && closeModals());
+	const wrapper = useClickOutside<HTMLDivElement>(() => active && closeModals());
 
 	const [status, setStatus] = useState<ModalStatus>(null);
 	const { inputs, onChange, empty } = useInputs({ email: "", password: "", passwordConfirm: "" });
@@ -63,49 +63,53 @@ export function Register() {
 	}
 
 	return (
-		<Wrapper className={classnames({ active })} ref={wrapper} as="form" onSubmit={submit}>
-			<ContainerLoader loading={status === "loading"} />
-			<Close onClick={closeModals}>
-				<Icon path={mdiClose} />
-			</Close>
-			<H3 className="mb-4">Login</H3>
-			{error && <FormError>{error}</FormError>}
-			<Col className="mb-10">
-				<Input
-					forwardRef={firstInput}
-					value={inputs.email}
-					onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "email")}
-					type="text"
-					placeholder="john.smith@gmail.com"
-					title="Email"
-					label="Email"
-				/>
-				<Input
-					value={inputs.password}
-					onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "password")}
-					type="password"
-					placeholder="••••••••••"
-					title="Password"
-					label="Password"
-				/>
-				<Input
-					value={inputs.passwordConfirm}
-					onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "passwordConfirm")}
-					type="password"
-					placeholder="••••••••••"
-					title="Password Confirmation"
-					label="Password Confirmation"
-				/>
-			</Col>
-			<P className="mb-5">
-				Already a member?{" "}
-				<A className="font-bold" onClick={() => openModal("login")}>
+		<Wrapper className={classnames({ active })} ref={wrapper}>
+			<form onSubmit={submit}>
+				<ContainerLoader loading={status === "loading"} />
+				<Close onClick={closeModals}>
+					<Icon path={mdiClose} />
+				</Close>
+				<H3 className="mb-4">Login</H3>
+				{error && <FormError>{error}</FormError>}
+				<Col className="mb-10">
+					<Input
+						forwardRef={firstInput}
+						value={inputs.email}
+						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "email")}
+						type="text"
+						placeholder="john.smith@gmail.com"
+						title="Email"
+						label="Email"
+					/>
+					<Input
+						value={inputs.password}
+						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "password")}
+						type="password"
+						placeholder="••••••••••"
+						title="Password"
+						label="Password"
+					/>
+					<Input
+						value={inputs.passwordConfirm}
+						onChange={(e: ChangeEvent<HTMLInputElement>) =>
+							onChange(e, "passwordConfirm")
+						}
+						type="password"
+						placeholder="••••••••••"
+						title="Password Confirmation"
+						label="Password Confirmation"
+					/>
+				</Col>
+				<P className="mb-5">
+					Already a member?{" "}
+					<A className="font-bold" onClick={() => openModal("login")}>
+						Login
+					</A>
+				</P>
+				<ButtonStatus type="submit" status={status}>
 					Login
-				</A>
-			</P>
-			<ButtonStatus type="submit" status={status}>
-				Login
-			</ButtonStatus>
+				</ButtonStatus>
+			</form>
 		</Wrapper>
 	);
 }

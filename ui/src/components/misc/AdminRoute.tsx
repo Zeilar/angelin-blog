@@ -1,5 +1,4 @@
-import { ReactNode } from "react";
-import { Redirect } from "react-router";
+import { Redirect, useLocation } from "react-router";
 import { useAuth, useAuthModals } from "../contexts";
 
 interface Props {
@@ -13,9 +12,15 @@ export function AdminRoute({ children }: Props) {
 	if (loading) return null;
 
 	if (!loggedIn || !user?.is_admin) {
-		// make modal state context and fire it here
 		openModal("login");
-		return <Redirect to="/" />;
+		return (
+			<Redirect
+				to={{
+					pathname: "/",
+					state: { loginPrompt: true, url: window.location.href },
+				}}
+			/>
+		);
 	}
 
 	return children;
