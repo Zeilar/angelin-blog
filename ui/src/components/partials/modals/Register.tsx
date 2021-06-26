@@ -8,7 +8,7 @@ import { FormError, Col, A, H3, P } from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { useAuthModals, useAuth } from "../../contexts";
 import classnames from "classnames";
-import { ModalStatus } from "./";
+import { Status } from "../../../types/modals";
 import ContainerLoader from "../../misc/ContainerLoader";
 import { useHistory, useLocation } from "react-router";
 import { RedirectState } from "../../../types/modals";
@@ -23,7 +23,7 @@ export function Register() {
 
 	const wrapper = useClickOutside<HTMLDivElement>(() => active && closeModals());
 
-	const [status, setStatus] = useState<ModalStatus>(null);
+	const [status, setStatus] = useState<Status>(null);
 	const { inputs, onChange, empty } = useInputs({ email: "", password: "", passwordConfirm: "" });
 	const [error, setError] = useState<string | string[] | null>(null);
 

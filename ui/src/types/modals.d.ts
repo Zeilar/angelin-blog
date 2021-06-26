@@ -4,3 +4,5 @@ export interface RedirectState {
 }
 
 export type ActiveModal = "login" | "register" | null;
+
+export type Status = "loading" | "success" | "error" | "done" | null;

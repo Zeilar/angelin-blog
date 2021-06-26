@@ -5,13 +5,11 @@ import { mdiClose, mdiCheck } from "@mdi/js";
 import Icon from "@mdi/react";
 import { theme } from "../../styles/theme";
 import classnames from "classnames";
-
-type Status = "loading" | "success" | "error" | "done" | null;
+import { Status } from "../../types/modals";
 
 interface Props {
 	className?: string;
 	children: ReactNode;
-	size?: "small" | "big";
 	status?: Status;
 	type?: "submit" | "button";
 	disabled?: boolean;
@@ -30,12 +28,8 @@ export function ButtonStatus(props: Props) {
 		}
 	}
 
-	if (props.size === "small") {
-		return null;
-	}
-
 	const classes = classnames(props.className, {
-		active: props.status != null,
+		active: props.status != null && props.status !== "loading",
 		error: props.status === "error",
 		success: props.status === "success" || props.status === "done",
 	});
