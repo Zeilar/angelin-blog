@@ -5,12 +5,12 @@ import { mdiClose, mdiCheck } from "@mdi/js";
 import Icon from "@mdi/react";
 import { theme } from "../../styles/theme";
 import classnames from "classnames";
-import { Status } from "../../types/modals";
+import { ModalStatus } from "../../types/modals";
 
 interface Props {
 	className?: string;
 	children: ReactNode;
-	status?: Status;
+	status?: ModalStatus;
 	type?: "submit" | "button";
 	disabled?: boolean;
 }
