@@ -10,14 +10,10 @@ import { useAuthModals, useAuth } from "../../contexts";
 import classnames from "classnames";
 import { ModalStatus } from "../../../types/modals";
 import ContainerLoader from "../../misc/ContainerLoader";
-import { useHistory, useLocation } from "react-router";
-import { RedirectState } from "../../../types/modals";
 
 export function Register() {
 	const { register, loggedIn } = useAuth();
 	const { activeModal, closeModals, openModal } = useAuthModals();
-	const { state } = useLocation<RedirectState>();
-	const { push } = useHistory();
 
 	const active = activeModal === "register";
 
@@ -50,8 +46,6 @@ export function Register() {
 		if (code === 200) {
 			setError(null);
 			setStatus("success");
-
-			if (state?.url) push(state.url);
 
 			setTimeout(() => {
 				closeModals();
