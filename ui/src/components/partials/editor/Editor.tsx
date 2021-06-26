@@ -13,13 +13,16 @@ export default function Editor() {
 
 	async function submit() {
 		if (!editor) return;
+
 		const { code, data, error } = await Post.create({
 			title: "My post",
 			body: editor.getHTML(),
 		});
+
 		if (code === 200 && data) {
-			push(`/post/${data.id}/${data.title}`);
+			push(`/post/${data.id}-${data.title}`);
 		}
+
 		console.log(code, data, error);
 	}
 

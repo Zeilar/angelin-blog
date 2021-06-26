@@ -11,8 +11,7 @@ interface Props {
 	className?: string;
 	children: ReactNode;
 	status?: ModalStatus;
-	type?: "submit" | "button";
-	disabled?: boolean;
+	[key: string]: any;
 }
 
 export function ButtonStatus(props: Props) {

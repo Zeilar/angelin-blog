@@ -1,7 +1,6 @@
-import { createContext, useState, ReactNode, useContext, useEffect } from "react";
+import { createContext, useState, ReactNode, useContext } from "react";
 import { useAuth } from "./UserContext";
-import { ActiveModal, RedirectState } from "../../types/modals";
-import { useHistory, useLocation } from "react-router";
+import { ActiveModal } from "../../types/modals";
 
 interface Props {
 	children: ReactNode;
@@ -18,12 +17,6 @@ export const AuthModalContext = createContext<Context | null>(null);
 export function AuthModalContextProvider({ children }: Props) {
 	const [activeModal, setActiveModal] = useState<ActiveModal>(null);
 	const { loggedIn } = useAuth();
-	const { state } = useLocation<RedirectState>();
-	const { push } = useHistory();
-
-	useEffect(() => {
-		if (state?.loginPrompt) setActiveModal("login");
-	}, [state?.loginPrompt, push]);
 
 	function openModal(modal: ActiveModal) {
 		if (loggedIn) return;

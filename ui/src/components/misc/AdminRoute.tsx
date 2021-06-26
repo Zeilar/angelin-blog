@@ -1,21 +1,19 @@
-import { Redirect, useLocation } from "react-router";
-import { useAuth, useAuthModals } from "../contexts";
+import { Redirect, Route, RouteProps } from "react-router";
+import { useAuth } from "../contexts";
+import { ComponentType } from "react";
 
-interface Props {
-	children: JSX.Element;
-}
+type Props = RouteProps & {
+	component: ComponentType<any>;
+};
 
-export function AdminRoute({ children }: Props) {
+export function AdminRoute({ component: Component, ...rest }: Props) {
 	const { loggedIn, loading, user } = useAuth();
-	const { openModal } = useAuthModals();
-	const { pathname } = useLocation();
 
 	if (loading) return null;
 
 	if (!loggedIn || !user?.is_admin) {
-		openModal("login");
-		return <Redirect to={{ pathname: "/", state: { loginPrompt: true, url: pathname } }} />;
+		return <Redirect to="/" />;
 	}
 
-	return children;
+	return <Route {...rest} render={props => <Component {...props} />} />;
 }

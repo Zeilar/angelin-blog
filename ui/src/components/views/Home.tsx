@@ -17,7 +17,7 @@ export function Home() {
 			{query.isSuccess &&
 				query.body?.data.map((post: Post) => (
 					<article key={post.id}>
-						<Link to={`/post/${post.id}/${post.title}`}>{post.title}</Link>
+						<Link to={`/post/${post.id}-${post.title}`}>{post.title}</Link>
 						<ReadOnlyEditor content={post.body} />
 						<p>
 							{post.tags?.map((tag: Tag) => (

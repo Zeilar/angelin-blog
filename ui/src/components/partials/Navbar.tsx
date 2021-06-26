@@ -1,4 +1,4 @@
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
 import { useAuth, useAuthModals } from "../contexts";
@@ -8,12 +8,6 @@ import Modals from "./modals/Modals";
 export function Navbar() {
 	const { loggedIn, loading, logout, user } = useAuth();
 	const { openModal } = useAuthModals();
-	const { push } = useHistory();
-
-	function logoutHandler() {
-		push("/");
-		logout();
-	}
 
 	return (
 		<Wrapper>
@@ -39,11 +33,11 @@ export function Navbar() {
 					{!loading && loggedIn && (
 						<>
 							<Item>
-								<ButtonSecondary onClick={logoutHandler}>Logout</ButtonSecondary>
+								<ButtonSecondary onClick={logout}>Logout</ButtonSecondary>
 							</Item>
 							{user?.is_admin && (
 								<Item>
-									<Link to="/new-post">Create post</Link>
+									<Link to="/post/new">Create post</Link>
 								</Item>
 							)}
 						</>

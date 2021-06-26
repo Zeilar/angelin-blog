@@ -10,10 +10,9 @@ export default function Router() {
 			<Navbar />
 			<Switch>
 				<Route component={Home} path="/" exact />
-				<Route component={SinglePost} path="/post/:id/:title?" exact />
-				<AdminRoute>
-					<Route component={CreatePost} path="/new-post" exact />
-				</AdminRoute>
+				<AdminRoute component={CreatePost} path="/post/new" exact />
+				<Route component={SinglePost} path="/post/:id-:title?" exact />
+				<AdminRoute component={CreatePost} path="/post/:id-:title?/edit" exact />
 				<Route>
 					<Helmet>
 						<title>404</title>
