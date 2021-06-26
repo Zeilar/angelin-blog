@@ -1,9 +1,12 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { useHistory } from "react-router";
 import { Post } from "../../../models/Post";
 import { Toolbar } from "./";
 
 export default function Editor() {
+	const { push } = useHistory();
+
 	const editor = useEditor({
 		extensions: [StarterKit],
 	});
@@ -14,8 +17,10 @@ export default function Editor() {
 			title: "My post",
 			body: editor.getHTML(),
 		});
+		if (code === 200 && data) {
+			push(`/post/${data.id}/${data.title}`);
+		}
 		console.log(code, data, error);
-		// create post
 	}
 
 	return (
