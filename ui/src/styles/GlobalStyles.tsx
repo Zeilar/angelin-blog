@@ -7,7 +7,8 @@ export const GlobalStyles = createGlobalStyle`
     ${editor}
 
     ::selection {
-        color: rgb(0, 255, 0);
+        color: rgb(${theme.color.brand});
+        background-color: rgba(0, 0, 0, 0.25);
     }
 
     html,
