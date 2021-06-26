@@ -1,10 +1,10 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
-import { Close, Wrapper } from "./_styles";
+import * as ModalStyles from "./_styles";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
 import { ButtonStatus, Input } from "../../misc";
 import { theme } from "../../../styles/theme";
-import { FormError, Col, A, H3, P } from "../../styled-components";
+import * as Styles from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { useAuthModals, useAuth } from "../../contexts";
 import classnames from "classnames";
@@ -62,15 +62,15 @@ export function Login() {
 	}
 
 	return (
-		<Wrapper className={classnames({ active })} ref={wrapper}>
+		<ModalStyles.Wrapper className={classnames({ active })} ref={wrapper}>
 			<form onSubmit={submit}>
 				<ContainerLoader loading={status === "loading"} />
-				<Close onClick={closeModals}>
+				<ModalStyles.Close onClick={closeModals}>
 					<Icon path={mdiClose} />
-				</Close>
-				<H3 className="mb-4">Login</H3>
-				{error && <FormError>{error}</FormError>}
-				<Col className="mb-10">
+				</ModalStyles.Close>
+				<Styles.H3 className="mb-4">Login</Styles.H3>
+				{error && <Styles.FormError>{error}</Styles.FormError>}
+				<Styles.Col className="mb-10">
 					<Input
 						forwardRef={firstInput}
 						value={inputs.email}
@@ -88,17 +88,17 @@ export function Login() {
 						title="Password"
 						label="Password"
 					/>
-				</Col>
-				<P className="mb-5">
+				</Styles.Col>
+				<Styles.P className="mb-5">
 					Not a member?{" "}
-					<A className="font-bold" onClick={() => openModal("register")}>
+					<Styles.A className="font-bold" onClick={() => openModal("register")}>
 						Register
-					</A>
-				</P>
+					</Styles.A>
+				</Styles.P>
 				<ButtonStatus className="w-full" type="submit" status={status}>
 					Login
 				</ButtonStatus>
 			</form>
-		</Wrapper>
+		</ModalStyles.Wrapper>
 	);
 }

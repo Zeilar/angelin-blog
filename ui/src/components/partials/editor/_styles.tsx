@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { theme } from "../../../styles/theme";
 import Icon from "@mdi/react";
 
@@ -15,7 +15,6 @@ export const ToolbarButton = styled.button`
 	margin: 1px;
 	&.active {
 		color: rgb(${theme.color.brand});
-		/* box-shadow: ${theme.shadow.elevate}, 0 0 0 1px rgb(${theme.color.brand}); */
 	}
 	&:hover {
 		background-color: rgb(${theme.color.primary});

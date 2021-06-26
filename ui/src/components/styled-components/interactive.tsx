@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
+import { P } from "./typography";
 
 export const button = css`
 	font: inherit;
@@ -79,11 +80,10 @@ export const Input = styled.input`
 		`}
 `;
 
-export const FormError = styled.p`
-	background-color: rgb(${theme.color.brand});
-	border-radius: ${theme.borderRadius}px;
+export const FormError = styled(P)`
+	background-color: rgb(${theme.color.secondary});
 	box-shadow: ${theme.shadow.elevate};
-	color: rgb(${theme.color.textSecondary});
-	font-weight: bold;
+	color: rgb(${theme.color.text});
+	border-left: 2px solid rgb(${theme.color.brand});
 	padding: 8px;
 `;

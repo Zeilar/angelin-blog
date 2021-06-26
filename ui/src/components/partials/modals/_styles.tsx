@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { theme } from "../../../styles/theme";
-import { Col } from "../../styled-components/layout";
+import { Col } from "../../styled-components";
 
 export const Background = styled.div`
 	position: fixed;
@@ -17,6 +17,7 @@ export const Background = styled.div`
 		background-color: rgba(0, 0, 0, 0.35);
 	}
 `;
+
 export const Wrapper = styled(Col)`
 	position: absolute;
 	transform: translateX(-50%) scale(0.5);
