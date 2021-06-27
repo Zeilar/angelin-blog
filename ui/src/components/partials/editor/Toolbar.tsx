@@ -1,9 +1,7 @@
-import styled from "styled-components";
 import { Editor } from "@tiptap/react";
-import { ToolbarButton, ToolbarIcon } from "./_styles";
 import classnames from "classnames";
 import { mdiFormatListBulleted, mdiFormatListNumbered, mdiFormatQuoteClose, mdiXml } from "@mdi/js";
-import { Row } from "../../styled-components";
+import * as ToolbarStyles from "./_styles";
 
 interface Props {
 	editor: Editor | null;
@@ -13,115 +11,124 @@ export function Toolbar({ editor }: Props) {
 	if (!editor) return null;
 
 	return (
-		<Wrapper className="mb-2">
-			<ToolbarButton
+		<ToolbarStyles.Wrapper className="mb-2">
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleBold().run()}
 				className={classnames({ active: editor.isActive("bold") }, "font-bold")}
+				title="Bold"
 			>
 				B
-			</ToolbarButton>
-			<ToolbarButton
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleItalic().run()}
 				className={classnames({ active: editor.isActive("italic") }, "italic")}
+				title="Italic"
 			>
 				I
-			</ToolbarButton>
-			<ToolbarButton
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleStrike().run()}
 				className={classnames({ active: editor.isActive("strike") }, "line-through")}
+				title="Strike through"
 			>
 				S
-			</ToolbarButton>
-			<ToolbarButton
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleCode().run()}
 				className={classnames({ active: editor.isActive("code") })}
+				title="Code"
 			>
-				<ToolbarIcon path={mdiXml} />
-			</ToolbarButton>
-			<ToolbarButton
+				<ToolbarStyles.ToolbarIcon path={mdiXml} />
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().setParagraph().run()}
 				className={classnames({ active: editor.isActive("paragraph") })}
+				title="Paragraph"
 			>
 				P
-			</ToolbarButton>
-			<ToolbarButton
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
 				className={classnames({ active: editor.isActive("heading", { level: 1 }) })}
+				title="Header 1"
 			>
 				h1
-			</ToolbarButton>
-			<ToolbarButton
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
 				className={classnames({ active: editor.isActive("heading", { level: 2 }) })}
+				title="Header 2"
 			>
 				h2
-			</ToolbarButton>
-			<ToolbarButton
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
 				className={classnames({ active: editor.isActive("heading", { level: 3 }) })}
+				title="Header 3"
 			>
 				h3
-			</ToolbarButton>
-			<ToolbarButton
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
 				className={classnames({ active: editor.isActive("heading", { level: 4 }) })}
+				title="Header 4"
 			>
 				h4
-			</ToolbarButton>
-			<ToolbarButton
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
 				className={classnames({ active: editor.isActive("heading", { level: 5 }) })}
+				title="Header 5"
 			>
 				h5
-			</ToolbarButton>
-			<ToolbarButton
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
 				className={classnames({ active: editor.isActive("heading", { level: 6 }) })}
+				title="Header 6"
 			>
 				h6
-			</ToolbarButton>
-			<ToolbarButton
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleBulletList().run()}
 				className={classnames({ active: editor.isActive("bulletList") })}
+				title="Bullet list"
 			>
-				<ToolbarIcon path={mdiFormatListBulleted} />
-			</ToolbarButton>
-			<ToolbarButton
+				<ToolbarStyles.ToolbarIcon path={mdiFormatListBulleted} />
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleOrderedList().run()}
 				className={classnames({ active: editor.isActive("orderedList") })}
+				title="Ordered list"
 			>
-				<ToolbarIcon path={mdiFormatListNumbered} />
-			</ToolbarButton>
-			<ToolbarButton
+				<ToolbarStyles.ToolbarIcon path={mdiFormatListNumbered} />
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleCodeBlock().run()}
 				className={classnames({ active: editor.isActive("codeBlock") })}
+				title="Codeblock"
 			>
 				Code block
-			</ToolbarButton>
-			<ToolbarButton
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleBlockquote().run()}
 				className={classnames({ active: editor.isActive("blockquote") })}
+				title="Blockquote"
 			>
-				<ToolbarIcon path={mdiFormatQuoteClose} />
-			</ToolbarButton>
-			<ToolbarButton onClick={() => editor.chain().focus().setHorizontalRule().run()}>
-				HR
-			</ToolbarButton>
-			<ToolbarButton onClick={() => editor.chain().focus().setHardBreak().run()}>
-				Hard break
-			</ToolbarButton>
-			<ToolbarButton onClick={() => editor.chain().focus().unsetAllMarks().run()}>
+				<ToolbarStyles.ToolbarIcon path={mdiFormatQuoteClose} />
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
+				onClick={() => editor.chain().focus().unsetAllMarks().run()}
+				title="Clear marks"
+			>
 				Clear marks
-			</ToolbarButton>
-			<ToolbarButton onClick={() => editor.chain().focus().clearNodes().run()}>
+			</ToolbarStyles.ToolbarButton>
+			<ToolbarStyles.ToolbarButton
+				onClick={() => editor.chain().focus().clearNodes().run()}
+				title="Clear nodes"
+			>
 				Clear nodes
-			</ToolbarButton>
-		</Wrapper>
+			</ToolbarStyles.ToolbarButton>
+		</ToolbarStyles.Wrapper>
 	);
 }
-
-const Wrapper = styled(Row)`
-	flex-wrap: wrap;
-	margin: -1px;
-	margin-bottom: 0.25rem;
-`;

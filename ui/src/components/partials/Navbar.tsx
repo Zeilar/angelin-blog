@@ -61,7 +61,7 @@ export function Navbar() {
 
 const Wrapper = styled.header`
 	background-color: rgb(${theme.color.secondary});
-	box-shadow: ${theme.shadow.elevate};
+	box-shadow: ${theme.shadow.elevateUnder};
 	z-index: 100;
 `;
 

@@ -8,8 +8,7 @@ export const editor = css`
 			background-color: rgb(${theme.color.secondary});
 			outline: 0;
 			padding: 1rem;
-			border: 1px solid rgb(${theme.color.primary});
-			box-shadow: ${theme.shadow.elevate};
+			box-shadow: ${theme.shadow.elevateUnder};
 		}
 	}
 
@@ -60,13 +59,14 @@ export const editor = css`
 		}
 
 		blockquote {
-			padding-left: 1rem;
-			border-left: 2px solid rgba(#0d0d0d, 0.1);
+			padding: 0.25rem 0 0.25rem 1rem;
+			background-color: rgba(0, 0, 0, 0.1);
+			border-left: 2px solid rgb(${theme.color.brand});
 		}
 
 		hr {
 			border: none;
-			border-top: 2px solid rgba(#0d0d0d, 0.1);
+			border-top: 2px solid rgba(13, 13, 13, 1);
 			margin: 2rem 0;
 		}
 	}
