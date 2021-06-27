@@ -1,3 +1,3 @@
 export * from "./useClickOutside";
 export * from "./useInputs";
-export * from "./useFetch/useFetch";
+export * from "./useFetch";
