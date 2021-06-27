@@ -35,7 +35,6 @@
 		"zod": "^3.2.0"
 	},
 	"scripts": {
-		"build-serve": "npm run build && npm run serve:prod",
 		"serve": "npm run serve:dev",
 		"serve:dev": "nodemon --transpile-only -P tsconfig.json server/api/app.ts",
 		"serve:prod": "nodemon build/server/api/app.js",

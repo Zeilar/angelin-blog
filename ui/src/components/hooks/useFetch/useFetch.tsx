@@ -52,10 +52,10 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 
 				const data: T = await response.json();
 
-				if (callback) callback(data);
-
 				setStatus("success");
 				setData(data);
+
+				if (callback) callback(data);
 			} catch (error) {
 				console.error(error);
 				if (!(error instanceof DOMException)) {
@@ -64,7 +64,7 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 			}
 		})();
 
-		return (): void => {
+		return () => {
 			abortController.abort();
 		};
 	}, [url, callback, memoArgs]);
