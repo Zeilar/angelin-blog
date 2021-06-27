@@ -5,6 +5,8 @@ import { Helmet } from "react-helmet";
 import { useFetch } from "../hooks";
 import * as Styles from "../styled-components";
 import { ReadOnlyEditor } from "../partials/editor";
+import styled from "styled-components";
+import { theme } from "../../styles/theme";
 
 interface MatchParams {
 	id: string;
@@ -19,12 +21,21 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 	}
 
 	return (
-		<Styles.Container direction="column" as="article">
+		<Styles.Container direction="column">
 			<Helmet>
 				<title>{query.body.data.title}</title>
 			</Helmet>
-			<Styles.H1>{query.body.data.title}</Styles.H1>
-			<ReadOnlyEditor content={query.body.data.body} />
+			<Wrapper>
+				<Styles.H3 className="mb-4">{query.body.data.title}</Styles.H3>
+				<ReadOnlyEditor content={query.body.data.body} />
+			</Wrapper>
 		</Styles.Container>
 	);
 }
+
+const Wrapper = styled(Styles.Col)`
+	background-color: rgb(${theme.color.secondary});
+	padding: 1rem;
+	box-shadow: ${theme.shadow.elevate};
+	margin-top: 1rem;
+`;

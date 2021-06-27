@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import { H1 } from "../styled-components";
+import * as Styles from "../styled-components";
 import { Post, Tag } from "../../models";
 import { Link } from "react-router-dom";
 import { useFetch } from "../hooks";
@@ -13,11 +13,11 @@ export function Home() {
 	}
 
 	return (
-		<div>
+		<Styles.Container className="mt-4">
 			<Helmet>
 				<title>Angelin Blog</title>
 			</Helmet>
-			<H1>Blog</H1>
+			<Styles.H1>Blog</Styles.H1>
 			{query.isSuccess &&
 				query.body?.data.map((post: Post) => (
 					<article key={post.id}>
@@ -31,6 +31,6 @@ export function Home() {
 						<br />
 					</article>
 				))}
-		</div>
+		</Styles.Container>
 	);
 }

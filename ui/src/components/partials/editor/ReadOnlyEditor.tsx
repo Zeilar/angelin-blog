@@ -3,6 +3,7 @@ import StarterKit from "@tiptap/starter-kit";
 
 interface Props {
 	content: string;
+	className?: string;
 }
 
 export function ReadOnlyEditor(props: Props) {

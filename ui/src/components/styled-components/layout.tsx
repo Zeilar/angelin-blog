@@ -46,10 +46,12 @@ export const Grid = styled.div`
 `;
 
 export const Container = styled.div`
+	flex-direction: column;
 	${flexbox}
 	width: 1200px;
-	margin: 0 auto;
+	margin-left: auto;
+	margin-right: auto;
 	${tablet} {
-		width: calc(100% - 30px);
+		width: calc(100% - 2rem);
 	}
 `;

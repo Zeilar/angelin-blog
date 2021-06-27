@@ -7,7 +7,7 @@ export const editor = css`
 		.tiptap {
 			background-color: rgb(${theme.color.secondary});
 			outline: 0;
-			padding: 15px;
+			padding: 1rem;
 			border: 1px solid rgb(${theme.color.primary});
 			box-shadow: ${theme.shadow.elevate};
 		}

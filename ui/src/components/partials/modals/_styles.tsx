@@ -27,7 +27,7 @@ export const Wrapper = styled(Col)`
 	pointer-events: none;
 	opacity: 0;
 	transition: 0.25s;
-	padding: 30px;
+	padding: 2rem;
 	border-radius: ${theme.borderRadius}px;
 	background-color: rgb(${theme.color.primary});
 	box-shadow: ${theme.shadow.elevate};
@@ -45,8 +45,8 @@ export const Close = styled.button.attrs({ type: "button" })`
 	width: 2rem;
 	height: 2rem;
 	position: absolute;
-	right: 10px;
-	top: 10px;
+	right: 0.5rem;
+	top: 0.5rem;
 	cursor: pointer;
 	color: inherit;
 	transition: 0.05s;

@@ -52,6 +52,6 @@ const Label = styled.label`
 
 const Errors = styled(Grid)`
 	justify-items: flex-start;
-	margin-bottom: 15px;
-	grid-gap: 5px;
+	margin-bottom: 1rem;
+	grid-gap: 0.25rem;
 `;

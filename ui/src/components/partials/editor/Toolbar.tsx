@@ -123,5 +123,5 @@ export function Toolbar({ editor }: Props) {
 const Wrapper = styled(Row)`
 	flex-wrap: wrap;
 	margin: -1px;
-	margin-bottom: 5px;
+	margin-bottom: 0.25rem;
 `;

@@ -51,8 +51,8 @@ export const theme: Theme = {
 	},
 	shadow: {
 		elevate: "0 0 3px 0 rgba(0, 0, 0, 0.85)",
-		elevateUnder: "0 1px 3px rgba(0, 0, 0, 0.85), 0 0 5px rgba(0, 0, 0, 0.25)",
-		spread: "0 0 8px 0 rgba(0, 0, 0, 0.85)",
+		elevateUnder: "0 1px 3px rgba(0, 0, 0, 0.85), 0 0 0.25rem rgba(0, 0, 0, 0.25)",
+		spread: "0 0 0.5rem 0 rgba(0, 0, 0, 0.85)",
 	},
 	durations: {
 		// In milliseconds

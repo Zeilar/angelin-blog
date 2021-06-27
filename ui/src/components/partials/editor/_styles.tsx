@@ -6,7 +6,7 @@ export const ToolbarButton = styled.button`
 	border: 1px solid rgb(${theme.color.primary});
 	background-color: rgb(${theme.color.secondary});
 	box-shadow: ${theme.shadow.elevate};
-	padding: 5px;
+	padding: 0.25rem;
 	font-size: 1rem;
 	min-width: 2.5rem;
 	display: flex;

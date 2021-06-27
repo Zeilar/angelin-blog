@@ -5,7 +5,7 @@ import { P } from "./typography";
 export const button = css`
 	font: inherit;
 	border: 0;
-	padding: 10px 14px;
+	padding: 0.5rem 1rem;
 	user-select: none;
 	font-family: Heebo;
 	box-shadow: ${theme.shadow.elevate};
@@ -49,6 +49,7 @@ export const ButtonSecondary = styled.button`
 	border-radius: ${theme.borderRadius}px;
 	background-color: rgb(${theme.color.primary});
 	border: 1px solid transparent;
+	padding: 0.5rem 1rem;
 	&:not([disabled]) {
 		&:hover,
 		&:active {
@@ -68,7 +69,7 @@ export const Input = styled.input`
 	border-radius: ${theme.borderRadius}px;
 	&:focus,
 	&:hover {
-		box-shadow: ${theme.shadow.elevate}, 0 0 5px 0 rgba(0, 0, 0, 0.5);
+		box-shadow: ${theme.shadow.elevate}, 0 0 0.25rem 0 rgba(0, 0, 0, 0.5);
 	}
 	&:focus {
 		background-color: rgb(${theme.color.secondary});
