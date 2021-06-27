@@ -1,5 +1,7 @@
 import { isEqual } from "lodash";
+import { useContext } from "react";
 import { useState, useEffect } from "react";
+import { FetchContext } from "./FetchProvider";
 import { Args, Options, Status, QueryParams } from "./types";
 
 export function parseQueryParams(params?: QueryParams) {
@@ -20,6 +22,8 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 	const [status, setStatus] = useState<Status>("loading");
 	const [memoArgs, setMemoArgs] = useState<Args>();
 
+	const fetchContext = useContext(FetchContext);
+
 	// This is to avoid infinite loops in the useEffect as args contains nested objects
 	useEffect(() => {
 		if (!isEqual(memoArgs, args)) {
@@ -31,7 +35,19 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 		const abortController: AbortController = new AbortController();
 
 		(async () => {
-			const method = memoArgs?.method ?? "GET";
+			if (!fetchContext) return;
+
+			const fullUrl = `${url}${parseQueryParams(memoArgs?.params)}`,
+				cachedData = fetchContext.cached,
+				cached = cachedData.get(fullUrl),
+				method = memoArgs?.method ?? "GET";
+
+			if (cached) {
+				setData(cached);
+				setStatus("success");
+				return;
+			}
+
 			try {
 				const options: Options = {
 					method,
@@ -40,10 +56,7 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 					signal: abortController.signal,
 				};
 
-				const response: Response = await fetch(
-					`${url}${parseQueryParams(memoArgs?.params)}`,
-					options
-				);
+				const response: Response = await fetch(fullUrl, options);
 
 				if (!response.ok)
 					throw new Error(
@@ -51,6 +64,8 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 					);
 
 				const data: T = await response.json();
+
+				cachedData.set(fullUrl, data);
 
 				setStatus("success");
 				setData(data);
