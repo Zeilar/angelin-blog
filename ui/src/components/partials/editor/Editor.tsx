@@ -22,14 +22,12 @@ export default function Editor() {
 		if (code === 200 && data) {
 			push(`/post/${data.id}-${data.title}`);
 		}
-
-		console.log(code, data, error);
 	}
 
 	return (
 		<div>
 			<Toolbar editor={editor} />
-			<EditorContent editor={editor} />
+			<EditorContent className="editing" editor={editor} />
 			<button onClick={submit}>Submit</button>
 		</div>
 	);

@@ -8,6 +8,10 @@ import { ReadOnlyEditor } from "../partials/editor";
 export function Home() {
 	const query = useFetch<{ data: Post[] }>("http://localhost:3030/api/posts");
 
+	if (query.isError) {
+		return <p>Oh dear something went wrong</p>;
+	}
+
 	return (
 		<div>
 			<Helmet>

@@ -3,8 +3,8 @@ import { Post } from "../../models";
 import { SERVER_URL } from "../../utils";
 import { Helmet } from "react-helmet";
 import { useFetch } from "../hooks";
-import styled from "styled-components";
-import { Col, H1, H2 } from "../styled-components";
+import * as Styles from "../styled-components";
+import { ReadOnlyEditor } from "../partials/editor";
 
 interface MatchParams {
 	id: string;
@@ -12,23 +12,19 @@ interface MatchParams {
 }
 
 export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
-	const query = useFetch<{ data: Post }>(`${SERVER_URL}/api/posts/${match.params.id}`, {
-		headers: {},
-	});
+	const query = useFetch<{ data: Post }>(`${SERVER_URL}/api/posts/${match.params.id}`);
 
 	if (!query.body) {
 		return null;
 	}
 
 	return (
-		<Wrapper as="article">
+		<Styles.Container direction="column" as="article">
 			<Helmet>
 				<title>{query.body.data.title}</title>
 			</Helmet>
-			<H1>{query.body.data.title}</H1>
-			<H2>{query.body.data.body}</H2>
-		</Wrapper>
+			<Styles.H1>{query.body.data.title}</Styles.H1>
+			<ReadOnlyEditor content={query.body.data.body} />
+		</Styles.Container>
 	);
 }
-
-const Wrapper = styled(Col)``;

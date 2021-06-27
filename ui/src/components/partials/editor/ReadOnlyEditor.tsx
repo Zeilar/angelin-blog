@@ -12,5 +12,5 @@ export function ReadOnlyEditor(props: Props) {
 		editable: false,
 	});
 
-	return <EditorContent editor={editor} />;
+	return <EditorContent className="w-full" editor={editor} />;
 }

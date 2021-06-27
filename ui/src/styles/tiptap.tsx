@@ -2,14 +2,19 @@ import { css } from "styled-components";
 import { theme } from "./theme";
 
 export const editor = css`
+	.editing {
+		.ProseMirror,
+		.tiptap {
+			background-color: rgb(${theme.color.secondary});
+			outline: 0;
+			padding: 15px;
+			border: 1px solid rgb(${theme.color.primary});
+			box-shadow: ${theme.shadow.elevate};
+		}
+	}
+
 	.ProseMirror,
 	.tiptap {
-		background-color: rgb(${theme.color.secondary});
-		outline: 0;
-		padding: 15px;
-		border: 1px solid rgb(${theme.color.primary});
-		box-shadow: ${theme.shadow.elevate};
-
 		> * + * {
 			margin-top: 0.75em;
 		}
