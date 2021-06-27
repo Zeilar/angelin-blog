@@ -10,8 +10,8 @@ import rateLimit from "express-rate-limit";
 import { usersRoutes, postsRoutes, commentsRoutes } from "./routes";
 
 const limiter = rateLimit({
-	windowMs: 1000 * 60,
-	max: 1,
+	windowMs: 1000 * 60 * 10, // 10 minutes
+	max: 1000,
 	handler: (req, res) => {
 		res.status(429).send({ error: "Too many requests, try again later." });
 	},
