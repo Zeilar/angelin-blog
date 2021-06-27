@@ -5,9 +5,17 @@ import { loggedIn } from "./middlewares/auth";
 import session from "express-session";
 import path from "path";
 import cors from "cors";
+import rateLimit from "express-rate-limit";
 
 import { usersRoutes, postsRoutes, commentsRoutes } from "./routes";
-import errorlog from "../utils/errorlog";
+
+const limiter = rateLimit({
+	windowMs: 1000 * 60,
+	max: 1,
+	handler: (req, res) => {
+		res.status(429).send({ error: "Too many requests, try again later." });
+	},
+});
 
 bootstrap();
 const app = express();
@@ -16,7 +24,8 @@ const { PORT, SESSION_SECRET } = process.env;
 const WEEK_IN_MILLISECONDS = 1000 * 60 * 60 * 24 * 7;
 const oneWeekFromNow = new Date(new Date().getTime() + WEEK_IN_MILLISECONDS);
 
-// Middlewares
+// Global middlewares
+app.use(limiter);
 app.use(
 	cors({
 		origin: "*", // TODO: change in production?
