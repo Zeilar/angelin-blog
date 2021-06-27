@@ -18,7 +18,7 @@ export function parseQueryParams(params?: QueryParams) {
 }
 
 export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => void) {
-	const [data, setData] = useState<T>();
+	const [data, setData] = useState<T | null>(null);
 	const [status, setStatus] = useState<Status>("loading");
 	const [memoArgs, setMemoArgs] = useState<Args>();
 
@@ -32,7 +32,7 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 	}, [args, memoArgs]);
 
 	useEffect(() => {
-		const abortController: AbortController = new AbortController();
+		const abortController = new AbortController();
 
 		(async () => {
 			if (!fetchContext) return;
