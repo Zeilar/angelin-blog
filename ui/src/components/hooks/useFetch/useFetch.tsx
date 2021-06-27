@@ -82,7 +82,7 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 		return () => {
 			abortController.abort();
 		};
-	}, [url, callback, memoArgs]);
+	}, [url, callback, memoArgs, fetchContext]);
 
 	return {
 		body: data,
