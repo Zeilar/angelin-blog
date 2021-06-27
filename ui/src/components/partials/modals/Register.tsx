@@ -69,7 +69,7 @@ export function Register() {
 				<ModalStyles.Close onClick={closeModals}>
 					<Icon path={mdiClose} />
 				</ModalStyles.Close>
-				<Styles.H3 className="mb-4">Login</Styles.H3>
+				<Styles.H3 className="mb-4">Register</Styles.H3>
 				{error && <Styles.FormError>{error}</Styles.FormError>}
 				<Styles.Col className="mb-10">
 					<Input
