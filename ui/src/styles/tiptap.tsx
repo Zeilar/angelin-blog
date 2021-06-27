@@ -41,7 +41,7 @@ export const editor = css`
 
 		pre {
 			background-color: rgba(0, 0, 0, 0.35);
-			color: #fff;
+			color: rgb(${theme.color.text});
 			padding: 0.75rem 1rem;
 			border-radius: 0.5rem;
 
@@ -49,7 +49,6 @@ export const editor = css`
 				color: inherit;
 				padding: 0;
 				background: none;
-				font-size: 0.8rem;
 			}
 		}
 

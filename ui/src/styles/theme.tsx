@@ -50,9 +50,9 @@ export const theme: Theme = {
 		success: "0, 175, 0",
 	},
 	shadow: {
-		elevate: "0 0 3px 0 rgba(0, 0, 0, 0.85)",
-		elevateUnder: "0 1px 3px rgba(0, 0, 0, 0.85), 0 0 0.25rem rgba(0, 0, 0, 0.25)",
-		spread: "0 0 0.5rem 0 rgba(0, 0, 0, 0.85)",
+		elevate: "0 0 3px 0 black",
+		elevateUnder: "0 1px 2px black, 0 0 0.25rem rgba(0, 0, 0, 0.35)",
+		spread: "0 0 0.25rem 0 black",
 	},
 	durations: {
 		// In milliseconds
