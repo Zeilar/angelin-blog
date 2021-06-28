@@ -44,11 +44,15 @@ export function Navbar() {
 			<Nav as="nav">
 				<List as="ul">
 					<Item>
-						<Link to="/">Home</Link>
+						<Link to="/" exact>
+							Home
+						</Link>
 					</Item>
 					{!loading && user?.is_admin && (
 						<Item>
-							<Link to="/post/new">Create Post</Link>
+							<Link to="/post/new" exact>
+								Create Post
+							</Link>
 						</Item>
 					)}
 					<Styles.Row className="ml-auto">{renderAuthNav()}</Styles.Row>
@@ -72,14 +76,14 @@ const List = styled(Styles.Row)``;
 const Item = styled.li`
 	display: flex;
 	align-items: center;
-	padding: 1rem 0;
-`;
-
-const link = css`
-	${Styles.header}
-	padding: 0.5rem;
+	padding: 0.5rem 0;
+	font-size: 1.25rem;
 `;
 
 const Link = styled(NavLink)`
-	${link}
+	${Styles.header}
+	margin-right: 1rem;
+	&:hover {
+		color: rgb(${theme.color.link});
+	}
 `;

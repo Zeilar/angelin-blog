@@ -35,18 +35,18 @@ export const editor = css`
 		}
 
 		code {
-			background-color: rgba(#616161, 0.1);
-			color: #616161;
+			background-color: rgba(0, 0, 0, 0.25);
+			padding: 0.25rem;
+			border-radius: ${theme.borderRadius}px;
 		}
 
 		pre {
 			background-color: rgba(0, 0, 0, 0.35);
 			color: rgb(${theme.color.text});
 			padding: 0.75rem 1rem;
-			border-radius: 0.5rem;
+			border-radius: ${theme.borderRadius}px;
 
 			code {
-				color: inherit;
 				padding: 0;
 				background: none;
 			}

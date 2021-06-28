@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import { Post } from "../../../models/Post";
 import { Toolbar } from "./";
 
-export default function Editor() {
+export default function Editor({ ...props }) {
 	const { push } = useHistory();
 
 	const editor = useEditor({
@@ -25,7 +25,7 @@ export default function Editor() {
 	}
 
 	return (
-		<div>
+		<div {...props}>
 			<Toolbar editor={editor} />
 			<EditorContent className="editing" editor={editor} />
 			<button onClick={submit}>Submit</button>
