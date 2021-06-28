@@ -1,7 +1,7 @@
 import { hash, compare } from "bcrypt";
 import { Request, Response } from "express";
 import { User } from "../../db/models";
-import { count } from "../../db/utils/query";
+import { DB } from "../../db/utils/DB";
 import errorlog from "../../utils/errorlog";
 import { validateBody } from "../middlewares/validateBody";
 import { ErrorMessages } from "../utils";
@@ -30,7 +30,7 @@ export async function register(req: Request, res: Response) {
 	const { email, password, passwordConfirm } = req.body;
 
 	try {
-		if ((await count(User.query().where({ email }))) > 0) {
+		if ((await DB.count(User.query().where({ email }))) > 0) {
 			res.status(422).json({ error: ErrorMessages.USER_TAKEN });
 			return;
 		}

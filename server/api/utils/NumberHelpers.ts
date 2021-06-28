@@ -1,8 +1,8 @@
 export class NumberHelpers {
-	public string: string;
+	public number: number;
 
-	constructor(string: string) {
-		this.string = string;
+	constructor(number: number) {
+		this.number = number;
 	}
 
 	/**
@@ -10,8 +10,6 @@ export class NumberHelpers {
 	 * @example clamp(-5) // expected output: 0
 	 */
 	public static clamp(number: number) {
-		if (typeof number !== "number")
-			throw new Error(`Invalid number argument, got ${JSON.stringify(number)}`);
 		return number < 0 ? 0 : number;
 	}
 }
