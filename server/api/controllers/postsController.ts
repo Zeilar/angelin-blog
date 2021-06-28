@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { Post } from "../../db/models";
+import { Post, Tag } from "../../db/models";
 import errorlog from "../../utils/errorlog";
 import { validateBody } from "../middlewares/validateBody";
-import { fetchTags, ErrorMessages, sanitizePost } from "../utils";
+import { ErrorMessages, sanitizePost } from "../utils";
 
 export async function createPost(req: Request, res: Response) {
 	if (!validateBody(["body", "title"], req.body)) {
@@ -15,7 +15,7 @@ export async function createPost(req: Request, res: Response) {
 
 	try {
 		const post = await Post.query().insertGraphAndFetch({ user_id: user, title, body });
-		const fetchedTags = await fetchTags(tags);
+		const fetchedTags = await Tag.findOrCreate(tags);
 		for (let i = 0; i < fetchedTags.length; i++) {
 			await post.$relatedQuery("tags").relate(fetchedTags[i]);
 		}
@@ -45,7 +45,7 @@ export async function editPost(req: Request, res: Response) {
 	try {
 		if (tags) {
 			await res.post!.$relatedQuery("tags").unrelate();
-			const fetchedTags = await fetchTags(tags);
+			const fetchedTags = await Tag.findOrCreate(tags);
 			for (let i = 0; i < fetchedTags.length; i++) {
 				await res.post!.$relatedQuery("tags").relate(fetchedTags[i]);
 			}
