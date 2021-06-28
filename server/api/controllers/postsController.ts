@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Post, Tag } from "../../db/models";
 import errorlog from "../../utils/errorlog";
 import { validateBody } from "../middlewares/validateBody";
-import { ErrorMessages, sanitizePost } from "../utils";
+import { ErrorMessages } from "../utils";
 
 export async function createPost(req: Request, res: Response) {
 	if (!validateBody(["body", "title"], req.body)) {
@@ -27,11 +27,11 @@ export async function createPost(req: Request, res: Response) {
 }
 
 export function getAllPosts(req: Request, res: Response) {
-	res.status(200).json({ data: res.posts!.map(post => sanitizePost(post)) });
+	res.status(200).json({ data: res.posts?.map(post => post.sanitize()) });
 }
 
 export function getPostById(req: Request, res: Response) {
-	res.status(200).json({ data: sanitizePost(res.post!) });
+	res.status(200).json({ data: res.post?.sanitize() });
 }
 
 export async function editPost(req: Request, res: Response) {

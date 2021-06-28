@@ -38,4 +38,14 @@ export class Comment extends Model {
 			},
 		};
 	}
+
+	/**
+	 * @description Removes sensitive information and converts is_admin from boolean to integer
+	 */
+	public sanitize() {
+		if (!this.author) return this;
+		delete this.author.password;
+		this.author.is_admin = Boolean(Number(this.author.is_admin));
+		return this;
+	}
 }

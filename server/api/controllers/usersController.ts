@@ -4,12 +4,12 @@ import { User } from "../../db/models";
 import { count } from "../../db/utils/query";
 import errorlog from "../../utils/errorlog";
 import { validateBody } from "../middlewares/validateBody";
-import { sanitizeUser, ErrorMessages } from "../utils";
+import { ErrorMessages } from "../utils";
 import { z } from "zod";
 
 export async function authenticate(req: Request, res: Response) {
 	try {
-		res.status(200).json({ data: sanitizeUser(res.user!) });
+		res.status(200).json({ data: res.user?.sanitize() });
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();
@@ -42,7 +42,7 @@ export async function register(req: Request, res: Response) {
 
 		req.session.user = user.id;
 
-		res.status(200).json({ data: sanitizeUser(user) });
+		res.status(200).json({ data: user.sanitize() });
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();
@@ -76,7 +76,7 @@ export async function login(req: Request, res: Response) {
 
 		req.session.user = user.id;
 
-		res.status(200).json({ data: sanitizeUser(user) });
+		res.status(200).json({ data: user.sanitize() });
 	} catch (error) {
 		errorlog(error);
 		res.status(500).end();

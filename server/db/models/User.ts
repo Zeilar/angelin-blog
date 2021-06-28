@@ -38,4 +38,13 @@ export class User extends Model {
 			},
 		};
 	}
+
+	/**
+	 * @description Removes sensitive information and converts is_admin from boolean to integer
+	 */
+	public sanitize() {
+		delete this.password;
+		this.is_admin = Boolean(Number(this.is_admin));
+		return this;
+	}
 }
