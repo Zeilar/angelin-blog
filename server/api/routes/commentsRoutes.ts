@@ -11,4 +11,9 @@ router.put(
 	Middlewares.CommentGuard.edit,
 	CommentsController.edit
 );
-router.delete("/:id", Middlewares.getCommentOrFail, CommentsController.delete);
+router.delete(
+	"/:id",
+	Middlewares.getCommentOrFail,
+	Middlewares.CommentGuard.delete,
+	CommentsController.delete
+);
