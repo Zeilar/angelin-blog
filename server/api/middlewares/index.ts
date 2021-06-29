@@ -1,4 +1,4 @@
 export * from "./validateBody";
-export * from "./authGuard";
+export * from "./AuthGuard";
 export * from "./post";
 export * from "./user";

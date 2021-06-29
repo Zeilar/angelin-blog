@@ -10,7 +10,7 @@ router.post(
 	"",
 	Middlewares.AuthGuard.user,
 	Middlewares.AuthGuard.admin,
-	Middlewares.canCreatePost,
+	Middlewares.PostGuard.create,
 	Controller.createPost
 );
 router.put(
@@ -18,7 +18,7 @@ router.put(
 	Middlewares.AuthGuard.user,
 	Middlewares.AuthGuard.admin,
 	Middlewares.getPostOrFail,
-	Middlewares.canEditPost,
+	Middlewares.PostGuard.edit,
 	Controller.editPost
 );
 router.delete(
@@ -26,6 +26,6 @@ router.delete(
 	Middlewares.AuthGuard.user,
 	Middlewares.AuthGuard.admin,
 	Middlewares.getPostOrFail,
-	Middlewares.canDeletePost,
+	Middlewares.PostGuard.delete,
 	Controller.deletePost
 );

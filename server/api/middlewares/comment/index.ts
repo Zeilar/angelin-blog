@@ -1,2 +1,2 @@
-export * from "./commentGuard";
+export * from "./CommentGuard";
 export * from "./getCommentOrfail";
