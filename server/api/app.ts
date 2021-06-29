@@ -1,7 +1,7 @@
 import "dotenv/config";
 import bootstrap from "../db/bootstrap";
 import express, { Request, Response } from "express";
-import { loggedIn } from "./middlewares/auth";
+import { AuthGuard } from "./middlewares";
 import session from "express-session";
 import path from "path";
 import cors from "cors";
@@ -45,7 +45,7 @@ app.use(
 // Routes
 app.use("/api/users", usersRoutes);
 app.use("/api/posts", postsRoutes);
-app.use("/api/comments", loggedIn, commentsRoutes);
+app.use("/api/comments", AuthGuard.user, commentsRoutes);
 
 app.use(express.static(path.join(__dirname, "../../ui")));
 

@@ -8,23 +8,23 @@ router.get("", Middlewares.getPostOrFail, Middlewares.filterPosts, Controller.ge
 router.get("/:id", Middlewares.getPostOrFail, Controller.getPostById);
 router.post(
 	"",
-	Middlewares.loggedIn,
-	Middlewares.admin,
+	Middlewares.AuthGuard.user,
+	Middlewares.AuthGuard.admin,
 	Middlewares.canCreatePost,
 	Controller.createPost
 );
 router.put(
 	"/:id",
-	Middlewares.loggedIn,
-	Middlewares.admin,
+	Middlewares.AuthGuard.user,
+	Middlewares.AuthGuard.admin,
 	Middlewares.getPostOrFail,
 	Middlewares.canEditPost,
 	Controller.editPost
 );
 router.delete(
 	"/:id",
-	Middlewares.loggedIn,
-	Middlewares.admin,
+	Middlewares.AuthGuard.user,
+	Middlewares.AuthGuard.admin,
 	Middlewares.getPostOrFail,
 	Middlewares.canDeletePost,
 	Controller.deletePost
