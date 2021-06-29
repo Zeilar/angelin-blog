@@ -1,5 +1,5 @@
 import express from "express";
-import { UsersController } from "../controllers/UsersController";
+import { UsersController } from "../controllers";
 import { AuthGuard } from "../middlewares";
 
 export const router = express.Router();
