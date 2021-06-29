@@ -15,6 +15,8 @@ export class PostsController {
 		const { user } = req.session;
 		const { body, title, tags } = req.body;
 
+		// TODO: validate
+
 		try {
 			const post = await Post.query().insertGraphAndFetch({ user_id: user, title, body });
 			const fetchedTags = await Tag.findOrCreate(tags);
