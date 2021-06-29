@@ -67,6 +67,7 @@ export class Post extends Model {
 
 	/**
 	 * @description Filter posts via search (body, title) or tags
+	 * @example const filtered = await Post.filter("hello world", ["programming"]);
 	 */
 	public static async filter(search?: string, tags?: string[]) {
 		try {

@@ -1,3 +1,3 @@
-export * from "./postAccess";
+export * from "./postGuard";
 export * from "./getPostOrfail";
 export * from "./filterPosts";
