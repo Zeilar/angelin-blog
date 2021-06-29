@@ -1,20 +1,19 @@
-import { Model, raw } from "objection";
+import { Model } from "objection";
 import errorlog from "../../utils/errorlog";
 import { Tag, User, Comment } from "./";
-import { PostTag } from "./PostTag";
 
 export class Post extends Model {
 	public static tableName = "posts";
 
 	public readonly id!: number;
-	public user_id!: number;
+	public readonly user_id!: number;
 	public title!: string;
 	public body!: string;
 	public readonly created_at!: string;
 	public readonly updated_at!: string;
-	public author!: User;
-	public comments?: Comment[];
-	public tags?: Tag[];
+	public readonly author!: User;
+	public readonly comments?: Comment[];
+	public readonly tags?: Tag[];
 
 	public static relationships = {
 		author: true,

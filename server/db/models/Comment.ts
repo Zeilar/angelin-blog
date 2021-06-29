@@ -5,13 +5,13 @@ export class Comment extends Model {
 	public static tableName = "comments";
 
 	public readonly id!: number;
-	public post_id!: number;
-	public user_id!: number;
+	public readonly post_id!: number;
+	public readonly user_id!: number;
 	public body!: string;
 	public readonly created_at!: string;
 	public readonly updated_at!: string;
-	public post!: Post;
-	public author!: User;
+	public readonly post!: Post;
+	public readonly author!: User;
 
 	public static relationships = {
 		author: true,

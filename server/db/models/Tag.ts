@@ -9,7 +9,7 @@ export class Tag extends Model {
 	public name!: string;
 	public readonly created_at!: string;
 	public readonly updated_at!: string;
-	public posts?: Post[];
+	public readonly posts?: Post[];
 
 	public static relationships = {
 		posts: true,

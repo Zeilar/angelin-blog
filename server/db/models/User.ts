@@ -11,8 +11,8 @@ export class User extends Model {
 	public avatar?: string;
 	public readonly created_at!: string;
 	public readonly updated_at!: string;
-	public posts?: Post[];
-	public comments?: Comment[];
+	public readonly posts?: Post[];
+	public readonly comments?: Comment[];
 
 	public static relationships = {
 		posts: true,
