@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { Post } from "../../../db/models";
 import errorlog from "../../../utils/errorlog";
-import { PAGE_SIZE, sanitizePost, NumberHelpers } from "../../utils";
+import { PAGE_SIZE, NumberHelpers } from "../../utils";
 
 export async function getPostOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;
@@ -10,7 +10,7 @@ export async function getPostOrFail(req: Request, res: Response, next: NextFunct
 		if (id) {
 			const post = await Post.query().findById(id).withGraphFetched(Post.relationships);
 			if (!post) return res.status(404).end();
-			res.post = sanitizePost(post);
+			res.post = post.sanitize();
 		} else {
 			res.posts = (
 				await Post.query()
