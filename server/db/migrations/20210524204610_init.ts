@@ -7,6 +7,7 @@ export function up(knex: Knex) {
 			table.boolean("is_admin").notNullable().defaultTo(false);
 			table.string("email").unique().notNullable();
 			table.string("password").notNullable();
+			table.string("avatar");
 			table.timestamp("created_at").notNullable().defaultTo(knex.raw("CURRENT_TIMESTAMP"));
 			table
 				.timestamp("updated_at")

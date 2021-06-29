@@ -1,5 +1,7 @@
-import { Model } from "objection";
+import { Model, raw } from "objection";
+import errorlog from "../../utils/errorlog";
 import { Tag, User, Comment } from "./";
+import { PostTag } from "./PostTag";
 
 export class Post extends Model {
 	public static tableName = "posts";
@@ -61,5 +63,29 @@ export class Post extends Model {
 		delete this.author.password;
 		this.author.is_admin = Boolean(Number(this.author.is_admin));
 		return this;
+	}
+
+	/**
+	 * @description Filter posts via search (body, title) or tags
+	 */
+	public static async filter(search?: string, tags?: string[]) {
+		try {
+			let query = Post.query();
+			if (search) {
+				query = query
+					.where("body", "like", `%${search}%`)
+					.orWhere("title", "like", `%${search}%`);
+			}
+			if (tags) {
+				query = query
+					.innerJoin("posts_tags", "posts_tags.post_id", "posts.id")
+					.innerJoin("tags", "tags.id", "posts_tags.tag_id")
+					.whereIn("tags.name", tags);
+			}
+			return await query.withGraphFetched(Post.relationships).execute();
+		} catch (error) {
+			errorlog(error);
+			return [];
+		}
 	}
 }

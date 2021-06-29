@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { z } from "zod";
 import { Post, Tag } from "../../db/models";
 import errorlog from "../../utils/errorlog";
 import { validateBody } from "../middlewares/validateBody";
@@ -26,7 +27,7 @@ export async function createPost(req: Request, res: Response) {
 	}
 }
 
-export function getAllPosts(req: Request, res: Response) {
+export async function getAllPosts(req: Request, res: Response) {
 	res.status(200).json({ data: res.posts?.map(post => post.sanitize()) });
 }
 

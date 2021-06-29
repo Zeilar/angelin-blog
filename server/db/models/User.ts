@@ -8,6 +8,7 @@ export class User extends Model {
 	public email!: string;
 	public is_admin!: number | boolean;
 	public password?: string;
+	public avatar?: string;
 	public readonly created_at!: string;
 	public readonly updated_at!: string;
 	public posts?: Post[];

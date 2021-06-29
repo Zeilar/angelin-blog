@@ -1,2 +1,2 @@
-export * from "./access";
+export * from "./commentAccess";
 export * from "./getCommentOrfail";

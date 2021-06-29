@@ -1,31 +1,31 @@
 import express from "express";
 import * as Controller from "../controllers/postsController";
-import * as Middleware from "../middlewares";
+import * as Middlewares from "../middlewares";
 
 export const router = express.Router();
 
-router.get("", Middleware.getPostOrFail, Controller.getAllPosts);
-router.get("/:id", Middleware.getPostOrFail, Controller.getPostById);
+router.get("", Middlewares.getPostOrFail, Middlewares.filterPosts, Controller.getAllPosts);
+router.get("/:id", Middlewares.getPostOrFail, Controller.getPostById);
 router.post(
 	"",
-	Middleware.loggedIn,
-	Middleware.admin,
-	Middleware.canCreatePost,
+	Middlewares.loggedIn,
+	Middlewares.admin,
+	Middlewares.canCreatePost,
 	Controller.createPost
 );
 router.put(
 	"/:id",
-	Middleware.loggedIn,
-	Middleware.admin,
-	Middleware.getPostOrFail,
-	Middleware.canEditPost,
+	Middlewares.loggedIn,
+	Middlewares.admin,
+	Middlewares.getPostOrFail,
+	Middlewares.canEditPost,
 	Controller.editPost
 );
 router.delete(
 	"/:id",
-	Middleware.loggedIn,
-	Middleware.admin,
-	Middleware.getPostOrFail,
-	Middleware.canDeletePost,
+	Middlewares.loggedIn,
+	Middlewares.admin,
+	Middlewares.getPostOrFail,
+	Middlewares.canDeletePost,
 	Controller.deletePost
 );
