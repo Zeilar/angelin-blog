@@ -45,7 +45,7 @@ export class User extends Model {
 	 */
 	public sanitize() {
 		delete this.password;
-		this.is_admin = Boolean(Number(this.is_admin));
+		this.is_admin = Boolean(this.is_admin);
 		return this;
 	}
 }

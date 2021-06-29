@@ -12,4 +12,6 @@ export class NumberHelpers {
 	public static clamp(number: number) {
 		return number < 0 ? 0 : number;
 	}
+
+	public static paginate(page: number, perPage: number) {}
 }

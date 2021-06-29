@@ -60,7 +60,7 @@ export class Post extends Model {
 	public sanitize() {
 		if (!this.author) return this;
 		delete this.author.password;
-		this.author.is_admin = Boolean(Number(this.author.is_admin));
+		this.author.is_admin = Boolean(this.author.is_admin);
 		return this;
 	}
 
