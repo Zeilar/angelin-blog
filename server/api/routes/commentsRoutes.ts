@@ -1,9 +1,14 @@
 import express from "express";
-import { createComment, editComment, deleteComment } from "../controllers/commentsController";
-import { getCommentOrFail, CommentGuard } from "../middlewares/comment";
+import { CommentsController } from "../controllers/CommentsController";
+import * as Middlewares from "../middlewares";
 
 export const router = express.Router();
 
-router.post("", createComment);
-router.put("/:id", getCommentOrFail, CommentGuard.edit, editComment);
-router.delete("/:id", getCommentOrFail, deleteComment);
+router.post("", CommentsController.create);
+router.put(
+	"/:id",
+	Middlewares.getCommentOrFail,
+	Middlewares.CommentGuard.edit,
+	CommentsController.edit
+);
+router.delete("/:id", Middlewares.getCommentOrFail, CommentsController.delete);

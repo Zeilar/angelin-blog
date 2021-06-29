@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { Comment } from "../../../db/models";
 import errorlog from "../../../utils/errorlog";
-import { sanitizeComment } from "../../utils";
 
 export async function getCommentOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;
@@ -11,7 +10,7 @@ export async function getCommentOrFail(req: Request, res: Response, next: NextFu
 				.findById(id)
 				.withGraphFetched(Comment.relationships);
 			if (!comment) return res.status(404).end();
-			res.comment = sanitizeComment(comment);
+			res.comment = comment.sanitize();
 		} else {
 			res.comments = await Comment.query().withGraphFetched(Comment.relationships);
 		}

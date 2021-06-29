@@ -1,17 +1,17 @@
 import express from "express";
-import * as Controller from "../controllers/postsController";
+import { PostsController } from "../controllers";
 import * as Middlewares from "../middlewares";
 
 export const router = express.Router();
 
-router.get("", Middlewares.getPostOrFail, Middlewares.filterPosts, Controller.getAllPosts);
-router.get("/:id", Middlewares.getPostOrFail, Controller.getPostById);
+router.get("", Middlewares.getPostOrFail, Middlewares.filterPosts, PostsController.index);
+router.get("/:id", Middlewares.getPostOrFail, PostsController.single);
 router.post(
 	"",
 	Middlewares.AuthGuard.user,
 	Middlewares.AuthGuard.admin,
 	Middlewares.PostGuard.create,
-	Controller.createPost
+	PostsController.create
 );
 router.put(
 	"/:id",
@@ -19,7 +19,7 @@ router.put(
 	Middlewares.AuthGuard.admin,
 	Middlewares.getPostOrFail,
 	Middlewares.PostGuard.edit,
-	Controller.editPost
+	PostsController.edit
 );
 router.delete(
 	"/:id",
@@ -27,5 +27,5 @@ router.delete(
 	Middlewares.AuthGuard.admin,
 	Middlewares.getPostOrFail,
 	Middlewares.PostGuard.delete,
-	Controller.deletePost
+	PostsController.delete
 );

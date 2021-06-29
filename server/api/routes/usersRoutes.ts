@@ -1,10 +1,10 @@
 import express from "express";
-import { authenticate, register, logout, login } from "../controllers/usersController";
+import { UsersController } from "../controllers/UsersController";
 import { AuthGuard } from "../middlewares";
 
 export const router = express.Router();
 
-router.get("/authenticate", AuthGuard.user, authenticate);
-router.post("/register", register);
-router.post("/login", login);
-router.get("/logout", logout);
+router.get("/authenticate", AuthGuard.user, UsersController.authenticate);
+router.post("/register", UsersController.register);
+router.post("/login", UsersController.login);
+router.get("/logout", UsersController.logout);
