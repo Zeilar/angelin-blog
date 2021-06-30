@@ -2,7 +2,7 @@ import { User } from "../../db/models";
 import errorlog from "../../utils/errorlog";
 
 export interface Policies {
-	[key: string]: () => boolean | boolean;
+	[key: string]: () => boolean;
 }
 
 export interface PolicyChild {
