@@ -1,22 +1,24 @@
 import { Request, Response, NextFunction } from "express";
+import { Post } from "../../../db/models";
 
 export class PostGuard {
 	public static create(req: Request, res: Response, next: NextFunction) {
-		if (res.post?.can(res.user!, "create")) {
+		console.log(Post.can(res.user!, res.post!, "create"));
+		if (Post.can(res.user!, res.post!, "create")) {
 			return next();
 		}
 		res.status(403).end();
 	}
 
 	public static delete(req: Request, res: Response, next: NextFunction) {
-		if (res.post?.can(res.user!, "delete")) {
+		if (Post.can(res.user!, res.post!, "delete")) {
 			return next();
 		}
 		res.status(403).end();
 	}
 
 	public static edit(req: Request, res: Response, next: NextFunction) {
-		if (res.post?.can(res.user!, "edit")) {
+		if (Post.can(res.user!, res.post!, "edit")) {
 			return next();
 		}
 		res.status(403).end();

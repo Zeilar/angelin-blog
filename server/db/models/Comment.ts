@@ -42,10 +42,10 @@ export class Comment extends Model {
 
 	/**
 	 * @description Uses the policy class system
-	 * @example can(user, "edit") // expected output: boolean
+	 * @example can(user, comment, "edit") // expected output: boolean
 	 */
-	public can(user: User, ...action: CommentAction[]) {
-		return new CommentPolicy(user, this).can(...action);
+	public static can(user: User, comment: Comment, ...action: CommentAction[]) {
+		return new CommentPolicy(user, comment).can(...action);
 	}
 
 	/**
