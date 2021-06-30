@@ -1,4 +1,5 @@
 import { Model } from "objection";
+import { CommentPolicy, CommentAction } from "../../api/policies";
 import { Post, User } from "./";
 
 export class Comment extends Model {
@@ -37,6 +38,14 @@ export class Comment extends Model {
 				},
 			},
 		};
+	}
+
+	/**
+	 * @description Uses the policy class system
+	 * @example can(user, "edit") // expected output: boolean
+	 */
+	public can(user: User, ...action: CommentAction[]) {
+		return new CommentPolicy(user, this).can(...action);
 	}
 
 	/**

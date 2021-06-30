@@ -1,4 +1,5 @@
 import { Model } from "objection";
+import { PostPolicy, PostAction } from "../../api/policies";
 import errorlog from "../../utils/errorlog";
 import { Tag, User, Comment } from "./";
 
@@ -55,6 +56,14 @@ export class Post extends Model {
 	}
 
 	/**
+	 * @description Uses the policy class system
+	 * @example can(user, "edit") // expected output: boolean
+	 */
+	public can(user: User, ...action: PostAction[]) {
+		return new PostPolicy(user, this).can(...action);
+	}
+
+	/**
 	 * @description Removes sensitive information and converts is_admin from boolean to integer
 	 */
 	public sanitize() {
@@ -66,7 +75,7 @@ export class Post extends Model {
 
 	/**
 	 * @description Filter posts via search (body, title) or tags
-	 * @example const filtered = await Post.filter("hello world", ["programming"]);
+	 * @example await Post.filter("hello world", ["programming"]);
 	 */
 	public static async filter(search?: string, tags?: string[]) {
 		try {
