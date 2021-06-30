@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction, response } from "express";
 import { Comment } from "../../../db/models";
 import errorlog from "../../../utils/errorlog";
-import { NumberHelpers, PAGE_SIZE } from "../../utils";
 
 export async function getCommentOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;
