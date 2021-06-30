@@ -13,7 +13,7 @@ export class CommentPolicy extends Policy<CommentAction> implements PolicyChild 
 		create: () => this.create(),
 	};
 
-	constructor(user?: User, comment?: Comment) {
+	constructor(user: User, comment: Comment) {
 		super();
 		this.user = user;
 		this.comment = comment;

@@ -13,7 +13,7 @@ export class PostPolicy extends Policy<PostAction> implements PolicyChild {
 		create: () => this.create(),
 	};
 
-	constructor(user?: User, post?: Post) {
+	constructor(user: User, post: Post) {
 		super();
 		this.user = user;
 		this.post = post;

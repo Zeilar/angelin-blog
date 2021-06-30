@@ -8,7 +8,7 @@ export interface Policies {
 export interface PolicyChild {
 	constructor: Function;
 	policies: Policies;
-	readonly user?: User;
+	readonly user: User;
 }
 
 export class Policy<Action extends string> {
