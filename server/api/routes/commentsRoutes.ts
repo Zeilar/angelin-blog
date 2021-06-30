@@ -7,13 +7,11 @@ export const router = express.Router();
 router.post("", CommentsController.create);
 router.put(
 	"/:id",
-	Middlewares.getCommentOrFail,
-	Middlewares.CommentGuard.edit,
+	[Middlewares.getCommentOrFail, Middlewares.CommentGuard.edit],
 	CommentsController.edit
 );
 router.delete(
 	"/:id",
-	Middlewares.getCommentOrFail,
-	Middlewares.CommentGuard.delete,
+	[Middlewares.getCommentOrFail, Middlewares.CommentGuard.delete],
 	CommentsController.delete
 );
