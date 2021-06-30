@@ -5,15 +5,15 @@ import errorlog from "../../../utils/errorlog";
 export async function getCommentOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;
 	try {
-		if (id) {
-			const comment = await Comment.query()
-				.findById(id)
-				.withGraphFetched(Comment.relationships);
-			if (!comment) return res.status(404).end();
-			res.comment = comment.sanitize();
-		} else {
+		if (!id) {
 			return res.status(400).json({ error: "Expected id query parameter." });
 		}
+
+		const comment = await Comment.query().findById(id).withGraphFetched(Comment.relationships);
+		if (!comment) return res.status(404).end();
+
+		res.comment = comment.sanitize();
+
 		next();
 	} catch (error) {
 		errorlog(error);
