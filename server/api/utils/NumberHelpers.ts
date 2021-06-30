@@ -1,3 +1,5 @@
+import errorlog from "../../utils/errorlog";
+
 export class NumberHelpers {
 	public number: number;
 
@@ -6,12 +8,36 @@ export class NumberHelpers {
 	}
 
 	/**
-	 * @description Change negative numbers to 0
+	 * @description Clamp a value to 0 or return it
 	 * @example clamp(-5) // expected output: 0
 	 */
 	public static clamp(number: number) {
 		return number < 0 ? 0 : number;
 	}
 
-	public static paginate(page: number, perPage: number) {}
+	/**
+	 * @description Try to parse unknown into int, as parseInt only accepts strings
+	 * @example const int = NumberHelpers.int("a5") // expected output: 5
+	 */
+	public static int(value: unknown) {
+		if (typeof value === "number") {
+			return value;
+		} else if (typeof value === "string") {
+			return parseInt(value);
+		}
+		return Number(value);
+	}
+
+	/**
+	 * @description Safely parse page/perPage
+	 * @example const [page, perPage] = paginate("1", 20); // expected output: [1, 20]
+	 */
+	public static paginate(page: string, perPage: string): { page: number; perPage: number };
+	public static paginate(page: number, perPage: number): { page: number; perPage: number };
+	public static paginate(page: unknown, perPage: unknown) {
+		return {
+			page: NumberHelpers.clamp(NumberHelpers.int(page ?? 0) - 1),
+			perPage: NumberHelpers.clamp(NumberHelpers.int(perPage ?? 0)),
+		};
+	}
 }
