@@ -15,7 +15,7 @@ export class NumberHelpers {
 
 	/**
 	 * @description Try to parse unknown into int, as parseInt only accepts strings
-	 * @example const int = NumberHelpers.int("a5") // expected output: 5
+	 * @example NumberHelpers.int("a5") // expected output: 5
 	 */
 	public static int(value: unknown) {
 		if (typeof value === "number") {
