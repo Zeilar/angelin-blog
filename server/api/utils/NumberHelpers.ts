@@ -6,16 +6,17 @@ export class NumberHelpers {
 	}
 
 	/**
-	 * @description Clamp a value to 0 or return it
+	 * @description Clamp a value or return it
 	 * @example clamp(-5) // expected output: 0
+	 * @example clamp(10) // expected output: 10
 	 */
 	public static clamp(number: number) {
 		return number < 0 ? 0 : number;
 	}
 
 	/**
-	 * @description Try to parse unknown into int, as parseInt only accepts strings
-	 * @example NumberHelpers.int("a5") // expected output: 5
+	 * @description Try to parse unknown to int
+	 * @example NumberHelpers.int("5a") // expected output: 5
 	 */
 	public static int(value: unknown) {
 		if (typeof value === "number") {
@@ -27,8 +28,8 @@ export class NumberHelpers {
 	}
 
 	/**
-	 * @description Safely parse page/perPage
-	 * @example paginate("1", 20); // expected output: { page: 1, perPage: 20 }
+	 * @description Safely parse page/perPage without having to convert strings to ints
+	 * @example paginate("1", "20"); // expected output: { page: 1, perPage: 20 }
 	 */
 	public static paginate(page: string, perPage: string): { page: number; perPage: number };
 	public static paginate(page: number, perPage: number): { page: number; perPage: number };
