@@ -3,7 +3,6 @@ import { Post } from "../../../db/models";
 
 export class PostGuard {
 	public static create(req: Request, res: Response, next: NextFunction) {
-		console.log(Post.can(res.user!, res.post!, "create"));
 		if (Post.can(res.user!, res.post!, "create")) {
 			return next();
 		}
