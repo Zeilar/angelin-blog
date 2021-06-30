@@ -1,5 +1,3 @@
-import errorlog from "../../utils/errorlog";
-
 export class NumberHelpers {
 	public number: number;
 
@@ -30,7 +28,7 @@ export class NumberHelpers {
 
 	/**
 	 * @description Safely parse page/perPage
-	 * @example const [page, perPage] = paginate("1", 20); // expected output: [1, 20]
+	 * @example paginate("1", 20); // expected output: { page: 1, perPage: 20 }
 	 */
 	public static paginate(page: string, perPage: string): { page: number; perPage: number };
 	public static paginate(page: number, perPage: number): { page: number; perPage: number };
