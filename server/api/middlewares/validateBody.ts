@@ -3,7 +3,9 @@ import errorlog from "../../utils/errorlog";
 
 /**
  * @description Compares keys input to body object keys, and return whether they match or not
- * @example const result = validateBody(["username", "password"], req.body);
+ * @example validateBody(["username", "email"], { username: "john" ); // expected output: false
+ * @example validateBody("username", { username: "john" ); // expected output: true
+ * @example validateBody({ username: true }, { email: "mymail" ); // expected output: false
  */
 export function validateBody(keys: string[], body: object): boolean;
 export function validateBody(keys: string, body: object): boolean;
