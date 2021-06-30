@@ -1,5 +1,5 @@
 import { Comment, User } from "../../db/models";
-import Policy, { PolicyChild, Policies } from "./Policy";
+import { Policy, PolicyChild, Policies } from "./Policy";
 
 export type CommentAction = "create" | "delete" | "edit";
 

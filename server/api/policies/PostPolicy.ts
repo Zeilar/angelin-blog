@@ -1,5 +1,5 @@
 import { User, Post } from "../../db/models";
-import Policy, { PolicyChild, Policies } from "./Policy";
+import { Policy, PolicyChild, Policies } from "./Policy";
 
 export type PostAction = "create" | "delete" | "edit";
 

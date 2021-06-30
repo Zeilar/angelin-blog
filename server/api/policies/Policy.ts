@@ -11,7 +11,7 @@ export interface PolicyChild {
 	readonly user?: User;
 }
 
-export default class Policy<Action extends string> {
+export class Policy<Action extends string> {
 	public authorized = false;
 
 	protected readonly policies: Policies = {};
