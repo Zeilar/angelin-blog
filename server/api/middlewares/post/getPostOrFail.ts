@@ -12,13 +12,15 @@ export async function getPostOrFail(req: Request, res: Response, next: NextFunct
 			if (!post) return res.status(404).end();
 			res.post = post.sanitize();
 		} else {
+			const pagination = NumberHelpers.paginate(
+				page as string,
+				(perPage as string) ?? PAGE_SIZE
+			);
+			console.log(pagination);
 			res.posts = (
 				await Post.query()
 					.withGraphFetched(Post.relationships)
-					.page(
-						NumberHelpers.clamp(parseInt(page as string) - 1) || 0,
-						NumberHelpers.clamp(parseInt(perPage as string)) || PAGE_SIZE
-					)
+					.page(pagination.page, pagination.perPage)
 			).results;
 		}
 		next();
