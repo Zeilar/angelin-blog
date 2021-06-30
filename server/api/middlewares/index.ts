@@ -1,5 +1,5 @@
 export * from "./validateBody";
-export * from "./AuthGuard";
+export * from "./user";
 export * from "./post";
 export * from "./user";
 export * from "./comment";
