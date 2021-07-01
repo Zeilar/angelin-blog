@@ -10,6 +10,8 @@ declare global {
 			DB_USER?: string;
 			DB_PASSWORD?: string;
 			DB_CLIENT?: string;
+			GITHUB_CLIENT?: string;
+			GITHUB_SECRET?: string;
 		}
 	}
 }

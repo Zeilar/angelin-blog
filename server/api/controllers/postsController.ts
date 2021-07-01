@@ -20,8 +20,8 @@ export class PostsController {
 		try {
 			const post = await Post.query().insertGraphAndFetch({ user_id: user, title, body });
 			const fetchedTags = await Tag.findOrCreate(tags);
-			for (let i = 0; i < fetchedTags.length; i++) {
-				await post.$relatedQuery("tags").relate(fetchedTags[i]);
+			for (const tag of fetchedTags) {
+				await post.$relatedQuery("tags").relate(tag);
 			}
 			res.status(200).json({ data: { ...post, tags } });
 		} catch (error) {
@@ -31,11 +31,11 @@ export class PostsController {
 	}
 
 	public static async index(req: Request, res: Response) {
-		res.status(200).json({ data: res.posts?.map(post => post.sanitize()) });
+		res.status(200).json({ data: res.posts?.map(post => post.dto()) });
 	}
 
 	public static single(req: Request, res: Response) {
-		res.status(200).json({ data: res.post?.sanitize() });
+		res.status(200).json({ data: res.post?.dto() });
 	}
 
 	public static async edit(req: Request, res: Response) {
@@ -50,8 +50,8 @@ export class PostsController {
 			if (tags) {
 				await res.post!.$relatedQuery("tags").unrelate();
 				const fetchedTags = await Tag.findOrCreate(tags);
-				for (let i = 0; i < fetchedTags.length; i++) {
-					await res.post!.$relatedQuery("tags").relate(fetchedTags[i]);
+				for (const tag of fetchedTags) {
+					await res.post!.$relatedQuery("tags").relate(tag);
 				}
 			}
 			res.status(200).json(

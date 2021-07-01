@@ -9,20 +9,17 @@ export async function getPostOrFail(req: Request, res: Response, next: NextFunct
 		if (id) {
 			const post = await Post.query().findById(id).withGraphFetched(Post.relationships);
 			if (!post) return res.status(404).end();
-			res.post = post.sanitize();
+			res.post = post.dto();
 		} else {
-			const { page, perPage } = req.query;
-
-			const pagination = NumberHelpers.paginate(
-				page as string,
-				(perPage as string) ?? PAGE_SIZE
+			const { page, perPage } = NumberHelpers.paginate(
+				req.query.page as string,
+				(req.query.perPage as string) ?? PAGE_SIZE
 			);
 
-			res.posts = (
-				await Post.query()
-					.withGraphFetched(Post.relationships)
-					.page(pagination.page, pagination.perPage)
-			).results;
+			const posts = await Post.query()
+				.withGraphFetched(Post.relationships)
+				.page(page, perPage);
+			res.posts = posts.results;
 		}
 		next();
 	} catch (error) {

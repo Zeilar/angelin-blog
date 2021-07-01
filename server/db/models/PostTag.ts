@@ -4,11 +4,11 @@ import { Post, Tag } from "./";
 export class PostTag extends Model {
 	public static tableName = "posts_tags";
 
-	public readonly id!: number;
-	public readonly post_id!: number;
-	public readonly tag_id!: number;
-	public readonly created_at!: string;
-	public readonly updated_at!: string;
+	public id!: number;
+	public post_id!: number;
+	public tag_id!: number;
+	public created_at!: string;
+	public updated_at!: string;
 
 	public static relationships = {
 		post: true,

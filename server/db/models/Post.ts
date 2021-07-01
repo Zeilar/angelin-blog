@@ -6,15 +6,15 @@ import { Tag, User, Comment } from "./";
 export class Post extends Model {
 	public static tableName = "posts";
 
-	public readonly id!: number;
-	public readonly user_id!: number;
+	public id!: number;
+	public user_id!: number;
 	public title!: string;
 	public body!: string;
-	public readonly created_at!: string;
-	public readonly updated_at!: string;
-	public readonly author!: User;
-	public readonly comments?: Comment[];
-	public readonly tags?: Tag[];
+	public created_at!: string;
+	public updated_at!: string;
+	public author!: User;
+	public comments?: Comment[];
+	public tags?: Tag[];
 
 	public static relationships = {
 		author: true,
@@ -63,13 +63,9 @@ export class Post extends Model {
 		return new PostPolicy(user, post).can(...action);
 	}
 
-	/**
-	 * @description Removes sensitive information and converts is_admin from boolean to integer
-	 */
-	public sanitize() {
+	public dto() {
 		if (!this.author) return this;
-		delete this.author.password;
-		this.author.is_admin = Boolean(this.author.is_admin);
+		this.author = this.author.dto();
 		return this;
 	}
 

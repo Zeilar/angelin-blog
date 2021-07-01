@@ -5,11 +5,11 @@ import { Post } from "./";
 export class Tag extends Model {
 	public static tableName = "tags";
 
-	public readonly id!: number;
+	public id!: number;
 	public name!: string;
-	public readonly created_at!: string;
-	public readonly updated_at!: string;
-	public readonly posts?: Post[];
+	public created_at!: string;
+	public updated_at!: string;
+	public posts?: Post[];
 
 	public static relationships = {
 		posts: true,
@@ -34,7 +34,7 @@ export class Tag extends Model {
 
 	// This has to be done one at a time in order to work outside PostgresQL
 	private static async findOrCreateQuery(tagArg: string) {
-		let tag = await Tag.query().where({ name: tagArg }).first();
+		let tag = await Tag.query().findOne({ name: tagArg });
 		if (!tag) tag = await Tag.query().insertAndFetch({ name: tag });
 		if (!tag) throw new Error(`Could not create or find tag: ${tag}`);
 		return tag;
@@ -50,8 +50,8 @@ export class Tag extends Model {
 		const tags = [];
 		try {
 			if (Array.isArray(tagsArg)) {
-				for (let i = 0; i < tagsArg.length; i++) {
-					tags.push(await Tag.findOrCreateQuery(tagsArg[i]));
+				for (const tag of tagsArg) {
+					tags.push(await Tag.findOrCreateQuery(tag));
 				}
 			} else if (typeof tagsArg === "string") {
 				tags.push(await Tag.findOrCreateQuery(tagsArg));

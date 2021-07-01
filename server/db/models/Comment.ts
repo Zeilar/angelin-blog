@@ -5,14 +5,14 @@ import { Post, User } from "./";
 export class Comment extends Model {
 	public static tableName = "comments";
 
-	public readonly id!: number;
-	public readonly post_id!: number;
-	public readonly user_id!: number;
+	public id!: number;
+	public post_id!: number;
+	public user_id!: number;
 	public body!: string;
-	public readonly created_at!: string;
-	public readonly updated_at!: string;
-	public readonly post!: Post;
-	public readonly author!: User;
+	public created_at!: string;
+	public updated_at!: string;
+	public post!: Post;
+	public author!: User;
 
 	public static relationships = {
 		author: true,
@@ -48,13 +48,9 @@ export class Comment extends Model {
 		return new CommentPolicy(user, comment).can(...action);
 	}
 
-	/**
-	 * @description Removes sensitive information and converts is_admin from boolean to integer
-	 */
-	public sanitize() {
+	public dto() {
 		if (!this.author) return this;
-		delete this.author.password;
-		this.author.is_admin = Boolean(this.author.is_admin);
+		this.author = this.author.dto();
 		return this;
 	}
 }

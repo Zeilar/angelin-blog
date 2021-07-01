@@ -18,8 +18,8 @@ export class Policy<Action extends string> {
 
 	public can(...actions: Action[]) {
 		try {
-			for (let i = 0; i < actions.length; i++) {
-				this.authorized = this.policies[actions[i]]();
+			for (const action of actions) {
+				this.authorized = this.policies[action]();
 				if (!this.authorized) break;
 			}
 		} catch (error) {

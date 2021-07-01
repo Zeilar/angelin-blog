@@ -12,7 +12,7 @@ export async function getCommentOrFail(req: Request, res: Response, next: NextFu
 		const comment = await Comment.query().findById(id).withGraphFetched(Comment.relationships);
 		if (!comment) return res.status(404).end();
 
-		res.comment = comment.sanitize();
+		res.comment = comment.dto();
 
 		next();
 	} catch (error) {

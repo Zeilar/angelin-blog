@@ -10,7 +10,7 @@ import { z } from "zod";
 export class UsersController {
 	public static async authenticate(req: Request, res: Response) {
 		try {
-			res.status(200).json({ data: res.user?.sanitize() });
+			res.status(200).json({ data: res.user?.dto() });
 		} catch (error) {
 			errorlog(error);
 			res.status(500).end();
@@ -39,11 +39,14 @@ export class UsersController {
 			// TODO: Validation
 			// email required and type email, and password min/max
 
-			const user = await User.query().insert({ email, password: await hash(password, 10) });
+			const user = await User.query().insertAndFetch({
+				email,
+				password: await hash(password, 10),
+			});
 
 			req.session.user = user.id;
 
-			res.status(200).json({ data: user.sanitize() });
+			res.status(200).json({ data: user.dto() });
 		} catch (error) {
 			errorlog(error);
 			res.status(500).end();
@@ -77,7 +80,7 @@ export class UsersController {
 
 			req.session.user = user.id;
 
-			res.status(200).json({ data: user.sanitize() });
+			res.status(200).json({ data: user.dto() });
 		} catch (error) {
 			errorlog(error);
 			res.status(500).end();

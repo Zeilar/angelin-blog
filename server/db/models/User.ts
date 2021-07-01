@@ -4,15 +4,16 @@ import { Post, Comment } from "./";
 export class User extends Model {
 	public static tableName = "users";
 
-	public readonly id!: number;
+	public id!: number;
 	public email!: string;
 	public is_admin!: number | boolean;
 	public password?: string;
 	public avatar?: string;
-	public readonly created_at!: string;
-	public readonly updated_at!: string;
-	public readonly posts?: Post[];
-	public readonly comments?: Comment[];
+	public oauth?: string;
+	public created_at!: string;
+	public updated_at!: string;
+	public posts?: Post[];
+	public comments?: Comment[];
 
 	public static relationships = {
 		posts: true,
@@ -40,12 +41,14 @@ export class User extends Model {
 		};
 	}
 
-	/**
-	 * @description Removes sensitive information and converts is_admin from boolean to integer
-	 */
-	public sanitize() {
+	public dto() {
 		delete this.password;
 		this.is_admin = Boolean(this.is_admin);
+		this.avatar = this.getAvatar();
 		return this;
+	}
+
+	public getAvatar() {
+		return this.avatar;
 	}
 }
