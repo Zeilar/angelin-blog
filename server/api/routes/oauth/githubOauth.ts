@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import passport from "passport";
 import { User } from "../../../db/models";
 import { Strategy as GitHubStrategy, Profile as GitHubProfile } from "passport-github2";
+import { NumberHelpers } from "../../utils";
 
 export const router = Router();
 
@@ -34,10 +35,10 @@ passport.use(
 				user = await User.query().insertAndFetch({
 					email: profile._json.email,
 					avatar: profile._json.avatar_url,
-					oauth: "github",
+					oauth: true,
+					github_id: profile.id,
 				});
 			}
-			console.log("user in strategy", user);
 			done(null, user);
 		}
 	)

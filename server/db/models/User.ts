@@ -1,4 +1,5 @@
 import { Model } from "objection";
+import { NumberHelpers } from "../../api/utils";
 import { Post, Comment } from "./";
 
 export class User extends Model {
@@ -6,10 +7,11 @@ export class User extends Model {
 
 	public id!: number;
 	public email!: string;
-	public is_admin!: number | boolean;
+	public is_admin!: boolean;
 	public password?: string;
-	public avatar?: string;
-	public oauth?: string;
+	public avatar?: string | null;
+	public oauth?: boolean;
+	public github_id?: number | string;
 	public created_at!: string;
 	public updated_at!: string;
 	public posts?: Post[];
@@ -52,6 +54,10 @@ export class User extends Model {
 
 	public $afterGet() {
 		this.avatar = this.getAvatar();
+		if (this.github_id) {
+			this.github_id = NumberHelpers.int(this.github_id);
+		}
+		this.oauth = Boolean(this.oauth);
 		this.is_admin = Boolean(this.is_admin);
 	}
 }
