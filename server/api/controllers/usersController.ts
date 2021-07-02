@@ -23,7 +23,7 @@ export class UsersController {
 			return;
 		}
 
-		if (req.session.user) {
+		if (req.user) {
 			res.status(405).json({ error: ErrorMessages.LOGGED_IN });
 			return;
 		}
@@ -61,24 +61,36 @@ export class UsersController {
 
 		const { email, password } = req.body;
 
-		if (req.session.user) {
+		if (req.isAuthenticated()) {
 			res.status(405).json({ error: ErrorMessages.LOGGED_IN });
 			return;
 		}
 
 		try {
 			const user = await User.query().findOne("email", email);
+
 			if (!user) {
 				res.status(422).json({ error: ErrorMessages.USER_NOT_EXISTS });
 				return;
 			}
 
-			if (!(await compare(password, user.password!))) {
+			if (!user.password) {
+				res.status(405).json({ error: "You must login via OAuth." });
+				return;
+			}
+
+			if (!(await compare(password, user.password))) {
 				res.status(422).json({ error: ErrorMessages.INCORRECT_CREDENTIALS });
 				return;
 			}
 
-			req.session.user = user.id;
+			req.login(user, error => {
+				if (error) {
+					errorlog(error);
+					res.status(500).end();
+					return;
+				}
+			});
 
 			res.status(200).json({ data: user.dto() });
 		} catch (error) {
@@ -88,11 +100,11 @@ export class UsersController {
 	}
 
 	public static logout(req: Request, res: Response) {
-		if (!req.session.user) {
+		if (!req.isAuthenticated()) {
 			res.status(405).json({ error: ErrorMessages.LOGGED_OUT });
 			return;
 		}
-		delete req.session.user;
+		req.logout();
 		res.status(200).end();
 	}
 }

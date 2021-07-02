@@ -9,7 +9,7 @@ export async function getPostOrFail(req: Request, res: Response, next: NextFunct
 		if (id) {
 			const post = await Post.query().findById(id).withGraphFetched(Post.relationships);
 			if (!post) return res.status(404).end();
-			res.post = post.dto();
+			res.post = post;
 		} else {
 			const { page, perPage } = NumberHelpers.paginate(
 				req.query.page as string,

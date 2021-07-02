@@ -31,11 +31,11 @@ export class PostsController {
 	}
 
 	public static async index(req: Request, res: Response) {
-		res.status(200).json({ data: res.posts?.map(post => post.dto()) });
+		res.status(200).json({ data: res.posts });
 	}
 
 	public static single(req: Request, res: Response) {
-		res.status(200).json({ data: res.post?.dto() });
+		res.status(200).json({ data: res.post });
 	}
 
 	public static async edit(req: Request, res: Response) {

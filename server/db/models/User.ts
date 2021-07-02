@@ -43,12 +43,15 @@ export class User extends Model {
 
 	public dto() {
 		delete this.password;
-		this.is_admin = Boolean(this.is_admin);
-		this.avatar = this.getAvatar();
 		return this;
 	}
 
 	public getAvatar() {
 		return this.avatar;
+	}
+
+	public $afterGet() {
+		this.avatar = this.getAvatar();
+		this.is_admin = Boolean(this.is_admin);
 	}
 }

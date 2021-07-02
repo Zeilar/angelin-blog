@@ -8,7 +8,8 @@ export function up(knex: Knex) {
 			table.string("email").unique().notNullable();
 			table.string("password").nullable();
 			table.string("avatar").nullable();
-			table.string("oauth").nullable();
+			table.boolean("oauth").defaultTo(false);
+			table.string("github_id").nullable();
 			table.timestamp("created_at").notNullable().defaultTo(knex.raw("CURRENT_TIMESTAMP"));
 			table
 				.timestamp("updated_at")

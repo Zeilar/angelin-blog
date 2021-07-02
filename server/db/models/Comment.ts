@@ -48,9 +48,8 @@ export class Comment extends Model {
 		return new CommentPolicy(user, comment).can(...action);
 	}
 
-	public dto() {
-		if (!this.author) return this;
+	public $afterGet() {
+		if (!this.author) return;
 		this.author = this.author.dto();
-		return this;
 	}
 }

@@ -63,12 +63,6 @@ export class Post extends Model {
 		return new PostPolicy(user, post).can(...action);
 	}
 
-	public dto() {
-		if (!this.author) return this;
-		this.author = this.author.dto();
-		return this;
-	}
-
 	/**
 	 * @description Filter posts via search (body, title) or tags
 	 * @example await Post.filter("hello world", ["programming"]);
@@ -92,5 +86,10 @@ export class Post extends Model {
 			errorlog(error);
 			return [];
 		}
+	}
+
+	public $afterGet() {
+		if (!this.author) return;
+		this.author = this.author.dto();
 	}
 }
