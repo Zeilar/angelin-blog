@@ -48,7 +48,7 @@ export class User extends Model {
 		return this;
 	}
 
-	public getAvatar() {
+	private getAvatar() {
 		return this.avatar;
 	}
 
