@@ -44,7 +44,11 @@ export class UsersController {
 				password: await hash(password, 10),
 			});
 
-			req.session.user = user.id;
+			req.login(user, error => {
+				errorlog(error);
+				res.status(500).end();
+				return;
+			});
 
 			res.status(200).json({ data: user.dto() });
 		} catch (error) {
