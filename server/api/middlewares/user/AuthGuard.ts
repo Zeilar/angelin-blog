@@ -3,10 +3,11 @@ import { Request, Response, NextFunction } from "express";
 
 export class AuthGuard {
 	public static async user(req: Request, res: Response, next: NextFunction) {
-		const { user: id } = req.session;
 		try {
-			if (!id) return res.status(401).end();
-			res.user = await User.query().findById(id);
+			if (!req.isAuthenticated()) {
+				return res.status(401).end();
+			}
+			res.user = await User.query().findById(req.user);
 			next();
 		} catch (error) {
 			res.status(500).end();
