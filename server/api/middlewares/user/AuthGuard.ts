@@ -7,7 +7,7 @@ export class AuthGuard {
 			if (!req.isAuthenticated()) {
 				return res.status(401).end();
 			}
-			res.user = await User.query().findById(req.user);
+			res.user = await User.query().findById(req.user.id);
 			next();
 		} catch (error) {
 			res.status(500).end();

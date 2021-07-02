@@ -9,12 +9,12 @@ export const router = Router();
 const { GITHUB_CLIENT, GITHUB_SECRET } = process.env;
 
 passport.serializeUser((user: any, done) => {
-	done(null, user.id);
+	done(null, user);
 });
 
-passport.deserializeUser(async (id: number, done) => {
-	const user = await User.query().findById(id);
-	done(null, user.id);
+passport.deserializeUser(async (user: User, done) => {
+	user = await User.query().findById(user.id);
+	done(null, user);
 });
 
 passport.use(

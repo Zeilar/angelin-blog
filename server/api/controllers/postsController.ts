@@ -12,13 +12,16 @@ export class PostsController {
 			return;
 		}
 
-		const { user } = req.session;
 		const { body, title, tags } = req.body;
 
 		// TODO: validate
 
 		try {
-			const post = await Post.query().insertGraphAndFetch({ user_id: user, title, body });
+			const post = await Post.query().insertGraphAndFetch({
+				user_id: req.user?.id,
+				title,
+				body,
+			});
 			const fetchedTags = await Tag.findOrCreate(tags);
 			for (const tag of fetchedTags) {
 				await post.$relatedQuery("tags").relate(tag);

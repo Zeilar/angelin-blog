@@ -1,3 +1,6 @@
+import { User as UserModel, Tag, Comment, Post } from "../../db/models";
+import express from "express";
+
 export {};
 
 declare global {
@@ -12,6 +15,21 @@ declare global {
 			DB_CLIENT?: string;
 			GITHUB_CLIENT?: string;
 			GITHUB_SECRET?: string;
+		}
+	}
+
+	namespace Express {
+		interface User extends UserModel {}
+
+		interface Response {
+			user?: UserModel;
+			users?: UserModel[];
+			post?: Post;
+			posts?: Post[];
+			comments?: Comment[];
+			comment?: Comment;
+			tags?: Tag[];
+			tag?: Tag;
 		}
 	}
 }
