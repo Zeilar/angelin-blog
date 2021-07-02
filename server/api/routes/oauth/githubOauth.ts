@@ -2,20 +2,10 @@ import { Router, Request, Response } from "express";
 import passport from "passport";
 import { User } from "../../../db/models";
 import { Strategy as GitHubStrategy, Profile as GitHubProfile } from "passport-github2";
-import { NumberHelpers } from "../../utils";
 
 export const router = Router();
 
 const { GITHUB_CLIENT, GITHUB_SECRET } = process.env;
-
-passport.serializeUser((user: any, done) => {
-	done(null, user);
-});
-
-passport.deserializeUser(async (user: User, done) => {
-	user = await User.query().findById(user.id);
-	done(null, user);
-});
 
 passport.use(
 	new GitHubStrategy(

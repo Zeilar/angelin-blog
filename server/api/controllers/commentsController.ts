@@ -30,6 +30,9 @@ export class CommentsController {
 
 	public static async edit(req: Request, res: Response) {
 		const { body } = req.body;
+
+		// TODO: validate
+
 		try {
 			res.status(200).json({ data: await res.comment!.$query().patchAndFetch({ body }) });
 		} catch (error) {

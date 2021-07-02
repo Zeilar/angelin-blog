@@ -1,5 +1,4 @@
 import { User as UserModel, Tag, Comment, Post } from "../../db/models";
-import express from "express";
 
 export {};
 

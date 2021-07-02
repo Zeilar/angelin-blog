@@ -8,6 +8,7 @@ import cors from "cors";
 import rateLimit from "express-rate-limit";
 import passport from "passport";
 import * as routes from "./routes";
+import { User } from "../db/models";
 
 const limiter = rateLimit({
 	windowMs: 1000 * 60 * 10, // 10 minutes
@@ -43,6 +44,14 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+
+// No reason to repeat these in every OAuth service
+passport.serializeUser((user, done) => {
+	done(null, user);
+});
+passport.deserializeUser<User>(async (user, done) => {
+	done(null, await User.query().findById(user.id));
+});
 
 // Routes
 app.use("/api/oauth", routes.oauth);
