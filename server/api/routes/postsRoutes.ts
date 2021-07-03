@@ -1,8 +1,8 @@
-import express from "express";
+import { Router } from "express";
 import { PostsController } from "../controllers";
 import * as middlewares from "../middlewares";
 
-export const router = express.Router();
+export const router = Router();
 
 router.get("", [middlewares.getPostOrFail, middlewares.filterPosts], PostsController.index);
 router.get("/:id", [middlewares.getPostOrFail], PostsController.single);

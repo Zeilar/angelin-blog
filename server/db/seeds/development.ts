@@ -5,7 +5,7 @@ export async function seed(knex: Knex) {
 	await knex("users").truncate();
 	await knex("users").insert([
 		{
-			email: "philip@angelin.dev",
+			email: "admin@angelin.dev",
 			is_admin: true,
 			password: await hash("123", 10),
 		},

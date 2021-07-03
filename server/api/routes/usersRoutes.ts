@@ -1,8 +1,8 @@
-import express from "express";
+import { Router } from "express";
 import { UsersController } from "../controllers";
 import { AuthGuard } from "../middlewares";
 
-export const router = express.Router();
+export const router = Router();
 
 router.get("/authenticate", [AuthGuard.user], UsersController.authenticate);
 router.post("/register", UsersController.register);
