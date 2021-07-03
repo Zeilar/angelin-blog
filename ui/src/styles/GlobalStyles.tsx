@@ -8,7 +8,7 @@ export const GlobalStyles = createGlobalStyle`
 
     ::selection {
         color: rgb(${theme.color.brand});
-        background-color: rgba(0, 0, 0, 0.25);
+        background-color: rgba(0, 0, 0, 0.15);
     }
 
     html,

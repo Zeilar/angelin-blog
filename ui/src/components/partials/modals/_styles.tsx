@@ -29,7 +29,7 @@ export const Wrapper = styled(Col)`
 	transition: 0.25s;
 	padding: 2rem;
 	border-radius: ${theme.borderRadius}px;
-	background-color: rgb(${theme.color.primary});
+	background-color: rgb(${theme.color.secondary});
 	box-shadow: ${theme.shadow.elevate};
 	&.active {
 		pointer-events: all;
@@ -52,7 +52,7 @@ export const Close = styled.button.attrs({ type: "button" })`
 	transition: 0.05s;
 	border-radius: ${theme.borderRadius}px;
 	&:hover {
-		background-color: rgb(${theme.color.secondary});
+		background-color: rgb(${theme.color.primary});
 	}
 	&:focus {
 		outline: 0;

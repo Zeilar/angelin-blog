@@ -1,6 +1,5 @@
 import { RefObject } from "react";
 import styled, { css } from "styled-components";
-import { theme } from "../../styles/theme";
 import { Input as StyledInput, FormError, Col, Grid } from "../styled-components";
 import classnames from "classnames";
 
@@ -31,7 +30,7 @@ export function Input<T>(props: Props<T>) {
 					{props.label}
 				</Label>
 			)}
-			<InputField error={hasErrors} id={labelId} {...props} />
+			<InputField className={classnames({ error: hasErrors })} id={labelId} {...props} />
 		</Col>
 	);
 }

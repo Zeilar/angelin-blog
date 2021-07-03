@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import * as ModalStyles from "./_styles";
 import { mdiClose } from "@mdi/js";
 import Icon from "@mdi/react";
@@ -31,6 +31,13 @@ export function Register() {
 		}
 	}, [active]);
 
+	useEffect(() => {
+		if (!active) {
+			empty();
+			setError(null);
+		}
+	}, [loggedIn]);
+
 	async function submit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		if (loggedIn) return;
@@ -58,7 +65,7 @@ export function Register() {
 
 		setTimeout(() => {
 			setStatus(null);
-			empty();
+			if (code === 200) empty();
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 

@@ -5,7 +5,6 @@ interface Theme {
 		secondary: string;
 		third: string;
 		brand: string;
-		brandDark: string;
 		text: string;
 		textSecondary: string;
 		textMuted: string;
@@ -35,11 +34,10 @@ export const theme: Theme = {
 	color: {
 		// Must be kept in rgb format
 		body: "27, 39, 53",
-		primary: "32, 43, 57",
-		secondary: "24, 34, 47",
+		primary: "37, 48, 62",
+		secondary: "19, 29, 42",
 		third: "30, 40, 50",
-		brand: "0, 150, 255",
-		brandDark: "0, 125, 255",
+		brand: "180, 30, 65",
 		text: "225, 225, 225",
 		textSecondary: "15, 15, 15",
 		textMuted: "75, 85, 90",
@@ -50,8 +48,8 @@ export const theme: Theme = {
 		success: "0, 175, 0",
 	},
 	shadow: {
-		elevate: "0 0 3px 0 black",
-		elevateUnder: "0 1px 2px black, 0 0 0.25rem rgba(0, 0, 0, 0.35)",
+		elevate: "0 0 2px 1px rgba(0, 0, 0, 0.5)",
+		elevateUnder: "0 2px 1px rgba(0, 0, 0, 0.35), 0 0 0.25rem rgba(0, 0, 0, 0.5)",
 		spread: "0 0 0.25rem 0 black",
 	},
 	durations: {

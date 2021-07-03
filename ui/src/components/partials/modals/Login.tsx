@@ -31,6 +31,13 @@ export function Login() {
 		}
 	}, [active]);
 
+	useEffect(() => {
+		if (!active) {
+			empty();
+			setError(null);
+		}
+	}, [loggedIn]);
+
 	async function submit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		if (loggedIn) return;
