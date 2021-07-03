@@ -26,19 +26,15 @@ export const button = css`
 
 export const ButtonPrimary = styled.button`
 	${button}
-	background-color: rgba(${theme.color.body});
+	background-color: rgba(${theme.color.brand});
 	color: rgb(${theme.color.text});
 	min-width: 5rem;
 	font-size: 1.2rem;
 	box-shadow: ${theme.shadow.elevateUnder};
 	transition: transform 0.25s;
-	border: 1px solid rgb(${theme.color.brand});
 	&:not([disabled]) {
-		&:hover {
-			box-shadow: ${theme.shadow.spread};
-		}
 		&:active {
-			background-color: rgba(${theme.color.brand}, 0.05);
+			background-color: rgba(${theme.color.brand}, 0.75);
 		}
 	}
 `;
@@ -67,24 +63,19 @@ export const Input = styled.input`
 	padding: 10px;
 	box-shadow: ${theme.shadow.elevate};
 	border-radius: ${theme.borderRadius}px;
-	&:focus,
-	&:hover {
-		box-shadow: ${theme.shadow.elevate}, 0 0 0.25rem 0 rgba(0, 0, 0, 0.5);
-	}
 	&:focus {
-		background-color: rgb(${theme.color.secondary});
+		background-color: rgb(${theme.color.primary});
 	}
-	${({ error }: { error?: boolean }) =>
-		error &&
-		css`
-			box-shadow: ${theme.shadow.elevate}, 0 0 2px 2px rgb(${theme.color.brand}) !important;
-		`}
+	&.error {
+		box-shadow: ${theme.shadow.elevate}, 0 0 2px 2px rgb(${theme.color.brand}) !important;
+	}
 `;
 
 export const FormError = styled(P)`
-	background-color: rgb(${theme.color.secondary});
+	background-color: rgba(${theme.color.brand}, 0.25);
 	box-shadow: ${theme.shadow.elevate};
 	color: rgb(${theme.color.text});
 	border-left: 2px solid rgb(${theme.color.brand});
 	padding: 8px;
+	border-radius: ${theme.borderRadius}px;
 `;

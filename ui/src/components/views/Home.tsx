@@ -1,4 +1,3 @@
-import { Helmet } from "react-helmet";
 import * as Styles from "../styled-components";
 import { Post, Tag } from "../../models";
 import { Link } from "react-router-dom";
@@ -15,22 +14,22 @@ export function Home() {
 
 	return (
 		<Styles.Container className="mt-4">
-			<Helmet>
-				<title>Angelin Blog</title>
-			</Helmet>
 			<Styles.H1>Blog</Styles.H1>
 			{posts.map((post: Post) => (
 				<article key={post.id}>
-					<Styles.H4 as={Link} to={`/post/${post.id}-${post.title}`}>
-						{post.title}
-					</Styles.H4>
-					<ReadOnlyEditor content={post.body} />
-					<p>
-						{post.tags?.map((tag: Tag) => (
-							<span key={tag.id}>{tag.name} </span>
-						))}
-					</p>
-					<br />
+					<Styles.PostWrapper className="mt-4">
+						<Styles.H4 as={Link} to={`/post/${post.id}-${post.title}`}>
+							{post.title}
+						</Styles.H4>
+						<ReadOnlyEditor content={post.body} />
+						{post.tags.length > 0 && (
+							<div className="mt-4">
+								{post.tags.map((tag: Tag) => (
+									<span key={tag.id}>{tag.name} </span>
+								))}
+							</div>
+						)}
+					</Styles.PostWrapper>
 				</article>
 			))}
 		</Styles.Container>
