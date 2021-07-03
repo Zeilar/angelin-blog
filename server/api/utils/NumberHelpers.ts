@@ -11,7 +11,7 @@ export class NumberHelpers {
 	 * @example clamp(10) // expected output: 10
 	 */
 	public static clamp(number: number) {
-		return number < 0 ? 0 : number;
+		return Math.max(0, number);
 	}
 
 	/**

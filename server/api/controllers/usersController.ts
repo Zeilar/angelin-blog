@@ -1,111 +1,95 @@
-import { hash, compare } from "bcrypt";
 import { Request, Response } from "express";
 import { User } from "../../db/models";
-import { DB } from "../../db/utils/DB";
-import errorlog from "../../utils/errorlog";
-import { validateBody } from "../middlewares/validateBody";
-import { ErrorMessages } from "../utils";
+import { Controller } from "./Controller";
+import { AuthService } from "../../services";
 import { z } from "zod";
 
-export class UsersController {
-	public static async authenticate(req: Request, res: Response) {
-		try {
-			res.status(200).json({ data: res.user?.dto() });
-		} catch (error) {
-			errorlog(error);
-			res.status(500).end();
-		}
+export class UsersController extends Controller {
+	constructor(public readonly authService: AuthService) {
+		super();
 	}
 
-	public static async register(req: Request, res: Response) {
-		if (!validateBody(["email", "password", "passwordConfirm"], req.body)) {
-			res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
+	public async authenticate(req: Request, res: Response) {
+		res.status(200).json({ data: res.user?.dto() });
+	}
+
+	public async register(req: Request, res: Response) {
+		if (!this.validateBody(["email", "password", "passwordConfirm"], req.body)) {
+			res.status(400).json({ error: this.ErrorMessages.MISSING_INPUT });
 			return;
 		}
 
-		if (req.user) {
-			res.status(405).json({ error: ErrorMessages.LOGGED_IN });
+		if (req.isAuthenticated()) {
+			res.status(405).json({ error: this.ErrorMessages.LOGGED_IN });
 			return;
 		}
 
 		const { email, password, passwordConfirm } = req.body;
 
-		try {
-			if ((await DB.count(User.query().where({ email }))) > 0) {
-				res.status(422).json({ error: ErrorMessages.USER_TAKEN });
-				return;
-			}
-
-			// TODO: Validation
-			// email required and type email, and password min/max
-
-			const user = await User.query().insertAndFetch({
-				email,
-				password: await hash(password, 10),
-			});
-
-			req.login(user, error => {
-				errorlog(error);
-				res.status(500).end();
-				return;
-			});
-
-			res.status(200).json({ data: user.dto() });
-		} catch (error) {
-			errorlog(error);
-			res.status(500).end();
+		if (await this.authService.userExists("email", email)) {
+			res.status(422).json({ error: this.ErrorMessages.EMAIL_TAKEN });
+			return;
 		}
+
+		// TODO: Validation
+		// email required and type email, and password min/max
+		const { user, error } = await this.authService.register({
+			email,
+			password,
+			passwordConfirm,
+		});
+
+		if (!user || error) {
+			throw error;
+		}
+
+		req.login(user, (error?: Error) => {
+			if (error) throw error;
+		});
+
+		res.status(200).json({ data: user.dto() });
 	}
 
-	public static async login(req: Request, res: Response) {
-		if (!validateBody(["email", "password"], req.body)) {
-			res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
+	public async login(req: Request, res: Response) {
+		if (!this.validateBody(["email", "password"], req.body)) {
+			res.status(400).json({ error: this.ErrorMessages.MISSING_INPUT });
 			return;
 		}
 
 		const { email, password } = req.body;
 
 		if (req.isAuthenticated()) {
-			res.status(405).json({ error: ErrorMessages.LOGGED_IN });
+			res.status(405).json({ error: this.ErrorMessages.LOGGED_IN });
 			return;
 		}
 
-		try {
-			const user = await User.query().findOne("email", email);
+		const user = await User.query().findOne("email", email);
 
-			if (!user) {
-				res.status(422).json({ error: ErrorMessages.USER_NOT_EXISTS });
-				return;
-			}
-
-			if (!user.password) {
-				res.status(405).json({ error: "You must login via OAuth." });
-				return;
-			}
-
-			if (!(await compare(password, user.password))) {
-				res.status(422).json({ error: ErrorMessages.INCORRECT_CREDENTIALS });
-				return;
-			}
-
-			req.login(user, error => {
-				if (error) {
-					errorlog(error);
-					res.status(500).end();
-					return;
-				}
-			});
-
-			res.status(200).json({ data: user.dto() });
-		} catch (error) {
-			errorlog(error);
-			res.status(500).end();
+		if (!user) {
+			res.status(422).json({ error: this.ErrorMessages.USER_NOT_EXISTS });
+			return;
 		}
+
+		if (!user.password) {
+			res.status(405).json({ error: "You must login via OAuth." });
+			return;
+		}
+
+		if (!(await this.authService.check(password, user.password))) {
+			res.status(422).json({ error: this.ErrorMessages.INCORRECT_CREDENTIALS });
+			return;
+		}
+
+		req.login(user, (error: Error) => {
+			if (error) throw error;
+		});
+
+		res.status(200).json({ data: user.dto() });
 	}
 
-	public static logout(req: Request, res: Response) {
+	public logout(req: Request, res: Response) {
 		if (!req.isAuthenticated()) {
-			res.status(405).json({ error: ErrorMessages.LOGGED_OUT });
+			res.status(405).json({ error: this.ErrorMessages.LOGGED_OUT });
 			return;
 		}
 		req.logout();

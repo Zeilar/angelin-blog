@@ -1,6 +1,6 @@
 import "dotenv/config";
 import bootstrap from "../db/bootstrap";
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import { AuthGuard } from "./middlewares";
 import session from "express-session";
 import path from "path";
@@ -9,6 +9,7 @@ import rateLimit from "express-rate-limit";
 import passport from "passport";
 import * as routes from "./routes";
 import { User } from "../db/models";
+import errorlog from "../utils/errorlog";
 
 const limiter = rateLimit({
 	windowMs: 1000 * 60 * 10, // 10 minutes
@@ -20,7 +21,7 @@ const limiter = rateLimit({
 
 bootstrap();
 const app = express();
-const { PORT, SESSION_SECRET, GITHUB_CLIENT, GITHUB_SECRET } = process.env;
+const { PORT, SESSION_SECRET } = process.env;
 
 const WEEK_IN_MILLISECONDS = 1000 * 60 * 60 * 24 * 7;
 const oneWeekFromNow = new Date(new Date().getTime() + WEEK_IN_MILLISECONDS);
@@ -60,6 +61,11 @@ app.use("/api/posts", routes.postsRoutes);
 app.use("/api/comments", AuthGuard.user, routes.commentsRoutes);
 
 app.use(express.static(path.join(__dirname, "../../ui")));
+
+app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+	errorlog(error);
+	res.status(500).end();
+});
 
 app.get("/*", (req, res) => {
 	res.sendFile(path.join(__dirname, "../../ui/index.html"));
