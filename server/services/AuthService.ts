@@ -9,18 +9,23 @@ export class AuthService extends Service {
 
 	public async register(data: { email: string; password: string; passwordConfirm: string }) {
 		try {
-			return await this.userRepository.create({
+			return this.userRepository.create({
 				email: data.email,
 				password: await hash(data.password, 10),
 			});
 		} catch (error) {
 			this.errorlog(error);
-			return { user: null, error };
+			return null;
 		}
 	}
 
 	public async check(password: string, encrypted: string) {
-		return await compare(password, encrypted);
+		try {
+			return await compare(password, encrypted);
+		} catch (error) {
+			this.errorlog(error);
+			return false;
+		}
 	}
 
 	public validateRegister() {
@@ -29,10 +34,10 @@ export class AuthService extends Service {
 
 	public async userExists(column: string, value: any) {
 		try {
-			return await this.userRepository.count(column, value);
+			return (await this.userRepository.count(column, value)) > 0;
 		} catch (error) {
 			this.errorlog(error);
-			return { user: null, error };
+			return false;
 		}
 	}
 }

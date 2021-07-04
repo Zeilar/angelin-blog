@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
-import { User } from "../../db/models";
 import { Controller } from "./Controller";
-import { AuthService } from "../../services";
+import { AuthService, ValidateService } from "../../services";
 import { z } from "zod";
 
 export class UsersController extends Controller {
-	constructor(public readonly authService: AuthService) {
+	constructor(
+		public readonly authService: AuthService,
+		public readonly validateService: ValidateService
+	) {
 		super();
 	}
 
@@ -14,7 +16,7 @@ export class UsersController extends Controller {
 	}
 
 	public async register(req: Request, res: Response) {
-		if (!this.validateBody(["email", "password", "passwordConfirm"], req.body)) {
+		if (!this.validateService.requestBody(["email", "password", "passwordConfirm"], req.body)) {
 			res.status(400).json({ error: this.ErrorMessages.MISSING_INPUT });
 			return;
 		}
@@ -33,15 +35,13 @@ export class UsersController extends Controller {
 
 		// TODO: Validation
 		// email required and type email, and password min/max
-		const { user, error } = await this.authService.register({
+		const user = await this.authService.register({
 			email,
 			password,
 			passwordConfirm,
 		});
 
-		if (!user || error) {
-			throw error;
-		}
+		if (!user) throw new Error("Failed creating user upon registration.");
 
 		req.login(user, (error?: Error) => {
 			if (error) throw error;
@@ -51,7 +51,7 @@ export class UsersController extends Controller {
 	}
 
 	public async login(req: Request, res: Response) {
-		if (!this.validateBody(["email", "password"], req.body)) {
+		if (!this.validateService.requestBody(["email", "password"], req.body)) {
 			res.status(400).json({ error: this.ErrorMessages.MISSING_INPUT });
 			return;
 		}
@@ -63,7 +63,7 @@ export class UsersController extends Controller {
 			return;
 		}
 
-		const user = await User.query().findOne("email", email);
+		const user = await this.authService.userRepository.findOne("email", email);
 
 		if (!user) {
 			res.status(422).json({ error: this.ErrorMessages.USER_NOT_EXISTS });

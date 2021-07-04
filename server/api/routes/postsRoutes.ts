@@ -1,15 +1,22 @@
 import { Router } from "express";
-import { PostsController } from "../controllers";
+import { compositeRoot } from "../../CompositeRoot";
 import * as middlewares from "../middlewares";
+
+const { postsController } = compositeRoot;
+const { errorWrapper } = postsController;
 
 export const router = Router();
 
-router.get("", [middlewares.getPostOrFail, middlewares.filterPosts], PostsController.index);
-router.get("/:id", [middlewares.getPostOrFail], PostsController.single);
+router.get(
+	"",
+	[middlewares.getPostOrFail, middlewares.filterPosts],
+	errorWrapper(postsController.index)
+);
+router.get("/:id", [middlewares.getPostOrFail], errorWrapper(postsController.single));
 router.post(
 	"",
 	[middlewares.AuthGuard.user, middlewares.AuthGuard.admin, middlewares.PostGuard.create],
-	PostsController.create
+	errorWrapper(postsController.create)
 );
 router.put(
 	"/:id",
@@ -19,7 +26,7 @@ router.put(
 		middlewares.getPostOrFail,
 		middlewares.PostGuard.edit,
 	],
-	PostsController.edit
+	errorWrapper(postsController.edit)
 );
 router.delete(
 	"/:id",
@@ -29,5 +36,5 @@ router.delete(
 		middlewares.getPostOrFail,
 		middlewares.PostGuard.delete,
 	],
-	PostsController.delete
+	errorWrapper(postsController.delete)
 );

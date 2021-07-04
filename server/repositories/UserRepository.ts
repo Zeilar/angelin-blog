@@ -14,76 +14,69 @@ export class UserRepository extends Repository {
 		super();
 	}
 
-	public async all(): Promise<{ users?: User[]; error?: Error }> {
+	public async all() {
 		try {
-			return { users: await User.query() };
+			return await User.query();
 		} catch (error) {
 			this.errorlog(error);
-			return { error };
+			return null;
 		}
 	}
 
-	public async create(data: UserEditable): Promise<{ user?: User; error?: Error }> {
+	public async create(data: UserEditable) {
 		try {
-			return { user: await User.query().insertGraphAndFetch(data) };
+			return await User.query().insertGraphAndFetch(data);
 		} catch (error) {
 			this.errorlog(error);
-			return { error };
+			return null;
 		}
 	}
 
-	public async findById(id: number): Promise<{ user?: User | null; error?: Error }> {
+	public async findById(id: number) {
 		try {
-			return { user: await User.query().findById(id) };
+			return await User.query().findById(id);
 		} catch (error) {
 			this.errorlog(error);
-			return { error };
+			return null;
 		}
 	}
 
-	public async findOne(
-		column: string,
-		value: any
-	): Promise<{ user?: User | null; error?: Error }> {
+	public async findOne(column: string, value: any) {
 		try {
-			return { user: await User.query().findOne(column, value) };
+			return await User.query().findOne(column, value);
 		} catch (error) {
 			this.errorlog(error);
-			return { error };
+			return null;
 		}
 	}
 
-	public async updateById(
-		id: number,
-		data: UserEditable
-	): Promise<{ user?: User; error?: Error }> {
+	public async updateById(id: number, data: UserEditable) {
 		try {
-			return { user: await User.query().updateAndFetchById(id, data) };
+			return await User.query().updateAndFetchById(id, data);
 		} catch (error) {
 			this.errorlog(error);
-			return { error };
+			return null;
 		}
 	}
 
-	public async deleteById(id: number): Promise<{ success: boolean; error?: Error }> {
+	public async deleteById(id: number) {
 		try {
-			const deletedRows = await User.query().deleteById(id);
-			return { success: deletedRows > 0 };
+			return (await User.query().deleteById(id)) > 0;
 		} catch (error) {
 			this.errorlog(error);
-			return { success: false, error };
+			return false;
 		}
 	}
 
-	public async deleteMany(users: User[]): Promise<{ success: boolean; error?: Error }> {
+	public async deleteMany(users: User[]) {
 		try {
 			for (const user of users) {
 				await this.deleteById(user.id);
 			}
-			return { success: true };
+			return true;
 		} catch (error) {
 			this.errorlog(error);
-			return { success: false, error };
+			return false;
 		}
 	}
 

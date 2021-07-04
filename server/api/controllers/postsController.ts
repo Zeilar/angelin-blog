@@ -1,13 +1,17 @@
 import { Request, Response } from "express";
 import { Post, Tag } from "../../db/models";
-import errorlog from "../../utils/errorlog";
-import { validateBody } from "../middlewares/validateBody";
 import { ErrorMessages } from "../utils";
+import { ValidateService } from "../../services";
+import { Controller } from "./Controller";
 import { z } from "zod";
 
-export class PostsController {
-	public static async create(req: Request, res: Response) {
-		if (!validateBody(["body", "title"], req.body)) {
+export class PostsController extends Controller {
+	constructor(public readonly validateService: ValidateService) {
+		super();
+	}
+
+	public async create(req: Request, res: Response) {
+		if (!this.validateService.requestBody(["body", "title"], req.body)) {
 			res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
 			return;
 		}
@@ -16,64 +20,49 @@ export class PostsController {
 
 		// TODO: validate
 
-		try {
-			const post = await Post.query().insertGraphAndFetch({
-				user_id: req.user?.id,
-				title,
-				body,
-			});
-			const fetchedTags = await Tag.findOrCreate(tags);
-			for (const tag of fetchedTags) {
-				await post.$relatedQuery("tags").relate(tag);
-			}
-			res.status(200).json({ data: { ...post, tags } });
-		} catch (error) {
-			errorlog(error);
-			res.status(500).end();
+		const post = await Post.query().insertGraphAndFetch({
+			user_id: req.user?.id,
+			title,
+			body,
+		});
+		const fetchedTags = await Tag.findOrCreate(tags);
+		for (const tag of fetchedTags) {
+			await post.$relatedQuery("tags").relate(tag);
 		}
+		res.status(200).json({ data: { ...post, tags } });
 	}
 
-	public static async index(req: Request, res: Response) {
+	public async index(req: Request, res: Response) {
 		res.status(200).json({ data: res.posts });
 	}
 
-	public static single(req: Request, res: Response) {
+	public single(req: Request, res: Response) {
 		res.status(200).json({ data: res.post });
 	}
 
-	public static async edit(req: Request, res: Response) {
-		if (!validateBody(["body", "title"], req.body)) {
+	public async edit(req: Request, res: Response) {
+		if (!this.validateService.requestBody(["body", "title"], req.body)) {
 			res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
 			return;
 		}
 
 		const { title, body, tags } = req.body;
 
-		try {
-			if (tags) {
-				await res.post!.$relatedQuery("tags").unrelate();
-				const fetchedTags = await Tag.findOrCreate(tags);
-				for (const tag of fetchedTags) {
-					await res.post!.$relatedQuery("tags").relate(tag);
-				}
+		if (tags) {
+			await res.post!.$relatedQuery("tags").unrelate();
+			const fetchedTags = await Tag.findOrCreate(tags);
+			for (const tag of fetchedTags) {
+				await res.post!.$relatedQuery("tags").relate(tag);
 			}
-			res.status(200).json(
-				await res.post!.$query().patchAndFetch({ body, title }).withGraphFetched("tags")
-			);
-		} catch (error) {
-			errorlog(error);
-			res.status(500).end();
 		}
+		res.status(200).json(
+			await res.post!.$query().patchAndFetch({ body, title }).withGraphFetched("tags")
+		);
 	}
 
-	public static async delete(req: Request, res: Response) {
-		try {
-			await res.post!.$relatedQuery("tags").unrelate();
-			await res.post!.$query().delete();
-			res.status(200).end();
-		} catch (error) {
-			errorlog(error);
-			res.status(500).end();
-		}
+	public async delete(req: Request, res: Response) {
+		await res.post!.$relatedQuery("tags").unrelate();
+		await res.post!.$query().delete();
+		res.status(200).end();
 	}
 }

@@ -1,9 +1,7 @@
-import { validateBody } from "../middlewares";
 import { ErrorMessages } from "../utils";
 import { Request, Response, NextFunction } from "express";
 
 export class Controller {
-	public validateBody = validateBody;
 	public ErrorMessages = ErrorMessages;
 
 	constructor() {

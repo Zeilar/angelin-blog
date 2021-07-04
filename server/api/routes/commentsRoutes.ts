@@ -1,17 +1,20 @@
 import { Router } from "express";
-import { CommentsController } from "../controllers";
+import { compositeRoot } from "../../CompositeRoot";
 import * as middlewares from "../middlewares";
+
+const { commentsController } = compositeRoot;
+const { errorWrapper } = commentsController;
 
 export const router = Router();
 
-router.post("", CommentsController.create);
+router.post("", errorWrapper(commentsController.create));
 router.put(
 	"/:id",
 	[middlewares.getCommentOrFail, middlewares.CommentGuard.edit],
-	CommentsController.edit
+	errorWrapper(commentsController.edit)
 );
 router.delete(
 	"/:id",
 	[middlewares.getCommentOrFail, middlewares.CommentGuard.delete],
-	CommentsController.delete
+	errorWrapper(commentsController.delete)
 );
