@@ -15,7 +15,6 @@ export class UsersController extends Controller {
 	}
 
 	public async authenticate(req: Request, res: Response) {
-		throw new Error("test");
 		res.status(200).json({ data: req.user?.dto() });
 	}
 
