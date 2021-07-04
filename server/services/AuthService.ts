@@ -1,13 +1,14 @@
 import { compare, hash } from "bcrypt";
 import { UserRepository } from "../repositories/UserRepository";
 import { Service } from "./Service";
+import { Register } from "../types/user";
 
 export class AuthService extends Service {
 	constructor(public readonly userRepository: UserRepository) {
 		super();
 	}
 
-	public async register(data: { email: string; password: string; passwordConfirm: string }) {
+	public async create(data: Register) {
 		try {
 			return this.userRepository.create({
 				email: data.email,
@@ -28,7 +29,7 @@ export class AuthService extends Service {
 		}
 	}
 
-	public validateRegister() {
+	public validateRegister(data: Register) {
 		//
 	}
 

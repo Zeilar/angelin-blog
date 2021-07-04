@@ -1,18 +1,19 @@
 import { Request, Response } from "express";
 import { Controller } from "./Controller";
-import { AuthService, ValidateService } from "../../services";
+import { AuthService, ValidateService, UserService } from "../../services";
 import { z } from "zod";
 
 export class UsersController extends Controller {
 	constructor(
 		public readonly authService: AuthService,
-		public readonly validateService: ValidateService
+		public readonly validateService: ValidateService,
+		public readonly userService: UserService
 	) {
 		super();
 	}
 
 	public async authenticate(req: Request, res: Response) {
-		res.status(200).json({ data: res.user?.dto() });
+		res.status(200).json({ data: req.user?.dto() });
 	}
 
 	public async register(req: Request, res: Response) {
@@ -35,7 +36,7 @@ export class UsersController extends Controller {
 
 		// TODO: Validation
 		// email required and type email, and password min/max
-		const user = await this.authService.register({
+		const user = await this.authService.create({
 			email,
 			password,
 			passwordConfirm,
@@ -70,7 +71,7 @@ export class UsersController extends Controller {
 			return;
 		}
 
-		if (!user.password) {
+		if (!user.password || user.oauth) {
 			res.status(405).json({ error: "You must login via OAuth." });
 			return;
 		}
@@ -94,5 +95,10 @@ export class UsersController extends Controller {
 		}
 		req.logout();
 		res.status(200).end();
+	}
+
+	public async update(req: Request, res: Response) {
+		//
+		res.status(200).send("Can edit");
 	}
 }

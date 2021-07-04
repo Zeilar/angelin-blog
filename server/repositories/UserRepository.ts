@@ -1,13 +1,6 @@
 import { User } from "../db/models";
 import { Repository } from "./Repository";
-
-interface UserEditable {
-	email?: string;
-	password?: string;
-	avatar?: string;
-	is_admin?: boolean;
-	oath?: boolean;
-}
+import { CreateUser, UserEditable } from "../types/user";
 
 export class UserRepository extends Repository {
 	constructor() {
@@ -23,7 +16,7 @@ export class UserRepository extends Repository {
 		}
 	}
 
-	public async create(data: UserEditable) {
+	public async create(data: CreateUser) {
 		try {
 			return await User.query().insertGraphAndFetch(data);
 		} catch (error) {
@@ -81,6 +74,11 @@ export class UserRepository extends Repository {
 	}
 
 	public async count(column: string, value: any) {
-		return await this.DB.count(User.query().findOne(column, value));
+		try {
+			return await this.DB.count(User.query().findOne(column, value));
+		} catch (error) {
+			this.errorlog(error);
+			return 0;
+		}
 	}
 }

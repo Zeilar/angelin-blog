@@ -1,11 +1,12 @@
 import { UsersController, PostsController, CommentsController } from "./api/controllers";
 import { UserRepository } from "./repositories";
-import { AuthService, ValidateService } from "./services";
+import { AuthService, UserService, ValidateService } from "./services";
 
 function createCompositeRoot() {
 	const usersController = new UsersController(
 		new AuthService(new UserRepository()),
-		new ValidateService()
+		new ValidateService(),
+		new UserService()
 	);
 
 	const postsController = new PostsController(new ValidateService());

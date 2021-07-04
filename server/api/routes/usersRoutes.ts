@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { compositeRoot } from "../../CompositeRoot";
-import { AuthGuard } from "../middlewares";
+import { AuthGuard, getUserOrFail } from "../middlewares";
+import { UserGuard } from "../middlewares/user/UserGuard";
 
 export const router = Router();
 
@@ -11,3 +12,8 @@ router.get("/authenticate", [AuthGuard.user], errorWrapper(usersController.authe
 router.post("/register", errorWrapper(usersController.register));
 router.post("/login", errorWrapper(usersController.login));
 router.get("/logout", errorWrapper(usersController.logout));
+router.put(
+	"/:id",
+	[AuthGuard.user, getUserOrFail, UserGuard.edit],
+	errorWrapper(usersController.update)
+);

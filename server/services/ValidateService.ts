@@ -33,4 +33,24 @@ export class ValidateService extends Service {
 			return false;
 		}
 	}
+
+	public register() {
+		//
+	}
+
+	public createPost() {
+		//
+	}
+
+	public editPost() {
+		//
+	}
+
+	public createComment() {
+		//
+	}
+
+	public editComment() {
+		//
+	}
 }

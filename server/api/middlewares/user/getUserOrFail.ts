@@ -10,6 +10,7 @@ export async function getUserOrFail(req: Request, res: Response, next: NextFunct
 		}
 
 		const user = await User.query().findById(id).withGraphFetched(User.relationships);
+		console.log("find user by id", id, user);
 		if (!user) return res.status(404).end();
 		res.user = user;
 

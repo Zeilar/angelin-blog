@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { Comment } from "../../db/models";
 import { ValidateService } from "../../services";
-import { ErrorMessages } from "../utils";
 import { Controller } from "./Controller";
 
 export class CommentsController extends Controller {
@@ -13,7 +12,7 @@ export class CommentsController extends Controller {
 		const { post_id, body } = req.body;
 
 		if (!this.validateService.requestBody("body", req.body)) {
-			res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
+			res.status(400).json({ error: this.ErrorMessages.MISSING_INPUT });
 			return;
 		}
 
@@ -24,6 +23,7 @@ export class CommentsController extends Controller {
 			user_id: req.user?.id,
 			body,
 		});
+
 		res.status(200).json({ data: comment });
 	}
 

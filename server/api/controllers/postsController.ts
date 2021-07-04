@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { Post, Tag } from "../../db/models";
-import { ErrorMessages } from "../utils";
 import { ValidateService } from "../../services";
 import { Controller } from "./Controller";
 import { z } from "zod";
@@ -12,7 +11,7 @@ export class PostsController extends Controller {
 
 	public async create(req: Request, res: Response) {
 		if (!this.validateService.requestBody(["body", "title"], req.body)) {
-			res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
+			res.status(400).json({ error: this.ErrorMessages.MISSING_INPUT });
 			return;
 		}
 
@@ -42,7 +41,7 @@ export class PostsController extends Controller {
 
 	public async edit(req: Request, res: Response) {
 		if (!this.validateService.requestBody(["body", "title"], req.body)) {
-			res.status(400).json({ error: ErrorMessages.MISSING_INPUT });
+			res.status(400).json({ error: this.ErrorMessages.MISSING_INPUT });
 			return;
 		}
 

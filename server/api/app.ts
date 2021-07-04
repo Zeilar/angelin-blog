@@ -46,7 +46,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// No reason to repeat these in every OAuth service
 passport.serializeUser((user, done) => {
 	done(null, user);
 });
@@ -58,7 +57,7 @@ passport.deserializeUser<User>(async (user, done) => {
 app.use("/api/oauth", routes.oauth);
 app.use("/api/users", routes.usersRoutes);
 app.use("/api/posts", routes.postsRoutes);
-app.use("/api/comments", AuthGuard.user, routes.commentsRoutes);
+app.use("/api/comments", [AuthGuard.user], routes.commentsRoutes);
 
 app.use(express.static(path.join(__dirname, "../../ui")));
 

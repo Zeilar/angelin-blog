@@ -1,4 +1,5 @@
 import { Model } from "objection";
+import { UserPolicy } from "../../api/policies";
 import { NumberHelpers } from "../../api/utils";
 import { Post, Comment } from "./";
 
@@ -59,5 +60,13 @@ export class User extends Model {
 		}
 		this.oauth = Boolean(this.oauth);
 		this.is_admin = Boolean(this.is_admin);
+	}
+
+	/**
+	 * @description Uses the policy class system
+	 * @example can(user, comment, "edit") // expected output: boolean
+	 */
+	public static can(user: User, comment: User, ...action: UserAction[]) {
+		return new UserPolicy(user, comment).can(...action);
 	}
 }

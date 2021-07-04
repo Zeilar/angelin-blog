@@ -1,4 +1,4 @@
-import { User as UserModel, Tag, Comment, Post } from "../../db/models";
+import { User as UserModel, Tag, Comment, Post } from "../db/models";
 
 export {};
 
