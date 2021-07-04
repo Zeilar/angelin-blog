@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { User } from "../../../db/models";
+import { UserRepository } from "../../../repositories";
 import errorlog from "../../../utils/errorlog";
 
 export async function getUserOrFail(req: Request, res: Response, next: NextFunction) {
@@ -9,8 +9,7 @@ export async function getUserOrFail(req: Request, res: Response, next: NextFunct
 			return res.status(400).json({ error: "Expected id query parameter." });
 		}
 
-		const user = await User.query().findById(id).withGraphFetched(User.relationships);
-		console.log("find user by id", id, user);
+		const user = await new UserRepository().findById(id);
 		if (!user) return res.status(404).end();
 		res.user = user;
 

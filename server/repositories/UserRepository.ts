@@ -25,7 +25,7 @@ export class UserRepository extends Repository {
 		}
 	}
 
-	public async findById(id: number) {
+	public async findById(id: number | string) {
 		try {
 			return await User.query().findById(id);
 		} catch (error) {
@@ -52,7 +52,7 @@ export class UserRepository extends Repository {
 		}
 	}
 
-	public async deleteById(id: number) {
+	public async deleteById(id: number | string) {
 		try {
 			return (await User.query().deleteById(id)) > 0;
 		} catch (error) {
