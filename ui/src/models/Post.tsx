@@ -16,8 +16,8 @@ interface PostSchema {
 	created_at: string;
 	updated_at: string;
 	author: User;
-	tags?: Tag[];
-	comments?: Comment[];
+	tags: Tag[];
+	comments: Comment[];
 }
 
 export class Post implements PostSchema {
@@ -28,8 +28,8 @@ export class Post implements PostSchema {
 	public created_at: string;
 	public updated_at: string;
 	public author: User;
-	public tags?: Tag[];
-	public comments?: Comment[];
+	public tags: Tag[];
+	public comments: Comment[];
 
 	constructor(post: PostSchema) {
 		this.id = post.id;

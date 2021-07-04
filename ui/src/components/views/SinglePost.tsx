@@ -4,6 +4,7 @@ import { SERVER_URL } from "../../utils";
 import { useFetch } from "../hooks";
 import * as Styles from "../styled-components";
 import { ReadOnlyEditor } from "../partials/editor";
+import useTitle from "../hooks/useTitle";
 
 interface MatchParams {
 	id: string;
@@ -12,6 +13,8 @@ interface MatchParams {
 
 export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 	const query = useFetch<{ data: Post }>(`${SERVER_URL}/api/posts/${match.params.id}`);
+
+	useTitle(`Angelin Blog | ${query.body?.data.title}`);
 
 	if (!query.body) {
 		return null;

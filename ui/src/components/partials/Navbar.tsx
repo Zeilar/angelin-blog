@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { useAuth, useAuthModals } from "../contexts";
 import * as Styles from "../styled-components";
@@ -84,6 +84,6 @@ const Link = styled(NavLink)`
 	${Styles.header}
 	margin-right: 1rem;
 	&:hover {
-		color: rgb(${theme.color.link});
+		color: rgb(${theme.color.brand});
 	}
 `;

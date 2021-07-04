@@ -1,11 +1,12 @@
 import { LoginCredentials, Response } from "../types/request";
-import { Request } from "../utils";
+import { Request, SERVER_URL } from "../utils";
 import { Post } from "./Post";
 
 interface UserSchema {
 	id: number;
 	email: string;
 	is_admin: boolean;
+	avatar: string;
 	created_at: string;
 	updated_at: string;
 	posts?: Post[];
@@ -21,6 +22,7 @@ export class User implements UserSchema {
 	public id: number;
 	public email: string;
 	public is_admin: boolean;
+	public avatar: string;
 	public created_at: string;
 	public updated_at: string;
 	public posts?: Post[];
@@ -30,6 +32,7 @@ export class User implements UserSchema {
 		this.id = user.id;
 		this.email = user.email;
 		this.is_admin = user.is_admin;
+		this.avatar = user.avatar;
 		this.created_at = user.created_at;
 		this.updated_at = user.updated_at;
 		this.posts = user.posts;

@@ -52,7 +52,7 @@ export const Close = styled.button.attrs({ type: "button" })`
 	transition: 0.05s;
 	border-radius: ${theme.borderRadius}px;
 	&:hover {
-		background-color: rgb(${theme.color.primary});
+		background-color: rgb(${theme.color.brand});
 	}
 	&:focus {
 		outline: 0;

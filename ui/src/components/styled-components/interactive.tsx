@@ -49,7 +49,7 @@ export const ButtonSecondary = styled.button`
 	&:not([disabled]) {
 		&:hover,
 		&:active {
-			background-color: rgb(${theme.color.body});
+			background-color: rgb(${theme.color.brand});
 		}
 	}
 `;

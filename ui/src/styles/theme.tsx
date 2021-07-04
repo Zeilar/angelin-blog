@@ -3,7 +3,6 @@ interface Theme {
 		body: string;
 		primary: string;
 		secondary: string;
-		third: string;
 		brand: string;
 		text: string;
 		textSecondary: string;
@@ -36,7 +35,6 @@ export const theme: Theme = {
 		body: "27, 39, 53",
 		primary: "37, 48, 62",
 		secondary: "19, 29, 42",
-		third: "30, 40, 50",
 		brand: "180, 30, 65",
 		text: "225, 225, 225",
 		textSecondary: "15, 15, 15",

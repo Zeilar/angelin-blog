@@ -3,10 +3,13 @@ import { Post, Tag } from "../../models";
 import { Link } from "react-router-dom";
 import { useFetch } from "../hooks";
 import { ReadOnlyEditor } from "../partials/editor";
+import useTitle from "../hooks/useTitle";
 
 export function Home() {
 	const query = useFetch<{ data: Post[] }>("http://localhost:3030/api/posts");
 	const posts = query.body?.data.map((post: Post) => new Post(post)) ?? [];
+
+	useTitle("Angelin Blog");
 
 	if (query.isError) {
 		return <p>Oh dear something went wrong</p>;
