@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import "dotenv/config";
 import bootstrap from "../db/bootstrap";
 import express, { Request, Response, NextFunction } from "express";

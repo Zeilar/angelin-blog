@@ -2,7 +2,9 @@ import { compare, hash } from "bcrypt";
 import { UserRepository } from "../repositories/UserRepository";
 import { Service } from "./Service";
 import { Register } from "../types/user";
+import { Service as TService } from "typedi";
 
+@TService()
 export class AuthService extends Service {
 	constructor(public readonly userRepository: UserRepository) {
 		super();

@@ -2,7 +2,9 @@ import { Request, Response } from "express";
 import { Comment } from "../../db/models";
 import { ValidateService } from "../../services";
 import { Controller } from "./Controller";
+import { Service } from "typedi";
 
+@Service()
 export class CommentsController extends Controller {
 	constructor(public readonly validateService: ValidateService) {
 		super();

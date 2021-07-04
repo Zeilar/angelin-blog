@@ -8,7 +8,9 @@
 		"declaration": true,
 		"module": "commonjs",
 		"moduleResolution": "node",
-		"target": "ES2017"
+		"target": "ES2017",
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true
 	},
 	"exclude": ["ui"]
 }

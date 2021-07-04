@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { compositeRoot } from "../../CompositeRoot";
 import * as middlewares from "../middlewares";
+import { Container } from "typedi";
+import { PostsController } from "../controllers";
 
-const { postsController } = compositeRoot;
+const postsController = Container.get(PostsController);
 const { errorWrapper } = postsController;
 
 export const router = Router();

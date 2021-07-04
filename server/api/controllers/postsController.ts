@@ -2,8 +2,10 @@ import { Request, Response } from "express";
 import { Post, Tag } from "../../db/models";
 import { ValidateService } from "../../services";
 import { Controller } from "./Controller";
+import { Service } from "typedi";
 import { z } from "zod";
 
+@Service()
 export class PostsController extends Controller {
 	constructor(public readonly validateService: ValidateService) {
 		super();

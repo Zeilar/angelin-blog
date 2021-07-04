@@ -1,7 +1,9 @@
 import { User } from "../db/models";
 import { Repository } from "./Repository";
 import { CreateUser, UserEditable } from "../types/user";
+import { Service } from "typedi";
 
+@Service()
 export class UserRepository extends Repository {
 	constructor() {
 		super();

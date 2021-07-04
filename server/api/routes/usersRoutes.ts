@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { compositeRoot } from "../../CompositeRoot";
+import { Container } from "typedi";
+import { UsersController } from "../controllers";
 import { AuthGuard, getUserOrFail } from "../middlewares";
 import { UserGuard } from "../middlewares/user/UserGuard";
 
 export const router = Router();
 
-const { usersController } = compositeRoot;
+const usersController = Container.get(UsersController);
 const { errorWrapper } = usersController;
 
 router.get("/authenticate", [AuthGuard.user], errorWrapper(usersController.authenticate));

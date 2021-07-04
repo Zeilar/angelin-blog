@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
 import { Controller } from "./Controller";
 import { AuthService, ValidateService, UserService } from "../../services";
+import { Service } from "typedi";
 import { z } from "zod";
 
+@Service()
 export class UsersController extends Controller {
 	constructor(
 		public readonly authService: AuthService,
@@ -13,6 +15,7 @@ export class UsersController extends Controller {
 	}
 
 	public async authenticate(req: Request, res: Response) {
+		throw new Error("test");
 		res.status(200).json({ data: req.user?.dto() });
 	}
 

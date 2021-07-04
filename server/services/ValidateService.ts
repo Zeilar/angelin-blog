@@ -1,6 +1,9 @@
 import { difference } from "lodash";
 import { Service } from "./Service";
 
+import { Service as TService } from "typedi";
+
+@TService()
 export class ValidateService extends Service {
 	constructor() {
 		super();
