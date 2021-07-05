@@ -2,6 +2,7 @@ import { Model } from "objection";
 import { UserPolicy } from "../../api/policies";
 import { NumberHelpers } from "../../api/utils";
 import { Post, Comment } from "./";
+import { UserAction } from "../../api/policies/UserPolicy";
 
 export class User extends Model {
 	public static tableName = "users";

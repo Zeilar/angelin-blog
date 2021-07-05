@@ -1,3 +1,3 @@
-export * from "./CommentsController";
-export * from "./UsersController";
-export * from "./PostsController";
+export * from "./CommentController";
+export * from "./UserController";
+export * from "./PostController";

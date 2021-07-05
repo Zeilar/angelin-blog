@@ -1,9 +1,8 @@
 import { difference } from "lodash";
 import { Service } from "./Service";
+import { injectable } from "inversify";
 
-import { Service as TService } from "typedi";
-
-@TService()
+@injectable()
 export class ValidateService extends Service {
 	constructor() {
 		super();
@@ -19,7 +18,10 @@ export class ValidateService extends Service {
 	requestBody(keys: string, body: object): boolean;
 	requestBody(keys: { [key: string]: true }, body: object): boolean;
 	requestBody(keys: unknown, body: object) {
+		if (!keys || !body) return false;
+
 		let keysArr;
+
 		try {
 			if (typeof keys === "string") {
 				keysArr = [keys];

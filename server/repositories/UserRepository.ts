@@ -1,9 +1,9 @@
 import { User } from "../db/models";
 import { Repository } from "./Repository";
 import { CreateUser, UserEditable } from "../types/user";
-import { Service } from "typedi";
+import { injectable } from "inversify";
 
-@Service()
+@injectable()
 export class UserRepository extends Repository {
 	constructor() {
 		super();
@@ -75,9 +75,18 @@ export class UserRepository extends Repository {
 		}
 	}
 
-	public async count(column: string, value: any) {
+	public async countWhere(column: string, value: any) {
 		try {
 			return await this.DB.count(User.query().findOne(column, value));
+		} catch (error) {
+			this.errorlog(error);
+			return 0;
+		}
+	}
+
+	public async count() {
+		try {
+			return await this.DB.count(User.query());
 		} catch (error) {
 			this.errorlog(error);
 			return 0;

@@ -34,9 +34,13 @@ export class Tag extends Model {
 
 	// This has to be done one at a time in order to work outside PostgresQL
 	private static async findOrCreateQuery(tagArg: string) {
-		let tag = await Tag.query().findOne({ name: tagArg });
-		if (!tag) tag = await Tag.query().insertAndFetch({ name: tag });
-		if (!tag) throw new Error(`Could not create or find tag: ${tag}`);
+		let tag = await Tag.query().findOne("name", tagArg);
+		if (!tag) {
+			tag = await Tag.query().insertAndFetch({ name: tagArg });
+		}
+		if (!tag) {
+			throw new Error(`Could not create or find tag: ${tag}`);
+		}
 		return tag;
 	}
 

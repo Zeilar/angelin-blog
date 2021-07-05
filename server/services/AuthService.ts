@@ -2,9 +2,9 @@ import { compare, hash } from "bcrypt";
 import { UserRepository } from "../repositories/UserRepository";
 import { Service } from "./Service";
 import { Register } from "../types/user";
-import { Service as TService } from "typedi";
+import { injectable } from "inversify";
 
-@TService()
+@injectable()
 export class AuthService extends Service {
 	constructor(public readonly userRepository: UserRepository) {
 		super();
@@ -37,7 +37,7 @@ export class AuthService extends Service {
 
 	public async userExists(column: string, value: any) {
 		try {
-			return (await this.userRepository.count(column, value)) > 0;
+			return (await this.userRepository.countWhere(column, value)) > 0;
 		} catch (error) {
 			this.errorlog(error);
 			return false;

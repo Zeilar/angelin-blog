@@ -5,7 +5,7 @@ export enum ErrorMessages {
 	LOGGED_IN = "You are already logged in.",
 	LOGGED_OUT = "You are already logged out.",
 	INCORRECT_CREDENTIALS = "Incorrect credentials.",
-	MISSING_INPUT = "Missing input.",
+	INVALID_INPUT = "Invalid input.",
 }
 
 export const PAGE_SIZE = 20;

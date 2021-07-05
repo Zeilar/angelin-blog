@@ -1,7 +1,7 @@
 import { Service } from "./Service";
-import { Service as TService } from "typedi";
+import { injectable } from "inversify";
 
-@TService()
+@injectable()
 export class UserService extends Service {
 	constructor() {
 		super();
