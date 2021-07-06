@@ -14,8 +14,8 @@ const userRepository = new UserRepository();
 passport.use(
 	new GitHubStrategy(
 		{
-			clientID: GITHUB_CLIENT!,
-			clientSecret: GITHUB_SECRET!,
+			clientID: GITHUB_CLIENT,
+			clientSecret: GITHUB_SECRET,
 			callbackURL: "/api/oauth/github/callback",
 		},
 		async (
@@ -55,7 +55,7 @@ export class GitHubController extends Controller {
 		res.redirect("/");
 	}
 
-	@inversify.httpGet("", passport.authenticate("github"))
+	@inversify.httpGet("/", passport.authenticate("github"))
 	public auth() {
 		return;
 	}

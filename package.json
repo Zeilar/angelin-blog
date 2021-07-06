@@ -36,6 +36,7 @@
 		"passport": "^0.4.1",
 		"passport-github2": "^0.1.12",
 		"pg": "^8.6.0",
+		"portfinder": "^1.0.28",
 		"reflect-metadata": "^0.1.13",
 		"remove": "^0.1.5",
 		"ts-node": "^10.0.0",
