@@ -7,6 +7,7 @@
 		"@types/express-session": "^1.17.3",
 		"@types/passport": "^1.0.6",
 		"@types/react-router-dom": "^5.1.7",
+		"dotenv-cli": "^4.0.0",
 		"nodemon": "^2.0.7"
 	},
 	"dependencies": {
@@ -44,10 +45,10 @@
 	},
 	"scripts": {
 		"serve": "npm run serve:dev",
-		"serve:dev": "nodemon --transpile-only -P tsconfig.json server/api/app.ts",
-		"serve:prod": "nodemon build/server/api/app.js",
+		"serve:dev": "dotenv -e .env -- nodemon --transpile-only -P tsconfig.json server/api/app.ts",
+		"serve:prod": "dotenv -e .env.production -- nodemon build/server/api/app.js",
 		"build": "rm -rf build && npm run build:ui && npm run build:server",
-		"build:server": "rm -rf build/server build/knexfile.* && tsc",
+		"build:server": "dotenv -e .env.production -- rm -rf build/server build/knexfile.* && tsc",
 		"build:ui": "rm -rf build && mkdir build\\ui && cd ui && npm run build && cd .. && mv ui/build/* build/ui && rm -rf ui/build",
 		"seed": "npx knex seed:run",
 		"migrate": "npx knex migrate:latest --knexfile knexfile.ts",
