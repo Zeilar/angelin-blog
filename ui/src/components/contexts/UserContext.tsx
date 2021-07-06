@@ -28,30 +28,31 @@ export function UserContextProvider({ children }: Props) {
 
 	useEffect(() => {
 		(async () => {
-			const { code, data } = await User.authenticate();
+			const query = await User.authenticate();
 			setLoading(false);
-			if (code === 200 && data) setUser(data);
+			if (query.ok && query.data) {
+				setUser(query.data);
+			}
 		})();
 	}, []);
 
 	async function update() {}
 
 	async function login(credentials: LoginCredentials) {
-		const { data, code, error } = await User.login(credentials);
-		if (code === 200 && data) setUser(data);
-		return { data, code, error };
+		const query = await User.login(credentials);
+		if (query.ok && query.data) setUser(query.data);
+		return query;
 	}
 
 	async function register(credentials: LoginCredentials) {
-		const { code, data, error } = await User.register(credentials);
-		if (code === 200 && data) setUser(data);
-		return { data, code, error };
+		const query = await User.register(credentials);
+		if (query.ok && query.data) setUser(query.data);
+		return query;
 	}
 
 	async function logout() {
 		setUser(null);
-		const { code, error } = await User.logout();
-		return { code, error };
+		return await User.logout();
 	}
 
 	const values: Context = {

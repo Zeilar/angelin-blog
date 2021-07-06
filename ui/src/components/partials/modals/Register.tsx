@@ -44,13 +44,13 @@ export function Register() {
 
 		setStatus("loading");
 
-		const { code, error } = await register({
+		const { ok, error } = await register({
 			email: inputs.email,
 			password: inputs.password,
 			passwordConfirm: inputs.passwordConfirm,
 		});
 
-		if (code === 200) {
+		if (ok) {
 			setError(null);
 			setStatus("success");
 
@@ -65,7 +65,7 @@ export function Register() {
 
 		setTimeout(() => {
 			setStatus(null);
-			if (code === 200) empty();
+			if (ok) empty();
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 

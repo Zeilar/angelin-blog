@@ -28,7 +28,7 @@ export class Comment implements CommentSchema {
 	}
 
 	private static queryHandler(query: Response<Comment>) {
-		if (query.code === 200 && query.data) {
+		if (query.ok && query.data) {
 			query.data = new Comment(query.data);
 		}
 		return query;

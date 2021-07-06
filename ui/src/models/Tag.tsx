@@ -25,7 +25,7 @@ export class Tag implements TagSchema {
 	}
 
 	private static queryHandler(query: Response<Tag>) {
-		if (query.code === 200 && query.data) {
+		if (query.ok && query.data) {
 			query.data = new Tag(query.data);
 		}
 		return query;

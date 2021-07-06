@@ -17,7 +17,8 @@ export interface Body<T> {
 export interface Response<T> {
 	data?: T;
 	error?: string | string[];
-	code?: number;
+	code: number;
+	ok: boolean;
 }
 
 export interface QueryParams {

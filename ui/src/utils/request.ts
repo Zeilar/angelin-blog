@@ -8,20 +8,21 @@ export class Request {
 		}
 
 		// Parse { key: value } to `&key=value` strings pairs and combine them
-		const queries = Object.entries(params)
+		const parsed = Object.entries(params)
 			.map(([key, val]) => `${key}=${val}`)
 			.join("&");
 
-		return `?${queries}`;
+		return `?${parsed}`;
 	}
 
 	public static async query<T>(args: Args) {
-		const queries = Request.parseQueryParams(args.params);
+		const params = Request.parseQueryParams(args.params);
 		let data: Body<T> | null = null;
 		let code = 200;
+		let ok = true;
 
 		try {
-			const response = await fetch(`${args.url}${queries}`, {
+			const response = await fetch(`${args.url}${params}`, {
 				method: args.method,
 				body: JSON.stringify(args.body),
 				headers: { "Content-Type": "application/json", ...args.headers },
@@ -34,11 +35,12 @@ export class Request {
 				data = await response.json();
 			}
 
+			ok = response.ok;
 			code = response.status;
 		} catch (error) {
 			console.error(error);
 		} finally {
-			return { data: data?.data, error: data?.error, code };
+			return { data: data?.data, error: data?.error, code, ok };
 		}
 	}
 

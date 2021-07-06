@@ -14,12 +14,12 @@ export default function Editor({ ...props }) {
 	async function submit() {
 		if (!editor) return;
 
-		const { code, data, error } = await Post.create({
+		const { data, ok } = await Post.create({
 			title: "My post",
 			body: editor.getHTML(),
 		});
 
-		if (code === 200 && data) {
+		if (ok && data) {
 			push(`/post/${data.id}-${data.title}`);
 		}
 	}

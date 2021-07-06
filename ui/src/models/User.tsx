@@ -40,7 +40,7 @@ export class User implements UserSchema {
 	}
 
 	private static queryHandler(query: Response<User>) {
-		if (query.code === 200 && query.data) {
+		if (query.ok && query.data) {
 			query.data = new User(query.data);
 		}
 		return query;
@@ -72,6 +72,6 @@ export class User implements UserSchema {
 	}
 
 	public static async logout() {
-		return await Request.auth({ url: "logout" });
+		return await Request.auth<User>({ url: "logout" });
 	}
 }

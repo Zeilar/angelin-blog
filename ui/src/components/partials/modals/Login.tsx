@@ -13,7 +13,7 @@ import ContainerLoader from "../../misc/ContainerLoader";
 
 export function Login() {
 	const { login, loggedIn } = useAuth();
-	const { activeModal, closeModals, openModal } = useAuthModals();
+	const { activeModal, closeModals, openModal, mountError } = useAuthModals();
 
 	const active = activeModal === "login";
 
@@ -24,6 +24,12 @@ export function Login() {
 	const [error, setError] = useState<string | string[] | null>(null);
 
 	const firstInput = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		// mountError should only ever change once
+		// But this is required, as the first render it will be null
+		setError(mountError);
+	}, [mountError]);
 
 	useEffect(() => {
 		if (active && firstInput.current) {
@@ -44,12 +50,12 @@ export function Login() {
 
 		setStatus("loading");
 
-		const { code, error } = await login({
+		const { error, ok } = await login({
 			email: inputs.email,
 			password: inputs.password,
 		});
 
-		if (code === 200) {
+		if (ok) {
 			setError(null);
 			setStatus("success");
 
@@ -64,7 +70,7 @@ export function Login() {
 
 		setTimeout(() => {
 			setStatus(null);
-			if (code === 200) empty();
+			if (ok) empty();
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 

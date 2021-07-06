@@ -43,7 +43,7 @@ export class Post implements PostSchema {
 	}
 
 	private static queryHandler(query: Response<Post>) {
-		if (query.code === 200 && query.data) {
+		if (query.ok && query.data) {
 			query.data = new Post(query.data);
 		}
 		return query;
