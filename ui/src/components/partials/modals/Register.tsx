@@ -1,8 +1,6 @@
-import { ChangeEvent, FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import * as ModalStyles from "./_styles";
-import { mdiClose } from "@mdi/js";
-import Icon from "@mdi/react";
-import { ButtonStatus, Input } from "../../misc";
+import { StatusButton, Input } from "../../misc";
 import { theme } from "../../../styles/theme";
 import * as Styles from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
@@ -38,11 +36,29 @@ export function Register() {
 		}
 	}, [loggedIn]);
 
+	useEffect(() => {
+		function keyHandler(e: KeyboardEvent) {
+			if (e.key === "Escape") {
+				closeModals();
+			}
+		}
+
+		document.addEventListener("keydown", keyHandler);
+		return () => {
+			document.removeEventListener("keydown", keyHandler);
+		};
+	}, [closeModals]);
+
+	function oAuthSubmit() {
+		setStatus("loading");
+	}
+
 	async function submit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		if (loggedIn) return;
 
 		setStatus("loading");
+		setError(null);
 
 		const { ok, error } = await register({
 			email: inputs.email,
@@ -73,11 +89,9 @@ export function Register() {
 		<ModalStyles.Wrapper className={classnames({ active })} ref={wrapper}>
 			<form onSubmit={submit}>
 				<ContainerLoader loading={status === "loading"} />
-				<ModalStyles.Close onClick={closeModals}>
-					<Icon path={mdiClose} />
-				</ModalStyles.Close>
-				<Styles.H3 className="mb-4">Register</Styles.H3>
-				{error && <Styles.FormError>{error}</Styles.FormError>}
+				<ModalStyles.Close onClick={closeModals} />
+				<Styles.H3 className="mb-10">Register</Styles.H3>
+				{error && <Styles.FormError className="mb-2">{error}</Styles.FormError>}
 				<Styles.Col className="mb-10">
 					<Input
 						forwardRef={firstInput}
@@ -107,15 +121,16 @@ export function Register() {
 						label="Password Confirmation"
 					/>
 				</Styles.Col>
-				<Styles.P className="mb-5">
-					Already a member?{" "}
-					<Styles.A className="font-bold" onClick={() => openModal("login")}>
-						Login
-					</Styles.A>
-				</Styles.P>
-				<ButtonStatus className="w-full" type="submit" status={status}>
+				<ModalStyles.ModalSwitch
+					question="Already a member?"
+					link="Login"
+					onClick={() => openModal("login")}
+				/>
+				<StatusButton className="w-full" type="submit" status={status}>
 					Register
-				</ButtonStatus>
+				</StatusButton>
+				<ModalStyles.LoginDivider />
+				<ModalStyles.GitHubLogin onClick={oAuthSubmit} />
 			</form>
 		</ModalStyles.Wrapper>
 	);

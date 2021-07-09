@@ -21,11 +21,11 @@ export const ToolbarButton = styled.button`
 	align-items: center;
 	margin: 1px;
 	border-radius: ${theme.borderRadius}px;
-	&.active {
-		color: rgb(${theme.color.brand});
-	}
 	&:hover {
 		background-color: rgb(${theme.color.primary});
+	}
+	&.active {
+		background-color: rgb(${theme.color.brand});
 	}
 	&:focus {
 		outline: 0;

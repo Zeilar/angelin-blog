@@ -1,7 +1,7 @@
 import { Post } from "./";
 import { Response } from "../types/request";
 
-interface TagSchema {
+interface TagProps {
 	id: number;
 	name: string;
 	created_at: string;
@@ -9,22 +9,30 @@ interface TagSchema {
 	posts?: Post[];
 }
 
-export class Tag implements TagSchema {
-	public id: number;
-	public name: string;
-	public created_at: string;
-	public updated_at: string;
-	public posts?: Post[];
-
-	constructor(tag: TagSchema) {
-		this.id = tag.id;
-		this.name = tag.name;
-		this.created_at = tag.created_at;
-		this.updated_at = tag.updated_at;
-		this.posts = tag.posts;
+export class Tag implements TagProps {
+	public get id() {
+		return this._props.id;
 	}
 
-	private static queryHandler(query: Response<Tag>) {
+	public get name() {
+		return this._props.name;
+	}
+
+	public get created_at() {
+		return this._props.created_at;
+	}
+
+	public get updated_at() {
+		return this._props.updated_at;
+	}
+
+	public get posts() {
+		return this._props.posts;
+	}
+
+	constructor(private readonly _props: TagProps) {}
+
+	private static dto(query: Response<Tag>) {
 		if (query.ok && query.data) {
 			query.data = new Tag(query.data);
 		}

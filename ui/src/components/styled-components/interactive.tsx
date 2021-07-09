@@ -1,13 +1,16 @@
 import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
-import { P } from "./typography";
+import { P, flexbox } from "./";
 
 export const button = css`
+	${flexbox}
 	font: inherit;
 	border: 0;
 	padding: 0.5rem 1rem;
 	user-select: none;
 	font-family: Heebo;
+	justify-content: center;
+	align-items: center;
 	box-shadow: ${theme.shadow.elevate};
 	border-radius: ${theme.borderRadius}px;
 	font-weight: bold;
@@ -24,7 +27,7 @@ export const button = css`
 	}
 `;
 
-export const ButtonPrimary = styled.button`
+export const PrimaryButton = styled.button`
 	${button}
 	background-color: rgba(${theme.color.brand});
 	color: rgb(${theme.color.text});
@@ -39,7 +42,7 @@ export const ButtonPrimary = styled.button`
 	}
 `;
 
-export const ButtonSecondary = styled.button`
+export const SecondaryButton = styled.button`
 	${button}
 	width: fit-content;
 	border-radius: ${theme.borderRadius}px;
@@ -76,6 +79,6 @@ export const FormError = styled(P)`
 	box-shadow: ${theme.shadow.elevate};
 	color: rgb(${theme.color.text});
 	border-left: 2px solid rgb(${theme.color.brand});
-	padding: 8px;
+	padding: 0.75rem;
 	border-radius: ${theme.borderRadius}px;
 `;

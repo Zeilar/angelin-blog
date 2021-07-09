@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
 import { useAuth, useAuthModals } from "../contexts";
 import * as Styles from "../styled-components";
@@ -15,24 +15,19 @@ export function Navbar() {
 		if (loggedIn) {
 			return (
 				<Item>
-					<Styles.ButtonSecondary onClick={logout}>Logout</Styles.ButtonSecondary>
+					<ModalButton onClick={logout}>Logout</ModalButton>
 				</Item>
 			);
 		} else {
 			return (
 				<>
 					<Item>
-						<Styles.ButtonSecondary onClick={() => openModal("login")}>
-							Login
-						</Styles.ButtonSecondary>
+						<ModalButton onClick={() => openModal("login")}>Login</ModalButton>
 					</Item>
 					<Item>
-						<Styles.ButtonSecondary
-							className="ml-2"
-							onClick={() => openModal("register")}
-						>
+						<ModalButton className="ml-2" onClick={() => openModal("register")}>
 							Register
-						</Styles.ButtonSecondary>
+						</ModalButton>
 					</Item>
 				</>
 			);
@@ -41,8 +36,8 @@ export function Navbar() {
 
 	return (
 		<Wrapper>
-			<Nav as="nav">
-				<List as="ul">
+			<Styles.Container as="nav">
+				<Styles.Row className="py-2" as="ul">
 					<Item>
 						<Link to="/" exact>
 							Home
@@ -56,8 +51,8 @@ export function Navbar() {
 						</Item>
 					)}
 					<Styles.Row className="ml-auto">{renderAuthNav()}</Styles.Row>
-				</List>
-			</Nav>
+				</Styles.Row>
+			</Styles.Container>
 			<Modals />
 		</Wrapper>
 	);
@@ -69,21 +64,30 @@ const Wrapper = styled.header`
 	z-index: 100;
 `;
 
-const Nav = styled(Styles.Container)``;
-
-const List = styled(Styles.Row)``;
-
-const Item = styled.li`
-	display: flex;
-	align-items: center;
-	padding: 0.5rem 0;
+const Item = styled.li.attrs({ align: "center" })`
+	${Styles.flexbox}
 	font-size: 1.25rem;
 `;
 
-const Link = styled(NavLink)`
+const link = css`
 	${Styles.header}
+	user-select: none;
 	margin-right: 1rem;
+	border-radius: ${theme.borderRadius}px;
+	padding: 0.5rem;
+	transition: 0.05s;
 	&:hover {
-		color: rgb(${theme.color.brand});
+		background-color: rgb(${theme.color.brand});
 	}
+	&:active {
+		background-color: rgba(${theme.color.brand}, 0.75);
+	}
+`;
+
+const ModalButton = styled.a`
+	${link}
+`;
+
+const Link = styled(NavLink)`
+	${link}
 `;

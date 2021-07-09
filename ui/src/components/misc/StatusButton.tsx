@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
-import { ButtonPrimary } from "../styled-components";
+import { PrimaryButton } from "../styled-components";
 import { mdiClose, mdiCheck } from "@mdi/js";
 import Icon from "@mdi/react";
 import { theme } from "../../styles/theme";
@@ -14,7 +14,7 @@ interface Props {
 	[key: string]: any;
 }
 
-export function ButtonStatus(props: Props) {
+export function StatusButton(props: Props) {
 	function renderIcon() {
 		switch (props.status) {
 			case "error":
@@ -40,7 +40,7 @@ export function ButtonStatus(props: Props) {
 	);
 }
 
-const StyledButton = styled(ButtonPrimary)`
+const StyledButton = styled(PrimaryButton)`
 	position: relative;
 	transition: 0.05s;
 	& svg {

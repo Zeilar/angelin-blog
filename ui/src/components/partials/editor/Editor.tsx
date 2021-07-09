@@ -1,11 +1,15 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { useContext } from "react";
 import { useHistory } from "react-router";
 import { Post } from "../../../models/Post";
+import { SERVER_URL } from "../../../utils";
+import { FetchContext } from "../../hooks";
 import { Toolbar } from "./";
 
 export default function Editor({ ...props }) {
 	const { push } = useHistory();
+	const fetchContext = useContext(FetchContext);
 
 	const editor = useEditor({
 		extensions: [StarterKit],
@@ -20,6 +24,7 @@ export default function Editor({ ...props }) {
 		});
 
 		if (ok && data) {
+			fetchContext?.clearCache(`${SERVER_URL}/api/posts`);
 			push(`/post/${data.id}-${data.title}`);
 		}
 	}

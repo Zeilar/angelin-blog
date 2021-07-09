@@ -8,7 +8,7 @@ interface PostCredentials {
 	body: string;
 }
 
-interface PostSchema {
+interface PostProps {
 	id: number;
 	user_id: number;
 	title: string;
@@ -20,29 +20,46 @@ interface PostSchema {
 	comments: Comment[];
 }
 
-export class Post implements PostSchema {
-	public id: number;
-	public user_id: number;
-	public title: string;
-	public body: string;
-	public created_at: string;
-	public updated_at: string;
-	public author: User;
-	public tags: Tag[];
-	public comments: Comment[];
-
-	constructor(post: PostSchema) {
-		this.id = post.id;
-		this.title = post.title;
-		this.body = post.body;
-		this.created_at = post.created_at;
-		this.updated_at = post.updated_at;
-		this.author = post.author;
-		this.tags = post.tags;
-		this.comments = post.comments;
+export class Post implements PostProps {
+	public get id() {
+		return this._props.id;
 	}
 
-	private static queryHandler(query: Response<Post>) {
+	public get user_id() {
+		return this._props.user_id;
+	}
+
+	public get title() {
+		return this._props.title;
+	}
+
+	public get body() {
+		return this._props.body;
+	}
+
+	public get created_at() {
+		return this._props.created_at;
+	}
+
+	public get updated_at() {
+		return this._props.updated_at;
+	}
+
+	public get author() {
+		return this._props.author;
+	}
+
+	public get tags() {
+		return this._props.tags;
+	}
+
+	public get comments() {
+		return this._props.comments;
+	}
+
+	constructor(private readonly _props: PostProps) {}
+
+	private static dto(query: Response<Post>) {
 		if (query.ok && query.data) {
 			query.data = new Post(query.data);
 		}
@@ -51,6 +68,6 @@ export class Post implements PostSchema {
 
 	public static async create(post: PostCredentials) {
 		const query = await Request.post<Post>({ url: "", method: "POST", body: post });
-		return Post.queryHandler(query);
+		return Post.dto(query);
 	}
 }

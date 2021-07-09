@@ -14,7 +14,7 @@ interface Flexbox {
 
 interface CssGrid {}
 
-const flexbox = css(
+export const flexbox = css(
 	({ justify, align, block, direction }: Flexbox) =>
 		css`
 			display: flex;
@@ -25,7 +25,7 @@ const flexbox = css(
 		`
 );
 
-const grid = css(
+export const grid = css(
 	(props: CssGrid) => css`
 		display: grid;
 	`

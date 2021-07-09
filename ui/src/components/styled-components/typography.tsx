@@ -51,6 +51,7 @@ export const P = styled.p`
 export const A = styled.a`
 	${text}
 	cursor: pointer;
+	display: inline-flex;
 	color: rgb(${theme.color.link});
 	&:hover {
 		text-decoration: underline;

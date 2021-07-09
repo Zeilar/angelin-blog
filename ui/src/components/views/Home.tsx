@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import { useFetch } from "../hooks";
 import { ReadOnlyEditor } from "../partials/editor";
 import useTitle from "../hooks/useTitle";
+import { SERVER_URL } from "../../utils";
 
 export function Home() {
-	const query = useFetch<{ data: Post[] }>("http://localhost:3030/api/posts");
+	const query = useFetch<{ data: Post[] }>(`${SERVER_URL}/api/posts`);
 	const posts = query.body?.data.map((post: Post) => new Post(post)) ?? [];
 
 	useTitle("Angelin Blog");

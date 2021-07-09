@@ -1,8 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import * as ModalStyles from "./_styles";
-import { mdiClose } from "@mdi/js";
-import Icon from "@mdi/react";
-import { ButtonStatus, Input } from "../../misc";
+import { StatusButton, Input } from "../../misc";
 import { theme } from "../../../styles/theme";
 import * as Styles from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
@@ -27,7 +25,7 @@ export function Login() {
 
 	useEffect(() => {
 		// mountError should only ever change once
-		// But this is required, as the first render it will be null
+		// But this useEffect is required, as the first render mountError will be null
 		setError(mountError);
 	}, [mountError]);
 
@@ -44,11 +42,29 @@ export function Login() {
 		}
 	}, [loggedIn]);
 
+	useEffect(() => {
+		function keyHandler(e: KeyboardEvent) {
+			if (e.key === "Escape") {
+				closeModals();
+			}
+		}
+
+		document.addEventListener("keydown", keyHandler);
+		return () => {
+			document.removeEventListener("keydown", keyHandler);
+		};
+	}, [closeModals]);
+
+	function oAuthSubmit() {
+		setStatus("loading");
+	}
+
 	async function submit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		if (loggedIn) return;
 
 		setStatus("loading");
+		setError(null);
 
 		const { error, ok } = await login({
 			email: inputs.email,
@@ -78,11 +94,9 @@ export function Login() {
 		<ModalStyles.Wrapper className={classnames({ active })} ref={wrapper}>
 			<form onSubmit={submit}>
 				<ContainerLoader loading={status === "loading"} />
-				<ModalStyles.Close onClick={closeModals}>
-					<Icon path={mdiClose} />
-				</ModalStyles.Close>
-				<Styles.H3 className="mb-4">Login</Styles.H3>
-				{error && <Styles.FormError>{error}</Styles.FormError>}
+				<ModalStyles.Close onClick={closeModals} />
+				<Styles.H3 className="mb-10">Login</Styles.H3>
+				{error && <Styles.FormError className="mb-2">{error}</Styles.FormError>}
 				<Styles.Col className="mb-10">
 					<Input
 						forwardRef={firstInput}
@@ -102,15 +116,16 @@ export function Login() {
 						label="Password"
 					/>
 				</Styles.Col>
-				<Styles.P className="mb-5">
-					Not a member?{" "}
-					<Styles.A className="font-bold" onClick={() => openModal("register")}>
-						Register
-					</Styles.A>
-				</Styles.P>
-				<ButtonStatus className="w-full" type="submit" status={status}>
+				<ModalStyles.ModalSwitch
+					question="Not a member?"
+					link="Register"
+					onClick={() => openModal("register")}
+				/>
+				<StatusButton className="w-full" type="submit" status={status}>
 					Login
-				</ButtonStatus>
+				</StatusButton>
+				<ModalStyles.LoginDivider />
+				<ModalStyles.GitHubLogin onClick={oAuthSubmit} />
 			</form>
 		</ModalStyles.Wrapper>
 	);

@@ -1,18 +1,18 @@
 import { RefObject } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Input as StyledInput, FormError, Col, Grid } from "../styled-components";
 import classnames from "classnames";
 
-interface Props<T> {
+interface Props {
 	label?: string;
 	errors?: string[];
 	value: string;
 	containerClass?: string;
-	forwardRef?: RefObject<T>;
+	forwardRef?: RefObject<HTMLInputElement>;
 	[key: string]: any;
 }
 
-export function Input<T>(props: Props<T>) {
+export function Input(props: Props) {
 	const hasErrors = props.errors && props.errors.length > 0;
 	const labelId = `input-${Math.ceil(Math.random() * 100)}`;
 
@@ -20,7 +20,7 @@ export function Input<T>(props: Props<T>) {
 		<Col align="flex-start" className={classnames(props.containerClass, "mt-5")}>
 			{hasErrors && (
 				<Errors>
-					{props.errors?.map((error, i: number) => (
+					{props.errors?.map((error: string, i: number) => (
 						<FormError key={i}>{error}</FormError>
 					))}
 				</Errors>
@@ -30,18 +30,21 @@ export function Input<T>(props: Props<T>) {
 					{props.label}
 				</Label>
 			)}
-			<InputField className={classnames({ error: hasErrors })} id={labelId} {...props} />
+			<InputField
+				className={classnames({ error: hasErrors, label: Boolean(props.label) })}
+				id={labelId}
+				ref={props.forwardRef}
+				{...props}
+			/>
 		</Col>
 	);
 }
 
 const InputField = styled(StyledInput)`
 	width: 100%;
-	${({ label }: any) =>
-		label &&
-		css`
-			border-top-left-radius: 0;
-		`}
+	&.label {
+		border-top-left-radius: 0;
+	}
 `;
 
 const Label = styled.label`
