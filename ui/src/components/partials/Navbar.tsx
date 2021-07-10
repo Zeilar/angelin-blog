@@ -1,13 +1,27 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
-import { useAuth, useAuthModals } from "../contexts";
+import { useAuth } from "../contexts";
 import * as Styles from "../styled-components";
-import Modals from "./modals/Modals";
+import { Login, Register } from "./modals";
+import { Modal } from "./modals/Modal";
 
 export function Navbar() {
 	const { loggedIn, loading, logout, user } = useAuth();
-	const { openModal } = useAuthModals();
+
+	const [loginModalOpen, setLoginModalOpen] = useState(false);
+	const [registerModalOpen, setRegisterModalOpen] = useState(false);
+
+	function openLogin() {
+		setRegisterModalOpen(false);
+		setLoginModalOpen(true);
+	}
+
+	function openRegister() {
+		setLoginModalOpen(false);
+		setRegisterModalOpen(true);
+	}
 
 	function renderAuthNav() {
 		if (loading) return null;
@@ -22,10 +36,10 @@ export function Navbar() {
 			return (
 				<>
 					<Item>
-						<ModalButton onClick={() => openModal("login")}>Login</ModalButton>
+						<ModalButton onClick={() => setLoginModalOpen(true)}>Login</ModalButton>
 					</Item>
 					<Item>
-						<ModalButton className="ml-2" onClick={() => openModal("register")}>
+						<ModalButton className="ml-2" onClick={() => setRegisterModalOpen(true)}>
 							Register
 						</ModalButton>
 					</Item>
@@ -53,7 +67,22 @@ export function Navbar() {
 					<Styles.Row className="ml-auto">{renderAuthNav()}</Styles.Row>
 				</Styles.Row>
 			</Styles.Container>
-			<Modals />
+			<Modal
+				altOpen={loginModalOpen}
+				altSetOpen={setLoginModalOpen}
+				onEscape={() => setLoginModalOpen(false)}
+				render={(open, setOpen) => (
+					<Login open={open} setOpen={setOpen} openRegister={openRegister} />
+				)}
+			/>
+			<Modal
+				altOpen={registerModalOpen}
+				altSetOpen={setRegisterModalOpen}
+				onEscape={() => setRegisterModalOpen(false)}
+				render={(open, setOpen) => (
+					<Register open={open} setOpen={setOpen} openLogin={openLogin} />
+				)}
+			/>
 		</Wrapper>
 	);
 }

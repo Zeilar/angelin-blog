@@ -8,14 +8,17 @@ import { useAuthModals, useAuth } from "../../contexts";
 import classnames from "classnames";
 import { ModalStatus } from "../../../types/modals";
 import ContainerLoader from "../../misc/ContainerLoader";
+import { RenderProps } from "./";
 
-export function Login() {
+interface Props extends RenderProps {
+	openRegister(): void;
+}
+
+export function Login({ open, setOpen, openRegister }: Props) {
 	const { login, loggedIn } = useAuth();
-	const { activeModal, closeModals, openModal, mountError } = useAuthModals();
+	const { mountError } = useAuthModals();
 
-	const active = activeModal === "login";
-
-	const wrapper = useClickOutside<HTMLDivElement>(() => active && closeModals());
+	const wrapper = useClickOutside<HTMLDivElement>(() => open && setOpen(false));
 
 	const [status, setStatus] = useState<ModalStatus>(null);
 	const { inputs, onChange, empty } = useInputs({ email: "", password: "" });
@@ -30,30 +33,17 @@ export function Login() {
 	}, [mountError]);
 
 	useEffect(() => {
-		if (active && firstInput.current) {
+		if (open && firstInput.current) {
 			firstInput.current.focus();
 		}
-	}, [active]);
+	}, [open]);
 
 	useEffect(() => {
-		if (!active) {
+		if (!open) {
 			empty();
 			setError(null);
 		}
 	}, [loggedIn]);
-
-	useEffect(() => {
-		function keyHandler(e: KeyboardEvent) {
-			if (e.key === "Escape") {
-				closeModals();
-			}
-		}
-
-		document.addEventListener("keydown", keyHandler);
-		return () => {
-			document.removeEventListener("keydown", keyHandler);
-		};
-	}, [closeModals]);
 
 	function oAuthSubmit() {
 		setStatus("loading");
@@ -76,7 +66,7 @@ export function Login() {
 			setStatus("success");
 
 			setTimeout(() => {
-				closeModals();
+				setOpen(false);
 				setStatus("done");
 			}, theme.durations.modalsAfterResponse);
 		} else {
@@ -91,10 +81,10 @@ export function Login() {
 	}
 
 	return (
-		<ModalStyles.Wrapper className={classnames({ active })} ref={wrapper}>
+		<ModalStyles.Wrapper className={classnames({ open })} ref={wrapper}>
 			<form onSubmit={submit}>
 				<ContainerLoader loading={status === "loading"} />
-				<ModalStyles.Close onClick={closeModals} />
+				<ModalStyles.Close onClick={() => setOpen(false)} />
 				<Styles.H3 className="mb-10">Login</Styles.H3>
 				{error && <Styles.FormError className="mb-2">{error}</Styles.FormError>}
 				<Styles.Col className="mb-10">
@@ -119,7 +109,7 @@ export function Login() {
 				<ModalStyles.ModalSwitch
 					question="Not a member?"
 					link="Register"
-					onClick={() => openModal("register")}
+					onClick={openRegister}
 				/>
 				<StatusButton className="w-full" type="submit" status={status}>
 					Login

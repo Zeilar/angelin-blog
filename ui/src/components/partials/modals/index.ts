@@ -1,3 +1,3 @@
 export * from "./Login";
 export * from "./Register";
-export * from "./Modals";
+export * from "./Modal";

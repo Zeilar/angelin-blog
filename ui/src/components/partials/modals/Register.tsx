@@ -4,18 +4,20 @@ import { StatusButton, Input } from "../../misc";
 import { theme } from "../../../styles/theme";
 import * as Styles from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
-import { useAuthModals, useAuth } from "../../contexts";
+import { useAuth } from "../../contexts";
 import classnames from "classnames";
 import { ModalStatus } from "../../../types/modals";
 import ContainerLoader from "../../misc/ContainerLoader";
+import { RenderProps } from "./";
 
-export function Register() {
+interface Props extends RenderProps {
+	openLogin(): void;
+}
+
+export function Register({ open, setOpen, openLogin }: Props) {
 	const { register, loggedIn } = useAuth();
-	const { activeModal, closeModals, openModal } = useAuthModals();
 
-	const active = activeModal === "register";
-
-	const wrapper = useClickOutside<HTMLDivElement>(() => active && closeModals());
+	const wrapper = useClickOutside<HTMLDivElement>(() => open && setOpen(false));
 
 	const [status, setStatus] = useState<ModalStatus>(null);
 	const { inputs, onChange, empty } = useInputs({ email: "", password: "", passwordConfirm: "" });
@@ -24,30 +26,17 @@ export function Register() {
 	const firstInput = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		if (active && firstInput.current) {
+		if (open && firstInput.current) {
 			firstInput.current.focus();
 		}
-	}, [active]);
+	}, [open]);
 
 	useEffect(() => {
-		if (!active) {
+		if (!open) {
 			empty();
 			setError(null);
 		}
 	}, [loggedIn]);
-
-	useEffect(() => {
-		function keyHandler(e: KeyboardEvent) {
-			if (e.key === "Escape") {
-				closeModals();
-			}
-		}
-
-		document.addEventListener("keydown", keyHandler);
-		return () => {
-			document.removeEventListener("keydown", keyHandler);
-		};
-	}, [closeModals]);
 
 	function oAuthSubmit() {
 		setStatus("loading");
@@ -71,7 +60,7 @@ export function Register() {
 			setStatus("success");
 
 			setTimeout(() => {
-				closeModals();
+				setOpen(false);
 				setStatus("done");
 			}, theme.durations.modalsAfterResponse);
 		} else {
@@ -86,10 +75,10 @@ export function Register() {
 	}
 
 	return (
-		<ModalStyles.Wrapper className={classnames({ active })} ref={wrapper}>
+		<ModalStyles.Wrapper className={classnames({ open })} ref={wrapper}>
 			<form onSubmit={submit}>
 				<ContainerLoader loading={status === "loading"} />
-				<ModalStyles.Close onClick={closeModals} />
+				<ModalStyles.Close onClick={() => setOpen(false)} />
 				<Styles.H3 className="mb-10">Register</Styles.H3>
 				{error && <Styles.FormError className="mb-2">{error}</Styles.FormError>}
 				<Styles.Col className="mb-10">
@@ -124,7 +113,7 @@ export function Register() {
 				<ModalStyles.ModalSwitch
 					question="Already a member?"
 					link="Login"
-					onClick={() => openModal("login")}
+					onClick={openLogin}
 				/>
 				<StatusButton className="w-full" type="submit" status={status}>
 					Register

@@ -14,7 +14,7 @@ export const Background = styled.div`
 	transition: 0.5s;
 	pointer-events: none;
 	z-index: 1000;
-	&.active {
+	&.open {
 		backdrop-filter: blur(5px);
 		pointer-events: all;
 		background-color: rgba(0, 0, 0, 0.35);
@@ -34,7 +34,7 @@ export const Wrapper = styled(Col)`
 	border-radius: ${theme.borderRadius}px;
 	background-color: rgb(${theme.color.secondary});
 	box-shadow: ${theme.shadow.elevate};
-	&.active {
+	&.open {
 		pointer-events: all;
 		opacity: 1;
 		transform: translate(-50%, -50%) scale(1);
