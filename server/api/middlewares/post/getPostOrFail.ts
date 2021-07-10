@@ -1,13 +1,18 @@
 import { Request, Response, NextFunction } from "express";
 import { Post } from "../../../db/models";
-import { PAGE_SIZE, NumberHelpers } from "../../utils";
+import { PAGE_SIZE, NumberHelpers, ErrorMessages } from "../../utils";
 
 export async function getPostOrFail(req: Request, res: Response, next: NextFunction) {
-	// throw new Error("sdfjipdfs");
 	const { id } = req.params;
+
 	if (id) {
 		const post = await Post.query().findById(id).withGraphFetched(Post.relationships);
-		if (!post) return res.status(404).end();
+
+		if (!post) {
+			res.status(404).json({ error: ErrorMessages.NOT_FOUND });
+			return;
+		}
+
 		res.post = post;
 	} else {
 		const { page, perPage } = NumberHelpers.paginate(

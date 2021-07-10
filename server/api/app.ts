@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import "dotenv/config";
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import path from "path";
 import { getPortPromise } from "portfinder";
 
@@ -23,4 +23,9 @@ app.use(express.static(uiPath));
 
 app.get("/*", (req, res) => {
 	res.sendFile(`${uiPath}/index.html`);
+});
+
+app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+	errorlog(error);
+	res.status(500).json({ error: "Could not find ui build." });
 });

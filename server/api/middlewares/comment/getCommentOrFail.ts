@@ -1,22 +1,23 @@
-import { Request, Response, NextFunction, response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { Comment } from "../../../db/models";
-import errorlog from "../../../utils/errorlog";
+import { ErrorMessages } from "../../utils";
 
 export async function getCommentOrFail(req: Request, res: Response, next: NextFunction) {
 	const { id } = req.params;
-	try {
-		if (!id) {
-			return res.status(400).json({ error: "Expected id query parameter." });
-		}
 
-		const comment = await Comment.query().findById(id).withGraphFetched(Comment.relationships);
-		if (!comment) return res.status(404).end();
-
-		res.comment = comment;
-
-		next();
-	} catch (error) {
-		errorlog(error);
-		res.status(500).end();
+	if (!id) {
+		res.status(400).json({ error: "Expected id query parameter." });
+		return;
 	}
+
+	const comment = await Comment.query().findById(id).withGraphFetched(Comment.relationships);
+
+	if (!comment) {
+		res.status(404).json({ error: ErrorMessages.NOT_FOUND });
+		return;
+	}
+
+	res.comment = comment;
+
+	next();
 }

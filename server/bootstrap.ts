@@ -14,11 +14,9 @@ import * as services from "./services";
 import { User } from "./db/models";
 import { development } from "../knexfile";
 import { UserRepository } from "./repositories";
+import { ErrorMessages } from "./api/utils";
 
-import "./api/controllers/UserController";
-import "./api/controllers/PostController";
-import "./api/controllers/CommentController";
-import "./api/controllers/GitHubController";
+import "./api/controllers";
 
 const WEEK_IN_MILLISECONDS = 1000 * 60 * 60 * 24 * 7,
 	oneWeekFromNow = new Date(new Date().getTime() + WEEK_IN_MILLISECONDS);
@@ -68,7 +66,7 @@ function bootstrap() {
 	server.setErrorConfig(app => {
 		app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
 			errorlog(error);
-			res.status(500).end();
+			res.status(500).json({ error: ErrorMessages.DEFAULT });
 		});
 	});
 

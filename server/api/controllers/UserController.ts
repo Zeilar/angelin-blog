@@ -21,14 +21,10 @@ export class UserController extends Controller {
 		return this.json({ data: req.user?.dto() });
 	}
 
-	@inversify.httpPost("/register")
-	public async register(req: Request, res: Response) {
+	@inversify.httpPost("/register", AuthGuard.guest)
+	public async register(@inversify.request() req: Request) {
 		if (!this.validateService.requestBody(["email", "password", "passwordConfirm"], req.body)) {
 			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
-		}
-
-		if (req.isAuthenticated()) {
-			return this.json({ error: this.ErrorMessages.LOGGED_IN }, 405);
 		}
 
 		const { email, password, passwordConfirm } = req.body;
@@ -54,7 +50,7 @@ export class UserController extends Controller {
 		return this.json({ data: user.dto() });
 	}
 
-	@inversify.httpPost("/login")
+	@inversify.httpPost("/login", AuthGuard.guest)
 	public async login(@inversify.request() req: Request, @inversify.response() res: Response) {
 		if (!this.validateService.requestBody(["email", "password"], req.body)) {
 			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
@@ -87,13 +83,9 @@ export class UserController extends Controller {
 		return this.json({ data: user.dto() });
 	}
 
-	@inversify.httpGet("/logout")
-	public logout(@inversify.request() req: Request, @inversify.response() res: Response) {
-		if (!req.isAuthenticated()) {
-			return this.json({ error: this.ErrorMessages.LOGGED_OUT }, 405);
-		}
+	@inversify.httpGet("/logout", AuthGuard.user)
+	public logout(@inversify.request() req: Request) {
 		req.logout();
-		return;
 	}
 
 	@inversify.httpPut("/:id", AuthGuard.user, getUserOrFail, UserGuard.edit)
@@ -113,6 +105,6 @@ export class UserController extends Controller {
 		@inversify.requestParam("id") id: string
 	) {
 		console.log(res.user, id);
-		res.status(200).send("Can edit");
+		res.status(200).send("Can delete");
 	}
 }

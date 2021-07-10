@@ -5,6 +5,7 @@ import passport from "passport";
 import { Strategy as GitHubStrategy, Profile } from "passport-github2";
 import { UserRepository } from "../../repositories";
 import { ErrorMessages } from "../utils";
+import { User } from "../../db/models";
 
 type GitHubProfile = Profile & { _json: any };
 
@@ -22,8 +23,10 @@ passport.use(
 			accessToken: string,
 			refreshToken: string,
 			profile: GitHubProfile,
-			done: (err?: Error | null, profile?: any) => void
+			done: (err: Error | null, profile: GitHubProfile | User | null) => void
 		) => {
+			if (!profile) done(new Error("Something went wrong."), null);
+
 			let user = await userRepository.findOne("github_id", profile.id);
 
 			if (!user) {
@@ -50,13 +53,16 @@ export class GitHubController extends Controller {
 		super();
 	}
 
-	@inversify.httpGet("/callback", passport.authenticate("github"))
-	public callback(@inversify.response() res: Response) {
-		res.redirect("/");
+	@inversify.httpGet(
+		"/callback",
+		passport.authenticate("github", {
+			failureRedirect: `/?error=${encodeURI("Something went wrong.")}`,
+		})
+	)
+	public done() {
+		this.redirect("/");
 	}
 
 	@inversify.httpGet("/", passport.authenticate("github"))
-	public auth() {
-		return;
-	}
+	public auth() {} // Only the middleware is needed apparently
 }

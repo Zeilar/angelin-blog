@@ -14,6 +14,7 @@ export class User extends Model {
 	public avatar?: string | null;
 	public oauth?: boolean;
 	public github_id?: number | string;
+	public google_id?: number | string;
 	public created_at!: string;
 	public updated_at!: string;
 	public posts?: Post[];

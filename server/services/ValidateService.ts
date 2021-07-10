@@ -32,6 +32,7 @@ export class ValidateService extends Service {
 			} else {
 				throw new Error("Invalid keys argument.");
 			}
+
 			return difference(keysArr, Object.keys(body)).length === 0;
 		} catch (error) {
 			this.errorlog(error);

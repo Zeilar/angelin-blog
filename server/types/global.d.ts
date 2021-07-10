@@ -1,4 +1,4 @@
-import { User as UserModel, Tag, Comment, Post } from "../db/models";
+import { User as IUser, Tag, Comment, Post } from "../db/models";
 
 export {};
 
@@ -19,17 +19,17 @@ declare global {
 	}
 
 	namespace Express {
-		interface User extends UserModel {}
+		interface User extends IUser {}
 
 		interface Response {
-			user?: UserModel;
-			users?: UserModel[];
-			post?: Post;
-			posts?: Post[];
-			comments?: Comment[];
-			comment?: Comment;
-			tags?: Tag[];
-			tag?: Tag;
+			user: IUser;
+			users: IUser[];
+			post: Post;
+			posts: Post[];
+			comments: Comment[];
+			comment: Comment;
+			tags: Tag[];
+			tag: Tag;
 		}
 	}
 }
