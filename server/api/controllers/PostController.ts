@@ -12,8 +12,8 @@ export class PostController extends Controller {
 		super();
 	}
 
-	@inversify.httpPost("/", AuthGuard.admin)
-	public async create(@inversify.request() req: Request, @inversify.response() res: Response) {
+	@inversify.httpPost("/", AuthGuard.user, AuthGuard.admin)
+	public async create(@inversify.request() req: Request) {
 		if (!this.validateService.requestBody(["body", "title"], req.body)) {
 			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
 		}

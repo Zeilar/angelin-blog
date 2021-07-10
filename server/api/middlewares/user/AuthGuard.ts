@@ -12,7 +12,7 @@ export class AuthGuard {
 
 	public static async guest(req: Request, res: Response, next: NextFunction) {
 		if (req.isAuthenticated()) {
-			res.status(405).json({ error: ErrorMessages.LOGGED_IN });
+			res.status(403).json({ error: ErrorMessages.LOGGED_IN });
 			return;
 		}
 		next();
