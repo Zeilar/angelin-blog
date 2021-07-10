@@ -29,17 +29,19 @@ export function Navbar() {
 		if (loggedIn) {
 			return (
 				<Item>
-					<ModalButton onClick={logout}>Logout</ModalButton>
+					<ModalButton className="mr-0" onClick={logout}>
+						Logout
+					</ModalButton>
 				</Item>
 			);
 		} else {
 			return (
 				<>
-					<Item>
+					<Item className="mr-2">
 						<ModalButton onClick={() => setLoginModalOpen(true)}>Login</ModalButton>
 					</Item>
 					<Item>
-						<ModalButton className="ml-2" onClick={() => setRegisterModalOpen(true)}>
+						<ModalButton onClick={() => setRegisterModalOpen(true)}>
 							Register
 						</ModalButton>
 					</Item>
@@ -52,7 +54,7 @@ export function Navbar() {
 		<Wrapper>
 			<Styles.Container as="nav">
 				<Styles.Row className="py-2" as="ul">
-					<Item>
+					<Item className="mr-2">
 						<Link to="/" exact>
 							Home
 						</Link>
@@ -101,7 +103,6 @@ const Item = styled.li.attrs({ align: "center" })`
 const link = css`
 	${Styles.header}
 	user-select: none;
-	margin-right: 1rem;
 	border-radius: ${theme.borderRadius}px;
 	padding: 0.5rem;
 	transition: 0.05s;
