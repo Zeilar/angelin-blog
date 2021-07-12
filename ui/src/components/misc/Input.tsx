@@ -1,7 +1,9 @@
-import { RefObject } from "react";
+import { FocusEventHandler, RefObject } from "react";
 import styled from "styled-components";
-import { Input as StyledInput, FormError, Col, Grid } from "../styled-components";
+import * as Styles from "../styled-components";
 import classnames from "classnames";
+import { color } from "../../styles/theme";
+import { useState } from "react";
 
 interface Props {
 	label?: string;
@@ -13,46 +15,68 @@ interface Props {
 }
 
 export function Input(props: Props) {
+	const [stayFocused, setStayFocused] = useState(false);
 	const hasErrors = props.errors && props.errors.length > 0;
-	const labelId = `input-${Math.ceil(Math.random() * 100)}`;
+
+	function blurHandler(e: any) {
+		setStayFocused(e.target.value.length > 0);
+	}
 
 	return (
-		<Col align="flex-start" className={classnames(props.containerClass, "mt-5")}>
+		<Styles.Col
+			className={classnames(props.containerClass, "mt-5 relative")}
+			align="flex-start"
+		>
 			{hasErrors && (
 				<Errors>
 					{props.errors?.map((error: string, i: number) => (
-						<FormError key={i}>{error}</FormError>
+						<Styles.FormError key={i}>{error}</Styles.FormError>
 					))}
 				</Errors>
 			)}
-			{props.label && (
-				<Label className="mb-2" htmlFor={labelId}>
-					{props.label}
-				</Label>
-			)}
 			<InputField
-				className={classnames({ error: hasErrors, label: Boolean(props.label) })}
-				id={labelId}
+				className={classnames({
+					error: hasErrors,
+					label: Boolean(props.label),
+					active: stayFocused,
+				})}
+				onBlur={blurHandler}
 				ref={props.forwardRef}
 				{...props}
 			/>
-		</Col>
+			{props.label && <Label className="mb-2">{props.label}</Label>}
+		</Styles.Col>
 	);
 }
 
-const InputField = styled(StyledInput)`
+const InputField = styled(Styles.Input)`
 	width: 100%;
-	&.label {
-		border-top-left-radius: 0;
+	border-color: rgb(${color.pick("textMuted").get()});
+	&::placeholder {
+		color: transparent;
+	}
+	&:focus,
+	&.active {
+		border-color: hsl(${color.pick("brand").get()});
+		& ~ label {
+			transform: translateY(-2rem);
+			color: hsl(${color.pick("brand").get()});
+			font-size: 0.85rem;
+		}
 	}
 `;
 
 const Label = styled.label`
-	display: inline;
+	position: absolute;
+	left: 0;
+	bottom: 0;
 	cursor: text;
+	transition: 0.25s;
+	pointer-events: none;
+	color: rgb(${color.pick("textMuted").get()});
 `;
 
-const Errors = styled(Grid)`
+const Errors = styled(Styles.Grid)`
 	justify-items: flex-start;
 	margin-bottom: 1rem;
 	grid-gap: 0.25rem;

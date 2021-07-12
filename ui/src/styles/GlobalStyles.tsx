@@ -1,20 +1,20 @@
-import { createGlobalStyle } from "styled-components";
 import "./fonts.css";
-import { theme } from "./theme";
+import { createGlobalStyle } from "styled-components";
+import { color, theme } from "./theme";
 import { editor } from "./tiptap";
 
 export const GlobalStyles = createGlobalStyle`
     ${editor}
 
     ::selection {
-        color: rgb(${theme.color.brand});
+        color: hsl(${theme.color.brand});
         background-color: rgba(0, 0, 0, 0.15);
     }
 
     html,
     #root {
         font-family: Open Sans;
-        color: rgb(${theme.color.text});
+        color: rgb(${color.pick("text").get()});
         background-color: rgb(${theme.color.body});
         min-height: 100vh;
     }

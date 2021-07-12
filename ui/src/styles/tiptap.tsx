@@ -60,7 +60,7 @@ export const editor = css`
 		blockquote {
 			padding: 0.25rem 0 0.25rem 1rem;
 			background-color: rgba(0, 0, 0, 0.1);
-			border-left: 2px solid rgb(${theme.color.brand});
+			border-left: 2px solid hsl(${theme.color.brand});
 		}
 
 		hr {

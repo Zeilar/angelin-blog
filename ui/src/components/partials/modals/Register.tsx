@@ -76,26 +76,26 @@ export function Register({ open, setOpen, openLogin }: Props) {
 
 	return (
 		<ModalStyles.Wrapper className={classnames({ open })} ref={wrapper}>
-			<form onSubmit={submit}>
+			<ModalStyles.Main onSubmit={submit}>
 				<ContainerLoader loading={status === "loading"} />
 				<ModalStyles.Close onClick={() => setOpen(false)} />
 				<Styles.H3 className="mb-10">Register</Styles.H3>
 				{error && <Styles.FormError className="mb-2">{error}</Styles.FormError>}
-				<Styles.Col className="mb-10">
+				<Styles.Col className="mb-12">
 					<Input
+						containerClass="mb-4"
 						forwardRef={firstInput}
 						value={inputs.email}
 						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "email")}
 						type="text"
-						placeholder="john.smith@gmail.com"
 						title="Email"
 						label="Email"
 					/>
 					<Input
+						containerClass="mb-4"
 						value={inputs.password}
 						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "password")}
 						type="password"
-						placeholder="••••••••••"
 						title="Password"
 						label="Password"
 					/>
@@ -105,22 +105,21 @@ export function Register({ open, setOpen, openLogin }: Props) {
 							onChange(e, "passwordConfirm")
 						}
 						type="password"
-						placeholder="••••••••••"
 						title="Password Confirmation"
 						label="Password Confirmation"
 					/>
 				</Styles.Col>
-				<ModalStyles.ModalSwitch
-					question="Already a member?"
-					link="Login"
-					onClick={openLogin}
-				/>
 				<StatusButton className="w-full" type="submit" status={status}>
 					Register
 				</StatusButton>
 				<ModalStyles.LoginDivider />
 				<ModalStyles.GitHubLogin onClick={oAuthSubmit} />
-			</form>
+			</ModalStyles.Main>
+			<ModalStyles.Footer>
+				<Styles.PrimaryButton className="w-full" onClick={openLogin}>
+					Already a member? Login
+				</Styles.PrimaryButton>
+			</ModalStyles.Footer>
 		</ModalStyles.Wrapper>
 	);
 }

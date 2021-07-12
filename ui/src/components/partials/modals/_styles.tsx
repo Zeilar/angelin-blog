@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import { theme } from "../../../styles/theme";
-import { Col, Row, PrimaryButton, P, A } from "../../styled-components";
+import { color, theme } from "../../../styles/theme";
+import * as Styles from "../../styled-components";
 import Icon from "@mdi/react";
 import { mdiClose, mdiGithub } from "@mdi/js";
 
 export const Background = styled.div`
 	position: fixed;
 	overflow: hidden;
-	width: 100vw;
+	width: 100%;
 	height: 100vh;
 	top: 0;
 	left: 0;
@@ -15,13 +15,13 @@ export const Background = styled.div`
 	pointer-events: none;
 	z-index: 1000;
 	&.open {
-		backdrop-filter: blur(5px);
+		backdrop-filter: blur(10px);
 		pointer-events: all;
-		background-color: rgba(0, 0, 0, 0.35);
+		background-color: rgba(0, 0, 0, 0.65);
 	}
 `;
 
-export const Wrapper = styled(Col)`
+export const Wrapper = styled(Styles.Col)`
 	position: absolute;
 	transform: translate(-50%, -50%) scale(0.5);
 	left: 50%;
@@ -30,10 +30,9 @@ export const Wrapper = styled(Col)`
 	pointer-events: none;
 	opacity: 0;
 	transition: 0.25s;
-	padding: 3rem;
 	border-radius: ${theme.borderRadius}px;
-	background-color: rgb(${theme.color.secondary});
-	box-shadow: ${theme.shadow.elevate};
+	background-color: rgb(${theme.color.body});
+	box-shadow: ${theme.shadow.spread};
 	&.open {
 		pointer-events: all;
 		opacity: 1;
@@ -55,34 +54,15 @@ export const CloseButton = styled.button.attrs({ type: "button" })`
 	transition: 0.05s;
 	border-radius: ${theme.borderRadius}px;
 	&:hover {
-		background-color: rgb(${theme.color.brand});
+		color: hsl(${theme.color.brand});
 	}
 	&:focus {
 		outline: 0;
 	}
 `;
 
-export const OAuthButton = styled(PrimaryButton).attrs({ type: "button" })`
-	position: relative;
-	margin-bottom: 1rem;
+export const OAuthButton = styled(Styles.PrimaryButton).attrs({ type: "button" })`
 	width: 100%;
-	& * {
-		z-index: 100;
-	}
-	&:active {
-		&::before {
-			box-shadow: inherit;
-			border: inherit;
-			z-index: 1;
-			top: 0;
-			left: 0;
-			content: "";
-			position: absolute;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.25);
-		}
-	}
 `;
 
 export const OAuthIcon = styled(Icon)`
@@ -92,7 +72,11 @@ export const OAuthIcon = styled(Icon)`
 `;
 
 export const GitHubButton = styled(OAuthButton)`
-	background-color: rgb(20, 20, 20) !important;
+	background-color: hsl(0, 0%, 4%);
+	color: rgb(${color.pick("text").get()});
+	&:active {
+		background-color: hsl(0, 0%, 0%);
+	}
 `;
 
 export const LoginDividerLine = styled.div`
@@ -108,11 +92,11 @@ export const LoginDividerText = styled.span`
 
 export function LoginDivider() {
 	return (
-		<Row className="my-4 justify-center items-center">
+		<Styles.Row className="my-4 justify-center items-center">
 			<LoginDividerLine />
 			<LoginDividerText>OR</LoginDividerText>
 			<LoginDividerLine />
-		</Row>
+		</Styles.Row>
 	);
 }
 
@@ -135,18 +119,13 @@ export function Close({ onClick }: { onClick: React.MouseEventHandler<HTMLButton
 	);
 }
 
-interface ModalSwitchProps {
-	question: string;
-	link: string;
-	onClick: React.MouseEventHandler<HTMLAnchorElement>;
-}
-export function ModalSwitch({ question, link, onClick }: ModalSwitchProps) {
-	return (
-		<P className="mb-10">
-			{`${question} `}
-			<A className="font-bold" onClick={onClick}>
-				{link}
-			</A>
-		</P>
-	);
-}
+export const Main = styled.form.attrs({ direction: "column" })`
+	${Styles.flexbox}
+	padding: 2rem;
+`;
+
+export const Footer = styled.div`
+	background-color: rgb(${color.pick("secondary").get()});
+	padding: 2rem;
+	box-shadow: ${theme.shadow.spread};
+`;

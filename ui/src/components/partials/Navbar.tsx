@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { theme } from "../../styles/theme";
+import { color, theme } from "../../styles/theme";
 import { useAuth } from "../contexts";
 import * as Styles from "../styled-components";
 import { Login, Register } from "./modals";
@@ -37,7 +37,7 @@ export function Navbar() {
 		} else {
 			return (
 				<>
-					<Item className="mr-2">
+					<Item className="mr-8">
 						<ModalButton onClick={() => setLoginModalOpen(true)}>Login</ModalButton>
 					</Item>
 					<Item>
@@ -51,10 +51,10 @@ export function Navbar() {
 	}
 
 	return (
-		<Wrapper>
-			<Styles.Container as="nav">
-				<Styles.Row className="py-2" as="ul">
-					<Item className="mr-2">
+		<Wrapper as="header" align="center">
+			<Nav as="nav">
+				<Styles.Row as="ul">
+					<Item className="mr-8">
 						<Link to="/" exact>
 							Home
 						</Link>
@@ -68,7 +68,7 @@ export function Navbar() {
 					)}
 					<Styles.Row className="ml-auto">{renderAuthNav()}</Styles.Row>
 				</Styles.Row>
-			</Styles.Container>
+			</Nav>
 			<Modal
 				altOpen={loginModalOpen}
 				altSetOpen={setLoginModalOpen}
@@ -89,10 +89,15 @@ export function Navbar() {
 	);
 }
 
-const Wrapper = styled.header`
-	background-color: rgb(${theme.color.secondary});
-	box-shadow: ${theme.shadow.elevateUnder};
+const Wrapper = styled(Styles.Row)`
+	position: sticky;
+	top: 0;
+	box-shadow: ${theme.shadow.elevate};
 	z-index: 100;
+`;
+
+const Nav = styled(Styles.Container)`
+	backdrop-filter: blur(10px);
 `;
 
 const Item = styled.li.attrs({ align: "center" })`
@@ -102,15 +107,25 @@ const Item = styled.li.attrs({ align: "center" })`
 
 const link = css`
 	${Styles.header}
+	position: relative;
 	user-select: none;
 	border-radius: ${theme.borderRadius}px;
-	padding: 0.5rem;
+	padding: 1rem 0;
 	transition: 0.05s;
-	&:hover {
-		background-color: rgb(${theme.color.brand});
+	&::after {
+		transition: width 0.15s;
+		content: "";
+		position: absolute;
+		left: 0;
+		bottom: -1px;
+		height: 2px;
+		background-color: hsl(${color.pick("brand").get()});
+		width: 0;
 	}
-	&:active {
-		background-color: rgba(${theme.color.brand}, 0.75);
+	&:hover {
+		&::after {
+			width: 100%;
+		}
 	}
 `;
 

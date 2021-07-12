@@ -25,7 +25,7 @@ export const ToolbarButton = styled.button`
 		background-color: rgb(${theme.color.primary});
 	}
 	&.active {
-		background-color: rgb(${theme.color.brand});
+		background-color: hsl(${theme.color.brand});
 	}
 	&:focus {
 		outline: 0;

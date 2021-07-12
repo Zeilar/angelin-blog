@@ -82,18 +82,18 @@ export function Login({ open, setOpen, openRegister }: Props) {
 
 	return (
 		<ModalStyles.Wrapper className={classnames({ open })} ref={wrapper}>
-			<form onSubmit={submit}>
+			<ModalStyles.Main onSubmit={submit}>
 				<ContainerLoader loading={status === "loading"} />
 				<ModalStyles.Close onClick={() => setOpen(false)} />
 				<Styles.H3 className="mb-10">Login</Styles.H3>
 				{error && <Styles.FormError className="mb-2">{error}</Styles.FormError>}
-				<Styles.Col className="mb-10">
+				<Styles.Col className="mb-12">
 					<Input
+						containerClass="mb-4"
 						forwardRef={firstInput}
 						value={inputs.email}
 						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "email")}
 						type="text"
-						placeholder="john.smith@gmail.com"
 						title="Email"
 						label="Email"
 					/>
@@ -101,22 +101,21 @@ export function Login({ open, setOpen, openRegister }: Props) {
 						value={inputs.password}
 						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "password")}
 						type="password"
-						placeholder="••••••••••"
 						title="Password"
 						label="Password"
 					/>
 				</Styles.Col>
-				<ModalStyles.ModalSwitch
-					question="Not a member?"
-					link="Register"
-					onClick={openRegister}
-				/>
 				<StatusButton className="w-full" type="submit" status={status}>
 					Login
 				</StatusButton>
 				<ModalStyles.LoginDivider />
 				<ModalStyles.GitHubLogin onClick={oAuthSubmit} />
-			</form>
+			</ModalStyles.Main>
+			<ModalStyles.Footer>
+				<Styles.PrimaryButton className="w-full" onClick={openRegister}>
+					Not a member? Register
+				</Styles.PrimaryButton>
+			</ModalStyles.Footer>
 		</ModalStyles.Wrapper>
 	);
 }
