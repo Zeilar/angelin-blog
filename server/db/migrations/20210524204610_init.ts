@@ -61,6 +61,13 @@ export function up(knex: Knex) {
 				.timestamp("updated_at")
 				.notNullable()
 				.defaultTo(knex.raw("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"));
+		})
+		.createTable("password_resets", table => {
+			table.increments();
+			table.uuid("token").unique();
+			table.foreign("user_id").references("id").inTable("users");
+			table.integer("user_id").notNullable().unique();
+			table.timestamp("created_at").notNullable().defaultTo(knex.raw("CURRENT_TIMESTAMP"));
 		});
 }
 

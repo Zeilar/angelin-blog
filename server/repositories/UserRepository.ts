@@ -2,6 +2,7 @@ import { User } from "../db/models";
 import { Repository } from "./Repository";
 import { CreateUser, UserEditable } from "../types/user";
 import { injectable } from "inversify";
+import { hash } from "bcrypt";
 
 @injectable()
 export class UserRepository extends Repository {
@@ -46,6 +47,10 @@ export class UserRepository extends Repository {
 	}
 
 	public async updateById(id: number, data: UserEditable) {
+		if (data.password) {
+			data.password = await hash(data.password, 10);
+		}
+
 		try {
 			return await User.query().updateAndFetchById(id, data);
 		} catch (error) {

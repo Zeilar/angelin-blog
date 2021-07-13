@@ -2,8 +2,7 @@ import { Request, Response } from "express";
 import { Controller } from "./Controller";
 import { AuthService, ValidateService, UserService } from "../../services";
 import * as inversify from "inversify-express-utils";
-import { AuthGuard, getUserOrFail } from "../middlewares";
-import { UserGuard } from "../middlewares/user/UserGuard";
+import { AuthGuard, getUserOrFail, UserGuard } from "../middlewares";
 import { z } from "zod";
 
 @inversify.controller("/api/users")

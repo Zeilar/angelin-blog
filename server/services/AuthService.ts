@@ -12,7 +12,7 @@ export class AuthService extends Service {
 
 	public async create(data: Register) {
 		try {
-			return this.userRepository.create({
+			return await this.userRepository.create({
 				email: data.email,
 				password: await hash(data.password, 10),
 			});
