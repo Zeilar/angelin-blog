@@ -51,7 +51,7 @@ export class User extends Model {
 	}
 
 	private getAvatar() {
-		return this.avatar;
+		return this.avatar; // Do some logic here with local and OAuth paths
 	}
 
 	public $afterGet() {
@@ -67,7 +67,7 @@ export class User extends Model {
 	 * @description Uses the policy class system
 	 * @example can(user, model, "edit") // expected output: boolean
 	 */
-	public static can(user: User, model: User, ...action: UserAction[]) {
-		return new UserPolicy(user, model).can(...action);
+	public static can(user: User, model: User, ...actions: UserAction[]) {
+		return new UserPolicy(user, model).can(...actions);
 	}
 }

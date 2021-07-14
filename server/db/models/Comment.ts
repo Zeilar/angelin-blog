@@ -11,8 +11,8 @@ export class Comment extends Model {
 	public body!: string;
 	public created_at!: string;
 	public updated_at!: string;
-	public post!: Post;
 	public author!: User;
+	public post?: Post;
 
 	public static relationships = {
 		author: true,
@@ -44,8 +44,8 @@ export class Comment extends Model {
 	 * @description Uses the policy class system
 	 * @example can(user, comment, "edit") // expected output: boolean
 	 */
-	public static can(user: User, comment: Comment, ...action: CommentAction[]) {
-		return new CommentPolicy(user, comment).can(...action);
+	public static can(user: User, comment: Comment, ...actions: CommentAction[]) {
+		return new CommentPolicy(user, comment).can(...actions);
 	}
 
 	public $afterGet() {

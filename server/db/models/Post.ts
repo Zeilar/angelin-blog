@@ -59,8 +59,8 @@ export class Post extends Model {
 	 * @description Uses the policy class system
 	 * @example can(user, post, "edit") // expected output: boolean
 	 */
-	public static can(user: User, post: Post, ...action: PostAction[]) {
-		return new PostPolicy(user, post).can(...action);
+	public static can(user: User, post: Post, ...actions: PostAction[]) {
+		return new PostPolicy(user, post).can(...actions);
 	}
 
 	/**
