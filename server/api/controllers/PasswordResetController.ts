@@ -16,19 +16,19 @@ export class PasswordResetController extends Controller {
 	}
 
 	@inversify.httpPost("/reset", AuthGuard.guest)
-	public async createAndSendToken(@inversify.requestBody() body: { userId: string }) {
-		if (!this.validateService.requestBody("userId", body)) {
+	public async createAndSendToken(@inversify.requestBody() body: { email: string }) {
+		if (!this.validateService.requestBody("email", body)) {
 			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
 		}
 
-		const user = await this.authService.userRepository.findById(body.userId);
+		const user = await this.authService.userRepository.findOne("email", body.email);
 
 		if (!user) {
 			return this.json({ error: this.ErrorMessages.NOT_FOUND }, 404);
 		}
 
-		// send mail
-		return this.json({ data: await this.userService.sendPasswordReset(user.id) });
+		// TODO: send mail instead, return void
+		return this.json({ data: await this.userService.passwordResetRepository.create(user.id) });
 	}
 
 	@inversify.httpPost("/reset/:token", AuthGuard.guest)
@@ -46,8 +46,8 @@ export class PasswordResetController extends Controller {
 			return this.json({ error: this.ErrorMessages.NOT_FOUND }, 404);
 		}
 
-		const WEEK_IN_MILLISECONDS = 1000 * 60 * 60 * 24 * 7;
-		if (new Date().getTime() - new Date(dbToken.created_at).getTime() >= WEEK_IN_MILLISECONDS) {
+		const DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
+		if (new Date().getTime() - new Date(dbToken.created_at).getTime() >= DAY_IN_MILLISECONDS) {
 			return this.json({ error: this.ErrorMessages.FORBIDDEN }, 403);
 		}
 

@@ -10,8 +10,4 @@ export class UserService extends Service {
 	) {
 		super();
 	}
-
-	public async sendPasswordReset(userId: number) {
-		return await this.passwordResetRepository.create(userId);
-	}
 }

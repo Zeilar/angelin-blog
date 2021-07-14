@@ -37,7 +37,7 @@ export class UserRepository extends Repository {
 		}
 	}
 
-	public async findOne(column: string, value: any) {
+	public async findOne(column: keyof User, value: string | number) {
 		try {
 			return await User.query().findOne(column, value);
 		} catch (error) {
@@ -80,7 +80,7 @@ export class UserRepository extends Repository {
 		}
 	}
 
-	public async countWhere(column: string, value: any) {
+	public async countWhere(column: keyof User, value: string | number) {
 		try {
 			return await this.DB.count(User.query().findOne(column, value));
 		} catch (error) {

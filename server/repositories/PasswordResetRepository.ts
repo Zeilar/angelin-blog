@@ -21,7 +21,7 @@ export class PasswordResetRepository extends Repository {
 		}
 	}
 
-	public async findOne(column: string, value: any) {
+	public async findOne(column: keyof PasswordReset, value: string | number) {
 		try {
 			return await PasswordReset.query()
 				.findOne(column, value)
