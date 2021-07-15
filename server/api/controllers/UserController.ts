@@ -40,7 +40,7 @@ export class UserController extends Controller {
 			passwordConfirm,
 		});
 
-		if (!user) throw new Error("Failed creating user upon registration.");
+		if (!user) throw new Error(`Failed creating user with email ${email} upon registration.`);
 
 		req.login(user, (error?: Error) => {
 			if (error) throw error;

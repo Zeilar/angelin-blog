@@ -35,6 +35,7 @@ function bootstrap() {
 	container.bind(services.CommentService).toSelf();
 	container.bind(services.AuthService).toSelf();
 	container.bind(services.ValidateService).toSelf();
+	container.bind(services.MailService).toSelf();
 
 	const server = new InversifyExpressServer(container);
 
