@@ -74,9 +74,9 @@ export const theme: ITheme = {
 		success: "0, 175, 0",
 	},
 	shadow: {
-		elevate: "0 0 2px 1px rgba(0, 0, 0, 0.25)",
+		elevate: "0 0 10px 0 rgba(0, 0, 0, 0.65)",
 		elevateUnder: "0 4px 8px rgba(0, 0, 0, 0.15)",
-		spread: "0 0 6px 0 rgba(0, 0, 0, 0.25)",
+		spread: "0 0 10px 0 rgba(0, 0, 0, 0.15)",
 	},
 	durations: {
 		// In milliseconds
@@ -131,12 +131,12 @@ class Color {
 	}
 
 	public darken() {
-		this.selected = this.lighting(lighting => lighting - 10);
+		this.selected = this.lighting(lighting => lighting - 15);
 		return this;
 	}
 
 	public lighten() {
-		this.selected = this.lighting(lighting => lighting + 10);
+		this.selected = this.lighting(lighting => lighting + 15);
 		return this;
 	}
 }

@@ -61,10 +61,13 @@ export const Input = styled.input`
 	outline: 0;
 	border: 0;
 	min-width: 15rem;
-	color: inherit;
-	padding: 0.25rem 0;
-	border-bottom: 2px solid hsl(${color.pick("brand").get()});
-	background: none;
+	padding: 0.75rem;
+	border-radius: ${theme.borderRadius}px;
+	background-color: rgb(${color.pick("secondary").get()});
+	box-shadow: ${theme.shadow.elevateUnder};
+	&:focus {
+		background-color: rgb(${color.pick("primary").get()});
+	}
 `;
 
 export const FormError = styled(P)`

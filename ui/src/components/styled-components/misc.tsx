@@ -5,5 +5,5 @@ import * as Styles from "./";
 export const PostWrapper = styled(Styles.Col)`
 	background-color: rgb(${theme.color.primary});
 	padding: 1rem;
-	box-shadow: ${theme.shadow.elevate};
+	box-shadow: ${theme.shadow.spread};
 `;

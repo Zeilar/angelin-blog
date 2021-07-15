@@ -1,11 +1,11 @@
-import { FocusEventHandler, RefObject } from "react";
+import { RefObject } from "react";
 import styled from "styled-components";
 import * as Styles from "../styled-components";
 import classnames from "classnames";
-import { color } from "../../styles/theme";
 import { useState } from "react";
+import { InputHTMLAttributes } from "react";
 
-interface Props {
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
 	label?: string;
 	errors?: string[];
 	value: string;
@@ -34,47 +34,23 @@ export function Input(props: Props) {
 					))}
 				</Errors>
 			)}
-			<InputField
-				className={classnames({
-					error: hasErrors,
-					label: Boolean(props.label),
-					active: stayFocused,
-				})}
+			{props.label && <label className="mb-2 cursor-text">{props.label}</label>}
+			<Styles.Input
+				className={classnames(
+					{
+						error: hasErrors,
+						label: Boolean(props.label),
+						active: stayFocused,
+					},
+					"w-full"
+				)}
 				onBlur={blurHandler}
 				ref={props.forwardRef}
 				{...props}
 			/>
-			{props.label && <Label className="mb-2">{props.label}</Label>}
 		</Styles.Col>
 	);
 }
-
-const InputField = styled(Styles.Input)`
-	width: 100%;
-	border-color: rgb(${color.pick("textMuted").get()});
-	&::placeholder {
-		color: transparent;
-	}
-	&:focus,
-	&.active {
-		border-color: hsl(${color.pick("brand").get()});
-		& ~ label {
-			transform: translateY(-2rem);
-			color: hsl(${color.pick("brand").get()});
-			font-size: 0.85rem;
-		}
-	}
-`;
-
-const Label = styled.label`
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	cursor: text;
-	transition: 0.25s;
-	pointer-events: none;
-	color: rgb(${color.pick("textMuted").get()});
-`;
 
 const Errors = styled(Styles.Grid)`
 	justify-items: flex-start;

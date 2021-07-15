@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -6,12 +7,26 @@ import { useAuth } from "../contexts";
 import * as Styles from "../styled-components";
 import { Login, Register } from "./modals";
 import { Modal } from "./modals/Modal";
+import classnames from "classnames";
 
 export function Navbar() {
 	const { loggedIn, loading, logout, user } = useAuth();
 
 	const [loginModalOpen, setLoginModalOpen] = useState(false);
 	const [registerModalOpen, setRegisterModalOpen] = useState(false);
+	const [isScrolled, setIsScrolled] = useState(false);
+
+	useEffect(() => {
+		function scrollHandler(e: Event) {
+			setIsScrolled(window.scrollY > 50);
+		}
+
+		document.addEventListener("scroll", scrollHandler);
+
+		return () => {
+			document.removeEventListener("scroll", scrollHandler);
+		};
+	}, []);
 
 	function openLogin() {
 		setRegisterModalOpen(false);
@@ -51,7 +66,7 @@ export function Navbar() {
 	}
 
 	return (
-		<Wrapper as="header" align="center">
+		<Wrapper className={classnames({ active: isScrolled })} as="header" align="center">
 			<Nav as="nav">
 				<Styles.Row as="ul">
 					<Item className="mr-8">
@@ -92,8 +107,11 @@ export function Navbar() {
 const Wrapper = styled(Styles.Row)`
 	position: sticky;
 	top: 0;
-	box-shadow: ${theme.shadow.elevate};
 	z-index: 100;
+	background-color: rgb(${color.pick("body").get()});
+	&.active {
+		box-shadow: ${theme.shadow.elevate};
+	}
 `;
 
 const Nav = styled(Styles.Container)`
@@ -112,20 +130,11 @@ const link = css`
 	border-radius: ${theme.borderRadius}px;
 	padding: 1rem 0;
 	transition: 0.05s;
-	&::after {
-		transition: width 0.15s;
-		content: "";
-		position: absolute;
-		left: 0;
-		bottom: -1px;
-		height: 2px;
-		background-color: hsl(${color.pick("brand").get()});
-		width: 0;
-	}
 	&:hover {
-		&::after {
-			width: 100%;
-		}
+		color: hsl(${color.pick("brand").get()});
+	}
+	&:active {
+		color: hsl(${color.pick("brand").darken().get()});
 	}
 `;
 

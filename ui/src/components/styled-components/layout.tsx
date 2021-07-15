@@ -45,13 +45,16 @@ export const Grid = styled.div`
 	${grid}
 `;
 
-export const Container = styled.div`
-	flex-direction: column;
+export const Container = styled(Col)`
 	${flexbox}
-	width: 1200px;
+	width: 1400px;
 	margin-left: auto;
 	margin-right: auto;
+	max-width: calc(100% - 1rem);
 	${tablet} {
 		width: calc(100% - 2rem);
+	}
+	${phone} {
+		width: calc(100% - 1rem);
 	}
 `;

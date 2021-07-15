@@ -83,21 +83,23 @@ export function Register({ open, setOpen, openLogin }: Props) {
 				{error && <Styles.FormError className="mb-2">{error}</Styles.FormError>}
 				<Styles.Col className="mb-12">
 					<Input
-						containerClass="mb-4"
+						containerClass="mb-2"
 						forwardRef={firstInput}
 						value={inputs.email}
 						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "email")}
 						type="text"
 						title="Email"
 						label="Email"
+						placeholder="john.smith@gmail.com"
 					/>
 					<Input
-						containerClass="mb-4"
+						containerClass="mb-2"
 						value={inputs.password}
 						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "password")}
 						type="password"
 						title="Password"
 						label="Password"
+						placeholder="••••••••••"
 					/>
 					<Input
 						value={inputs.passwordConfirm}
@@ -107,6 +109,7 @@ export function Register({ open, setOpen, openLogin }: Props) {
 						type="password"
 						title="Password Confirmation"
 						label="Password Confirmation"
+						placeholder="••••••••••"
 					/>
 				</Styles.Col>
 				<StatusButton className="w-full" type="submit" status={status}>
