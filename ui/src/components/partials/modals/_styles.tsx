@@ -61,38 +61,18 @@ export const CloseButton = styled.button.attrs({ type: "button" })`
 	}
 `;
 
-export const OAuthButton = styled(Styles.PrimaryButton).attrs({ type: "button" })`
-	width: 100%;
-`;
-
-export const OAuthIcon = styled(Icon)`
-	margin-left: 0.5rem;
-	width: 2rem;
-	height: 2rem;
-`;
-
-export const GitHubButton = styled(OAuthButton)`
-	background-color: hsl(0, 0%, 4%);
-	color: rgb(${color.pick("text").get()});
-	&:active {
-		background-color: hsl(0, 0%, 0%);
-	}
-`;
-
-export const LoginDividerLine = styled.div`
+const LoginDividerLine = styled.div`
 	height: 1px;
 	width: 100%;
 	background-color: rgb(${theme.color.text});
 `;
-
-export const LoginDividerText = styled.span`
+const LoginDividerText = styled.span`
 	color: rgb(${theme.color.text});
 	margin: 0 1rem;
 `;
-
 export function LoginDivider() {
 	return (
-		<Styles.Row className="my-4 justify-center items-center">
+		<Styles.Row className="my-6 justify-center items-center">
 			<LoginDividerLine />
 			<LoginDividerText>OR</LoginDividerText>
 			<LoginDividerLine />
@@ -100,9 +80,25 @@ export function LoginDivider() {
 	);
 }
 
-type GitHubLoginClick = React.MouseEventHandler<HTMLButtonElement> &
+const OAuthButton = styled(Styles.PrimaryButton).attrs({ type: "button" })`
+	width: 100%;
+`;
+const OAuthIcon = styled(Icon)`
+	margin-left: 0.5rem;
+	width: 2rem;
+	height: 2rem;
+`;
+export const GitHubButton = styled(OAuthButton)`
+	background-color: hsl(0, 0%, 6%);
+	color: rgb(${color.pick("text").get()});
+	&:active {
+		background-color: hsl(0, 0%, 2%);
+	}
+`;
+
+type OAuthClick = React.MouseEventHandler<HTMLButtonElement> &
 	React.MouseEventHandler<HTMLAnchorElement>;
-export function GitHubLogin({ onClick }: { onClick: GitHubLoginClick }) {
+export function GitHubLogin({ onClick }: { onClick: OAuthClick }) {
 	return (
 		<GitHubButton as="a" href="/api/oauth/github" onClick={onClick}>
 			<span>Login with GitHub</span>
@@ -119,8 +115,9 @@ export function Close({ onClick }: { onClick: React.MouseEventHandler<HTMLButton
 	);
 }
 
-export const Main = styled.form.attrs({ direction: "column" })`
-	${Styles.flexbox}
+export const Main = styled.form`
+	display: flex;
+	flex-direction: column;
 	padding: 2rem;
 `;
 

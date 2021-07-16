@@ -85,7 +85,11 @@ export function Login({ open, setOpen, openRegister }: Props) {
 			<ModalStyles.Main onSubmit={submit}>
 				<ContainerLoader loading={status === "loading"} />
 				<ModalStyles.Close onClick={() => setOpen(false)} />
-				<Styles.H3 className="mb-10">Login</Styles.H3>
+				<Styles.H3 className="mb-4">Login</Styles.H3>
+				<Styles.P className="mb-10">
+					{"Not a member? "}
+					<Styles.A onClick={openRegister}>Register</Styles.A>
+				</Styles.P>
 				{error && <Styles.FormError className="mb-2">{error}</Styles.FormError>}
 				<Styles.Col className="mb-12">
 					<Input
@@ -113,11 +117,6 @@ export function Login({ open, setOpen, openRegister }: Props) {
 				<ModalStyles.LoginDivider />
 				<ModalStyles.GitHubLogin onClick={oAuthSubmit} />
 			</ModalStyles.Main>
-			<ModalStyles.Footer>
-				<Styles.PrimaryButton className="w-full" onClick={openRegister}>
-					Not a member? Register
-				</Styles.PrimaryButton>
-			</ModalStyles.Footer>
 		</ModalStyles.Wrapper>
 	);
 }

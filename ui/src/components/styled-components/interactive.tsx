@@ -72,7 +72,7 @@ export const Input = styled.input`
 
 export const FormError = styled(P)`
 	background-color: rgba(${theme.color.error}, 0.25);
-	box-shadow: ${theme.shadow.elevate};
+	box-shadow: ${theme.shadow.elevateUnder};
 	color: rgb(${theme.color.text});
 	border-left: 2px solid rgb(${theme.color.error});
 	padding: 0.75rem;
