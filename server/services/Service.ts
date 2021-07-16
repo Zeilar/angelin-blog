@@ -3,5 +3,5 @@ import errorlog from "../utils/errorlog";
 
 @injectable()
 export class Service {
-	public readonly errorlog = errorlog;
+	protected readonly errorlog = errorlog;
 }

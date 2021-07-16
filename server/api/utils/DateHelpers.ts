@@ -14,41 +14,41 @@ export class DateHelpers {
 		return this;
 	}
 
-	public static get(date?: Date | string | number) {
+	public static getDate(date?: Date | string | number) {
 		if (date === undefined) return this.date;
 		if (date instanceof Date) return date;
 		return new Date(date);
 	}
 
-	public static unix(date?: Date | string | number) {
+	public static getUnix(date?: Date | string | number) {
 		if (date === undefined) return this.date.getTime();
 		if (date instanceof Date) return date.getTime();
 		return new Date(date).getTime();
 	}
 
-	public static iso(date?: Date | string | number) {
+	public static getISO(date?: Date | string | number) {
 		if (date === undefined) return this.date.toISOString();
 		if (date instanceof Date) return date.toISOString();
 		return new Date(date).toISOString();
 	}
 
 	public static subHours(hours: number = 1) {
-		this.date = new Date(this.unix() - this.HOUR_IN_MILLISECONDS * hours);
+		this.date = new Date(this.getUnix() - this.HOUR_IN_MILLISECONDS * hours);
 		return this;
 	}
 
 	public static subDays(days: number = 1) {
-		this.date = new Date(this.unix() - this.DAY_IN_MILLISECONDS * days);
+		this.date = new Date(this.getUnix() - this.DAY_IN_MILLISECONDS * days);
 		return this;
 	}
 
 	public static addHours(hours: number = 1) {
-		this.date = new Date(this.unix() + this.HOUR_IN_MILLISECONDS * hours);
+		this.date = new Date(this.getUnix() + this.HOUR_IN_MILLISECONDS * hours);
 		return this;
 	}
 
 	public static addDays(days: number = 1) {
-		this.date = new Date(this.unix() + this.DAY_IN_MILLISECONDS * days);
+		this.date = new Date(this.getUnix() + this.DAY_IN_MILLISECONDS * days);
 		return this;
 	}
 }

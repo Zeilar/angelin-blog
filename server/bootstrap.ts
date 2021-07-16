@@ -45,7 +45,7 @@ function bootstrap() {
 				secret: process.env.SESSION_SECRET,
 				resave: false,
 				saveUninitialized: true,
-				cookie: { expires: DateHelpers.subDays(7).get(), httpOnly: true },
+				cookie: { expires: DateHelpers.subDays(7).getDate(), httpOnly: true },
 			}),
 			passport.initialize(),
 			passport.session(),
