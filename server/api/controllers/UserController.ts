@@ -67,7 +67,7 @@ export class UserController extends Controller {
 			return this.json({ error: this.ErrorMessages.USER_NOT_EXISTS }, 422);
 		}
 
-		if (!user.password || user.oauth) {
+		if (!user.password || user.isOAuth()) {
 			return this.json({ error: "You must login via OAuth." }, 405);
 		}
 

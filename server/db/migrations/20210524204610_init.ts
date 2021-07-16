@@ -8,7 +8,6 @@ export function up(knex: Knex) {
 			table.string("email").unique().notNullable();
 			table.string("password").nullable();
 			table.string("avatar").nullable();
-			table.boolean("oauth").defaultTo(false).notNullable();
 			table.string("github_id").nullable();
 			table.timestamp("created_at").notNullable().defaultTo(knex.raw("CURRENT_TIMESTAMP"));
 			table
@@ -64,9 +63,9 @@ export function up(knex: Knex) {
 		})
 		.createTable("password_resets", table => {
 			table.increments();
-			table.uuid("token").unique();
+			table.uuid("token");
 			table.foreign("user_id").references("id").inTable("users");
-			table.integer("user_id").notNullable().unique();
+			table.integer("user_id").notNullable();
 			table.timestamp("created_at").notNullable().defaultTo(knex.raw("CURRENT_TIMESTAMP"));
 		});
 }
@@ -77,5 +76,6 @@ export function down(knex: Knex) {
 		.dropTableIfExists("posts")
 		.dropTableIfExists("comments")
 		.dropTableIfExists("tags")
-		.dropTableIfExists("posts_tags");
+		.dropTableIfExists("posts_tags")
+		.dropTableIfExists("password_resets");
 }

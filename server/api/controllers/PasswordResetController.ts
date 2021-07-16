@@ -4,6 +4,7 @@ import { AuthService, ValidateService, UserService, MailService } from "../../se
 import * as inversify from "inversify-express-utils";
 import { AuthGuard } from "../middlewares";
 import { z } from "zod";
+import { DateHelpers } from "../utils";
 
 @inversify.controller("/api/password")
 export class PasswordResetController extends Controller {
@@ -47,24 +48,21 @@ export class PasswordResetController extends Controller {
 		}
 
 		const dbToken = await this.userService.passwordResetRepository.findOne("token", token);
+		if (!dbToken) return this.json({ error: this.ErrorMessages.NOT_FOUND }, 404);
 
-		if (!dbToken) {
-			return this.json({ error: this.ErrorMessages.NOT_FOUND }, 404);
-		}
-
-		const DAY_IN_MILLISECONDS = 1000 * 60 * 60 * 24;
-		if (new Date().getTime() - new Date(dbToken.created_at).getTime() >= DAY_IN_MILLISECONDS) {
+		if (DateHelpers.subDays(1).get() >= DateHelpers.get(dbToken.created_at)) {
 			return this.json({ error: this.ErrorMessages.FORBIDDEN }, 403);
 		}
+
+		const deletedToken = await this.userService.passwordResetRepository.deleteById(dbToken.id);
+		if (!deletedToken) throw new Error(`Could not remove password reset token ${dbToken.id}`);
 
 		const user = await this.userService.userRepository.updateById(dbToken!.user!.id, {
 			password: body.password,
 		});
 
-		if (!user) throw new Error(`Could not reset password on ${dbToken?.user?.id}`);
+		if (!user) throw new Error(`Could not reset password on user ${dbToken?.user?.id}`);
 
-		await dbToken.$query().delete();
-
-		return this.json({ data: user });
+		return;
 	}
 }

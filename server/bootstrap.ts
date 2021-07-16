@@ -8,18 +8,16 @@ import { json, urlencoded } from "body-parser";
 import session from "express-session";
 import passport from "passport";
 import rateLimit from "express-rate-limit";
+import cron from "node-cron";
 
 import errorlog from "./utils/errorlog";
 import * as services from "./services";
 import { User } from "./db/models";
 import { development } from "../knexfile";
 import { PasswordResetRepository, UserRepository } from "./repositories";
-import { ErrorMessages } from "./api/utils";
+import { DateHelpers, ErrorMessages } from "./api/utils";
 
 import "./api/controllers";
-
-const WEEK_IN_MILLISECONDS = 1000 * 60 * 60 * 24 * 7,
-	oneWeekFromNow = new Date(new Date().getTime() + WEEK_IN_MILLISECONDS);
 
 function bootstrap() {
 	Model.knex(knex(development));
@@ -47,7 +45,7 @@ function bootstrap() {
 				secret: process.env.SESSION_SECRET,
 				resave: false,
 				saveUninitialized: true,
-				cookie: { expires: oneWeekFromNow, httpOnly: true },
+				cookie: { expires: DateHelpers.subDays(7).get(), httpOnly: true },
 			}),
 			passport.initialize(),
 			passport.session(),
@@ -78,6 +76,11 @@ function bootstrap() {
 
 	passport.deserializeUser<User>(async ({ id }, done) => {
 		done(null, await new UserRepository().findById(id));
+	});
+
+	// Runs Monday-Saturday 00:00
+	cron.schedule("0 0 * * 1-6", async () => {
+		await new PasswordResetRepository().deleteInactive();
 	});
 
 	return server.build();

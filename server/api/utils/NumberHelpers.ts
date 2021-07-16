@@ -1,10 +1,4 @@
 export class NumberHelpers {
-	public number: number;
-
-	constructor(number: number) {
-		this.number = number;
-	}
-
 	/**
 	 * @description Clamp a value or return it
 	 * @example clamp(-5) // expected output: 0

@@ -61,7 +61,8 @@ export class UserRepository extends Repository {
 
 	public async deleteById(id: number | string) {
 		try {
-			return (await User.query().deleteById(id)) > 0;
+			await User.query().deleteById(id);
+			return true;
 		} catch (error) {
 			this.errorlog(error);
 			return false;

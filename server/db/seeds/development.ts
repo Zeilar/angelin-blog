@@ -62,4 +62,6 @@ export async function seed(knex: Knex) {
 			post_id: 1,
 		},
 	]);
+
+	await knex("password_resets").truncate();
 }

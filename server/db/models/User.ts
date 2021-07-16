@@ -12,7 +12,6 @@ export class User extends Model {
 	public is_admin!: boolean;
 	public password?: string;
 	public avatar?: string | null;
-	public oauth?: boolean;
 	public github_id?: number | string;
 	public created_at!: string;
 	public updated_at!: string;
@@ -51,7 +50,11 @@ export class User extends Model {
 	}
 
 	private getAvatar() {
-		return this.avatar; // Do some logic here with local and OAuth paths
+		return this.avatar; // Do some logic here with local and OAuth paths, or just save the avatars on my own server?
+	}
+
+	public isOAuth() {
+		return this.github_id != null;
 	}
 
 	public $afterGet() {
@@ -59,7 +62,6 @@ export class User extends Model {
 		if (this.github_id) {
 			this.github_id = NumberHelpers.int(this.github_id);
 		}
-		this.oauth = Boolean(this.oauth);
 		this.is_admin = Boolean(this.is_admin);
 	}
 
