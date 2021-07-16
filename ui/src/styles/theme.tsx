@@ -63,14 +63,14 @@ export const theme: ITheme = {
 		body: "35, 35, 35",
 		primary: "55, 55, 55",
 		secondary: "45, 45, 45",
-		brand: "176, 96%, 69%",
+		brand: "150, 65%, 65%",
 		text: "225, 225, 225",
 		textSecondary: "15, 15, 15",
 		textMuted: "175, 175, 175",
 		border: "150, 150, 150",
 		borderSecondary: "75, 75, 75",
 		link: "0, 150, 255",
-		error: "175, 0, 0",
+		error: "225, 0, 0",
 		success: "0, 175, 0",
 	},
 	shadow: {
@@ -91,54 +91,67 @@ export const theme: ITheme = {
 	},
 };
 
-class Color {
-	public selected: string;
+interface Colors {
+	body: string;
+	primary: string;
+	secondary: string;
+	brand: string;
+	text: string;
+	textSecondary: string;
+	textMuted: string;
+	border: string;
+	borderSecondary: string;
+	link: string;
+	error: string;
+	success: string;
+}
+
+export class Color {
+	public static selected: string;
 
 	/**
 	 * Must be kept in HSL format to work properly with the methods
 	 */
-	public colors = {
+	public static colors: Colors = {
 		body: "35, 35, 35",
 		primary: "55, 55, 55",
 		secondary: "45, 45, 45",
-		brand: "150, 60%, 60%",
+		brand: "150, 65%, 65%",
 		text: "225, 225, 225",
 		textSecondary: "35, 35, 35",
 		textMuted: "175, 175, 175",
 		border: "150, 150, 150",
 		borderSecondary: "75, 75, 75",
 		link: "0, 150, 255",
-		error: "175, 0, 0",
+		error: "225, 0, 0",
 		success: "0, 175, 0",
 	};
 
-	public get() {
+	public static get() {
 		return this.selected;
 	}
 
-	public pick(key: keyof Color["colors"]) {
+	public static pick(key: keyof Colors) {
 		this.selected = this.colors[key];
 		return this;
 	}
 
-	private modify(cb: (h: number, s: number, l: number) => string) {
+	public static modify(cb: (h: number, s: number, l: number) => string) {
 		const [h, s, l] = this.selected.split(", ").map((value: string) => parseInt(value));
 		return cb(h, s, l);
 	}
 
-	public lighting(cb: (l: number) => number) {
+	public static lighting(cb: (l: number) => number) {
 		return this.modify((h, s, l) => `${h}, ${s}%, ${cb(l)}%`);
 	}
 
-	public darken() {
-		this.selected = this.lighting(lighting => lighting - 15);
+	public static darken() {
+		this.selected = this.lighting(lighting => lighting - 8);
 		return this;
 	}
 
-	public lighten() {
-		this.selected = this.lighting(lighting => lighting + 15);
+	public static lighten() {
+		this.selected = this.lighting(lighting => lighting + 8);
 		return this;
 	}
 }
-
-export const color = new Color();

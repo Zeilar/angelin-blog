@@ -2,12 +2,14 @@ import { RefObject } from "react";
 import styled from "styled-components";
 import * as Styles from "../styled-components";
 import classnames from "classnames";
-import { useState } from "react";
 import { InputHTMLAttributes } from "react";
+import { Color } from "../../styles/theme";
+import { mdiAlertCircleOutline } from "@mdi/js";
+import Icon from "@mdi/react";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
 	label?: string;
-	errors?: string[];
+	error?: string | null;
 	value: string;
 	containerClass?: string;
 	forwardRef?: RefObject<HTMLInputElement>;
@@ -15,45 +17,36 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export function Input(props: Props) {
-	const [stayFocused, setStayFocused] = useState(false);
-	const hasErrors = props.errors && props.errors.length > 0;
-
-	function blurHandler(e: any) {
-		setStayFocused(e.target.value.length > 0);
-	}
-
 	return (
 		<Styles.Col
 			className={classnames(props.containerClass, "mt-5 relative")}
 			align="flex-start"
 		>
-			{hasErrors && (
-				<Errors>
-					{props.errors?.map((error: string, i: number) => (
-						<Styles.FormError key={i}>{error}</Styles.FormError>
-					))}
-				</Errors>
+			{props.label && <Styles.Label className="mb-2">{props.label}</Styles.Label>}
+			{props.error && (
+				<Styles.Row>
+					<ErrorIcon className="mr-1" path={mdiAlertCircleOutline} size={1} />
+					<InputError className="mb-2">{props.error}</InputError>
+				</Styles.Row>
 			)}
-			{props.label && <label className="mb-2 cursor-text">{props.label}</label>}
 			<Styles.Input
-				className={classnames(
-					{
-						error: hasErrors,
-						label: Boolean(props.label),
-						active: stayFocused,
-					},
-					"w-full"
-				)}
-				onBlur={blurHandler}
-				ref={props.forwardRef}
 				{...props}
+				ref={props.forwardRef}
+				className={classnames(
+					{ label: Boolean(props.label), error: Boolean(props.error) },
+					"w-full",
+					props.className
+				)}
 			/>
 		</Styles.Col>
 	);
 }
 
-const Errors = styled(Styles.Grid)`
-	justify-items: flex-start;
-	margin-bottom: 1rem;
-	grid-gap: 0.25rem;
+const InputError = styled(Styles.Span)`
+	color: rgb(${Color.pick("error").get()});
+	font-weight: bold;
+`;
+
+const ErrorIcon = styled(Icon)`
+	color: rgb(${Color.pick("error").get()});
 `;

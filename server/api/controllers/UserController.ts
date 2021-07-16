@@ -29,7 +29,7 @@ export class UserController extends Controller {
 		const { email, password, passwordConfirm } = req.body;
 
 		if (await this.authService.userExists("email", email)) {
-			return this.json({ error: this.ErrorMessages.EMAIL_TAKEN }, 422);
+			return this.json({ error: { email: this.ErrorMessages.EMAIL_TAKEN } }, 422);
 		}
 
 		// TODO: Validation
@@ -64,7 +64,7 @@ export class UserController extends Controller {
 		const user = await this.authService.userRepository.findOne("email", email);
 
 		if (!user) {
-			return this.json({ error: this.ErrorMessages.USER_NOT_EXISTS }, 422);
+			return this.json({ error: { email: this.ErrorMessages.USER_NOT_EXISTS } }, 422);
 		}
 
 		if (!user.password || user.isOAuth()) {
@@ -72,7 +72,10 @@ export class UserController extends Controller {
 		}
 
 		if (!(await this.authService.check(password, user.password))) {
-			return this.json({ error: this.ErrorMessages.INCORRECT_CREDENTIALS }, 422);
+			return this.json(
+				{ error: { password: this.ErrorMessages.INCORRECT_CREDENTIALS } },
+				422
+			);
 		}
 
 		req.login(user, (error: Error) => {

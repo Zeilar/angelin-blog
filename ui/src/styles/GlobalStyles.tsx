@@ -1,26 +1,26 @@
 import "./fonts.css";
 import { createGlobalStyle } from "styled-components";
-import { color, theme } from "./theme";
+import { Color, theme } from "./theme";
 import { editor } from "./tiptap";
 
 export const GlobalStyles = createGlobalStyle`
     ${editor}
 
     ::selection {
-        color: hsl(${theme.color.brand});
-        background-color: rgba(0, 0, 0, 0.15);
+        color: hsl(${Color.pick("brand").get()});
+        background-color: rgba(0, 0, 0, 0.25);
     }
 
     html,
     #root {
         font-family: Open Sans;
-        color: rgb(${color.pick("text").get()});
+        color: rgb(${Color.pick("text").get()});
         background-color: rgb(${theme.color.body});
         min-height: 100vh;
     }
 
     a {
-        color: rgb(${theme.color.link});
+        color: rgb(${Color.pick("link").get()});
         text-decoration: none;
     }
 

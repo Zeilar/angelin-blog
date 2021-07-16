@@ -14,6 +14,13 @@ interface Props extends RenderProps {
 	openRegister(): void;
 }
 
+interface Inputs {
+	email: string;
+	password: string;
+}
+
+type InputError = string | null | Record<keyof Inputs, string>;
+
 export function Login({ open, setOpen, openRegister }: Props) {
 	const { login, loggedIn } = useAuth();
 	const { mountError } = useAuthModals();
@@ -22,14 +29,14 @@ export function Login({ open, setOpen, openRegister }: Props) {
 
 	const [status, setStatus] = useState<ModalStatus>(null);
 	const { inputs, onChange, empty } = useInputs({ email: "", password: "" });
-	const [error, setError] = useState<string | string[] | null>(null);
+	const [errors, setErrors] = useState<InputError>(null);
 
 	const firstInput = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		// mountError should only ever change once
 		// But this useEffect is required, as the first render mountError will be null
-		setError(mountError);
+		setErrors(mountError);
 	}, [mountError]);
 
 	useEffect(() => {
@@ -39,10 +46,10 @@ export function Login({ open, setOpen, openRegister }: Props) {
 	}, [open]);
 
 	useEffect(() => {
-		if (!open) {
+		setTimeout(() => {
 			empty();
-			setError(null);
-		}
+			setErrors(null);
+		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}, [loggedIn]);
 
 	function oAuthSubmit() {
@@ -54,7 +61,7 @@ export function Login({ open, setOpen, openRegister }: Props) {
 		if (loggedIn) return;
 
 		setStatus("loading");
-		setError(null);
+		setErrors(null);
 
 		const { error, ok } = await login({
 			email: inputs.email,
@@ -62,7 +69,7 @@ export function Login({ open, setOpen, openRegister }: Props) {
 		});
 
 		if (ok) {
-			setError(null);
+			setErrors(null);
 			setStatus("success");
 
 			setTimeout(() => {
@@ -70,7 +77,7 @@ export function Login({ open, setOpen, openRegister }: Props) {
 				setStatus("done");
 			}, theme.durations.modalsAfterResponse);
 		} else {
-			if (error) setError(error);
+			if (error) setErrors(error as InputError);
 			setStatus("error");
 		}
 
@@ -80,19 +87,29 @@ export function Login({ open, setOpen, openRegister }: Props) {
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 
+	function getInputError(input: keyof Inputs) {
+		if (!errors || typeof errors !== "object") {
+			return null;
+		}
+		return errors[input];
+	}
+
 	return (
 		<ModalStyles.Wrapper className={classnames({ open })} ref={wrapper}>
 			<ModalStyles.Main onSubmit={submit}>
 				<ContainerLoader loading={status === "loading"} />
 				<ModalStyles.Close onClick={() => setOpen(false)} />
-				<Styles.H3 className="mb-4">Login</Styles.H3>
+				<ModalStyles.Header className="mb-4">Login</ModalStyles.Header>
 				<Styles.P className="mb-10">
 					{"Not a member? "}
 					<Styles.A onClick={openRegister}>Register</Styles.A>
 				</Styles.P>
-				{error && <Styles.FormError className="mb-2">{error}</Styles.FormError>}
+				{typeof errors === "string" && (
+					<Styles.FormError className="mb-2">{errors}</Styles.FormError>
+				)}
 				<Styles.Col className="mb-12">
 					<Input
+						error={getInputError("email")}
 						containerClass="mb-2"
 						forwardRef={firstInput}
 						value={inputs.email}
@@ -103,6 +120,7 @@ export function Login({ open, setOpen, openRegister }: Props) {
 						placeholder="john.smith@gmail.com"
 					/>
 					<Input
+						error={getInputError("password")}
 						value={inputs.password}
 						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "password")}
 						type="password"

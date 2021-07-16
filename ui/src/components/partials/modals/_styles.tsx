@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { color, theme } from "../../../styles/theme";
+import { Color, theme } from "../../../styles/theme";
 import * as Styles from "../../styled-components";
 import Icon from "@mdi/react";
 import { mdiClose, mdiGithub } from "@mdi/js";
@@ -40,6 +40,10 @@ export const Wrapper = styled(Styles.Col)`
 	}
 `;
 
+export const Header = styled(Styles.H3)`
+	color: hsl(${Color.pick("brand").get()});
+`;
+
 export const CloseButton = styled.button.attrs({ type: "button" })`
 	display: flex;
 	background: none;
@@ -67,7 +71,8 @@ const LoginDividerLine = styled.div`
 	background-color: rgb(${theme.color.text});
 `;
 const LoginDividerText = styled.span`
-	color: rgb(${theme.color.text});
+	color: rgb(${Color.pick("textMuted").get()});
+	user-select: none;
 	margin: 0 1rem;
 `;
 export function LoginDivider() {
@@ -90,8 +95,8 @@ const OAuthIcon = styled(Icon)`
 `;
 export const GitHubButton = styled(OAuthButton)`
 	background-color: hsl(0, 0%, 6%);
-	color: rgb(${color.pick("text").get()});
-	&:active {
+	color: rgb(${Color.pick("text").get()});
+	&:hover {
 		background-color: hsl(0, 0%, 2%);
 	}
 `;
@@ -122,7 +127,7 @@ export const Main = styled.form`
 `;
 
 export const Footer = styled.div`
-	background-color: rgb(${color.pick("secondary").get()});
+	background-color: rgb(${Color.pick("secondary").get()});
 	padding: 2rem;
 	box-shadow: ${theme.shadow.spread};
 `;

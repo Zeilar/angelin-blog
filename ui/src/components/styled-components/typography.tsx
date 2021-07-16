@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { theme } from "../../styles/theme";
+import { Color, theme } from "../../styles/theme";
 
 export const header = css`
 	font-weight: 700;
@@ -36,11 +36,13 @@ export const H4 = styled.h4`
 
 export const H5 = styled.h5`
 	${header}
+	font-weight: 600;
 	font-size: 1.5rem;
 `;
 
 export const H6 = styled.h6`
 	${header}
+	font-weight: 600;
 	font-size: 1.25rem;
 `;
 
@@ -48,12 +50,23 @@ export const P = styled.p`
 	${text}
 `;
 
+export const Span = styled.span`
+	${text}
+`;
+
 export const A = styled.a`
 	${text}
 	cursor: pointer;
 	display: inline-flex;
-	color: rgb(${theme.color.link});
+	color: hsl(${Color.pick("brand").get()});
+	font-weight: 600;
 	&:hover {
 		text-decoration: underline;
 	}
+`;
+
+export const Label = styled.label`
+	${text}
+	font-weight: 600;
+	cursor: text;
 `;

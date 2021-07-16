@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { color, theme } from "../../styles/theme";
+import { Color, theme } from "../../styles/theme";
 import { P, flexbox } from "./";
 
 export const button = css`
@@ -14,7 +14,7 @@ export const button = css`
 	background-color: rgb(${theme.color.primary});
 	box-shadow: ${theme.shadow.elevate};
 	border-radius: ${theme.borderRadius}px;
-	font-weight: bold;
+	font-weight: 600;
 	color: rgb(${theme.color.text});
 	&:focus {
 		outline: 0;
@@ -35,10 +35,10 @@ export const PrimaryButton = styled.button`
 	font-size: 1.2rem;
 	box-shadow: ${theme.shadow.elevateUnder};
 	transition: transform 0.25s;
-	background-color: hsl(${color.pick("brand").get()});
-	color: rgb(${color.pick("textSecondary").get()});
-	&:active {
-		background-color: hsl(${color.pick("brand").darken().get()});
+	background-color: hsl(${Color.pick("brand").get()});
+	color: rgb(${Color.pick("textSecondary").get()});
+	&:hover {
+		background-color: hsl(${Color.pick("brand").darken().get()});
 	}
 `;
 
@@ -50,10 +50,7 @@ export const SecondaryButton = styled.button`
 	border: 1px solid transparent;
 	padding: 0.5rem 1rem;
 	&:hover {
-		background-color: hsl(${theme.color.brand});
-	}
-	&:active {
-		background-color: hsl(${theme.darkenHsl(theme.color.brand)});
+		background-color: hsl(${Color.pick("brand").get()});
 	}
 `;
 
@@ -63,14 +60,18 @@ export const Input = styled.input`
 	min-width: 15rem;
 	padding: 0.75rem;
 	border-radius: ${theme.borderRadius}px;
-	background-color: rgb(${color.pick("secondary").get()});
+	background-color: rgb(${Color.pick("secondary").get()});
 	box-shadow: ${theme.shadow.elevateUnder};
+	&.error {
+		border: 1px solid rgb(${Color.pick("error").get()});
+	}
 	&:focus {
-		background-color: rgb(${color.pick("primary").get()});
+		background-color: rgb(${Color.pick("primary").get()});
 	}
 `;
 
 export const FormError = styled(P)`
+	width: 100%;
 	background-color: rgba(${theme.color.error}, 0.25);
 	box-shadow: ${theme.shadow.elevateUnder};
 	color: rgb(${theme.color.text});

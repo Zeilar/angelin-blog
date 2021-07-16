@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { color, theme } from "../../styles/theme";
+import { Color, theme } from "../../styles/theme";
 import { useAuth } from "../contexts";
 import * as Styles from "../styled-components";
 import { Login, Register } from "./modals";
@@ -108,7 +108,7 @@ const Wrapper = styled(Styles.Row)`
 	position: sticky;
 	top: 0;
 	z-index: 100;
-	background-color: rgb(${color.pick("body").get()});
+	background-color: rgb(${Color.pick("body").get()});
 	&.active {
 		box-shadow: ${theme.shadow.elevate};
 	}
@@ -131,10 +131,10 @@ const link = css`
 	padding: 1rem 0;
 	transition: 0.05s;
 	&:hover {
-		color: hsl(${color.pick("brand").get()});
+		color: hsl(${Color.pick("brand").get()});
 	}
 	&:active {
-		color: hsl(${color.pick("brand").darken().get()});
+		color: hsl(${Color.pick("brand").darken().get()});
 	}
 `;
 

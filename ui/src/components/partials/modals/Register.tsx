@@ -14,6 +14,14 @@ interface Props extends RenderProps {
 	openLogin(): void;
 }
 
+interface Inputs {
+	email: string;
+	password: string;
+	passwordConfirm: string;
+}
+
+type InputError = string | null | Record<keyof Inputs, string>;
+
 export function Register({ open, setOpen, openLogin }: Props) {
 	const { register, loggedIn } = useAuth();
 
@@ -21,7 +29,7 @@ export function Register({ open, setOpen, openLogin }: Props) {
 
 	const [status, setStatus] = useState<ModalStatus>(null);
 	const { inputs, onChange, empty } = useInputs({ email: "", password: "", passwordConfirm: "" });
-	const [error, setError] = useState<string | string[] | null>(null);
+	const [errors, setErrors] = useState<InputError>(null);
 
 	const firstInput = useRef<HTMLInputElement>(null);
 
@@ -32,10 +40,10 @@ export function Register({ open, setOpen, openLogin }: Props) {
 	}, [open]);
 
 	useEffect(() => {
-		if (!open) {
+		setTimeout(() => {
 			empty();
-			setError(null);
-		}
+			setErrors(null);
+		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}, [loggedIn]);
 
 	function oAuthSubmit() {
@@ -47,7 +55,7 @@ export function Register({ open, setOpen, openLogin }: Props) {
 		if (loggedIn) return;
 
 		setStatus("loading");
-		setError(null);
+		setErrors(null);
 
 		const { ok, error } = await register({
 			email: inputs.email,
@@ -56,7 +64,7 @@ export function Register({ open, setOpen, openLogin }: Props) {
 		});
 
 		if (ok) {
-			setError(null);
+			setErrors(null);
 			setStatus("success");
 
 			setTimeout(() => {
@@ -64,7 +72,7 @@ export function Register({ open, setOpen, openLogin }: Props) {
 				setStatus("done");
 			}, theme.durations.modalsAfterResponse);
 		} else {
-			if (error) setError(error);
+			if (error) setErrors(error as InputError);
 			setStatus("error");
 		}
 
@@ -74,19 +82,29 @@ export function Register({ open, setOpen, openLogin }: Props) {
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 
+	function getInputError(input: keyof Inputs) {
+		if (!errors || typeof errors !== "object") {
+			return null;
+		}
+		return errors[input];
+	}
+
 	return (
 		<ModalStyles.Wrapper className={classnames({ open })} ref={wrapper}>
 			<ModalStyles.Main onSubmit={submit}>
 				<ContainerLoader loading={status === "loading"} />
 				<ModalStyles.Close onClick={() => setOpen(false)} />
-				<Styles.H3 className="mb-4">Register</Styles.H3>
+				<ModalStyles.Header className="mb-4">Register</ModalStyles.Header>
 				<Styles.P className="mb-10">
 					{"Already a member? "}
 					<Styles.A onClick={openLogin}>Login</Styles.A>
 				</Styles.P>
-				{error && <Styles.FormError className="mb-2">{error}</Styles.FormError>}
+				{typeof errors === "string" && (
+					<Styles.FormError className="mb-2">{errors}</Styles.FormError>
+				)}
 				<Styles.Col className="mb-12">
 					<Input
+						error={getInputError("email")}
 						containerClass="mb-2"
 						forwardRef={firstInput}
 						value={inputs.email}
@@ -97,6 +115,7 @@ export function Register({ open, setOpen, openLogin }: Props) {
 						placeholder="john.smith@gmail.com"
 					/>
 					<Input
+						error={getInputError("password")}
 						containerClass="mb-2"
 						value={inputs.password}
 						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "password")}
@@ -106,6 +125,7 @@ export function Register({ open, setOpen, openLogin }: Props) {
 						placeholder="••••••••••"
 					/>
 					<Input
+						error={getInputError("passwordConfirm")}
 						value={inputs.passwordConfirm}
 						onChange={(e: ChangeEvent<HTMLInputElement>) =>
 							onChange(e, "passwordConfirm")

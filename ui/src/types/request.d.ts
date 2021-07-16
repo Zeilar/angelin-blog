@@ -16,7 +16,7 @@ export interface Body<T> {
 
 export interface Response<T> {
 	data?: T;
-	error?: string | string[];
+	error?: string | { [key: string]: string };
 	code: number;
 	ok: boolean;
 }
