@@ -1,53 +1,3 @@
-interface ITheme {
-	shadow: {
-		elevate: string;
-		elevateUnder: string;
-		spread: string;
-	};
-	durations: {
-		modalsAfterResponse: number;
-		modalsFade: number;
-	};
-	borderRadius: number;
-	breakpoints: {
-		phone: number;
-		tablet: number;
-	};
-}
-
-export const theme: ITheme = {
-	shadow: {
-		elevate: "0 0 10px 0 rgba(0, 0, 0, 0.65)",
-		elevateUnder: "0 4px 8px rgba(0, 0, 0, 0.15)",
-		spread: "0 0 10px 0 rgba(0, 0, 0, 0.15)",
-	},
-	durations: {
-		// In milliseconds
-		modalsAfterResponse: 500,
-		modalsFade: 250,
-	},
-	borderRadius: 4,
-	breakpoints: {
-		// In pixels
-		phone: 768,
-		tablet: 1200,
-	},
-};
-
-interface Colors {
-	body: string;
-	primary: string;
-	secondary: string;
-	brand: string;
-	text: string;
-	textSecondary: string;
-	textMuted: string;
-	border: string;
-	link: string;
-	error: string;
-	success: string;
-}
-
 export class Color {
 	public static selected: string;
 
@@ -95,4 +45,54 @@ export class Color {
 		this.selected = this.lighting(lighting => lighting + 8);
 		return this;
 	}
+}
+
+interface ITheme {
+	shadow: {
+		elevate: string;
+		elevateUnder: string;
+		spread: string;
+	};
+	durations: {
+		modalsAfterResponse: number;
+		modalsFade: number;
+	};
+	borderRadius: number;
+	breakpoints: {
+		phone: number;
+		tablet: number;
+	};
+}
+
+export const theme: ITheme = {
+	shadow: {
+		elevate: "0 0 5px 0 rgba(0, 0, 0, 0.75)",
+		elevateUnder: "0 4px 8px rgba(0, 0, 0, 0.15)",
+		spread: "0 0 10px 0 rgba(0, 0, 0, 0.15)",
+	},
+	durations: {
+		// In milliseconds
+		modalsAfterResponse: 500,
+		modalsFade: 250,
+	},
+	borderRadius: 4,
+	breakpoints: {
+		// In pixels
+		phone: 768,
+		tablet: 1200,
+	},
+};
+
+interface Colors {
+	body: string;
+	primary: string;
+	secondary: string;
+	brand: string;
+	text: string;
+	textSecondary: string;
+	textMuted: string;
+	border: string;
+	link: string;
+	error: string;
+	success: string;
 }

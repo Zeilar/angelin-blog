@@ -3,7 +3,7 @@ import * as ModalStyles from "./_styles";
 import { StatusButton, Input } from "../../misc";
 import { theme } from "../../../styles/theme";
 import * as Styles from "../../styled-components";
-import { useInputs, useClickOutside } from "../../hooks";
+import { useInputs, useClickOutside, useLocalStorage } from "../../hooks";
 import { useAuthModals, useAuth } from "../../contexts";
 import classnames from "classnames";
 import { ModalStatus } from "../../../types/modals";
@@ -28,10 +28,15 @@ export function Login({ open, setOpen, openRegister }: Props) {
 	const wrapper = useClickOutside<HTMLDivElement>(() => open && setOpen(false));
 
 	const [status, setStatus] = useState<ModalStatus>(null);
-	const { inputs, onChange, empty } = useInputs({ email: "", password: "" });
+	const [cached, setCached] = useLocalStorage<Inputs>("login");
+	const { inputs, onChange, empty, update } = useInputs<Inputs>({
+		email: cached.email,
+		password: "",
+	});
 	const [errors, setErrors] = useState<InputError>(null);
 
 	const firstInput = useRef<HTMLInputElement>(null);
+	const secondInput = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		// mountError should only ever change once
@@ -40,16 +45,23 @@ export function Login({ open, setOpen, openRegister }: Props) {
 	}, [mountError]);
 
 	useEffect(() => {
-		if (open && firstInput.current) {
-			firstInput.current.focus();
+		if (!open) return;
+		if (cached.email) {
+			secondInput.current?.focus();
+		} else {
+			firstInput.current?.focus();
 		}
-	}, [open]);
+	}, [open, cached.email]);
 
 	useEffect(() => {
-		setTimeout(() => {
-			empty();
-			setErrors(null);
-		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
+		if (loggedIn) {
+			setTimeout(() => {
+				empty();
+				setErrors(null);
+			}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
+		} else {
+			update("email", cached.email);
+		}
 	}, [loggedIn]);
 
 	function oAuthSubmit() {
@@ -67,6 +79,8 @@ export function Login({ open, setOpen, openRegister }: Props) {
 			email: inputs.email,
 			password: inputs.password,
 		});
+
+		setCached({ email: inputs.email, password: "" });
 
 		if (ok) {
 			setErrors(null);
@@ -121,6 +135,7 @@ export function Login({ open, setOpen, openRegister }: Props) {
 					/>
 					<Input
 						error={getInputError("password")}
+						forwardRef={secondInput}
 						value={inputs.password}
 						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "password")}
 						type="password"

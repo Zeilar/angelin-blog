@@ -5,6 +5,7 @@ import { useHistory } from "react-router";
 import { Post } from "../../../models/Post";
 import { SERVER_URL } from "../../../utils";
 import { FetchContext } from "../../hooks";
+import { PrimaryButton } from "../../styled-components";
 import { Toolbar } from "./";
 
 export default function Editor({ ...props }) {
@@ -18,7 +19,7 @@ export default function Editor({ ...props }) {
 	async function submit() {
 		if (!editor) return;
 
-		const { data, ok } = await Post.create({
+		const { data, ok, error } = await Post.create({
 			title: "My post",
 			body: editor.getHTML(),
 		});
@@ -33,7 +34,9 @@ export default function Editor({ ...props }) {
 		<div {...props}>
 			<Toolbar editor={editor} />
 			<EditorContent className="editing" editor={editor} />
-			<button onClick={submit}>Submit</button>
+			<PrimaryButton className="mt-4" onClick={submit}>
+				Submit
+			</PrimaryButton>
 		</div>
 	);
 }

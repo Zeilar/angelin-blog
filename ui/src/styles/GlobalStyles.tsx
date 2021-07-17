@@ -1,6 +1,6 @@
 import "./fonts.css";
 import { createGlobalStyle } from "styled-components";
-import { Color, theme } from "./theme";
+import { Color } from "./theme";
 import { editor } from "./tiptap";
 
 export const GlobalStyles = createGlobalStyle`
@@ -11,7 +11,7 @@ export const GlobalStyles = createGlobalStyle`
         background-color: rgba(0, 0, 0, 0.25);
     }
 
-    html,
+    body,
     #root {
         font-family: Open Sans;
         color: hsl(${Color.pick("text").get()});

@@ -6,7 +6,6 @@ import * as Styles from "../../styled-components";
 export const Wrapper = styled(Styles.Row)`
 	background-color: hsl(${Color.pick("secondary").get()});
 	flex-wrap: wrap;
-	margin: -1px;
 	padding: 0.25rem;
 	margin-bottom: 0.5rem;
 	box-shadow: ${theme.shadow.elevateUnder};
@@ -21,10 +20,12 @@ export const ToolbarButton = styled.button`
 	align-items: center;
 	margin: 1px;
 	border-radius: ${theme.borderRadius}px;
+	font-weight: 600;
 	&:hover {
 		background-color: hsl(${Color.pick("primary").get()});
 	}
 	&.active {
+		color: hsl(${Color.pick("textSecondary").get()});
 		background-color: hsl(${Color.pick("brand").get()});
 	}
 	&:focus {

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -7,26 +6,12 @@ import { useAuth } from "../contexts";
 import * as Styles from "../styled-components";
 import { Login, Register } from "./modals";
 import { Modal } from "./modals/Modal";
-import classnames from "classnames";
 
 export function Navbar() {
 	const { loggedIn, loading, logout, user } = useAuth();
 
 	const [loginModalOpen, setLoginModalOpen] = useState(false);
 	const [registerModalOpen, setRegisterModalOpen] = useState(false);
-	const [isScrolled, setIsScrolled] = useState(false);
-
-	useEffect(() => {
-		function scrollHandler(e: Event) {
-			setIsScrolled(window.scrollY > 50);
-		}
-
-		document.addEventListener("scroll", scrollHandler);
-
-		return () => {
-			document.removeEventListener("scroll", scrollHandler);
-		};
-	}, []);
 
 	function openLogin() {
 		setRegisterModalOpen(false);
@@ -66,7 +51,7 @@ export function Navbar() {
 	}
 
 	return (
-		<Wrapper className={classnames({ active: isScrolled })} as="header" align="center">
+		<Wrapper as="header" align="center">
 			<Nav as="nav">
 				<Styles.Row as="ul">
 					<Item className="mr-8">
@@ -108,10 +93,8 @@ const Wrapper = styled(Styles.Row)`
 	position: sticky;
 	top: 0;
 	z-index: 100;
-	background-color: hsl(${Color.pick("body").get()});
-	&.active {
-		box-shadow: ${theme.shadow.elevate};
-	}
+	background-color: hsl(${Color.pick("secondary").get()});
+	box-shadow: ${theme.shadow.elevate};
 `;
 
 const Nav = styled(Styles.Container)`

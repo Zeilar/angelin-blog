@@ -61,7 +61,7 @@ export const A = styled.a`
 	color: hsl(${Color.pick("brand").get()});
 	font-weight: 600;
 	&:hover {
-		text-decoration: underline;
+		color: hsl(${Color.pick("brand").darken().get()});
 	}
 `;
 

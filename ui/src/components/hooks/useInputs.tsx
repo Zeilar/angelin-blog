@@ -1,10 +1,14 @@
 import { useState, ChangeEvent } from "react";
 
-export function useInputs(inputsArg: { [key: string]: string }) {
-	const [inputs, setInputs] = useState(inputsArg);
+export function useInputs<T>(defaultInputs: Record<keyof T, string>) {
+	const [inputs, setInputs] = useState<Record<keyof T, string>>(defaultInputs);
 
-	function onChange(e: ChangeEvent<HTMLInputElement>, input: string) {
-		setInputs(inputs => ({ ...inputs, [input]: e.target.value }));
+	function update(input: keyof T, value: string) {
+		setInputs(inputs => ({ ...inputs, [input]: value }));
+	}
+
+	function onChange(e: ChangeEvent<HTMLInputElement>, input: keyof T) {
+		update(input, e.target.value);
 	}
 
 	function empty() {
@@ -15,5 +19,5 @@ export function useInputs(inputsArg: { [key: string]: string }) {
 		setInputs(emptyInputs);
 	}
 
-	return { inputs, onChange, empty };
+	return { inputs, onChange, empty, update };
 }
