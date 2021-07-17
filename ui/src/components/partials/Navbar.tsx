@@ -108,7 +108,7 @@ const Wrapper = styled(Styles.Row)`
 	position: sticky;
 	top: 0;
 	z-index: 100;
-	background-color: rgb(${Color.pick("body").get()});
+	background-color: hsl(${Color.pick("body").get()});
 	&.active {
 		box-shadow: ${theme.shadow.elevate};
 	}

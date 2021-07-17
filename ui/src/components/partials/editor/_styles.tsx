@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { theme } from "../../../styles/theme";
+import { Color, theme } from "../../../styles/theme";
 import Icon from "@mdi/react";
 import * as Styles from "../../styled-components";
 
 export const Wrapper = styled(Styles.Row)`
-	background-color: rgb(${theme.color.secondary});
+	background-color: hsl(${Color.pick("secondary").get()});
 	flex-wrap: wrap;
 	margin: -1px;
 	padding: 0.25rem;
@@ -22,10 +22,10 @@ export const ToolbarButton = styled.button`
 	margin: 1px;
 	border-radius: ${theme.borderRadius}px;
 	&:hover {
-		background-color: rgb(${theme.color.primary});
+		background-color: hsl(${Color.pick("primary").get()});
 	}
 	&.active {
-		background-color: hsl(${theme.color.brand});
+		background-color: hsl(${Color.pick("brand").get()});
 	}
 	&:focus {
 		outline: 0;

@@ -43,10 +43,10 @@ export function Input(props: Props) {
 }
 
 const InputError = styled(Styles.Span)`
-	color: rgb(${Color.pick("error").get()});
+	color: hsl(${Color.pick("error").get()});
 	font-weight: bold;
 `;
 
 const ErrorIcon = styled(Icon)`
-	color: rgb(${Color.pick("error").get()});
+	color: hsl(${Color.pick("error").get()});
 `;

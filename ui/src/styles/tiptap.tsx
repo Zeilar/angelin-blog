@@ -1,11 +1,11 @@
 import { css } from "styled-components";
-import { theme } from "./theme";
+import { Color, theme } from "./theme";
 
 export const editor = css`
 	.editing {
 		.ProseMirror,
 		.tiptap {
-			background-color: rgb(${theme.color.secondary});
+			background-color: hsl(${Color.pick("secondary").get()});
 			outline: 0;
 			padding: 1rem;
 			box-shadow: ${theme.shadow.elevateUnder};
@@ -42,7 +42,7 @@ export const editor = css`
 
 		pre {
 			background-color: rgba(0, 0, 0, 0.35);
-			color: rgb(${theme.color.text});
+			color: hsl(${Color.pick("text").get()});
 			padding: 0.75rem 1rem;
 			border-radius: ${theme.borderRadius}px;
 
@@ -60,7 +60,7 @@ export const editor = css`
 		blockquote {
 			padding: 0.25rem 0 0.25rem 1rem;
 			background-color: rgba(0, 0, 0, 0.1);
-			border-left: 2px solid hsl(${theme.color.brand});
+			border-left: 2px solid hsl(${Color.pick("brand").get()});
 		}
 
 		hr {

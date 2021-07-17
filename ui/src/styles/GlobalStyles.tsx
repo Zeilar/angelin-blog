@@ -14,13 +14,13 @@ export const GlobalStyles = createGlobalStyle`
     html,
     #root {
         font-family: Open Sans;
-        color: rgb(${Color.pick("text").get()});
-        background-color: rgb(${theme.color.body});
+        color: hsl(${Color.pick("text").get()});
+        background-color: hsl(${Color.pick("body").get()});
         min-height: 100vh;
     }
 
     a {
-        color: rgb(${Color.pick("link").get()});
+        color: hsl(${Color.pick("link").get()});
         text-decoration: none;
     }
 
@@ -35,7 +35,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     ::placeholder {
-        color: rgb(${theme.color.textMuted});
+        color: hsl(${Color.pick("textMuted").get()});
     }
 
     img,

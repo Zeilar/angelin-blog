@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { PrimaryButton } from "../styled-components";
 import { mdiClose, mdiCheck } from "@mdi/js";
 import Icon from "@mdi/react";
-import { theme } from "../../styles/theme";
+import { Color, theme } from "../../styles/theme";
 import classnames from "classnames";
 import { ModalStatus } from "../../types/modals";
 
@@ -53,13 +53,13 @@ const StyledButton = styled(PrimaryButton)`
 	}
 
 	&.success {
-		background-color: rgb(${theme.color.success});
-		border-color: rgb(${theme.color.success});
+		background-color: hsl(${Color.pick("success").get()});
+		border-color: hsl(${Color.pick("success").get()});
 	}
 
 	&.error {
-		background-color: rgb(${theme.color.error});
-		border-color: rgb(${theme.color.error});
+		background-color: hsl(${Color.pick("error").get()});
+		border-color: hsl(${Color.pick("error").get()});
 	}
 
 	&.active {
@@ -69,9 +69,9 @@ const StyledButton = styled(PrimaryButton)`
 `;
 
 const Error = styled(Icon)`
-	color: rgb(${theme.color.text});
+	color: hsl(${Color.pick("text").get()});
 `;
 
 const Success = styled(Icon)`
-	color: rgb(${theme.color.text});
+	color: hsl(${Color.pick("text").get()});
 `;

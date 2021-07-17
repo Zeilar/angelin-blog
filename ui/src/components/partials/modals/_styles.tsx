@@ -31,7 +31,7 @@ export const Wrapper = styled(Styles.Col)`
 	opacity: 0;
 	transition: 0.25s;
 	border-radius: ${theme.borderRadius}px;
-	background-color: rgb(${theme.color.body});
+	background-color: hsl(${Color.pick("secondary").get()});
 	box-shadow: ${theme.shadow.spread};
 	&.open {
 		pointer-events: all;
@@ -58,7 +58,7 @@ export const CloseButton = styled.button.attrs({ type: "button" })`
 	transition: 0.05s;
 	border-radius: ${theme.borderRadius}px;
 	&:hover {
-		color: hsl(${theme.color.brand});
+		color: hsl(${Color.pick("brand").get()});
 	}
 	&:focus {
 		outline: 0;
@@ -68,10 +68,10 @@ export const CloseButton = styled.button.attrs({ type: "button" })`
 const LoginDividerLine = styled.div`
 	height: 1px;
 	width: 100%;
-	background-color: rgb(${theme.color.text});
+	background-color: hsl(${Color.pick("text").get()});
 `;
 const LoginDividerText = styled.span`
-	color: rgb(${Color.pick("textMuted").get()});
+	color: hsl(${Color.pick("textMuted").get()});
 	user-select: none;
 	margin: 0 1rem;
 `;
@@ -95,7 +95,7 @@ const OAuthIcon = styled(Icon)`
 `;
 export const GitHubButton = styled(OAuthButton)`
 	background-color: hsl(0, 0%, 6%);
-	color: rgb(${Color.pick("text").get()});
+	color: hsl(${Color.pick("text").get()});
 	&:hover {
 		background-color: hsl(0, 0%, 2%);
 	}
@@ -127,7 +127,7 @@ export const Main = styled.form`
 `;
 
 export const Footer = styled.div`
-	background-color: rgb(${Color.pick("secondary").get()});
+	background-color: hsl(${Color.pick("secondary").get()});
 	padding: 2rem;
 	box-shadow: ${theme.shadow.spread};
 `;

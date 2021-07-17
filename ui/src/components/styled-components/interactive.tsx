@@ -11,11 +11,11 @@ export const button = css`
 	font-family: Open Sans;
 	justify-content: center;
 	align-items: center;
-	background-color: rgb(${theme.color.primary});
+	background-color: hsl(${Color.pick("primary").get()});
 	box-shadow: ${theme.shadow.elevate};
 	border-radius: ${theme.borderRadius}px;
 	font-weight: 600;
-	color: rgb(${theme.color.text});
+	color: hsl(${Color.pick("text").get()});
 	&:focus {
 		outline: 0;
 	}
@@ -25,7 +25,7 @@ export const button = css`
 		cursor: default;
 		pointer-events: none;
 		border-color: transparent;
-		color: rgb(${theme.color.textMuted});
+		color: hsl(${Color.pick("textMuted").get()});
 	}
 `;
 
@@ -36,7 +36,7 @@ export const PrimaryButton = styled.button`
 	box-shadow: ${theme.shadow.elevateUnder};
 	transition: transform 0.25s;
 	background-color: hsl(${Color.pick("brand").get()});
-	color: rgb(${Color.pick("textSecondary").get()});
+	color: hsl(${Color.pick("textSecondary").get()});
 	&:hover {
 		background-color: hsl(${Color.pick("brand").darken().get()});
 	}
@@ -46,7 +46,7 @@ export const SecondaryButton = styled.button`
 	${button}
 	width: fit-content;
 	border-radius: ${theme.borderRadius}px;
-	background-color: rgb(${theme.color.primary});
+	background-color: hsl(${Color.pick("primary").get()});
 	border: 1px solid transparent;
 	padding: 0.5rem 1rem;
 	&:hover {
@@ -60,22 +60,22 @@ export const Input = styled.input`
 	min-width: 15rem;
 	padding: 0.75rem;
 	border-radius: ${theme.borderRadius}px;
-	background-color: rgb(${Color.pick("secondary").get()});
+	background-color: hsl(${Color.pick("body").get()});
 	box-shadow: ${theme.shadow.elevateUnder};
 	&.error {
-		border: 1px solid rgb(${Color.pick("error").get()});
+		border: 1px solid hsl(${Color.pick("error").get()});
 	}
 	&:focus {
-		background-color: rgb(${Color.pick("primary").get()});
+		background-color: hsl(${Color.pick("primary").get()});
 	}
 `;
 
 export const FormError = styled(P)`
 	width: 100%;
-	background-color: rgba(${theme.color.error}, 0.25);
+	background-color: hsla(${Color.pick("error").get()}, 0.25);
 	box-shadow: ${theme.shadow.elevateUnder};
-	color: rgb(${theme.color.text});
-	border-left: 2px solid rgb(${theme.color.error});
+	color: hsl(${Color.pick("text").get()});
+	border-left: 2px solid hsl(${Color.pick("error").get()});
 	padding: 0.75rem;
 	border-radius: ${theme.borderRadius}px;
 `;

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color, theme } from "../../styles/theme";
+import { Color } from "../../styles/theme";
 
 export const header = css`
 	font-weight: 700;
@@ -11,7 +11,7 @@ export const header = css`
 export const text = css`
 	font-size: 1rem;
 	font-family: Open Sans;
-	color: rgb(225, 225, 225);
+	color: hsl(${Color.pick("text").get()});
 `;
 
 export const H1 = styled.h1`
