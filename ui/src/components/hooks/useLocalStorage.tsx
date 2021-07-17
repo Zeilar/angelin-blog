@@ -9,6 +9,7 @@ export function useLocalStorage<T>(key: string) {
 	});
 
 	useEffect(() => {
+		console.log("data changed to", data);
 		localStorage.setItem(key, JSON.stringify(data));
 	}, [data, key]);
 

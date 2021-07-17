@@ -3,6 +3,8 @@ import { Color, theme } from "./theme";
 
 export const editor = css`
 	.editing {
+		border-radius: ${theme.borderRadius}px;
+
 		.ProseMirror,
 		.tiptap {
 			background-color: hsl(${Color.pick("secondary").get()});
@@ -10,10 +12,15 @@ export const editor = css`
 			padding: 1rem;
 			box-shadow: ${theme.shadow.elevateUnder};
 		}
+		&.error {
+			border: 1px solid hsl(${Color.pick("error").get()});
+		}
 	}
 
 	.ProseMirror,
 	.tiptap {
+		border-radius: ${theme.borderRadius}px;
+
 		> * + * {
 			margin-top: 0.75em;
 		}

@@ -1,9 +1,11 @@
 import styled, { css } from "styled-components";
 import { Color, theme } from "../../styles/theme";
-import { P, flexbox } from "./";
+import * as Styles from "./";
+import { mdiAlertCircleOutline } from "@mdi/js";
+import Icon from "@mdi/react";
 
 export const button = css`
-	${flexbox}
+	${Styles.flexbox}
 	font: inherit;
 	border: 0;
 	padding: 0.5rem 1rem;
@@ -69,7 +71,7 @@ export const Input = styled.input`
 	}
 `;
 
-export const FormError = styled(P)`
+export const FormError = styled(Styles.P)`
 	width: 100%;
 	background-color: hsla(${Color.pick("error").get()}, 0.25);
 	box-shadow: ${theme.shadow.elevateUnder};
@@ -78,3 +80,19 @@ export const FormError = styled(P)`
 	padding: 0.75rem;
 	border-radius: ${theme.borderRadius}px;
 `;
+
+const StyledInputError = styled(Styles.Span)`
+	color: hsl(${Color.pick("error").get()});
+	font-weight: bold;
+`;
+const InputErrorIcon = styled(Icon)`
+	color: hsl(${Color.pick("error").get()});
+`;
+export function InputError({ message, ...props }: { message?: string; [key: string]: any }) {
+	return (
+		<Styles.Row {...props}>
+			<InputErrorIcon className="mr-1" path={mdiAlertCircleOutline} size={1} />
+			<StyledInputError className="mb-2">{message}</StyledInputError>
+		</Styles.Row>
+	);
+}

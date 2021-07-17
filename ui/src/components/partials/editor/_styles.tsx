@@ -9,6 +9,7 @@ export const Wrapper = styled(Styles.Row)`
 	padding: 0.25rem;
 	margin-bottom: 0.5rem;
 	box-shadow: ${theme.shadow.elevateUnder};
+	border-radius: ${theme.borderRadius}px;
 `;
 
 export const ToolbarButton = styled.button`

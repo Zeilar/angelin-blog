@@ -1,16 +1,16 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
 import { PrimaryButton } from "../styled-components";
-import { mdiClose, mdiCheck } from "@mdi/js";
+import { mdiClose, mdiCheck, mdiLoading } from "@mdi/js";
 import Icon from "@mdi/react";
-import { Color, theme } from "../../styles/theme";
+import { Color } from "../../styles/theme";
 import classnames from "classnames";
 import { ModalStatus } from "../../types/modals";
 
 interface Props {
 	className?: string;
 	children: ReactNode;
-	status?: ModalStatus;
+	status: ModalStatus;
 	[key: string]: any;
 }
 
@@ -18,32 +18,39 @@ export function StatusButton(props: Props) {
 	function renderIcon() {
 		switch (props.status) {
 			case "error":
-				return <Error path={mdiClose} />;
+				return <StatusIcon path={mdiClose} />;
 			case "done":
 			case "success":
-				return <Success path={mdiCheck} />;
+				return <StatusIcon path={mdiCheck} />;
+			case "loading":
+				return <StatusIcon path={mdiLoading} spin={1} />;
 			default:
 				return null;
 		}
 	}
 
 	const classes = classnames(props.className, {
-		active: props.status != null && props.status !== "loading",
+		active: props.status != null,
 		error: props.status === "error",
+		loading: props.status === "loading",
 		success: props.status === "success" || props.status === "done",
 	});
 
 	return (
-		<StyledButton {...props} className={classes}>
+		<StyledButton disabled={props.status != null} {...props} className={classes}>
 			{renderIcon()} {props.children}
 		</StyledButton>
 	);
 }
 
+const StatusIcon = styled(Icon)`
+	color: hsl(${Color.pick("text").get()});
+`;
+
 const StyledButton = styled(PrimaryButton)`
 	position: relative;
-	transition: 0.05s;
-	& svg {
+
+	& ${StatusIcon} {
 		transform: translate(-50%, -50%);
 		position: absolute;
 		top: 50%;
@@ -52,26 +59,20 @@ const StyledButton = styled(PrimaryButton)`
 		height: 2rem;
 	}
 
-	&.success {
-		background-color: hsl(${Color.pick("success").get()});
-		border-color: hsl(${Color.pick("success").get()});
-	}
-
-	&.error {
-		background-color: hsl(${Color.pick("error").get()});
-		border-color: hsl(${Color.pick("error").get()});
-	}
-
 	&.active {
 		color: transparent !important;
 		pointer-events: none;
 	}
-`;
 
-const Error = styled(Icon)`
-	color: hsl(${Color.pick("text").get()});
-`;
+	&.success {
+		background-color: hsl(${Color.pick("success").get()});
+	}
 
-const Success = styled(Icon)`
-	color: hsl(${Color.pick("text").get()});
+	&.error {
+		background-color: hsl(${Color.pick("error").get()});
+	}
+
+	&.loading {
+		background-color: hsla(${Color.pick("brand").get()}, 0.25);
+	}
 `;

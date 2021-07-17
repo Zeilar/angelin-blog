@@ -29,7 +29,7 @@ export function Login({ open, setOpen, openRegister }: Props) {
 
 	const [status, setStatus] = useState<ModalStatus>(null);
 	const [cached, setCached] = useLocalStorage<Inputs>("login");
-	const { inputs, onChange, empty, update } = useInputs<Inputs>({
+	const { inputs, onChange } = useInputs<Inputs>({
 		email: cached.email,
 		password: "",
 	});
@@ -56,11 +56,8 @@ export function Login({ open, setOpen, openRegister }: Props) {
 	useEffect(() => {
 		if (loggedIn) {
 			setTimeout(() => {
-				empty();
 				setErrors(null);
 			}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
-		} else {
-			update("email", cached.email);
 		}
 	}, [loggedIn]);
 
@@ -80,9 +77,8 @@ export function Login({ open, setOpen, openRegister }: Props) {
 			password: inputs.password,
 		});
 
-		setCached({ email: inputs.email, password: "" });
-
 		if (ok) {
+			setCached({ email: inputs.email, password: "" });
 			setErrors(null);
 			setStatus("success");
 
@@ -97,7 +93,6 @@ export function Login({ open, setOpen, openRegister }: Props) {
 
 		setTimeout(() => {
 			setStatus(null);
-			if (ok) empty();
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 
