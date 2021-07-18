@@ -1,4 +1,5 @@
 import { Controller } from "./Controller";
+import { Response } from "express";
 import * as inversify from "inversify-express-utils";
 import passport from "passport";
 import { Strategy as GitHubStrategy, Profile } from "passport-github2";
@@ -24,7 +25,7 @@ passport.use(
 			profile: GitHubProfile,
 			done: (err: Error | null, profile: GitHubProfile | User | null) => void
 		) => {
-			if (!profile) done(new Error(ErrorMessages.DEFAULT), null);
+			if (!profile) return done(new Error(ErrorMessages.DEFAULT), null);
 
 			let user = await userRepository.findOne("github_id", profile.id);
 
@@ -51,11 +52,11 @@ export class GitHubController extends Controller {
 		super();
 	}
 
-	@inversify.httpGet("/callback", passport.authenticate("github"))
-	public done() {
-		this.redirect("/");
+	@inversify.httpGet("/callback", passport.authenticate("github", { scope: ["user:email"] }))
+	public callback() {
+		return this.redirect("/");
 	}
 
-	@inversify.httpGet("/", passport.authenticate("github"))
-	public auth() {} // Only the middleware is needed apparently
+	@inversify.httpGet("/", passport.authenticate("github", { scope: ["user:email"] }))
+	public auth() {} // Only middleware is needed *shrug*
 }
