@@ -1,6 +1,6 @@
 node_modules
-build
-build-ui
-errors
+/build
+/build-ui
+/errors
 .env
 .env.production
