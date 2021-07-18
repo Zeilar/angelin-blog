@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color, theme } from "../../styles/theme";
+import { Color, Shadow, theme } from "../../styles/theme";
 import * as Styles from "./";
 import { mdiAlertCircleOutline } from "@mdi/js";
 import Icon from "@mdi/react";
@@ -14,7 +14,7 @@ export const button = css`
 	justify-content: center;
 	align-items: center;
 	background-color: hsl(${Color.pick("primary").get()});
-	box-shadow: ${theme.shadow.elevateUnder};
+	box-shadow: ${Shadow.pick("elevateUnder")};
 	border-radius: ${theme.borderRadius}px;
 	font-weight: 600;
 	color: hsl(${Color.pick("text").get()});
@@ -62,7 +62,7 @@ export const Input = styled.input`
 	padding: 0.75rem;
 	border-radius: ${theme.borderRadius}px;
 	background-color: hsl(${Color.pick("body").get()});
-	box-shadow: ${theme.shadow.elevateUnder};
+	box-shadow: ${Shadow.pick("elevateUnder")};
 	&.error {
 		border: 1px solid hsl(${Color.pick("error").get()});
 	}
@@ -74,7 +74,7 @@ export const Input = styled.input`
 export const FormError = styled(Styles.P)`
 	width: 100%;
 	background-color: hsla(${Color.pick("error").get()}, 0.25);
-	box-shadow: ${theme.shadow.elevateUnder};
+	box-shadow: ${Shadow.pick("elevateUnder")};
 	color: hsl(${Color.pick("text").get()});
 	border-left: 2px solid hsl(${Color.pick("error").get()});
 	padding: 0.75rem;

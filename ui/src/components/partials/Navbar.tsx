@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { Color, theme } from "../../styles/theme";
+import { Color, Shadow, theme } from "../../styles/theme";
 import { useAuth } from "../contexts";
 import * as Styles from "../styled-components";
 import { Login, Register } from "./modals";
@@ -96,7 +96,7 @@ const Wrapper = styled(Styles.Row)`
 	top: 0;
 	z-index: 100;
 	background-color: hsl(${Color.pick("secondary").get()});
-	box-shadow: ${theme.shadow.elevate};
+	box-shadow: ${Shadow.pick("elevate")};
 `;
 
 const Nav = styled(Styles.Container)`

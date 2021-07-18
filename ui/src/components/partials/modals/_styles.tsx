@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, theme } from "../../../styles/theme";
+import { Color, Shadow, theme } from "../../../styles/theme";
 import * as Styles from "../../styled-components";
 import Icon from "@mdi/react";
 import { mdiClose, mdiGithub } from "@mdi/js";
@@ -32,7 +32,7 @@ export const Wrapper = styled(Styles.Col)`
 	transition: 0.25s;
 	border-radius: ${theme.borderRadius}px;
 	background-color: hsl(${Color.pick("secondary").get()});
-	box-shadow: ${theme.shadow.spread};
+	box-shadow: ${Shadow.pick("spread")};
 	&.open {
 		pointer-events: all;
 		opacity: 1;
@@ -129,5 +129,5 @@ export const Main = styled.form`
 export const Footer = styled.div`
 	background-color: hsl(${Color.pick("secondary").get()});
 	padding: 2rem;
-	box-shadow: ${theme.shadow.spread};
+	box-shadow: ${Shadow.pick("spread")};
 `;
