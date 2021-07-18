@@ -3,6 +3,7 @@ import { UserRepository } from "../repositories/UserRepository";
 import { Service } from "./Service";
 import { Register } from "../types/user";
 import { injectable } from "inversify";
+import { User } from "../db/models";
 
 @injectable()
 export class AuthService extends Service {
@@ -35,7 +36,7 @@ export class AuthService extends Service {
 		//
 	}
 
-	public async userExists(column: string, value: any) {
+	public async userExists(column: keyof User, value: any) {
 		try {
 			return (await this.userRepository.countWhere(column, value)) > 0;
 		} catch (error) {

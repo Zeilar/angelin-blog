@@ -30,7 +30,7 @@ export function Login({ open, setOpen, openRegister }: Props) {
 	const [status, setStatus] = useState<ModalStatus>(null);
 	const [cached, setCached] = useLocalStorage<Inputs>("login");
 	const { inputs, onChange } = useInputs<Inputs>({
-		email: cached.email,
+		email: cached?.email ?? "",
 		password: "",
 	});
 	const [errors, setErrors] = useState<InputError>(null);
@@ -46,12 +46,12 @@ export function Login({ open, setOpen, openRegister }: Props) {
 
 	useEffect(() => {
 		if (!open) return;
-		if (cached.email) {
+		if (cached?.email) {
 			secondInput.current?.focus();
 		} else {
 			firstInput.current?.focus();
 		}
-	}, [open, cached.email]);
+	}, [open, cached?.email]);
 
 	useEffect(() => {
 		if (loggedIn) {

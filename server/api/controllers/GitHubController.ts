@@ -37,7 +37,6 @@ passport.use(
 				user = await userRepository.create({
 					email: profile._json.email,
 					avatar: profile._json.avatar_url,
-					oauth: true,
 					github_id: profile.id,
 				});
 			}

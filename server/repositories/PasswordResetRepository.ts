@@ -49,7 +49,7 @@ export class PasswordResetRepository extends Repository {
 	public async deleteInactive() {
 		try {
 			await PasswordReset.query()
-				.where("created_at", "<", DateHelpers.subDays(1).get())
+				.where("created_at", "<", DateHelpers.subDays(1).getDate())
 				.delete();
 		} catch (error) {
 			this.errorlog(error);
