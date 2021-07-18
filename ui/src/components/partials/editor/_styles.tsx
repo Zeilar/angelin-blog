@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color, theme } from "../../../styles/theme";
+import { Color, Shadow, theme } from "../../../styles/theme";
 import Icon from "@mdi/react";
 import * as Styles from "../../styled-components";
 
@@ -8,7 +8,7 @@ export const Wrapper = styled(Styles.Row)`
 	flex-wrap: wrap;
 	padding: 0.25rem;
 	margin-bottom: 0.5rem;
-	box-shadow: ${theme.shadow.elevateUnder};
+	box-shadow: ${Shadow.pick("elevateUnder")};
 	border-radius: ${theme.borderRadius}px;
 `;
 
@@ -19,7 +19,7 @@ export const ToolbarButton = styled.button`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin: 1px;
+	margin: 0.25rem;
 	border-radius: ${theme.borderRadius}px;
 	font-weight: 600;
 	&:hover {

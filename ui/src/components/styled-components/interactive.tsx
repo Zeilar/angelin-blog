@@ -47,11 +47,11 @@ export const SecondaryButton = styled.button`
 	${button}
 	width: fit-content;
 	border-radius: ${theme.borderRadius}px;
-	background-color: hsl(${Color.pick("secondary").get()});
+	background-color: hsl(${Color.pick("secondary").lighten(4).get()});
 	border: 1px solid transparent;
 	padding: 0.5rem 1rem;
 	&:hover {
-		background-color: hsl(${Color.pick("secondary").lighten().get()});
+		background-color: hsl(${Color.pick("secondary").lighten(6).get()});
 	}
 `;
 

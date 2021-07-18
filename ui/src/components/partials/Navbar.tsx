@@ -29,21 +29,23 @@ export function Navbar() {
 		if (loggedIn) {
 			return (
 				<Item>
-					<ModalButton className="mr-0" onClick={logout}>
+					<Styles.SecondaryButton className="mr-0" onClick={logout}>
 						Logout
-					</ModalButton>
+					</Styles.SecondaryButton>
 				</Item>
 			);
 		} else {
 			return (
 				<>
-					<Item className="mr-8">
-						<ModalButton onClick={() => setLoginModalOpen(true)}>Login</ModalButton>
+					<Item className="mr-4">
+						<Styles.SecondaryButton onClick={() => setLoginModalOpen(true)}>
+							Login
+						</Styles.SecondaryButton>
 					</Item>
 					<Item>
-						<ModalButton onClick={() => setRegisterModalOpen(true)}>
+						<Styles.PrimaryButton onClick={() => setRegisterModalOpen(true)}>
 							Register
-						</ModalButton>
+						</Styles.PrimaryButton>
 					</Item>
 				</>
 			);
@@ -119,10 +121,6 @@ const link = css`
 	&:active {
 		color: hsl(${Color.pick("brand").darken().get()});
 	}
-`;
-
-const ModalButton = styled.a`
-	${link}
 `;
 
 const Link = styled(NavLink)`

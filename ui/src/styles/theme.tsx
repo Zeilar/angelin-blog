@@ -36,13 +36,13 @@ export class Color {
 		return this.modify((h, s, l) => `${h}, ${s}%, ${cb(l)}%`);
 	}
 
-	public static darken() {
-		this.selected = this.lighting(lighting => lighting - 8);
+	public static darken(value?: number) {
+		this.selected = this.lighting(lighting => lighting - (value ?? 8));
 		return this;
 	}
 
-	public static lighten() {
-		this.selected = this.lighting(lighting => lighting + 8);
+	public static lighten(value?: number) {
+		this.selected = this.lighting(lighting => lighting + (value ?? 8));
 		return this;
 	}
 }
@@ -95,4 +95,24 @@ interface Colors {
 	link: string;
 	error: string;
 	success: string;
+}
+
+interface Shadows {
+	elevate: string;
+	elevateUnder: string;
+	spread: string;
+}
+
+export class Shadow {
+	public static selected: string;
+
+	public static shadows: Shadows = {
+		elevate: "0 0 5px 0 rgba(0, 0, 0, 0.75)",
+		elevateUnder: "0 4px 8px rgba(0, 0, 0, 0.15)",
+		spread: "0 0 10px 0 rgba(0, 0, 0, 0.15)",
+	};
+
+	public static pick(...keys: Array<keyof Shadows>) {
+		return keys.map(key => this.shadows[key]).join(", ");
+	}
 }
