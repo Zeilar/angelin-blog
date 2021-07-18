@@ -24,12 +24,12 @@ passport.use(
 			profile: GitHubProfile,
 			done: (err: Error | null, profile: GitHubProfile | User | null) => void
 		) => {
-			if (!profile) done(new Error("Something went wrong."), null);
+			if (!profile) done(new Error(ErrorMessages.DEFAULT), null);
 
 			let user = await userRepository.findOne("github_id", profile.id);
 
 			if (!user) {
-				if (await userRepository.countWhere("email", profile._json.email)) {
+				if ((await userRepository.countWhere("email", profile._json.email)) > 0) {
 					return done(new Error(ErrorMessages.EMAIL_TAKEN), null);
 				}
 
@@ -51,12 +51,7 @@ export class GitHubController extends Controller {
 		super();
 	}
 
-	@inversify.httpGet(
-		"/callback",
-		passport.authenticate("github", {
-			failureRedirect: `/?error=${encodeURI("Something went wrong.")}`,
-		})
-	)
+	@inversify.httpGet("/callback", passport.authenticate("github"))
 	public done() {
 		this.redirect("/");
 	}
