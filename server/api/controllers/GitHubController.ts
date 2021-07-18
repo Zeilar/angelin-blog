@@ -1,4 +1,3 @@
-import { Response } from "express";
 import { Controller } from "./Controller";
 import * as inversify from "inversify-express-utils";
 import passport from "passport";
