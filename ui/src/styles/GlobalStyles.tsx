@@ -8,7 +8,7 @@ export const GlobalStyles = createGlobalStyle`
 
     ::selection {
         color: hsl(${Color.pick("brand").get()});
-        background-color: rgba(0, 0, 0, 0.25);
+        background-color: hsl(${Color.pick("secondary").get()});
     }
 
     body,

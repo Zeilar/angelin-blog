@@ -12,6 +12,9 @@ export const text = css`
 	font-size: 1rem;
 	font-family: Open Sans;
 	color: hsl(${Color.pick("text").get()});
+	&.muted {
+		color: hsl(${Color.pick("textMuted").get()});
+	}
 `;
 
 export const H1 = styled.h1`

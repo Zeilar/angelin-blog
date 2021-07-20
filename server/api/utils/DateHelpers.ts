@@ -42,6 +42,11 @@ export class DateHelpers {
 		return this;
 	}
 
+	public static addMinutes(minutes: number = 1) {
+		this.date = new Date(this.getUnix() + this.MINUTE_IN_MILLISECONDS * minutes);
+		return this;
+	}
+
 	public static addHours(hours: number = 1) {
 		this.date = new Date(this.getUnix() + this.HOUR_IN_MILLISECONDS * hours);
 		return this;

@@ -1,3 +1,17 @@
+interface Colors {
+	body: string;
+	primary: string;
+	secondary: string;
+	brand: string;
+	text: string;
+	textSecondary: string;
+	textMuted: string;
+	border: string;
+	link: string;
+	error: string;
+	success: string;
+}
+
 export class Color {
 	public static selected: string;
 
@@ -48,11 +62,6 @@ export class Color {
 }
 
 interface ITheme {
-	shadow: {
-		elevate: string;
-		elevateUnder: string;
-		spread: string;
-	};
 	durations: {
 		modalsAfterResponse: number;
 		modalsFade: number;
@@ -65,11 +74,6 @@ interface ITheme {
 }
 
 export const theme: ITheme = {
-	shadow: {
-		elevate: "0 0 5px 0 rgba(0, 0, 0, 0.75)",
-		elevateUnder: "0 4px 8px rgba(0, 0, 0, 0.15)",
-		spread: "0 0 10px 0 rgba(0, 0, 0, 0.15)",
-	},
 	durations: {
 		// In milliseconds
 		modalsAfterResponse: 500,
@@ -82,20 +86,6 @@ export const theme: ITheme = {
 		tablet: 1200,
 	},
 };
-
-interface Colors {
-	body: string;
-	primary: string;
-	secondary: string;
-	brand: string;
-	text: string;
-	textSecondary: string;
-	textMuted: string;
-	border: string;
-	link: string;
-	error: string;
-	success: string;
-}
 
 interface Shadows {
 	elevate: string;

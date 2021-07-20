@@ -14,6 +14,7 @@ declare global {
 			DB_CLIENT: string;
 			GITHUB_CLIENT: string;
 			GITHUB_SECRET: string;
+			GITHUB_CALLBACK: string;
 			SENDGRID_KEY: string;
 			[key: string]: string;
 		}

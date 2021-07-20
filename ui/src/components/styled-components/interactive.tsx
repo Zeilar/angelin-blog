@@ -55,6 +55,22 @@ export const SecondaryButton = styled.button`
 	}
 `;
 
+export const IconButton = styled.button`
+	${button}
+	width: fit-content;
+	background: none;
+	box-shadow: none;
+	border-radius: ${theme.borderRadius}px;
+	padding: 0.5rem;
+	& > * {
+		width: 2rem;
+		height: 2rem;
+	}
+	&:hover {
+		background-color: hsl(${Color.pick("primary").get()});
+	}
+`;
+
 export const Input = styled.input`
 	outline: 0;
 	border: 0;

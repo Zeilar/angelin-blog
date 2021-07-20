@@ -1,10 +1,10 @@
 import * as Styles from "../styled-components";
-import { Post, Tag } from "../../models";
-import { Link } from "react-router-dom";
+import { Post } from "../../models";
 import { useFetch } from "../hooks";
-import { ReadOnlyEditor } from "../partials/editor";
 import useTitle from "../hooks/useTitle";
 import { SERVER_URL } from "../../utils";
+import PostThumbnail from "../partials/PostThumbnail";
+import { Filter } from "../partials";
 
 export function Home() {
 	const query = useFetch<{ data: Post[] }>(`${SERVER_URL}/api/posts`);
@@ -19,23 +19,14 @@ export function Home() {
 	return (
 		<Styles.Container className="mt-4">
 			<Styles.H1>Blog</Styles.H1>
-			{posts.map((post: Post) => (
-				<article key={post.id}>
-					<Styles.PostWrapper className="mt-4">
-						<Styles.H4 as={Link} to={`/post/${post.id}-${post.title}`}>
-							{post.title}
-						</Styles.H4>
-						<ReadOnlyEditor content={post.body} />
-						{post.tags.length > 0 && (
-							<div className="mt-4">
-								{post.tags.map((tag: Tag) => (
-									<span key={tag.id}>{tag.name} </span>
-								))}
-							</div>
-						)}
-					</Styles.PostWrapper>
-				</article>
-			))}
+			<Styles.Row>
+				<Styles.Col className="w-full">
+					{posts.map((post: Post) => (
+						<PostThumbnail className="mt-4" post={post} key={post.id} />
+					))}
+				</Styles.Col>
+				<Filter />
+			</Styles.Row>
 		</Styles.Container>
 	);
 }

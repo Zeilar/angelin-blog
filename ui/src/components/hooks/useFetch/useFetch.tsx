@@ -1,10 +1,9 @@
 import { isEqual } from "lodash";
-import { useContext } from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FetchContext } from "./FetchProvider";
-import { Args, Options, Status, QueryParams } from "./types";
+import { Args, Options, Status } from "./types";
 
-export function parseQueryParams(params?: QueryParams) {
+export function parseQueryParams(params?: { [key: string]: string }) {
 	if (!params || !Object.keys(params).length) {
 		return "";
 	}
@@ -56,14 +55,14 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 					signal: abortController.signal,
 				};
 
-				const response: Response = await fetch(fullUrl, options);
+				const response = await fetch(fullUrl, options);
 
 				if (!response.ok)
 					throw new Error(
 						`Failed to ${method} ${url} ${response.status} ${response.statusText}`
 					);
 
-				const data: T = await response.json();
+				const data = await response.json();
 
 				cachedData.set(fullUrl, data);
 

@@ -16,6 +16,7 @@ export const ToolbarButton = styled.button`
 	padding: 0.5rem;
 	font-size: 1rem;
 	min-width: 2.5rem;
+	user-select: none;
 	display: flex;
 	justify-content: center;
 	align-items: center;

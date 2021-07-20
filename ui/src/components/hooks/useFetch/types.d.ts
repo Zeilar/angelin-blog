@@ -4,11 +4,7 @@ export interface Args {
 	method?: Method;
 	body?: string | FormData;
 	headers?: Headers;
-	params?: QueryParams;
-}
-
-export interface QueryParams {
-	[key: string]: string;
+	params?: { [key: string]: string };
 }
 
 export type Status = "loading" | "success" | "error";
