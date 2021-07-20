@@ -1,66 +1,67 @@
-import { Args, QueryParams, Body } from "../types/request";
-import { SERVER_URL } from "./constants";
+import { Args, QueryParams, Body } from '../types/request'
+import { SERVER_URL } from './constants'
 
 export class Request {
-	public static parseQueryParams(params?: QueryParams) {
-		if (!params || !Object.keys(params).length) {
-			return "";
-		}
+  public static parseQueryParams(params?: QueryParams) {
+    if (!params || !Object.keys(params).length) {
+      return ''
+    }
 
-		// Parse { key: value } to `&key=value` strings pairs and combine them
-		const parsed = Object.entries(params)
-			.map(([key, val]) => `${key}=${val}`)
-			.join("&");
+    // Parse { key: value } to `&key=value` strings pairs and combine them
+    const parsed = Object.entries(params)
+      .map(([key, val]) => `${key}=${val}`)
+      .join('&')
 
-		return `?${parsed}`;
-	}
+    return `?${parsed}`
+  }
 
-	public static async query<T>(args: Args) {
-		const params = Request.parseQueryParams(args.params);
-		let data: Body<T> | null = null;
-		let code = 200;
-		let ok = true;
+  public static async query<T>(args: Args) {
+    const params = Request.parseQueryParams(args.params)
+    let data: Body<T> | null = null
+    let code = 200
+    let ok = true
 
-		try {
-			const response = await fetch(`${args.url}${params}`, {
-				method: args.method,
-				body: JSON.stringify(args.body),
-				headers: { "Content-Type": "application/json", ...args.headers },
-			});
+    try {
+      const response = await fetch(`${args.url}${params}`, {
+        method: args.method,
+        body: JSON.stringify(args.body),
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json', ...args.headers },
+      })
 
-			if (
-				args.withResponse &&
-				response.headers.get("Content-Type")?.includes("application/json")
-			) {
-				data = await response.json();
-			}
+      if (
+        args.withResponse &&
+        response.headers.get('Content-Type')?.includes('application/json')
+      ) {
+        data = await response.json()
+      }
 
-			ok = response.ok;
-			code = response.status;
-		} catch (error) {
-			console.error(error);
-		} finally {
-			return { data: data?.data, error: data?.error, code, ok };
-		}
-	}
+      ok = response.ok
+      code = response.status
+    } catch (error) {
+      console.error(error)
+    } finally {
+      return { data: data?.data, error: data?.error, code, ok }
+    }
+  }
 
-	public static async tag<T>(args: Args) {
-		args.url = `${SERVER_URL}/api/tags/${args.url}`;
-		return await Request.query<T>({ ...args });
-	}
+  public static async tag<T>(args: Args) {
+    args.url = `${SERVER_URL}/api/tags/${args.url}`
+    return await Request.query<T>({ ...args })
+  }
 
-	public static async comment<T>(args: Args) {
-		args.url = `${SERVER_URL}/api/comments/${args.url}`;
-		return await Request.query<T>({ ...args, withResponse: true });
-	}
+  public static async comment<T>(args: Args) {
+    args.url = `${SERVER_URL}/api/comments/${args.url}`
+    return await Request.query<T>({ ...args, withResponse: true })
+  }
 
-	public static async post<T>(args: Args) {
-		args.url = `${SERVER_URL}/api/posts/${args.url}`;
-		return await Request.query<T>({ ...args, withResponse: true });
-	}
+  public static async post<T>(args: Args) {
+    args.url = `${SERVER_URL}/api/posts/${args.url}`
+    return await Request.query<T>({ ...args, withResponse: true })
+  }
 
-	public static async auth<T>(args: Args) {
-		args.url = `${SERVER_URL}/api/users/${args.url}`;
-		return await Request.query<T>({ ...args, withResponse: true });
-	}
+  public static async auth<T>(args: Args) {
+    args.url = `${SERVER_URL}/api/users/${args.url}`
+    return await Request.query<T>({ ...args, withResponse: true })
+  }
 }
