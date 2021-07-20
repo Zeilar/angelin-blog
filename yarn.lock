@@ -844,11 +844,6 @@
   "resolved" "https://registry.npmjs.org/csstype/-/csstype-3.0.8.tgz"
   "version" "3.0.8"
 
-"date-fns@^2.22.1":
-  "integrity" "sha512-yUFPQjrxEmIsMqlHhAhmxkuH769baF21Kk+nZwZGyrMoyLA+LugaQtC0+Tqf9CBUUULWwUJt6Q5ySI3LJDDCGg=="
-  "resolved" "https://registry.npmjs.org/date-fns/-/date-fns-2.22.1.tgz"
-  "version" "2.22.1"
-
 "dayjs@^1.10.5":
   "integrity" "sha512-BUFis41ikLz+65iH6LHQCDm4YPMj5r1YFLdupPIyM4SGcXMmtiLQ7U37i+hGS8urIuqe7I/ou3IS1jVc4nbN4g=="
   "resolved" "https://registry.npmjs.org/dayjs/-/dayjs-1.10.5.tgz"

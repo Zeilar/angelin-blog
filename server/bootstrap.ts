@@ -18,20 +18,18 @@ import * as services from "./services";
 import { User } from "./db/models";
 import { development } from "../knexfile";
 import { PasswordResetRepository, UserRepository } from "./repositories";
-import { ErrorMessages } from "./api/utils";
-// @ts-ignore
-import { milliseconds } from "date-fns";
+import { DateHelpers, ErrorMessages } from "./api/utils";
 
 import "./api/controllers";
 
 type GitHubProfile = Profile & { _json: any };
 
-const { GITHUB_CLIENT, GITHUB_SECRET, PORT, SESSION_SECRET } = process.env;
-const userRepository = new UserRepository();
+const { GITHUB_CLIENT, GITHUB_SECRET, GITHUB_CALLBACK, PORT, SESSION_SECRET } = process.env;
 const uiPath = path.join(__dirname, "../../ui");
 
 function bootstrap() {
 	Model.knex(knex(development));
+
 	const container = new Container();
 
 	// Repositories
@@ -62,14 +60,14 @@ function bootstrap() {
 				resave: false,
 				saveUninitialized: false,
 				cookie: {
-					maxAge: milliseconds({ days: 7 }),
+					maxAge: DateHelpers.DAY_IN_MILLISECONDS * 7,
 					httpOnly: true,
 					secure: false, // TODO: setup env variable for is prod
 					sameSite: "strict",
 				},
 			}),
 			rateLimit({
-				windowMs: 1000 * 60 * 10, // 10 minutes
+				windowMs: DateHelpers.MINUTE_IN_MILLISECONDS * 10,
 				max: 1000,
 				handler: (req, res) => {
 					res.status(429).send({ error: "Too many requests, try again later." });
@@ -80,15 +78,14 @@ function bootstrap() {
 		);
 	});
 
+	const userRepository = container.get(UserRepository);
+
 	passport.serializeUser((user, done) => {
 		done(null, user);
 	});
 
 	passport.deserializeUser<User>(async ({ id }, done) => {
-		const repo = container.get(UserRepository);
-		const user = await repo.findById(id);
-
-		done(null, user);
+		done(null, await userRepository.findById(id));
 	});
 
 	passport.use(
@@ -96,7 +93,7 @@ function bootstrap() {
 			{
 				clientID: GITHUB_CLIENT,
 				clientSecret: GITHUB_SECRET,
-				callbackURL: "api/oauth/github/callback",
+				callbackURL: GITHUB_CALLBACK,
 			},
 			async (
 				accessToken: string,
@@ -137,26 +134,20 @@ function bootstrap() {
 		await container.get(PasswordResetRepository).deleteInactive();
 	});
 
-	return server.build();
+	const app = server.build();
+
+	app.use(express.static(uiPath));
+
+	app.get("/*", (req, res) => {
+		res.sendFile(`${uiPath}/index.html`);
+	});
+
+	app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+		errorlog(error);
+		res.status(500).json({ error: "Could not find ui build." });
+	});
+
+	app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 }
 
-export const app = bootstrap();
-
-app.use(express.static(uiPath));
-
-app.get("/*", (req, res) => {
-	res.sendFile(`${uiPath}/index.html`);
-});
-
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-	errorlog(error);
-	res.status(500).json({ error: "Could not find ui build." });
-});
-
-(async () => {
-	try {
-		app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
-	} catch (error) {
-		errorlog(error);
-	}
-})();
+bootstrap();
