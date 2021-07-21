@@ -9,7 +9,6 @@ import {
 import { Col } from "../../styled-components";
 import styled, { css } from "styled-components";
 import { useClickOutside } from "../../hooks";
-import { Color, Shadow, theme } from "../../../styles/theme";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	render(
@@ -68,9 +67,9 @@ export const MenuItem = styled.div`
 	white-space: nowrap;
 	cursor: pointer;
 	z-index: 50;
-	border-radius: ${theme.borderRadius}px;
 	font-weight: 600;
 	${props => css`
+		border-radius: ${props.theme.borderRadius}px;
 		&:hover {
 			background-color: hsl(${props.theme.color.get("primary")});
 		}

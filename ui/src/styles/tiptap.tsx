@@ -1,17 +1,18 @@
 import { css } from "styled-components";
-import { Color, Shadow, theme } from "./theme";
 
 export const editor = css`
 	.editing {
-		border-radius: ${theme.borderRadius}px;
+		${props => css`
+			border-radius: ${props.theme.borderRadius}px;
+		`}
 
 		.ProseMirror,
 		.tiptap {
 			outline: 0;
 			padding: 1rem;
-			box-shadow: ${Shadow.pick("elevateUnder")};
 			min-height: 400px;
 			${props => css`
+				box-shadow: ${props.theme.shadow.pick("elevateUnder")};
 				background-color: hsl(${props.theme.color.get("secondary")});
 			`}
 		}
@@ -25,7 +26,9 @@ export const editor = css`
 
 	.ProseMirror,
 	.tiptap {
-		border-radius: ${theme.borderRadius}px;
+		${props => css`
+			border-radius: ${props.theme.borderRadius}px;
+		`}
 
 		> * + * {
 			margin-top: 0.75em;
@@ -50,14 +53,16 @@ export const editor = css`
 		code {
 			background-color: rgba(0, 0, 0, 0.25);
 			padding: 0.25rem;
-			border-radius: ${theme.borderRadius}px;
+			${props => css`
+				border-radius: ${props.theme.borderRadius}px;
+			`}
 		}
 
 		pre {
 			background-color: rgba(0, 0, 0, 0.35);
 			padding: 0.75rem 1rem;
-			border-radius: ${theme.borderRadius}px;
 			${props => css`
+				border-radius: ${props.theme.borderRadius}px;
 				color: hsl(${props.theme.color.get("text")});
 			`}
 

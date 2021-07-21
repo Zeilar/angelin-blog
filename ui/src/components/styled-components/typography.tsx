@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../styles/theme";
 
 export const header = css`
 	font-weight: 700;

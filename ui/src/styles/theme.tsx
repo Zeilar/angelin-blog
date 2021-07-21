@@ -12,7 +12,7 @@ interface Colors {
 	success: string;
 }
 
-export class Color {
+class Color {
 	public selected: string;
 
 	public dark: Colors = {
@@ -45,26 +45,6 @@ export class Color {
 
 	public colors = this.dark;
 
-	// REMOVE UNDER
-
-	public static selected: string;
-	/**
-	 * Must be kept in HSL format to work properly with the methods
-	 */
-	public static colors: Colors = {
-		body: "0, 0%, 17%",
-		primary: "0, 0%, 24%",
-		secondary: "0, 0%, 19%",
-		brand: "150, 65%, 65%",
-		text: "0, 0%, 88%",
-		textSecondary: "0, 0%, 17.5%",
-		textMuted: "0, 0%, 68.5%",
-		border: "0, 0%, 10%",
-		link: "0, 100%, 50%",
-		error: "0, 100%, 60%",
-		success: "120, 100%, 35%",
-	};
-
 	public get(color?: keyof Colors) {
 		return color ? this.colors[color] : this.selected;
 	}
@@ -92,35 +72,6 @@ export class Color {
 		this.selected = this.lighting(lighting => lighting + (value ?? 8));
 		return this;
 	}
-
-	// REMOVE UNDER
-	public static get(color?: keyof Colors) {
-		return color ? this.colors[color] : this.selected;
-	}
-
-	public static pick(key: keyof Colors) {
-		this.selected = this.colors[key];
-		return this;
-	}
-
-	public static modify(cb: (h: number, s: number, l: number) => string) {
-		const [h, s, l] = this.selected.split(", ").map((value: string) => parseInt(value));
-		return cb(h, s, l);
-	}
-
-	public static lighting(cb: (l: number) => number) {
-		return this.modify((h, s, l) => `${h}, ${s}%, ${cb(l)}%`);
-	}
-
-	public static darken(value?: number) {
-		this.selected = this.lighting(lighting => lighting - (value ?? 8));
-		return this;
-	}
-
-	public static lighten(value?: number) {
-		this.selected = this.lighting(lighting => lighting + (value ?? 8));
-		return this;
-	}
 }
 
 interface Shadows {
@@ -129,7 +80,7 @@ interface Shadows {
 	spread: string;
 }
 
-export class Shadow {
+class Shadow {
 	public selected: string;
 
 	public shadows: Shadows = {
@@ -139,19 +90,6 @@ export class Shadow {
 	};
 
 	public pick(...keys: Array<keyof Shadows>) {
-		return keys.map(key => this.shadows[key]).join(", ");
-	}
-
-	// REMOVE UNDER
-	public static selected: string;
-
-	public static shadows: Shadows = {
-		elevate: "0 0 3px 0 rgba(0, 0, 0, 0.75)",
-		elevateUnder: "0 4px 8px rgba(0, 0, 0, 0.15)",
-		spread: "0 0 10px 0 rgba(0, 0, 0, 0.15)",
-	};
-
-	public static pick(...keys: Array<keyof Shadows>) {
 		return keys.map(key => this.shadows[key]).join(", ");
 	}
 }
