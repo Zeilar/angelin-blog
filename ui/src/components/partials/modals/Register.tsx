@@ -28,7 +28,11 @@ export function Register({ open, setOpen, openLogin }: Props) {
 	const wrapper = useClickOutside<HTMLDivElement>(() => open && setOpen(false));
 
 	const [status, setStatus] = useState<ModalStatus>(null);
-	const { inputs, onChange, empty } = useInputs({ email: "", password: "", passwordConfirm: "" });
+	const { inputs, onChange, empty } = useInputs<Inputs>({
+		email: "",
+		password: "",
+		passwordConfirm: "",
+	});
 	const [errors, setErrors] = useState<InputError>(null);
 
 	const firstInput = useRef<HTMLInputElement>(null);
