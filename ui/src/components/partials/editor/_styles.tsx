@@ -1,16 +1,17 @@
-import styled from "styled-components";
-import { Color, Shadow, theme } from "../../../styles/theme";
+import styled, { css } from "styled-components";
 import Icon from "@mdi/react";
 import * as Styles from "../../styled-components";
 
 export const Wrapper = styled(Styles.Row)`
-	background-color: hsl(${Color.pick("secondary").get()});
 	flex-wrap: wrap;
 	padding: 0.25rem;
 	margin-bottom: 0.5rem;
-	box-shadow: ${Shadow.pick("elevateUnder")};
-	border-radius: ${theme.borderRadius}px;
 	width: 100%;
+	${props => css`
+		background-color: hsl(${props.theme.color.get("secondary")});
+		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
+		border-radius: ${props.theme.borderRadius}px;
+	`}
 `;
 
 export const ToolbarButton = styled.button.attrs({ tabIndex: -1 })`
@@ -22,18 +23,20 @@ export const ToolbarButton = styled.button.attrs({ tabIndex: -1 })`
 	justify-content: center;
 	align-items: center;
 	margin: 0.25rem;
-	border-radius: ${theme.borderRadius}px;
 	font-weight: 600;
-	&:hover {
-		background-color: hsl(${Color.pick("primary").get()});
-	}
-	&.active {
-		color: hsl(${Color.pick("textSecondary").get()});
-		background-color: hsl(${Color.pick("brand").get()});
-	}
-	&:focus {
-		outline: 0;
-	}
+	${props => css`
+		border-radius: ${props.theme.borderRadius}px;
+		&:hover {
+			background-color: hsl(${props.theme.color.get("primary")});
+		}
+		&.active {
+			color: hsl(${props.theme.color.get("textSecondary")});
+			background-color: hsl(${props.theme.color.get("brand")});
+		}
+		&:focus {
+			outline: 0;
+		}
+	`}
 `;
 
 export const ToolbarIcon = styled(Icon)`

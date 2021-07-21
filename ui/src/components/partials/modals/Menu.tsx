@@ -7,7 +7,7 @@ import {
 	SetStateAction,
 } from "react";
 import { Col } from "../../styled-components";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useClickOutside } from "../../hooks";
 import { Color, Shadow, theme } from "../../../styles/theme";
 
@@ -49,13 +49,15 @@ export function Menu({ render, onEscape, ...props }: Props) {
 
 export const MenuWrapper = styled(Col)`
 	position: absolute;
-	background-color: hsl(${Color.pick("body").darken(2).get()});
 	right: 0;
 	top: 2.5rem;
 	display: none;
 	padding: 0.5rem;
-	border-radius: ${theme.borderRadius}px;
-	box-shadow: ${Shadow.pick("elevate")};
+	${props => css`
+		background-color: hsl(${props.theme.color.pick("body").darken(2).get()});
+		border-radius: ${props.theme.borderRadius}px;
+		box-shadow: ${props.theme.shadow.pick("elevate")};
+	`}
 	&.open {
 		display: flex;
 	}
@@ -68,10 +70,12 @@ export const MenuItem = styled.div`
 	z-index: 50;
 	border-radius: ${theme.borderRadius}px;
 	font-weight: 600;
-	&:hover {
-		background-color: hsl(${Color.pick("primary").get()});
-	}
-	&.danger {
-		color: hsl(${Color.pick("error").get()});
-	}
+	${props => css`
+		&:hover {
+			background-color: hsl(${props.theme.color.get("primary")});
+		}
+		&.danger {
+			color: hsl(${props.theme.color.get("error")});
+		}
+	`}
 `;

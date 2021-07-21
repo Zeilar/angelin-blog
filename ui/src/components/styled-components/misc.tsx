@@ -1,13 +1,14 @@
-import styled from "styled-components";
-import { Color, Shadow, theme } from "../../styles/theme";
+import styled, { css } from "styled-components";
 import * as Styles from "./";
 
 export const PostWrapper = styled(Styles.Col)`
-	background-color: hsl(${Color.pick("secondary").get()});
-	border-radius: ${theme.borderRadius}px;
 	padding: 1rem;
 	position: relative;
-	box-shadow: ${Shadow.pick("elevateUnder")};
+	${props => css`
+		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
+		background-color: hsl(${props.theme.color.get("secondary")});
+		border-radius: ${props.theme.borderRadius}px;
+	`}
 	&:first-child {
 		margin-top: 0;
 	}
@@ -21,7 +22,9 @@ export const PostPreview = styled.article`
 `;
 
 export const PostPreviewHeader = styled(Styles.H4)`
-	&:hover {
-		color: hsl(${Color.pick("brand").get()});
-	}
+	${props => css`
+		&:hover {
+			color: hsl(${props.theme.color.get("brand")});
+		}
+	`}
 `;

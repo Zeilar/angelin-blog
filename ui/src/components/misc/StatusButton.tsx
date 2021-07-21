@@ -1,9 +1,8 @@
 import { ReactNode } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { PrimaryButton } from "../styled-components";
 import { mdiClose, mdiCheck, mdiLoading } from "@mdi/js";
 import Icon from "@mdi/react";
-import { Color } from "../../styles/theme";
 import classNames from "classnames";
 import { ModalStatus } from "../../types/modals";
 
@@ -44,7 +43,9 @@ export function StatusButton(props: Props) {
 }
 
 const StatusIcon = styled(Icon)`
-	color: hsl(${Color.pick("text").get()});
+	${props => css`
+		color: hsl(${props.theme.color.get("text")});
+	`}
 `;
 
 const StyledButton = styled(PrimaryButton)`
@@ -64,15 +65,17 @@ const StyledButton = styled(PrimaryButton)`
 		pointer-events: none;
 	}
 
-	&.success {
-		background-color: hsl(${Color.pick("success").get()});
-	}
+	${props => css`
+		&.success {
+			background-color: hsl(${props.theme.color.get("success")});
+		}
 
-	&.error {
-		background-color: hsl(${Color.pick("error").get()});
-	}
+		&.error {
+			background-color: hsl(${props.theme.color.get("error")});
+		}
 
-	&.loading {
-		background-color: hsla(${Color.pick("brand").get()}, 0.25);
-	}
+		&.loading {
+			background-color: hsla(${props.theme.color.get("brand")}, 0.25);
+		}
+	`}
 `;

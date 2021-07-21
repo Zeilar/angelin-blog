@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { Color, Shadow, theme } from "../../../styles/theme";
+import styled, { css } from "styled-components";
 import * as Styles from "../../styled-components";
 import Icon from "@mdi/react";
 import { mdiClose, mdiGithub } from "@mdi/js";
@@ -30,9 +29,12 @@ export const Wrapper = styled(Styles.Col)`
 	pointer-events: none;
 	opacity: 0;
 	transition: 0.25s;
-	border-radius: ${theme.borderRadius}px;
-	background-color: hsl(${Color.pick("body").darken(2).get()});
-	box-shadow: ${Shadow.pick("spread")};
+	${props => css`
+		border-radius: ${props.theme.borderRadius}px;
+
+		background-color: hsl(${props.theme.color.pick("body").darken(2).get()});
+		box-shadow: ${props.theme.shadow.pick("spread")};
+	`}
 	&.open {
 		pointer-events: all;
 		opacity: 1;
@@ -41,7 +43,9 @@ export const Wrapper = styled(Styles.Col)`
 `;
 
 export const Header = styled(Styles.H3)`
-	color: hsl(${Color.pick("brand").get()});
+	${props => css`
+		color: hsl(${props.theme.color.get("brand")});
+	`}
 `;
 
 export const CloseButton = styled.button.attrs({ type: "button" })`
@@ -56,10 +60,12 @@ export const CloseButton = styled.button.attrs({ type: "button" })`
 	cursor: pointer;
 	color: inherit;
 	transition: 0.05s;
-	border-radius: ${theme.borderRadius}px;
-	&:hover {
-		color: hsl(${Color.pick("brand").get()});
-	}
+	${props => css`
+		border-radius: ${props.theme.borderRadius}px;
+		&:hover {
+			color: hsl(${props.theme.color.get("brand")});
+		}
+	`}
 	&:focus {
 		outline: 0;
 	}
@@ -68,12 +74,16 @@ export const CloseButton = styled.button.attrs({ type: "button" })`
 const LoginDividerLine = styled.div`
 	height: 1px;
 	width: 100%;
-	background-color: hsl(${Color.pick("text").get()});
+	${props => css`
+		background-color: hsl(${props.theme.color.get("text")});
+	`}
 `;
 const LoginDividerText = styled.span`
-	color: hsl(${Color.pick("textMuted").get()});
 	user-select: none;
 	margin: 0 1rem;
+	${props => css`
+		color: hsl(${props.theme.color.get("textMuted")});
+	`}
 `;
 export function LoginDivider() {
 	return (
@@ -95,7 +105,9 @@ const OAuthIcon = styled(Icon)`
 `;
 export const GitHubButton = styled(OAuthButton)`
 	background-color: hsl(0, 0%, 6%);
-	color: hsl(${Color.pick("text").get()});
+	${props => css`
+		color: hsl(${props.theme.color.get("text")});
+	`}
 	&:hover {
 		background-color: hsl(0, 0%, 2%);
 	}
@@ -131,7 +143,9 @@ export const Main = styled.form`
 `;
 
 export const Footer = styled.div`
-	background-color: hsl(${Color.pick("secondary").get()});
 	padding: 2rem;
-	box-shadow: ${Shadow.pick("spread")};
+	${props => css`
+		background-color: hsl(${props.theme.color.get("secondary")});
+		box-shadow: ${props.theme.shadow.pick("spread")};
+	`}
 `;

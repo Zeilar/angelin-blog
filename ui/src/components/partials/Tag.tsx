@@ -1,9 +1,8 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Tag as ITag } from "../../models";
 import { Row, Span } from "../styled-components";
 import { mdiTagOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import { Color, theme } from "../../styles/theme";
 import { HTMLAttributes } from "react";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -29,10 +28,12 @@ const TagIcon = styled(Icon)`
 const Wrapper = styled(Row)`
 	cursor: pointer;
 	user-select: none;
-	&:hover {
-		${Span},
-		${TagIcon} {
-			color: hsl(${Color.pick("brand").get()});
+	${props => css`
+		&:hover {
+			${Span},
+			${TagIcon} {
+				color: hsl(${props.theme.color.get("brand")});
+			}
 		}
-	}
+	`}
 `;

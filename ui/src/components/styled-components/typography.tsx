@@ -11,10 +11,12 @@ export const header = css`
 export const text = css`
 	font-size: 1rem;
 	font-family: Open Sans;
-	color: hsl(${Color.pick("text").get()});
-	&.muted {
-		color: hsl(${Color.pick("textMuted").get()});
-	}
+	${props => css`
+		color: hsl(${props.theme.color.get("text")});
+		&.muted {
+			color: hsl(${props.theme.color.get("textMuted")});
+		}
+	`}
 `;
 
 export const H1 = styled.h1`
@@ -61,11 +63,13 @@ export const A = styled.a`
 	${text}
 	cursor: pointer;
 	display: inline-flex;
-	color: hsl(${Color.pick("brand").get()});
 	font-weight: 600;
-	&:hover {
-		color: hsl(${Color.pick("brand").darken().get()});
-	}
+	${props => css`
+		color: hsl(${props.theme.color.get("brand")});
+		&:hover {
+			color: hsl(${props.theme.color.pick("brand").darken().get()});
+		}
+	`}
 `;
 
 export const Label = styled.label`

@@ -1,28 +1,33 @@
 import "./fonts.css";
-import { createGlobalStyle } from "styled-components";
-import { Color } from "./theme";
+import { createGlobalStyle, css } from "styled-components";
 import { editor } from "./tiptap";
 
 export const GlobalStyles = createGlobalStyle`
     ${editor}
 
-    ::selection {
-        color: hsl(${Color.pick("brand").get()});
-        background-color: hsl(${Color.pick("secondary").get()});
-    }
+    ${props => css`
+		::placeholder {
+			color: hsl(${props.theme.color.get("textMuted")});
+		}
 
-    body,
-    #root {
-        font-family: Open Sans;
-        color: hsl(${Color.pick("text").get()});
-        background-color: hsl(${Color.pick("body").get()});
-        min-height: 100vh;
-    }
+		::selection {
+			color: hsl(${props.theme.color.get("brand")});
+			background-color: hsl(${props.theme.color.get("secondary")});
+		}
 
-    a {
-        color: hsl(${Color.pick("link").get()});
-        text-decoration: none;
-    }
+		body,
+		#root {
+			font-family: Open Sans;
+			color: hsl(${props.theme.color.get("text")});
+			background-color: hsl(${props.theme.color.get("body")});
+			min-height: 100vh;
+		}
+
+		a {
+			color: hsl(${props.theme.color.get("link")});
+			text-decoration: none;
+		}
+	`}
 
     a,
     button {
@@ -32,10 +37,6 @@ export const GlobalStyles = createGlobalStyle`
     input,
     textarea {
         font: inherit;
-    }
-
-    ::placeholder {
-        color: hsl(${Color.pick("textMuted").get()});
     }
 
     img,

@@ -7,15 +7,20 @@ export const editor = css`
 
 		.ProseMirror,
 		.tiptap {
-			background-color: hsl(${Color.pick("secondary").get()});
 			outline: 0;
 			padding: 1rem;
 			box-shadow: ${Shadow.pick("elevateUnder")};
 			min-height: 400px;
+			${props => css`
+				background-color: hsl(${props.theme.color.get("secondary")});
+			`}
 		}
-		&.error {
-			border: 1px solid hsl(${Color.pick("error").get()});
-		}
+
+		${props => css`
+			&.error {
+				border: 1px solid hsl(${props.theme.color.get("error")});
+			}
+		`}
 	}
 
 	.ProseMirror,
@@ -50,9 +55,11 @@ export const editor = css`
 
 		pre {
 			background-color: rgba(0, 0, 0, 0.35);
-			color: hsl(${Color.pick("text").get()});
 			padding: 0.75rem 1rem;
 			border-radius: ${theme.borderRadius}px;
+			${props => css`
+				color: hsl(${props.theme.color.get("text")});
+			`}
 
 			code {
 				padding: 0;
@@ -68,7 +75,9 @@ export const editor = css`
 		blockquote {
 			padding: 0.25rem 0 0.25rem 1rem;
 			background-color: rgba(0, 0, 0, 0.1);
-			border-left: 2px solid hsl(${Color.pick("brand").get()});
+			${props => css`
+				border-left: 2px solid hsl(${props.theme.color.get("brand")});
+			`}
 		}
 
 		hr {

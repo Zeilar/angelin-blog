@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { Color, Shadow, theme } from "../../styles/theme";
 import { useAuth } from "../contexts";
 import * as Styles from "../styled-components";
 import { Login, Register } from "./modals";
@@ -92,11 +91,13 @@ export function Navbar() {
 }
 
 const Wrapper = styled(Styles.Row)`
+	${props => css`
+		background-color: hsl(${props.theme.color.get("secondary")});
+		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
+	`}
 	position: sticky;
 	top: 0;
 	z-index: 100;
-	background-color: hsl(${Color.pick("secondary").get()});
-	box-shadow: ${Shadow.pick("elevateUnder")};
 `;
 
 const Nav = styled(Styles.Container)`
@@ -111,15 +112,17 @@ const link = css`
 	${Styles.header}
 	position: relative;
 	user-select: none;
-	border-radius: ${theme.borderRadius}px;
 	padding: 1rem 0;
 	transition: 0.05s;
-	&:hover {
-		color: hsl(${Color.pick("brand").get()});
-	}
-	&:active {
-		color: hsl(${Color.pick("brand").darken().get()});
-	}
+	${props => css`
+		border-radius: ${props.theme.borderRadius}px;
+		&:hover {
+			color: hsl(${props.theme.color.get("brand")});
+		}
+		&:active {
+			color: hsl(${props.theme.color.pick("brand").darken().get()});
+		}
+	`}
 `;
 
 const Link = styled(NavLink)`

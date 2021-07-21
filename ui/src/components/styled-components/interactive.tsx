@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { Color, Shadow, theme } from "../../styles/theme";
 import * as Styles from "./";
 import { mdiAlertCircleOutline } from "@mdi/js";
 import Icon from "@mdi/react";
@@ -13,11 +12,13 @@ export const button = css`
 	font-family: Open Sans;
 	justify-content: center;
 	align-items: center;
-	background-color: hsl(${Color.pick("primary").get()});
-	box-shadow: ${Shadow.pick("elevateUnder")};
-	border-radius: ${theme.borderRadius}px;
 	font-weight: 600;
-	color: hsl(${Color.pick("text").get()});
+	${props => css`
+		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
+		border-radius: ${props.theme.borderRadius}px;
+		background-color: hsl(${props.theme.color.get("primary")});
+		color: hsl(${props.theme.color.get("text")});
+	`}
 	&:focus {
 		outline: 0;
 	}
@@ -27,7 +28,9 @@ export const button = css`
 		cursor: default;
 		pointer-events: none;
 		border-color: transparent;
-		color: hsl(${Color.pick("textMuted").get()});
+		${props => css`
+			color: hsl(${props.theme.color.get("textMuted")});
+		`}
 	}
 `;
 
@@ -35,24 +38,28 @@ export const PrimaryButton = styled.button`
 	${button}
 	min-width: 5rem;
 	transition: transform 0.25s;
-	background-color: hsl(${Color.pick("brand").get()});
-	color: hsl(${Color.pick("textSecondary").get()});
-	&:hover {
-		background-color: hsl(${Color.pick("brand").darken().get()});
-	}
+	${props => css`
+		background-color: hsl(${props.theme.color.get("brand")});
+		color: hsl(${props.theme.color.get("textSecondary")});
+		&:hover {
+			background-color: hsl(${props.theme.color.pick("brand").darken().get()});
+		}
+	`}
 `;
 
 export const SecondaryButton = styled.button`
 	${button}
 	width: fit-content;
-	border-radius: ${theme.borderRadius}px;
-	background-color: hsl(${Color.pick("secondary").lighten(4).get()});
 	border: 1px solid transparent;
 	padding: 0.5rem 1rem;
-	box-shadow: ${Shadow.pick("elevateUnder")};
-	&:hover {
-		background-color: hsl(${Color.pick("secondary").lighten(6).get()});
-	}
+	${props => css`
+		border-radius: ${props.theme.borderRadius}px;
+		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
+		background-color: hsl(${props.theme.color.pick("secondary").lighten(4).get()});
+		&:hover {
+			background-color: hsl(${props.theme.color.pick("secondary").lighten(6).get()});
+		}
+	`}
 `;
 
 export const IconButton = styled.button`
@@ -60,14 +67,16 @@ export const IconButton = styled.button`
 	width: fit-content;
 	background: none;
 	box-shadow: none;
-	border-radius: ${theme.borderRadius}px;
 	padding: 0.5rem;
+	${props => css`
+		border-radius: ${props.theme.borderRadius}px;
+		&:hover {
+			background-color: hsl(${props.theme.color.pick("primary").lighten(4).get()});
+		}
+	`}
 	& > * {
 		min-width: 1rem;
 		min-height: 1rem;
-	}
-	&:hover {
-		background-color: hsl(${Color.pick("primary").lighten(4).get()});
 	}
 `;
 
@@ -76,33 +85,41 @@ export const Input = styled.input`
 	border: 0;
 	min-width: 15rem;
 	padding: 0.75rem;
-	border-radius: ${theme.borderRadius}px;
-	background-color: hsl(${Color.pick("secondary").get()});
-	box-shadow: ${Shadow.pick("elevateUnder")};
-	&.error {
-		border: 1px solid hsl(${Color.pick("error").get()});
-	}
-	&:focus {
-		background-color: hsl(${Color.pick("primary").get()});
-	}
+	${props => css`
+		border-radius: ${props.theme.borderRadius}px;
+		background-color: hsl(${props.theme.color.get("secondary")});
+		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
+		&.error {
+			border: 1px solid hsl(${props.theme.color.get("error")});
+		}
+		&:focus {
+			background-color: hsl(${props.theme.color.get("primary")});
+		}
+	`}
 `;
 
 export const FormError = styled(Styles.P)`
 	width: 100%;
-	background-color: hsla(${Color.pick("error").get()}, 0.25);
-	box-shadow: ${Shadow.pick("elevateUnder")};
-	color: hsl(${Color.pick("text").get()});
-	border-left: 2px solid hsl(${Color.pick("error").get()});
 	padding: 0.75rem;
-	border-radius: ${theme.borderRadius}px;
+	${props => css`
+		background-color: hsla(${props.theme.color.pick("error").get()}, 0.25);
+		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
+		color: hsl(${props.theme.color.get("text")});
+		border-left: 2px solid hsl(${props.theme.color.get("error")});
+		border-radius: ${props.theme.borderRadius}px;
+	`}
 `;
 
 const StyledInputError = styled(Styles.Span)`
-	color: hsl(${Color.pick("error").get()});
 	font-weight: bold;
+	${props => css`
+		color: hsl(${props.theme.color.get("error")});
+	`}
 `;
 const InputErrorIcon = styled(Icon)`
-	color: hsl(${Color.pick("error").get()});
+	${props => css`
+		color: hsl(${props.theme.color.get("error")});
+	`}
 `;
 export function InputError({ message, ...props }: { message?: string; [key: string]: any }) {
 	return (

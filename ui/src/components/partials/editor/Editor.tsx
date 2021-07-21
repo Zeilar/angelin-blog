@@ -9,11 +9,11 @@ import { StatusButton } from "../../misc";
 import { Toolbar } from "./";
 import { ModalStatus } from "../../../types/modals";
 import { useState } from "react";
-import { Color, Shadow, theme } from "../../../styles/theme";
 import classNames from "classnames";
 import { Col, InputError } from "../../styled-components";
 import { useEffect } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { theme } from "../../../styles/theme";
 
 export default function Editor({ ...props }) {
 	const { push } = useHistory();
@@ -95,9 +95,11 @@ export default function Editor({ ...props }) {
 
 const Input = styled.input`
 	outline: 0;
-	background-color: hsl(${Color.pick("secondary").get()});
-	box-shadow: ${Shadow.pick("elevateUnder")};
-	border-radius: ${theme.borderRadius}px;
 	padding: 0.75rem;
 	width: 100%;
+	${props => css`
+		background-color: hsl(${props.theme.color.get("secondary")});
+		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
+		border-radius: ${props.theme.borderRadius}px;
+	`}
 `;
