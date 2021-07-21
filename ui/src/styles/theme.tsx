@@ -28,7 +28,7 @@ export class Color {
 		textMuted: "0, 0%, 68.5%",
 		border: "0, 0%, 10%",
 		link: "0, 100%, 50%",
-		error: "0, 100%, 45%",
+		error: "0, 100%, 60%",
 		success: "120, 100%, 35%",
 	};
 
@@ -79,7 +79,7 @@ export const theme: ITheme = {
 		modalsAfterResponse: 500,
 		modalsFade: 250,
 	},
-	borderRadius: 4,
+	borderRadius: 5,
 	breakpoints: {
 		// In pixels
 		phone: 768,
@@ -97,7 +97,7 @@ export class Shadow {
 	public static selected: string;
 
 	public static shadows: Shadows = {
-		elevate: "0 0 5px 0 rgba(0, 0, 0, 0.75)",
+		elevate: "0 0 3px 0 rgba(0, 0, 0, 0.75)",
 		elevateUnder: "0 4px 8px rgba(0, 0, 0, 0.15)",
 		spread: "0 0 10px 0 rgba(0, 0, 0, 0.15)",
 	};

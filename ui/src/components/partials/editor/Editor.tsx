@@ -9,8 +9,8 @@ import { StatusButton } from "../../misc";
 import { Toolbar } from "./";
 import { ModalStatus } from "../../../types/modals";
 import { useState } from "react";
-import { Color, theme } from "../../../styles/theme";
-import classnames from "classnames";
+import { Color, Shadow, theme } from "../../../styles/theme";
+import classNames from "classnames";
 import { Col, InputError } from "../../styled-components";
 import { useEffect } from "react";
 import styled from "styled-components";
@@ -78,14 +78,14 @@ export default function Editor({ ...props }) {
 				onChange={e => setTitle(e.target.value)}
 				placeholder="Title"
 			/>
-			<Wrapper {...props} align="flex-start">
+			<Col {...props} align="flex-start">
 				<Toolbar editor={editor} />
 				<EditorContent
-					className={classnames("editing w-full", { error: Boolean(errorMessage) })}
+					className={classNames("editing w-full", { error: Boolean(errorMessage) })}
 					editor={editor}
 				/>
 				{errorMessage && <InputError message={errorMessage} className="mt-2" />}
-			</Wrapper>
+			</Col>
 			<StatusButton status={status} className="mt-4" onClick={submit}>
 				Submit
 			</StatusButton>
@@ -93,18 +93,11 @@ export default function Editor({ ...props }) {
 	);
 }
 
-const Wrapper = styled(Col)`
-	/* background-color: hsl(${Color.pick("secondary").get()});
-	padding: 0.75rem; */
-`;
-
 const Input = styled.input`
 	outline: 0;
 	background-color: hsl(${Color.pick("secondary").get()});
-	border: 2px solid hsl(${Color.pick("border").get()});
+	box-shadow: ${Shadow.pick("elevateUnder")};
+	border-radius: ${theme.borderRadius}px;
 	padding: 0.75rem;
 	width: 100%;
-	&:focus {
-		background-color: hsl(${Color.pick("primary").get()});
-	}
 `;

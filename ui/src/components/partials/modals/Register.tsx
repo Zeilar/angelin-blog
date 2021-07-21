@@ -5,7 +5,7 @@ import { theme } from "../../../styles/theme";
 import * as Styles from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { useAuth } from "../../contexts";
-import classnames from "classnames";
+import classNames from "classnames";
 import { ModalStatus } from "../../../types/modals";
 import ContainerLoader from "../../misc/ContainerLoader";
 import { RenderProps } from "./";
@@ -90,7 +90,7 @@ export function Register({ open, setOpen, openLogin }: Props) {
 	}
 
 	return (
-		<ModalStyles.Wrapper className={classnames({ open })} ref={wrapper}>
+		<ModalStyles.Wrapper className={classNames({ open })} ref={wrapper}>
 			<ModalStyles.Main onSubmit={submit}>
 				<ContainerLoader loading={status === "loading"} />
 				<ModalStyles.Close onClick={() => setOpen(false)} />

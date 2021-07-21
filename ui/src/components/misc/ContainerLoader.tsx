@@ -1,6 +1,6 @@
 import { useState, useEffect, ReactNode } from "react";
 import styled from "styled-components";
-import classnames from "classnames";
+import classNames from "classnames";
 import { mdiLoading } from "@mdi/js";
 import Icon from "@mdi/react";
 
@@ -10,7 +10,7 @@ interface Props {
 
 export default function ContainerLoader({ loading = false }: Props) {
 	return (
-		<Container className={classnames({ active: loading })}>
+		<Container className={classNames({ active: loading })}>
 			<Loader path={mdiLoading} spin={1} size={2} />
 		</Container>
 	);

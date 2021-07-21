@@ -47,7 +47,7 @@ export const Grid = styled.div`
 
 export const Container = styled(Col)`
 	${flexbox}
-	width: 1400px;
+	width: 1200px;
 	margin-left: auto;
 	margin-right: auto;
 	max-width: calc(100% - 1rem);

@@ -34,7 +34,6 @@ export const button = css`
 export const PrimaryButton = styled.button`
 	${button}
 	min-width: 5rem;
-	font-size: 1.2rem;
 	transition: transform 0.25s;
 	background-color: hsl(${Color.pick("brand").get()});
 	color: hsl(${Color.pick("textSecondary").get()});
@@ -64,11 +63,11 @@ export const IconButton = styled.button`
 	border-radius: ${theme.borderRadius}px;
 	padding: 0.5rem;
 	& > * {
-		width: 2rem;
-		height: 2rem;
+		min-width: 1rem;
+		min-height: 1rem;
 	}
 	&:hover {
-		background-color: hsl(${Color.pick("primary").get()});
+		background-color: hsl(${Color.pick("primary").lighten(4).get()});
 	}
 `;
 

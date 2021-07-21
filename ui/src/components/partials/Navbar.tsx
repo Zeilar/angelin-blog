@@ -55,7 +55,7 @@ export function Navbar() {
 	return (
 		<Wrapper as="header" align="center">
 			<Nav as="nav">
-				<Styles.Row as="ul">
+				<Styles.Row className="py-1" as="ul">
 					<Item className="mr-8">
 						<Link to="/" exact>
 							Home
@@ -105,7 +105,6 @@ const Nav = styled(Styles.Container)`
 
 const Item = styled.li.attrs({ align: "center" })`
 	${Styles.flexbox}
-	font-size: 1.25rem;
 `;
 
 const link = css`

@@ -6,7 +6,7 @@ import {
 	HTMLAttributes,
 	SetStateAction,
 } from "react";
-import classnames from "classnames";
+import classNames from "classnames";
 import { Background } from "./_styles";
 
 export interface RenderProps {
@@ -43,7 +43,7 @@ export function Modal({ render, onEscape, altOpen, altSetOpen }: Props) {
 	}, [onEscape]);
 
 	return (
-		<Background className={classnames({ open: altOpen ?? open })}>
+		<Background className={classNames({ open: altOpen ?? open })}>
 			{render(altOpen ?? open, altSetOpen ?? setOpen)}
 		</Background>
 	);

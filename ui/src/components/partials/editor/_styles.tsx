@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import { Color, theme } from "../../../styles/theme";
+import { Color, Shadow, theme } from "../../../styles/theme";
 import Icon from "@mdi/react";
 import * as Styles from "../../styled-components";
 
 export const Wrapper = styled(Styles.Row)`
-	background-color: hsl(${Color.pick("body").get()});
+	background-color: hsl(${Color.pick("secondary").get()});
 	flex-wrap: wrap;
 	padding: 0.25rem;
 	margin-bottom: 0.5rem;
-	border: 2px solid hsl(${Color.pick("border").get()});
+	box-shadow: ${Shadow.pick("elevateUnder")};
 	border-radius: ${theme.borderRadius}px;
 	width: 100%;
 `;

@@ -1,11 +1,7 @@
 import { RefObject } from "react";
-import styled from "styled-components";
 import * as Styles from "../styled-components";
-import classnames from "classnames";
+import classNames from "classnames";
 import { InputHTMLAttributes } from "react";
-import { Color } from "../../styles/theme";
-import { mdiAlertCircleOutline } from "@mdi/js";
-import Icon from "@mdi/react";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
 	label?: string;
@@ -19,7 +15,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 export function Input(props: Props) {
 	return (
 		<Styles.Col
-			className={classnames(props.containerClass, "mt-5 relative")}
+			className={classNames(props.containerClass, "mt-5 relative")}
 			align="flex-start"
 		>
 			{props.label && <Styles.Label className="mb-2">{props.label}</Styles.Label>}
@@ -27,7 +23,7 @@ export function Input(props: Props) {
 			<Styles.Input
 				{...props}
 				ref={props.forwardRef}
-				className={classnames(
+				className={classNames(
 					{ label: Boolean(props.label), error: Boolean(props.error) },
 					"w-full",
 					props.className

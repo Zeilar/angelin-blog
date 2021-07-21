@@ -1,5 +1,5 @@
 import { css } from "styled-components";
-import { Color, theme } from "./theme";
+import { Color, Shadow, theme } from "./theme";
 
 export const editor = css`
 	.editing {
@@ -10,11 +10,8 @@ export const editor = css`
 			background-color: hsl(${Color.pick("secondary").get()});
 			outline: 0;
 			padding: 1rem;
-			border: 2px solid hsl(${Color.pick("border").get()});
+			box-shadow: ${Shadow.pick("elevateUnder")};
 			min-height: 400px;
-			&:focus {
-				background-color: hsl(${Color.pick("primary").get()});
-			}
 		}
 		&.error {
 			border: 1px solid hsl(${Color.pick("error").get()});

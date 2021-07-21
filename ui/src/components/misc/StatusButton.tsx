@@ -4,7 +4,7 @@ import { PrimaryButton } from "../styled-components";
 import { mdiClose, mdiCheck, mdiLoading } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Color } from "../../styles/theme";
-import classnames from "classnames";
+import classNames from "classnames";
 import { ModalStatus } from "../../types/modals";
 
 interface Props {
@@ -29,7 +29,7 @@ export function StatusButton(props: Props) {
 		}
 	}
 
-	const classes = classnames(props.className, {
+	const classes = classNames(props.className, {
 		active: props.status != null,
 		error: props.status === "error",
 		loading: props.status === "loading",

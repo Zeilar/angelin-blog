@@ -6,6 +6,7 @@ export const PostWrapper = styled(Styles.Col)`
 	background-color: hsl(${Color.pick("secondary").get()});
 	border-radius: ${theme.borderRadius}px;
 	padding: 1rem;
+	position: relative;
 	box-shadow: ${Shadow.pick("elevateUnder")};
 	&:first-child {
 		margin-top: 0;
