@@ -48,7 +48,7 @@ export function Register({ open, setOpen, openLogin }: Props) {
 			empty();
 			setErrors(null);
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
-	}, [loggedIn]);
+	}, [loggedIn, empty]);
 
 	function oAuthSubmit() {
 		setStatus("loading");
