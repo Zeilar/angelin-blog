@@ -1,18 +1,19 @@
 import styled from "styled-components";
-import { Color, Shadow, theme } from "../../../styles/theme";
+import { Color, theme } from "../../../styles/theme";
 import Icon from "@mdi/react";
 import * as Styles from "../../styled-components";
 
 export const Wrapper = styled(Styles.Row)`
-	background-color: hsl(${Color.pick("secondary").get()});
+	background-color: hsl(${Color.pick("body").get()});
 	flex-wrap: wrap;
 	padding: 0.25rem;
 	margin-bottom: 0.5rem;
-	box-shadow: ${Shadow.pick("elevateUnder")};
+	border: 2px solid hsl(${Color.pick("border").get()});
 	border-radius: ${theme.borderRadius}px;
+	width: 100%;
 `;
 
-export const ToolbarButton = styled.button`
+export const ToolbarButton = styled.button.attrs({ tabIndex: -1 })`
 	padding: 0.5rem;
 	font-size: 1rem;
 	min-width: 2.5rem;

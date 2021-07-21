@@ -51,7 +51,7 @@ function bootstrap() {
 			cookieParser(),
 			urlencoded({ extended: true }),
 			cors({
-				origin: "http://localhost:3000",
+				origin: "http://localhost:3000", // Never set this to wildcard "*"
 				credentials: true,
 			}),
 			json(),
@@ -62,7 +62,7 @@ function bootstrap() {
 				cookie: {
 					maxAge: DateHelpers.DAY_IN_MILLISECONDS * 7,
 					httpOnly: true,
-					secure: false, // TODO: setup env variable for is prod
+					secure: false, // TODO: use env variable
 					sameSite: "strict",
 				},
 			}),
@@ -148,6 +148,8 @@ function bootstrap() {
 	});
 
 	app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+
+	return container;
 }
 
-bootstrap();
+export const container = bootstrap();

@@ -22,8 +22,8 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 
 	return (
 		<Styles.Container direction="column">
-			<Styles.PostWrapper className="mt-4">
-				<Styles.H3 className="mb-4">{query.body.data.title}</Styles.H3>
+			<Styles.PostWrapper className="my-4">
+				<Styles.H4 className="mb-4">{query.body.data.title}</Styles.H4>
 				<ReadOnlyEditor content={query.body.data.body} />
 			</Styles.PostWrapper>
 		</Styles.Container>

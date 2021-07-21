@@ -11,7 +11,7 @@ export function Toolbar({ editor }: Props) {
 	if (!editor) return null;
 
 	return (
-		<ToolbarStyles.Wrapper className="mb-2">
+		<ToolbarStyles.Wrapper className="mb-2" tabIndex={-1}>
 			<ToolbarStyles.ToolbarButton
 				onClick={() => editor.chain().focus().toggleBold().run()}
 				className={classnames({ active: editor.isActive("bold") }, "font-bold")}

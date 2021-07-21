@@ -96,7 +96,7 @@ const Wrapper = styled(Styles.Row)`
 	top: 0;
 	z-index: 100;
 	background-color: hsl(${Color.pick("secondary").get()});
-	box-shadow: ${Shadow.pick("elevate")};
+	box-shadow: ${Shadow.pick("elevateUnder")};
 `;
 
 const Nav = styled(Styles.Container)`

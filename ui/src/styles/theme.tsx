@@ -19,14 +19,14 @@ export class Color {
 	 * Must be kept in HSL format to work properly with the methods
 	 */
 	public static colors: Colors = {
-		body: "0, 0%, 17.5%",
-		primary: "0, 0%, 21.5%",
-		secondary: "0, 0%, 13.5%",
+		body: "0, 0%, 17%",
+		primary: "0, 0%, 24%",
+		secondary: "0, 0%, 19%",
 		brand: "150, 65%, 65%",
 		text: "0, 0%, 88%",
 		textSecondary: "0, 0%, 17.5%",
 		textMuted: "0, 0%, 68.5%",
-		border: "0, 0%, 58.5%",
+		border: "0, 0%, 10%",
 		link: "0, 100%, 50%",
 		error: "0, 100%, 45%",
 		success: "120, 100%, 35%",

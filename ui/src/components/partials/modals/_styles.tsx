@@ -31,7 +31,7 @@ export const Wrapper = styled(Styles.Col)`
 	opacity: 0;
 	transition: 0.25s;
 	border-radius: ${theme.borderRadius}px;
-	background-color: hsl(${Color.pick("secondary").get()});
+	background-color: hsl(${Color.pick("body").darken(2).get()});
 	box-shadow: ${Shadow.pick("spread")};
 	&.open {
 		pointer-events: all;

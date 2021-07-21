@@ -50,6 +50,7 @@ export const SecondaryButton = styled.button`
 	background-color: hsl(${Color.pick("secondary").lighten(4).get()});
 	border: 1px solid transparent;
 	padding: 0.5rem 1rem;
+	box-shadow: ${Shadow.pick("elevateUnder")};
 	&:hover {
 		background-color: hsl(${Color.pick("secondary").lighten(6).get()});
 	}
@@ -77,7 +78,7 @@ export const Input = styled.input`
 	min-width: 15rem;
 	padding: 0.75rem;
 	border-radius: ${theme.borderRadius}px;
-	background-color: hsl(${Color.pick("body").get()});
+	background-color: hsl(${Color.pick("secondary").get()});
 	box-shadow: ${Shadow.pick("elevateUnder")};
 	&.error {
 		border: 1px solid hsl(${Color.pick("error").get()});
