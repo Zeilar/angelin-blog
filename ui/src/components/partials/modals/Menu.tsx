@@ -51,9 +51,9 @@ export const MenuWrapper = styled(Col)`
 	right: 0;
 	top: 2.5rem;
 	display: none;
-	padding: 0.5rem;
+	overflow: hidden;
 	${props => css`
-		background-color: hsl(${props.theme.color.pick("body").darken(2).get()});
+		background-color: hsl(${props.theme.color.get("primary")});
 		border-radius: ${props.theme.borderRadius}px;
 		box-shadow: ${props.theme.shadow.pick("elevate")};
 	`}
@@ -63,15 +63,14 @@ export const MenuWrapper = styled(Col)`
 `;
 
 export const MenuItem = styled.div`
-	padding: 0.5rem 1rem;
+	padding: 0.75rem 1.5rem;
 	white-space: nowrap;
 	cursor: pointer;
 	z-index: 50;
 	font-weight: 600;
 	${props => css`
-		border-radius: ${props.theme.borderRadius}px;
 		&:hover {
-			background-color: hsl(${props.theme.color.get("primary")});
+			background-color: hsl(${props.theme.color.get("secondary")});
 		}
 		&.danger {
 			color: hsl(${props.theme.color.get("error")});

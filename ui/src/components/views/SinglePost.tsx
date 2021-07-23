@@ -1,12 +1,12 @@
 import { RouteComponentProps } from "../../types/props";
 import { Post } from "../../models";
 import { SERVER_URL } from "../../utils";
-import { useClickOutside, useFetch } from "../hooks";
+import { useFetch } from "../hooks";
 import * as Styles from "../styled-components";
 import { ReadOnlyEditor } from "../partials/editor";
 import useTitle from "../hooks/useTitle";
 import { Menu, MenuItem, MenuWrapper } from "../partials/modals";
-import { mdiDotsVertical } from "@mdi/js";
+import { mdiDotsHorizontal } from "@mdi/js";
 import Icon from "@mdi/react";
 import styled from "styled-components";
 import classNames from "classnames";
@@ -33,7 +33,7 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 					render={(open, setOpen) => (
 						<Options>
 							<Dots onClick={() => setOpen(p => !p)}>
-								<Icon path={mdiDotsVertical} />
+								<Icon path={mdiDotsHorizontal} />
 							</Dots>
 							<MenuWrapper className={classNames({ open })}>
 								<MenuItem
@@ -66,7 +66,7 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 
 const Options = styled.div`
 	position: absolute;
-	right: 0.5rem;
+	right: 0.75rem;
 	top: 0.75rem;
 `;
 

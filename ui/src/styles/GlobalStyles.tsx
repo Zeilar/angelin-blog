@@ -11,8 +11,7 @@ export const GlobalStyles = createGlobalStyle`
 		}
 
 		::selection {
-			color: hsl(${props.theme.color.get("brand")});
-			background-color: hsl(${props.theme.color.get("secondary")});
+			color: hsl(${props.theme.color.get("link")});
 		}
 
 		body,
@@ -28,6 +27,12 @@ export const GlobalStyles = createGlobalStyle`
 			text-decoration: none;
 		}
 	`}
+
+    html.transition {
+        * {
+            transition: 0.5s !important;
+        }
+    }
 
     a,
     button {

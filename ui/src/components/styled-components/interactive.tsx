@@ -7,7 +7,7 @@ export const button = css`
 	${Styles.flexbox}
 	font: inherit;
 	border: 0;
-	padding: 0.5rem 1rem;
+	padding: 0.75rem 1.25rem;
 	user-select: none;
 	font-family: Open Sans;
 	justify-content: center;
@@ -19,6 +19,9 @@ export const button = css`
 		background-color: hsl(${props.theme.color.get("primary")});
 		color: hsl(${props.theme.color.get("text")});
 	`}
+	&.small {
+		padding: 0.5rem 1rem;
+	}
 	&:focus {
 		outline: 0;
 	}
@@ -40,7 +43,7 @@ export const PrimaryButton = styled.button`
 	transition: transform 0.25s;
 	${props => css`
 		background-color: hsl(${props.theme.color.get("brand")});
-		color: hsl(${props.theme.color.get("textSecondary")});
+		color: hsl(${props.theme.color.get("textSecondaryStrong")});
 		&:hover {
 			background-color: hsl(${props.theme.color.pick("brand").darken().get()});
 		}
@@ -51,7 +54,6 @@ export const SecondaryButton = styled.button`
 	${button}
 	width: fit-content;
 	border: 1px solid transparent;
-	padding: 0.5rem 1rem;
 	${props => css`
 		border-radius: ${props.theme.borderRadius}px;
 		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
@@ -71,7 +73,9 @@ export const IconButton = styled.button`
 	${props => css`
 		border-radius: ${props.theme.borderRadius}px;
 		&:hover {
-			background-color: hsl(${props.theme.color.pick("primary").lighten(4).get()});
+			${props.theme.scheme === "dark"
+				? `background-color: hsl(${props.theme.color.pick("primary").lighten().get()})`
+				: `background-color: hsl(${props.theme.color.get("secondary")})`}
 		}
 	`}
 	& > * {
@@ -87,13 +91,13 @@ export const Input = styled.input`
 	padding: 0.75rem;
 	${props => css`
 		border-radius: ${props.theme.borderRadius}px;
-		background-color: hsl(${props.theme.color.get("secondary")});
-		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
-		&.error {
-			border: 1px solid hsl(${props.theme.color.get("error")});
-		}
+		background-color: hsl(${props.theme.color.get("primary")});
+		border: 1px solid hsl(${props.theme.color.get("border")});
 		&:focus {
-			background-color: hsl(${props.theme.color.get("primary")});
+			border-color: hsl(${props.theme.color.get("brand")});
+		}
+		&.error {
+			border-color: hsl(${props.theme.color.get("error")});
 		}
 	`}
 `;
@@ -125,7 +129,7 @@ export function InputError({ message, ...props }: { message?: string; [key: stri
 	return (
 		<Styles.Row {...props}>
 			<InputErrorIcon className="mr-1" path={mdiAlertCircleOutline} size={1} />
-			<StyledInputError className="mb-2">{message}</StyledInputError>
+			<StyledInputError>{message}</StyledInputError>
 		</Styles.Row>
 	);
 }

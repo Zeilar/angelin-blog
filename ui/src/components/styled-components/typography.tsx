@@ -3,8 +3,10 @@ import styled, { css } from "styled-components";
 export const header = css`
 	font-weight: 700;
 	font-family: Heebo;
-	color: white;
 	letter-spacing: 1px;
+	${props => css`
+		color: hsl(${props.theme.color.get("textStrong")});
+	`}
 `;
 
 export const text = css`
@@ -66,7 +68,7 @@ export const A = styled.a`
 	${props => css`
 		color: hsl(${props.theme.color.get("brand")});
 		&:hover {
-			color: hsl(${props.theme.color.pick("brand").darken().get()});
+			color: hsl(${props.theme.color.pick("brand").darken(10).get()});
 		}
 	`}
 `;

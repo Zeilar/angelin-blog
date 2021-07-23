@@ -44,7 +44,7 @@ export function StatusButton(props: Props) {
 
 const StatusIcon = styled(Icon)`
 	${props => css`
-		color: hsl(${props.theme.color.get("text")});
+		color: hsl(0, 0%, 90%);
 	`}
 `;
 

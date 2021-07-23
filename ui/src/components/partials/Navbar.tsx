@@ -28,21 +28,22 @@ export function Navbar() {
 		if (loggedIn) {
 			return (
 				<Item>
-					<Styles.SecondaryButton className="mr-0" onClick={logout}>
+					<ModalButton className="mr-0" onClick={logout}>
 						Logout
-					</Styles.SecondaryButton>
+					</ModalButton>
 				</Item>
 			);
 		} else {
 			return (
 				<>
-					<Item className="mr-4">
-						<Styles.SecondaryButton onClick={() => setLoginModalOpen(true)}>
-							Login
-						</Styles.SecondaryButton>
+					<Item className="mr-8">
+						<ModalButton onClick={() => setLoginModalOpen(true)}>Login</ModalButton>
 					</Item>
 					<Item>
-						<Styles.PrimaryButton onClick={() => setRegisterModalOpen(true)}>
+						<Styles.PrimaryButton
+							className="small"
+							onClick={() => setRegisterModalOpen(true)}
+						>
 							Register
 						</Styles.PrimaryButton>
 					</Item>
@@ -54,7 +55,7 @@ export function Navbar() {
 	return (
 		<Wrapper as="header" align="center">
 			<Nav as="nav">
-				<Styles.Row className="py-1" as="ul">
+				<Styles.Row className="py-2" as="ul">
 					<Item className="mr-8">
 						<Link to="/" exact>
 							Home
@@ -92,7 +93,7 @@ export function Navbar() {
 
 const Wrapper = styled(Styles.Row)`
 	${props => css`
-		background-color: hsl(${props.theme.color.get("secondary")});
+		background-color: hsl(${props.theme.color.get("primary")});
 		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
 	`}
 	position: sticky;
@@ -112,7 +113,7 @@ const link = css`
 	${Styles.header}
 	position: relative;
 	user-select: none;
-	padding: 1rem 0;
+	cursor: pointer;
 	transition: 0.05s;
 	${props => css`
 		border-radius: ${props.theme.borderRadius}px;
@@ -126,5 +127,9 @@ const link = css`
 `;
 
 const Link = styled(NavLink)`
+	${link}
+`;
+
+const ModalButton = styled(Styles.Span)`
 	${link}
 `;

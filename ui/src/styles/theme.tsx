@@ -4,7 +4,9 @@ interface Colors {
 	secondary: string;
 	brand: string;
 	text: string;
+	textStrong: string;
 	textSecondary: string;
+	textSecondaryStrong: string;
 	textMuted: string;
 	border: string;
 	link: string;
@@ -13,37 +15,43 @@ interface Colors {
 }
 
 class Color {
+	constructor(public scheme: "light" | "dark" = "dark") {}
+
 	public selected: string;
 
-	public dark: Colors = {
+	public readonly dark: Colors = {
 		body: "0, 0%, 17%",
 		primary: "0, 0%, 24%",
 		secondary: "0, 0%, 19%",
 		brand: "150, 65%, 65%",
 		text: "0, 0%, 88%",
+		textStrong: "0, 0%, 100%",
 		textSecondary: "0, 0%, 17.5%",
+		textSecondaryStrong: "0, 0%, 0%",
 		textMuted: "0, 0%, 68.5%",
 		border: "0, 0%, 10%",
-		link: "0, 100%, 50%",
+		link: "210, 100%, 65%",
 		error: "0, 100%, 60%",
 		success: "120, 100%, 35%",
 	};
 
-	public light: Colors = {
-		body: "0, 50%, 50%",
-		primary: "25, 25%, 25%",
-		secondary: "0, 0%, 19%",
-		brand: "150, 65%, 65%",
-		text: "0, 0%, 88%",
-		textSecondary: "0, 0%, 17.5%",
-		textMuted: "0, 0%, 68.5%",
-		border: "0, 0%, 10%",
-		link: "0, 100%, 50%",
+	public readonly light: Colors = {
+		body: "200, 10%, 90%",
+		primary: "0, 0%, 100%",
+		secondary: "0, 0%, 95%",
+		brand: "150, 65%, 35%",
+		text: "0, 0%, 4%",
+		textStrong: "0, 0%, 0%",
+		textSecondary: "0, 0%, 88%",
+		textSecondaryStrong: "0, 0%, 100%",
+		textMuted: "0, 0%, 60%",
+		border: "0, 0%, 93%",
+		link: "210, 100%, 50%",
 		error: "0, 100%, 60%",
 		success: "120, 100%, 35%",
 	};
 
-	public colors = this.dark;
+	public colors = this[this.scheme];
 
 	public get(color?: keyof Colors) {
 		return color ? this.colors[color] : this.selected;
@@ -64,12 +72,12 @@ class Color {
 	}
 
 	public darken(value?: number) {
-		this.selected = this.lighting(lighting => lighting - (value ?? 8));
+		this.selected = this.lighting(lighting => lighting - (value ?? 5));
 		return this;
 	}
 
 	public lighten(value?: number) {
-		this.selected = this.lighting(lighting => lighting + (value ?? 8));
+		this.selected = this.lighting(lighting => lighting + (value ?? 5));
 		return this;
 	}
 }
@@ -81,13 +89,23 @@ interface Shadows {
 }
 
 class Shadow {
+	constructor(public scheme: "light" | "dark" = "dark") {}
+
 	public selected: string;
 
-	public shadows: Shadows = {
-		elevate: "0 0 3px 0 rgba(0, 0, 0, 0.75)",
-		elevateUnder: "0 4px 8px rgba(0, 0, 0, 0.15)",
+	public readonly dark: Shadows = {
+		elevate: "0 0 4px 0 rgba(0, 0, 0, 0.75)",
+		elevateUnder: "0 3px 6px rgba(0, 0, 0, 0.08)",
 		spread: "0 0 10px 0 rgba(0, 0, 0, 0.15)",
 	};
+
+	public readonly light: Shadows = {
+		elevate: "0 0 6px 0 rgba(0, 0, 0, 0.08)",
+		elevateUnder: "0 3px 6px rgba(0, 0, 0, 0.08)",
+		spread: "0 0 10px 0 rgba(0, 0, 0, 0.15)",
+	};
+
+	public shadows = this[this.scheme];
 
 	public pick(...keys: Array<keyof Shadows>) {
 		return keys.map(key => this.shadows[key]).join(", ");
@@ -95,8 +113,10 @@ class Shadow {
 }
 
 export class Theme {
-	public color = new Color();
-	public shadow = new Shadow();
+	constructor(public scheme: "light" | "dark" = "dark") {}
+
+	public color = new Color(this.scheme);
+	public shadow = new Shadow(this.scheme);
 	public durations = {
 		// In milliseconds
 		modalsAfterResponse: 500,
@@ -108,6 +128,11 @@ export class Theme {
 		phone: 768,
 		tablet: 1200,
 	};
+
+	public toggleScheme() {
+		this.color.colors = this.color[this.scheme === "light" ? "dark" : "light"];
+		this.shadow.shadows = this.shadow[this.scheme === "light" ? "dark" : "light"];
+	}
 }
 
 export const theme = new Theme();

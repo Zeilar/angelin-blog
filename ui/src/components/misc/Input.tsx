@@ -19,7 +19,6 @@ export function Input(props: Props) {
 			align="flex-start"
 		>
 			{props.label && <Styles.Label className="mb-2">{props.label}</Styles.Label>}
-			{props.error && <Styles.InputError message={props.error} className="mb-2" />}
 			<Styles.Input
 				{...props}
 				ref={props.forwardRef}
@@ -29,6 +28,7 @@ export function Input(props: Props) {
 					props.className
 				)}
 			/>
+			{props.error && <Styles.InputError message={props.error} className="mt-2" />}
 		</Styles.Col>
 	);
 }

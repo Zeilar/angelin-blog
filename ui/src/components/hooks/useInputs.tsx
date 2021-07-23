@@ -1,11 +1,10 @@
-import { useRef } from "react";
-import { useState, ChangeEvent, useCallback } from "react";
+import { useState, ChangeEvent, useCallback, useRef } from "react";
 
 export function useInputs<T>(defaultInputs: Record<keyof T, string>) {
 	const [inputs, setInputs] = useState<Record<keyof T, string>>(defaultInputs);
 
 	const empty = useRef(() => {
-		const emptyInputs = { ...inputs };
+		const emptyInputs = { ...defaultInputs };
 		for (const property in emptyInputs) {
 			emptyInputs[property] = "";
 		}

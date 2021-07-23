@@ -98,15 +98,12 @@ export function Register({ open, setOpen, openLogin }: Props) {
 			<ModalStyles.Main onSubmit={submit}>
 				<ContainerLoader loading={status === "loading"} />
 				<ModalStyles.Close onClick={() => setOpen(false)} />
-				<ModalStyles.Header className="mb-4">Register</ModalStyles.Header>
-				<Styles.P className="mb-10">
-					{"Already a member? "}
-					<Styles.A onClick={openLogin}>Login</Styles.A>
-				</Styles.P>
+				<Styles.H4 className="text-center">Angelin Blog</Styles.H4>
+				<Styles.H5 className="mb-6 text-center">Register</Styles.H5>
 				{typeof errors === "string" && (
 					<Styles.FormError className="mb-2">{errors}</Styles.FormError>
 				)}
-				<Styles.Col className="mb-12">
+				<Styles.Col className="mb-6">
 					<Input
 						error={getInputError("email")}
 						containerClass="mb-2"
@@ -145,6 +142,10 @@ export function Register({ open, setOpen, openLogin }: Props) {
 				</StatusButton>
 				<ModalStyles.LoginDivider />
 				<ModalStyles.GitHubLogin onClick={oAuthSubmit} />
+				<Styles.P className="mt-6 text-center">
+					{"Already a member? "}
+					<Styles.A onClick={openLogin}>Login</Styles.A>
+				</Styles.P>
 			</ModalStyles.Main>
 		</ModalStyles.Wrapper>
 	);

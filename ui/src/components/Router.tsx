@@ -2,6 +2,7 @@ import { Route, Switch } from "react-router-dom";
 import { Home, SinglePost, CreatePost } from "./views";
 import { AdminRoute } from "./misc";
 import { Navbar } from "./partials";
+import ThemeToggler from "./partials/ThemeToggler";
 
 export default function Router() {
 	return (
@@ -16,6 +17,7 @@ export default function Router() {
 					<h1>404</h1>
 				</Route>
 			</Switch>
+			<ThemeToggler />
 		</>
 	);
 }

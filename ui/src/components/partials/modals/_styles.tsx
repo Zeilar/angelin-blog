@@ -31,8 +31,7 @@ export const Wrapper = styled(Styles.Col)`
 	transition: 0.25s;
 	${props => css`
 		border-radius: ${props.theme.borderRadius}px;
-
-		background-color: hsl(${props.theme.color.pick("body").darken(2).get()});
+		background-color: hsl(${props.theme.color.get("primary")});
 		box-shadow: ${props.theme.shadow.pick("spread")};
 	`}
 	&.open {
@@ -40,12 +39,6 @@ export const Wrapper = styled(Styles.Col)`
 		opacity: 1;
 		transform: translate(-50%, -50%) scale(1);
 	}
-`;
-
-export const Header = styled(Styles.H3)`
-	${props => css`
-		color: hsl(${props.theme.color.get("brand")});
-	`}
 `;
 
 export const CloseButton = styled.button.attrs({ type: "button" })`
@@ -75,7 +68,7 @@ const LoginDividerLine = styled.div`
 	height: 1px;
 	width: 100%;
 	${props => css`
-		background-color: hsl(${props.theme.color.get("text")});
+		background-color: hsl(${props.theme.color.get("border")});
 	`}
 `;
 const LoginDividerText = styled.span`
@@ -105,11 +98,9 @@ const OAuthIcon = styled(Icon)`
 `;
 export const GitHubButton = styled(OAuthButton)`
 	background-color: hsl(0, 0%, 6%);
-	${props => css`
-		color: hsl(${props.theme.color.get("text")});
-	`}
+	color: hsl(0, 0%, 100%);
 	&:hover {
-		background-color: hsl(0, 0%, 2%);
+		background-color: hsl(0, 0%, 12%);
 	}
 `;
 
@@ -119,7 +110,7 @@ export function GitHubLogin({ onClick }: { onClick: OAuthClick }) {
 	return (
 		<GitHubButton
 			as="a"
-			href={`${process.env.REACT_APP_SERVER_URL}/api/oauth/github`}
+			href={`${process.env.REACT_APP_SERVER_URL}${process.env.REACT_APP_GITHUB_CALLBACK_URI}`}
 			onClick={onClick}
 		>
 			<span>Login with GitHub</span>
@@ -139,11 +130,11 @@ export function Close({ onClick }: { onClick: React.MouseEventHandler<HTMLButton
 export const Main = styled.form`
 	display: flex;
 	flex-direction: column;
-	padding: 2rem;
+	padding: 3rem;
 `;
 
 export const Footer = styled.div`
-	padding: 2rem;
+	padding: 3rem;
 	${props => css`
 		background-color: hsl(${props.theme.color.get("secondary")});
 		box-shadow: ${props.theme.shadow.pick("spread")};
