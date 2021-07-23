@@ -1,8 +1,7 @@
 import { Route, Switch } from "react-router-dom";
 import { Home, SinglePost, CreatePost } from "./views";
 import { AdminRoute } from "./misc";
-import { Navbar } from "./partials";
-import ThemeToggler from "./partials/ThemeToggler";
+import { Navbar, ThemeToggler } from "./partials";
 
 export default function Router() {
 	return (

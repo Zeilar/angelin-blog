@@ -4,7 +4,7 @@ import { ThemeContext } from "../contexts";
 import { mdiLightbulbOutline, mdiLightbulb } from "@mdi/js";
 import Icon from "@mdi/react";
 
-export default function ThemeToggler() {
+export function ThemeToggler() {
 	const theme = useContext(ThemeContext);
 
 	function toggleTheme() {
