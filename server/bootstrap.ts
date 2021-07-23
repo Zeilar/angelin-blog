@@ -25,7 +25,7 @@ import "./api/controllers";
 type GitHubProfile = Profile & { _json: any };
 
 const { GITHUB_CLIENT, GITHUB_SECRET, GITHUB_CALLBACK, PORT, SESSION_SECRET } = process.env;
-const uiPath = path.join(__dirname, "../../ui");
+const uiPath = path.join(__dirname, "../ui");
 
 function bootstrap() {
 	Model.knex(knex(development));
