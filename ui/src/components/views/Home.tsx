@@ -19,14 +19,12 @@ export function Home() {
 	return (
 		<Styles.Container className="mt-4">
 			<Styles.H1>Blog</Styles.H1>
-			<Styles.Row>
-				<Styles.Col className="w-full">
-					{posts.map((post: Post) => (
-						<PostThumbnail className="mt-4" post={post} key={post.id} />
-					))}
-				</Styles.Col>
-				<Filter />
-			</Styles.Row>
+			<Filter />
+			<Styles.Col className="w-full">
+				{posts.map((post: Post) => (
+					<PostThumbnail className="mt-4" post={post} key={post.id} />
+				))}
+			</Styles.Col>
 		</Styles.Container>
 	);
 }

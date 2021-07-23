@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import styled, { css } from "styled-components";
 import { ThemeContext } from "../contexts";
-import { mdiLightbulbOutline, mdiLightbulb } from "@mdi/js";
+import { mdiLightbulbOutline, mdiLightbulbOn } from "@mdi/js";
 import Icon from "@mdi/react";
 
 export function ThemeToggler() {
@@ -22,7 +22,7 @@ export function ThemeToggler() {
 			title={`Switch to ${theme?.themeScheme === "dark" ? "light" : "dark"} theme`}
 		>
 			{theme?.themeScheme === "light" ? (
-				<IconOn path={mdiLightbulb} />
+				<IconOn path={mdiLightbulbOn} />
 			) : (
 				<IconOff path={mdiLightbulbOutline} />
 			)}

@@ -28,6 +28,7 @@ const TagIcon = styled(Icon)`
 const Wrapper = styled(Row)`
 	cursor: pointer;
 	user-select: none;
+	font-weight: 600;
 	${props => css`
 		&:hover {
 			${Span},
