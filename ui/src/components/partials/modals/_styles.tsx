@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 import * as Styles from "../../styled-components";
 import Icon from "@mdi/react";
 import { mdiClose, mdiGithub } from "@mdi/js";
+import { SERVER_URL } from "../../../utils";
 
 export const Background = styled.div`
 	position: fixed;
@@ -110,7 +111,7 @@ export function GitHubLogin({ onClick }: { onClick: OAuthClick }) {
 	return (
 		<GitHubButton
 			as="a"
-			href={`${process.env.REACT_APP_SERVER_URL}${process.env.REACT_APP_GITHUB_CALLBACK_URI}`}
+			href={`${SERVER_URL}${process.env.REACT_APP_GITHUB_LOGIN_URI}`}
 			onClick={onClick}
 		>
 			<span>Login with GitHub</span>

@@ -4,8 +4,6 @@
 	"private": true,
 	"dependencies": {
 		"@craco/craco": "^6.1.2",
-		"@testing-library/jest-dom": "^5.12.0",
-		"@testing-library/react": "^11.2.7",
 		"@testing-library/user-event": "^12.8.3",
 		"@tiptap/extension-code-block-lowlight": "*",
 		"@tiptap/react": "*",
@@ -55,10 +53,13 @@
 		]
 	},
 	"devDependencies": {
+		"@testing-library/jest-dom": "^5.14.1",
+		"@testing-library/react": "^12.0.0",
 		"@types/react-helmet": "^6.1.1",
 		"@types/styled-components": "^5.1.9",
 		"autoprefixer": "^9.8.6",
 		"postcss": "^7.0.35",
+		"react-test-renderer": "^17.0.2",
 		"tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.4"
 	}
 }

@@ -40,6 +40,7 @@ export const button = css`
 export const PrimaryButton = styled.button`
 	${button}
 	min-width: 5rem;
+	height: 3rem;
 	transition: transform 0.25s;
 	${props => css`
 		background-color: hsl(${props.theme.color.get("brand")});

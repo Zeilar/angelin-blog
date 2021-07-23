@@ -55,7 +55,7 @@ export function Navbar() {
 	return (
 		<Wrapper as="header" align="center">
 			<Nav as="nav">
-				<Styles.Row className="py-2" as="ul">
+				<Styles.Row as="ul">
 					<Item className="mr-8">
 						<Link to="/" exact>
 							Home
@@ -96,6 +96,7 @@ const Wrapper = styled(Styles.Row)`
 		background-color: hsl(${props.theme.color.get("primary")});
 		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
 	`}
+	height: 4rem;
 	position: sticky;
 	top: 0;
 	z-index: 100;
