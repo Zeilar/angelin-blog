@@ -5,12 +5,11 @@ import * as Styles from "../../styled-components";
 export const Wrapper = styled(Styles.Row)`
 	flex-wrap: wrap;
 	padding: 0.25rem;
-	margin-bottom: 0.5rem;
 	width: 100%;
+	margin-bottom: -1px;
 	${props => css`
-		background-color: hsl(${props.theme.color.get("secondary")});
-		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
-		border-radius: ${props.theme.borderRadius}px;
+		background-color: hsl(${props.theme.color.get("primary")});
+		border: 1px solid hsl(${props.theme.color.get("secondary")});
 	`}
 `;
 
@@ -30,7 +29,6 @@ export const ToolbarButton = styled.button.attrs({ tabIndex: -1 })`
 			background-color: hsl(${props.theme.color.get("primary")});
 		}
 		&.active {
-			color: hsl(${props.theme.color.get("textSecondary")});
 			background-color: hsl(${props.theme.color.get("brand")});
 		}
 		&:focus {

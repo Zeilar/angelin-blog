@@ -54,7 +54,6 @@ export const MenuWrapper = styled(Col)`
 	overflow: hidden;
 	${props => css`
 		background-color: hsl(${props.theme.color.get("primary")});
-		border-radius: ${props.theme.borderRadius}px;
 		box-shadow: ${props.theme.shadow.pick("elevate")};
 	`}
 	&.open {

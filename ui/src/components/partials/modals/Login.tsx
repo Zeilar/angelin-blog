@@ -4,11 +4,12 @@ import { StatusButton, Input } from "../../misc";
 import { theme } from "../../../styles/theme";
 import * as Styles from "../../styled-components";
 import { useInputs, useClickOutside, useLocalStorage } from "../../hooks";
-import { useAuthModals, useAuth } from "../../contexts";
+import { AuthModalContext, IAuthModalContext, IUserContext, UserContext } from "../../contexts";
 import classNames from "classnames";
 import { ModalStatus } from "../../../types/modals";
 import ContainerLoader from "../../misc/ContainerLoader";
 import { RenderProps } from "./";
+import { useContext } from "react";
 
 interface Props extends RenderProps {
 	openRegister(): void;
@@ -22,8 +23,8 @@ interface Inputs {
 type InputError = string | null | Record<keyof Inputs, string>;
 
 export function Login({ open, setOpen, openRegister }: Props) {
-	const { login, loggedIn } = useAuth();
-	const { mountError } = useAuthModals();
+	const { login, loggedIn } = useContext(UserContext) as IUserContext;
+	const { mountError } = useContext(AuthModalContext) as IAuthModalContext;
 
 	const wrapper = useClickOutside<HTMLDivElement>(() => open && setOpen(false));
 
@@ -113,7 +114,7 @@ export function Login({ open, setOpen, openRegister }: Props) {
 				{typeof errors === "string" && (
 					<Styles.FormError className="mb-2">{errors}</Styles.FormError>
 				)}
-				<Styles.Col className="mb-6">
+				<Styles.Col className="mb-12">
 					<Input
 						error={getInputError("email")}
 						containerClass="mb-2"

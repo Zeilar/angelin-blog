@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, ReactNode, useContext } from "react";
+import { createContext, useState, useEffect, ReactNode } from "react";
 import { LoginCredentials, RegisterCredentials, Response } from "../../types/request";
 import { User } from "../../models/User";
 
@@ -6,7 +6,7 @@ interface Props {
 	children: ReactNode;
 }
 
-interface Context {
+export interface IUserContext {
 	user: User | null;
 	loggedIn: boolean;
 	login: (credentials: LoginCredentials) => Promise<Response<User>>;
@@ -20,7 +20,7 @@ interface UserEditable {
 	password?: string;
 }
 
-export const UserContext = createContext<Context | null>(null);
+export const UserContext = createContext<IUserContext | null>(null);
 
 export function UserContextProvider({ children }: Props) {
 	const [user, setUser] = useState<User | null>(null);
@@ -55,7 +55,7 @@ export function UserContextProvider({ children }: Props) {
 		return await User.logout();
 	}
 
-	const values: Context = {
+	const values: IUserContext = {
 		loggedIn: Boolean(user),
 		user,
 		login,
@@ -66,9 +66,3 @@ export function UserContextProvider({ children }: Props) {
 
 	return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 }
-
-export const useAuth = () => {
-	const context = useContext(UserContext);
-	if (!context) throw new Error();
-	return context;
-};

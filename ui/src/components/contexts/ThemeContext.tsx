@@ -9,12 +9,12 @@ interface Props {
 
 type ThemeScheme = "light" | "dark";
 
-interface Context {
+export interface IThemeContext {
 	themeScheme: ThemeScheme;
 	setThemeScheme: Dispatch<React.SetStateAction<ThemeScheme>>;
 }
 
-export const ThemeContext = createContext<Context | null>(null);
+export const ThemeContext = createContext<IThemeContext | null>(null);
 
 export function ThemeContextProvider({ children }: Props) {
 	const [themeScheme, setThemeScheme] = useState<ThemeScheme>(
@@ -22,7 +22,7 @@ export function ThemeContextProvider({ children }: Props) {
 	);
 	const theme = useMemo(() => new Theme(themeScheme), [themeScheme]);
 
-	const values: Context = { themeScheme, setThemeScheme };
+	const values: IThemeContext = { themeScheme, setThemeScheme };
 
 	return (
 		<ThemeProvider theme={theme}>

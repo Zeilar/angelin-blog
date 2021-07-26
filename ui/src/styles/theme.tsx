@@ -20,18 +20,18 @@ class Color {
 	public selected: string;
 
 	public readonly dark: Colors = {
-		body: "0, 0%, 17%",
-		primary: "0, 0%, 24%",
-		secondary: "0, 0%, 19%",
-		brand: "150, 65%, 65%",
-		text: "0, 0%, 88%",
-		textStrong: "0, 0%, 100%",
+		body: "220, 38%, 6%",
+		primary: "222, 21%, 9%",
+		secondary: "216, 45%, 22%",
+		brand: "355, 70%, 50%",
+		text: "0, 0%, 80%",
+		textStrong: "0, 0%, 90%",
 		textSecondary: "0, 0%, 17.5%",
 		textSecondaryStrong: "0, 0%, 0%",
 		textMuted: "0, 0%, 68.5%",
-		border: "0, 0%, 10%",
+		border: "0, 0%, 25%",
 		link: "210, 100%, 65%",
-		error: "0, 100%, 60%",
+		error: "0, 100%, 50%",
 		success: "120, 100%, 35%",
 	};
 
@@ -122,7 +122,7 @@ export class Theme {
 		modalsAfterResponse: 500,
 		modalsFade: 250,
 	};
-	public borderRadius = 5;
+	public borderRadius = 4;
 	public breakpoints = {
 		// In pixels
 		phone: 768,
@@ -130,8 +130,9 @@ export class Theme {
 	};
 
 	public toggleScheme() {
-		this.color.colors = this.color[this.scheme === "light" ? "dark" : "light"];
-		this.shadow.shadows = this.shadow[this.scheme === "light" ? "dark" : "light"];
+		const scheme = this.scheme === "light" ? "dark" : "light";
+		this.color.colors = this.color[scheme];
+		this.shadow.shadows = this.shadow[scheme];
 	}
 }
 

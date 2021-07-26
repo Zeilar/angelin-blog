@@ -5,8 +5,8 @@ export const PostWrapper = styled(Styles.Col)`
 	padding: 1rem;
 	position: relative;
 	${props => css`
-		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
 		background-color: hsl(${props.theme.color.get("primary")});
+		border: 1px solid hsl(${props.theme.color.get("secondary")});
 		border-radius: ${props.theme.borderRadius}px;
 	`}
 	&:first-child {

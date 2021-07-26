@@ -4,11 +4,12 @@ import { StatusButton, Input } from "../../misc";
 import { theme } from "../../../styles/theme";
 import * as Styles from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
-import { useAuth } from "../../contexts";
+import { IUserContext, UserContext } from "../../contexts";
 import classNames from "classnames";
 import { ModalStatus } from "../../../types/modals";
 import ContainerLoader from "../../misc/ContainerLoader";
 import { RenderProps } from "./";
+import { useContext } from "react";
 
 interface Props extends RenderProps {
 	openLogin(): void;
@@ -23,7 +24,7 @@ interface Inputs {
 type InputError = string | null | Record<keyof Inputs, string>;
 
 export function Register({ open, setOpen, openLogin }: Props) {
-	const { register, loggedIn } = useAuth();
+	const { register, loggedIn } = useContext(UserContext) as IUserContext;
 
 	const wrapper = useClickOutside<HTMLDivElement>(() => open && setOpen(false));
 
@@ -103,7 +104,7 @@ export function Register({ open, setOpen, openLogin }: Props) {
 				{typeof errors === "string" && (
 					<Styles.FormError className="mb-2">{errors}</Styles.FormError>
 				)}
-				<Styles.Col className="mb-6">
+				<Styles.Col className="mb-12">
 					<Input
 						error={getInputError("email")}
 						containerClass="mb-2"

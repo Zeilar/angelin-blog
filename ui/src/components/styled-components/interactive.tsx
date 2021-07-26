@@ -14,8 +14,6 @@ export const button = css`
 	align-items: center;
 	font-weight: 600;
 	${props => css`
-		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
-		border-radius: ${props.theme.borderRadius}px;
 		background-color: hsl(${props.theme.color.get("primary")});
 		color: hsl(${props.theme.color.get("text")});
 	`}
@@ -44,7 +42,7 @@ export const PrimaryButton = styled.button`
 	transition: transform 0.25s;
 	${props => css`
 		background-color: hsl(${props.theme.color.get("brand")});
-		color: hsl(${props.theme.color.get("textSecondaryStrong")});
+		color: hsl(${props.theme.color.get("textStrong")});
 		&:hover {
 			background-color: hsl(${props.theme.color.pick("brand").darken().get()});
 		}
@@ -91,9 +89,8 @@ export const Input = styled.input`
 	min-width: 15rem;
 	padding: 0.75rem;
 	${props => css`
-		border-radius: ${props.theme.borderRadius}px;
 		background-color: hsl(${props.theme.color.get("primary")});
-		border: 1px solid hsl(${props.theme.color.get("border")});
+		border: 1px solid hsl(${props.theme.color.get("secondary")});
 		&:focus {
 			border-color: hsl(${props.theme.color.get("brand")});
 		}

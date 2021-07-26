@@ -1,20 +1,13 @@
+import { useContext } from "react";
 import { Redirect } from "react-router";
-import { useAuth, useAuthModals } from "../contexts";
+import { IUserContext, UserContext } from "../contexts";
 
 interface Props {
 	children: JSX.Element;
 }
 
 export function AuthRoute({ children }: Props) {
-	const { loggedIn, loading } = useAuth();
-	const { openModal } = useAuthModals();
-
+	const { loggedIn, loading } = useContext(UserContext) as IUserContext;
 	if (loading) return null;
-
-	if (!loggedIn) {
-		openModal("login");
-		return <Redirect to="/" />;
-	}
-
-	return children;
+	return loggedIn ? children : <Redirect to="/" />;
 }

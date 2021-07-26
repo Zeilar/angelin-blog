@@ -1,15 +1,15 @@
 import { createContext, ReactNode, useRef } from "react";
 
-export const FetchContext = createContext<Context | null>(null);
-
 interface Props {
 	children: ReactNode;
 }
 
-interface Context {
+export interface IFetchContext {
 	cached: Map<string, any>;
 	clearCache: (key: string) => void;
 }
+
+export const FetchContext = createContext<IFetchContext | null>(null);
 
 export function FetchContextProvider({ children }: Props) {
 	let cached = useRef(new Map<string, any>()).current;
@@ -26,7 +26,7 @@ export function FetchContextProvider({ children }: Props) {
 		}
 	}
 
-	const values: Context = {
+	const values: IFetchContext = {
 		cached,
 		clearCache,
 	};

@@ -4,20 +4,22 @@ import { useContext } from "react";
 import { useHistory } from "react-router";
 import { Post } from "../../../models/Post";
 import { SERVER_URL } from "../../../utils";
-import { FetchContext } from "../../hooks";
+import { FetchContext, IFetchContext } from "../../hooks";
 import { StatusButton } from "../../misc";
 import { Toolbar } from "./";
 import { ModalStatus } from "../../../types/modals";
 import { useState } from "react";
 import classNames from "classnames";
-import { Col, InputError } from "../../styled-components";
+import { Col, InputError, Input } from "../../styled-components";
 import { useEffect } from "react";
-import styled, { css } from "styled-components";
 import { theme } from "../../../styles/theme";
+import { Prompt } from "react-router-dom";
+
+const promptMsg = "You have unsaved progress, are you sure you want to exit?";
 
 export default function Editor({ ...props }) {
 	const { push } = useHistory();
-	const fetchContext = useContext(FetchContext);
+	const { clearCache } = useContext(FetchContext) as IFetchContext;
 	const [status, setStatus] = useState<ModalStatus>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [title, setTitle] = useState("");
@@ -29,7 +31,7 @@ export default function Editor({ ...props }) {
 	useEffect(() => {
 		function exitHandler(e: BeforeUnloadEvent) {
 			if (editor && editor.getHTML().length > 10) {
-				e.returnValue = "You have unsaved progress, are you sure you want to exit?";
+				e.returnValue = promptMsg;
 			}
 		}
 
@@ -40,22 +42,21 @@ export default function Editor({ ...props }) {
 		};
 	}, [editor]);
 
-	async function submit() {
-		if (!editor) {
-			return setErrorMessage("Something went wrong.");
-		}
+	if (!editor) return null;
 
+	async function submit() {
 		setErrorMessage(null);
 		setStatus("loading");
 
 		const { data, ok, error } = await Post.create({
 			title,
-			body: editor.getHTML(),
+			body: editor!.getHTML(), // You can't convince me editor is not null
 		});
 
 		if (ok) {
 			if (!data) return;
-			fetchContext?.clearCache(`${SERVER_URL}/api/posts`);
+			clearCache(`${SERVER_URL}/api/posts`);
+			setStatus("success");
 			push(`/post/${data.id}-${data.title}`);
 		} else {
 			setStatus("error");
@@ -72,8 +73,12 @@ export default function Editor({ ...props }) {
 
 	return (
 		<div>
+			<Prompt
+				message={promptMsg}
+				when={status !== "success" && editor.getHTML().length > 10}
+			/>
 			<Input
-				className="mb-2"
+				className="mb-2 w-full"
 				value={title}
 				onChange={e => setTitle(e.target.value)}
 				placeholder="Title"
@@ -92,14 +97,3 @@ export default function Editor({ ...props }) {
 		</div>
 	);
 }
-
-const Input = styled.input`
-	outline: 0;
-	padding: 0.75rem;
-	width: 100%;
-	${props => css`
-		background-color: hsl(${props.theme.color.get("secondary")});
-		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
-		border-radius: ${props.theme.borderRadius}px;
-	`}
-`;

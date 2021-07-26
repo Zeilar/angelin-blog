@@ -31,9 +31,7 @@ export const Wrapper = styled(Styles.Col)`
 	opacity: 0;
 	transition: 0.25s;
 	${props => css`
-		border-radius: ${props.theme.borderRadius}px;
 		background-color: hsl(${props.theme.color.get("primary")});
-		box-shadow: ${props.theme.shadow.pick("spread")};
 	`}
 	&.open {
 		pointer-events: all;
@@ -101,7 +99,7 @@ export const GitHubButton = styled(OAuthButton)`
 	background-color: hsl(0, 0%, 6%);
 	color: hsl(0, 0%, 100%);
 	&:hover {
-		background-color: hsl(0, 0%, 12%);
+		background-color: hsl(0, 0%, 4%);
 	}
 `;
 
