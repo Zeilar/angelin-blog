@@ -7,5 +7,6 @@ export function Filter() {
 
 const Wrapper = styled.div`
 	position: sticky;
-	top: 0;
+	z-index: 100;
+	top: 4rem; /* Navbar height */
 `;

@@ -28,12 +28,6 @@ export const GlobalStyles = createGlobalStyle`
 		}
 	`}
 
-    html.transition {
-        * {
-            transition: 0.5s !important;
-        }
-    }
-
     a,
     button {
         cursor: pointer;

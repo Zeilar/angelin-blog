@@ -17,7 +17,9 @@ interface Context {
 export const ThemeContext = createContext<Context | null>(null);
 
 export function ThemeContextProvider({ children }: Props) {
-	const [themeScheme, setThemeScheme] = useState<ThemeScheme>("light");
+	const [themeScheme, setThemeScheme] = useState<ThemeScheme>(
+		window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+	);
 	const theme = useMemo(() => new Theme(themeScheme), [themeScheme]);
 
 	const values: Context = { themeScheme, setThemeScheme };

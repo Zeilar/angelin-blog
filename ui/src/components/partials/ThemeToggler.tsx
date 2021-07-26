@@ -8,12 +8,7 @@ export function ThemeToggler() {
 	const theme = useContext(ThemeContext);
 
 	function toggleTheme() {
-		const element = document.querySelector("html") as HTMLHtmlElement; // If this doesn't exist then who knows
-		element.classList.add("transition");
 		theme?.setThemeScheme(p => (p === "dark" ? "light" : "dark"));
-		setTimeout(() => {
-			element.classList.remove("transition");
-		}, 500); // Should match the overriding transition timer
 	}
 
 	return (
@@ -30,7 +25,7 @@ export function ThemeToggler() {
 	);
 }
 
-const ThemeIcon = styled(Icon)`
+const TogglerIcon = styled(Icon)`
 	position: fixed;
 	transform: translateY(-50%);
 	top: 50%;
@@ -39,13 +34,13 @@ const ThemeIcon = styled(Icon)`
 	height: 2rem;
 `;
 
-const IconOn = styled(ThemeIcon)`
+const IconOn = styled(TogglerIcon)`
 	${props => css`
 		color: hsl(${props.theme.color.get("brand")});
 	`}
 `;
 
-const IconOff = styled(ThemeIcon)`
+const IconOff = styled(TogglerIcon)`
 	${props => css`
 		color: hsl(${props.theme.color.get("text")});
 	`}
