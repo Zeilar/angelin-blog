@@ -109,8 +109,8 @@ export function Login({ open, setOpen, openRegister }: Props) {
 			<ModalStyles.Main onSubmit={submit}>
 				<ContainerLoader loading={status === "loading"} />
 				<ModalStyles.Close onClick={() => setOpen(false)} />
-				<Styles.H4 className="text-center">Angelin Blog</Styles.H4>
-				<Styles.H5 className="mb-6 text-center">Login</Styles.H5>
+				<Styles.H4 className="mb-2 text-center">Angelin Blog</Styles.H4>
+				<Styles.H6 className="mb-6 text-center">Login</Styles.H6>
 				{typeof errors === "string" && (
 					<Styles.FormError className="mb-2">{errors}</Styles.FormError>
 				)}

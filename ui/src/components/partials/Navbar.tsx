@@ -41,12 +41,9 @@ export function Navbar() {
 						<ModalButton onClick={() => setLoginModalOpen(true)}>Login</ModalButton>
 					</Item>
 					<Item>
-						<Styles.PrimaryButton
-							className="small"
-							onClick={() => setRegisterModalOpen(true)}
-						>
+						<RegisterButton onClick={() => setRegisterModalOpen(true)}>
 							Register
-						</Styles.PrimaryButton>
+						</RegisterButton>
 					</Item>
 				</>
 			);
@@ -112,7 +109,7 @@ const link = css`
 	position: relative;
 	user-select: none;
 	cursor: pointer;
-	height: 5rem;
+	font-weight: 600;
 	font-size: 1.25rem;
 	position: relative;
 	display: flex;
@@ -138,9 +135,19 @@ const link = css`
 `;
 
 const Link = styled(NavLink)`
+	height: 5rem;
 	${link}
 `;
 
 const ModalButton = styled(Styles.Span)`
 	${link}
+`;
+
+const RegisterButton = styled(Styles.SecondaryButton)`
+	${link}
+	${props => css`
+		&:hover {
+			color: hsl(${props.theme.color.get("textStrong")});
+		}
+	`}
 `;

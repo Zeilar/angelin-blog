@@ -14,12 +14,12 @@ export const button = css`
 	align-items: center;
 	font-weight: 600;
 	${props => css`
-		background-color: hsl(${props.theme.color.get("primary")});
-		color: hsl(${props.theme.color.get("text")});
+		background-color: hsl(${props.theme.color.get("brand")});
+		color: hsl(${props.theme.color.get("textStrong")});
+		&:hover {
+			background-color: hsl(${props.theme.color.pick("brand").darken().get()});
+		}
 	`}
-	&.small {
-		padding: 0.5rem 1rem;
-	}
 	&:focus {
 		outline: 0;
 	}
@@ -39,28 +39,14 @@ export const PrimaryButton = styled.button`
 	${button}
 	min-width: 5rem;
 	height: 3rem;
-	transition: transform 0.25s;
-	${props => css`
-		background-color: hsl(${props.theme.color.get("brand")});
-		color: hsl(${props.theme.color.get("textStrong")});
-		&:hover {
-			background-color: hsl(${props.theme.color.pick("brand").darken().get()});
-		}
-	`}
 `;
 
 export const SecondaryButton = styled.button`
 	${button}
 	width: fit-content;
-	border: 1px solid transparent;
-	${props => css`
-		border-radius: ${props.theme.borderRadius}px;
-		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
-		background-color: hsl(${props.theme.color.pick("secondary").lighten(4).get()});
-		&:hover {
-			background-color: hsl(${props.theme.color.pick("secondary").lighten(6).get()});
-		}
-	`}
+	border-radius: 10px;
+	padding: 0.5rem 0.75rem;
+	height: 2.5rem;
 `;
 
 export const IconButton = styled.button`

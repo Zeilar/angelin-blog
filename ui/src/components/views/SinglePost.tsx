@@ -1,7 +1,7 @@
 import { RouteComponentProps } from "../../types/props";
 import { Post } from "../../models";
 import { SERVER_URL } from "../../utils";
-import { useFetch } from "../hooks";
+import { FetchContext, IFetchContext, useFetch } from "../hooks";
 import * as Styles from "../styled-components";
 import { ReadOnlyEditor } from "../partials/editor";
 import useTitle from "../hooks/useTitle";
@@ -11,6 +11,8 @@ import Icon from "@mdi/react";
 import styled from "styled-components";
 import classNames from "classnames";
 import { IconButton } from "../styled-components";
+import { useHistory } from "react-router-dom";
+import { useContext } from "react";
 
 interface MatchParams {
 	id: string;
@@ -18,12 +20,24 @@ interface MatchParams {
 }
 
 export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
-	const query = useFetch<{ data: Post }>(`${SERVER_URL}/api/posts/${match.params.id}`);
+	const url = `${SERVER_URL}/api/posts/${match.params.id}`;
+	const query = useFetch<{ data: Post }>(url);
+	const { clearCache } = useContext(FetchContext) as IFetchContext;
+	const { push } = useHistory();
 
 	useTitle(`Angelin Blog | ${query.body?.data.title}`);
 
-	if (!query.body) {
+	if (!query.body?.data) {
 		return null;
+	}
+
+	async function deletePost() {
+		const { ok, error } = await Post.destroy(query.body!.data.id);
+		if (ok) {
+			clearCache(url);
+			push("/");
+			return;
+		}
 	}
 
 	return (
@@ -48,7 +62,7 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 									className="danger"
 									onClick={() => {
 										setOpen(false);
-										// ...
+										deletePost();
 									}}
 								>
 									Delete

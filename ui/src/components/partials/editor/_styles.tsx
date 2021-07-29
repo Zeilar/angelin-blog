@@ -26,7 +26,7 @@ export const ToolbarButton = styled.button.attrs({ tabIndex: -1 })`
 	${props => css`
 		border-radius: ${props.theme.borderRadius}px;
 		&:hover {
-			background-color: hsl(${props.theme.color.get("primary")});
+			background-color: hsl(${props.theme.color.get("secondary")});
 		}
 		&.active {
 			background-color: hsl(${props.theme.color.get("brand")});

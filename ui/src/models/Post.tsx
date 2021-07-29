@@ -70,4 +70,8 @@ export class Post implements PostProps {
 		const query = await Request.post<Post>({ url: "", method: "POST", body: post });
 		return Post.dto(query);
 	}
+
+	public static async destroy(id: number) {
+		return await Request.post<Post>({ url: `${id}`, method: "DELETE" });
+	}
 }
