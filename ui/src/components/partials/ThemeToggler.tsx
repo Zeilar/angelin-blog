@@ -12,7 +12,7 @@ export function ThemeToggler() {
 	}
 
 	return (
-		<button
+		<Wrapper
 			onClick={toggleTheme}
 			title={`Switch to ${theme?.themeScheme === "dark" ? "light" : "dark"} theme`}
 		>
@@ -21,11 +21,11 @@ export function ThemeToggler() {
 			) : (
 				<IconOff path={mdiLightbulbOutline} />
 			)}
-		</button>
+		</Wrapper>
 	);
 }
 
-const TogglerIcon = styled(Icon)`
+const Wrapper = styled.button`
 	position: fixed;
 	transform: translateY(-50%);
 	top: 50%;
@@ -34,13 +34,13 @@ const TogglerIcon = styled(Icon)`
 	height: 2rem;
 `;
 
-const IconOn = styled(TogglerIcon)`
+const IconOn = styled(Icon)`
 	${props => css`
 		color: hsl(${props.theme.color.get("brand")});
 	`}
 `;
 
-const IconOff = styled(TogglerIcon)`
+const IconOff = styled(Icon)`
 	${props => css`
 		color: hsl(${props.theme.color.get("text")});
 	`}

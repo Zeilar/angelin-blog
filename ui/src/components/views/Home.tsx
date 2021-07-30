@@ -17,9 +17,8 @@ export function Home() {
 	}
 
 	return (
-		<Styles.Container className="mt-4">
+		<Styles.Container className="my-4">
 			<Styles.H1>Angelin Blog</Styles.H1>
-			<Styles.SecondaryButton>fspidf</Styles.SecondaryButton>
 			<Filter />
 			<Styles.Col className="w-full">
 				{posts.map((post: Post) => (
