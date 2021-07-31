@@ -1,13 +1,12 @@
 import * as Styles from "../styled-components";
 import { Post } from "../../models";
-import { useFetch } from "../hooks";
-import useTitle from "../hooks/useTitle";
-import { SERVER_URL } from "../../utils";
+import { useFetch, useTitle } from "../hooks";
 import PostThumbnail from "../partials/PostThumbnail";
 import { Filter } from "../partials";
+import { URLHelpers } from "../../utils/URLHelpers";
 
 export function Home() {
-	const query = useFetch<{ data: Post[] }>(`${SERVER_URL}/api/posts`);
+	const query = useFetch<{ data: Post[] }>(URLHelpers.apiPosts());
 	const posts = query.body?.data.map((post: Post) => new Post(post)) ?? [];
 
 	useTitle("Angelin Blog");

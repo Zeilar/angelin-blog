@@ -1,37 +1,31 @@
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { useContext } from "react";
-import { useHistory } from "react-router";
-import { Post } from "../../../models/Post";
-import { SERVER_URL } from "../../../utils";
-import { FetchContext, IFetchContext } from "../../hooks";
-import { StatusButton } from "../../misc";
+import { EditorContent, Editor as IEditor } from "@tiptap/react";
 import { Toolbar } from "./";
-import { ModalStatus } from "../../../types/modals";
-import { useState } from "react";
+import { IStatus } from "../../../types/modals";
 import classNames from "classnames";
-import { Col, InputError, Input } from "../../styled-components";
-import { useEffect } from "react";
-import { theme } from "../../../styles/theme";
+import { Col, InputError } from "../../styled-components";
 import { Prompt } from "react-router-dom";
+import { useMemo, useEffect } from "react";
 
-const promptMsg = "You have unsaved progress, are you sure you want to exit?";
+const promptMessage = "You have unsaved progress, are you sure you want to exit?";
 
-export default function Editor({ ...props }) {
-	const { push } = useHistory();
-	const { clearCache } = useContext(FetchContext) as IFetchContext;
-	const [status, setStatus] = useState<ModalStatus>(null);
-	const [errorMessage, setErrorMessage] = useState<string | null>(null);
-	const [title, setTitle] = useState("");
+interface Props {
+	onSubmit?: () => void;
+	error?: string | null;
+	editor: IEditor | null;
+	content?: string;
+	status?: IStatus;
+	[key: string]: any;
+}
 
-	const editor = useEditor({
-		extensions: [StarterKit],
-	});
+export default function Editor(props: Props) {
+	const originalBody = useMemo(() => props.editor?.getHTML(), [props.editor]);
 
 	useEffect(() => {
 		function exitHandler(e: BeforeUnloadEvent) {
-			if (editor && editor.getHTML().length > 10) {
-				e.returnValue = promptMsg;
+			if (!props.editor) return;
+
+			if (originalBody !== props.editor.getHTML() && props.editor.getHTML().length > 10) {
+				e.returnValue = promptMessage;
 			}
 		}
 
@@ -40,60 +34,24 @@ export default function Editor({ ...props }) {
 		return () => {
 			window.removeEventListener("beforeunload", exitHandler);
 		};
-	}, [editor]);
+	}, [props.editor, originalBody]);
 
-	if (!editor) return null;
-
-	async function submit() {
-		setErrorMessage(null);
-		setStatus("loading");
-
-		const { data, ok, error } = await Post.create({
-			title,
-			body: editor!.getHTML(), // You can't convince me editor is not null
-		});
-
-		if (ok) {
-			if (!data) return;
-			clearCache(`${SERVER_URL}/api/posts`);
-			setStatus("success");
-			push(`/post/${data.id}-${data.title}`);
-		} else {
-			setStatus("error");
-
-			if (typeof error === "string") {
-				setErrorMessage(error);
-			}
-
-			setTimeout(() => {
-				setStatus(null);
-			}, theme.durations.modalsAfterResponse);
-		}
-	}
+	if (!props.editor) return null;
 
 	return (
-		<div>
+		<>
 			<Prompt
-				message={promptMsg}
-				when={status !== "success" && editor.getHTML().length > 10}
-			/>
-			<Input
-				className="mb-2 w-full"
-				value={title}
-				onChange={e => setTitle(e.target.value)}
-				placeholder="Title"
+				message={promptMessage}
+				when={props.status !== "success" && props.editor.getHTML().length > 10}
 			/>
 			<Col {...props} align="flex-start">
-				<Toolbar editor={editor} />
+				<Toolbar editor={props.editor} />
 				<EditorContent
-					className={classNames("editing w-full", { error: Boolean(errorMessage) })}
-					editor={editor}
+					className={classNames("editing w-full", { error: Boolean(props.error) })}
+					editor={props.editor}
 				/>
-				{errorMessage && <InputError message={errorMessage} className="mt-2" />}
+				{props.error && <InputError message={props.error} className="mt-2" />}
 			</Col>
-			<StatusButton status={status} className="mt-4" onClick={submit}>
-				Submit
-			</StatusButton>
-		</div>
+		</>
 	);
 }

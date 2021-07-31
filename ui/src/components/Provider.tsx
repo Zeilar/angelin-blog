@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
+import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "../styles/GlobalStyles";
-import { AuthModalContextProvider, ThemeContextProvider, UserContextProvider } from "./contexts";
+import { theme } from "../styles/theme";
+import { AuthModalContextProvider, UserContextProvider } from "./contexts";
 import { FetchContextProvider } from "./hooks/useFetch";
 
 interface Props {
@@ -9,7 +11,7 @@ interface Props {
 
 export default function Provider({ children }: Props) {
 	return (
-		<ThemeContextProvider>
+		<ThemeProvider theme={theme}>
 			<FetchContextProvider>
 				<UserContextProvider>
 					<AuthModalContextProvider>
@@ -18,6 +20,6 @@ export default function Provider({ children }: Props) {
 					</AuthModalContextProvider>
 				</UserContextProvider>
 			</FetchContextProvider>
-		</ThemeContextProvider>
+		</ThemeProvider>
 	);
 }

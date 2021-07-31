@@ -37,7 +37,7 @@ export function Navbar() {
 		} else {
 			return (
 				<>
-					<Item className="mr-6">
+					<Item className="mr-10">
 						<ModalButton onClick={() => setLoginModalOpen(true)}>Login</ModalButton>
 					</Item>
 					<Item>
@@ -54,7 +54,7 @@ export function Navbar() {
 		<Wrapper as="header" align="center">
 			<Styles.Container as="nav">
 				<Styles.Row as="ul">
-					<Item className="mr-6">
+					<Item className="mr-10">
 						<Link to="/" exact>
 							Home
 						</Link>
@@ -95,8 +95,8 @@ const Wrapper = styled(Styles.Row)`
 	top: 0;
 	z-index: 100;
 	${props => css`
-		background-color: hsl(${props.theme.color.get("primary")});
-		border-bottom: 1px solid hsl(${props.theme.color.get("secondary")});
+		box-shadow: ${props.theme.shadow.pick("elevate")};
+		background-color: ${props.theme.color.rgb("primary")};
 	`}
 `;
 
@@ -121,15 +121,15 @@ const link = css`
 				content: "";
 				position: absolute;
 				width: 100%;
-				height: 1px;
+				height: 2px;
 				bottom: 0;
 				left: 0;
-				background-color: hsl(${props.theme.color.get("brand")});
+				background-color: ${props.theme.color.rgb("brand")};
 			}
 		}
 		&:hover,
 		&.active {
-			color: hsl(${props.theme.color.get("brand")});
+			color: ${props.theme.color.rgb("brand")};
 		}
 	`}
 `;
@@ -147,7 +147,7 @@ const RegisterButton = styled(Styles.SecondaryButton)`
 	${link}
 	${props => css`
 		&:hover {
-			color: hsl(${props.theme.color.get("textStrong")});
+			color: ${props.theme.color.rgb("textStrong")};
 		}
 	`}
 `;

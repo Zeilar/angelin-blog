@@ -6,7 +6,7 @@ import * as Styles from "../../styled-components";
 import { useInputs, useClickOutside, useLocalStorage } from "../../hooks";
 import { AuthModalContext, IAuthModalContext, IUserContext, UserContext } from "../../contexts";
 import classNames from "classnames";
-import { ModalStatus } from "../../../types/modals";
+import { IStatus } from "../../../types/modals";
 import ContainerLoader from "../../misc/ContainerLoader";
 import { RenderProps } from "./";
 import { useContext } from "react";
@@ -28,7 +28,7 @@ export function Login({ open, setOpen, openRegister }: Props) {
 
 	const wrapper = useClickOutside<HTMLDivElement>(() => open && setOpen(false));
 
-	const [status, setStatus] = useState<ModalStatus>(null);
+	const [status, setStatus] = useState<IStatus>(null);
 	const [cached, setCached] = useLocalStorage<Inputs>("login");
 	const { inputs, onChange } = useInputs<Inputs>({
 		email: cached?.email ?? "",
@@ -62,7 +62,7 @@ export function Login({ open, setOpen, openRegister }: Props) {
 		}
 	}, [loggedIn]);
 
-	function oAuthSubmit() {
+	function OAuthSubmit() {
 		setStatus("loading");
 	}
 
@@ -137,11 +137,11 @@ export function Login({ open, setOpen, openRegister }: Props) {
 						placeholder="••••••••••"
 					/>
 				</Styles.Col>
-				<StatusButton className="w-full" type="submit" status={status}>
+				<StatusButton className="w-full block" type="submit" status={status}>
 					Login
 				</StatusButton>
 				<ModalStyles.LoginDivider />
-				<ModalStyles.GitHubLogin onClick={oAuthSubmit} />
+				<ModalStyles.GitHubLogin className="block" onClick={OAuthSubmit} />
 				<Styles.P className="mt-6 text-center">
 					{"Not a member? "}
 					<Styles.A onClick={openRegister}>Register</Styles.A>

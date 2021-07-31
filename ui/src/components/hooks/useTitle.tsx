@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function useTitle(title: string, f?: string) {
+export function useTitle(title: string, f?: string) {
 	const fallback = useRef(f);
 
 	function setTitle(title: string) {

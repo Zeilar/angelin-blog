@@ -1,18 +1,17 @@
 import { RouteComponentProps } from "../../types/props";
 import { Post } from "../../models";
-import { SERVER_URL } from "../../utils";
-import { FetchContext, IFetchContext, useFetch } from "../hooks";
+import { FetchContext, IFetchContext, useFetch, useTitle } from "../hooks";
 import * as Styles from "../styled-components";
 import { ReadOnlyEditor } from "../partials/editor";
-import useTitle from "../hooks/useTitle";
 import { Menu, MenuItem, MenuWrapper } from "../partials/modals";
-import { mdiDotsHorizontal } from "@mdi/js";
+import { mdiDotsVertical } from "@mdi/js";
 import Icon from "@mdi/react";
 import styled from "styled-components";
 import classNames from "classnames";
 import { IconButton } from "../styled-components";
 import { useHistory } from "react-router-dom";
 import { useContext } from "react";
+import { URLHelpers } from "../../utils/URLHelpers";
 
 interface MatchParams {
 	id: string;
@@ -20,19 +19,22 @@ interface MatchParams {
 }
 
 export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
-	const url = `${SERVER_URL}/api/posts/${match.params.id}`;
+	const url = URLHelpers.apiPost(match.params.id);
+
 	const query = useFetch<{ data: Post }>(url);
 	const { clearCache } = useContext(FetchContext) as IFetchContext;
 	const { push } = useHistory();
 
-	useTitle(`Angelin Blog | ${query.body?.data.title}`);
+	const post = query.body?.data;
+
+	useTitle(`Angelin Blog | ${post?.title}`);
 
 	if (!query.body?.data) {
 		return null;
 	}
 
 	async function deletePost() {
-		const { ok, error } = await Post.destroy(query.body!.data.id);
+		const { ok, error } = await Post.destroy(post!.id);
 		if (ok) {
 			clearCache(url);
 			push("/");
@@ -47,22 +49,22 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 					render={(open, setOpen) => (
 						<Options>
 							<Dots onClick={() => setOpen(p => !p)}>
-								<Icon path={mdiDotsHorizontal} />
+								<Icon path={mdiDotsVertical} />
 							</Dots>
 							<MenuWrapper className={classNames({ open })}>
 								<MenuItem
 									onClick={() => {
 										setOpen(false);
-										// ...
+										push(`/post/${post?.id}-${post?.title}/edit`);
 									}}
 								>
-									Item 1
+									Edit
 								</MenuItem>
 								<MenuItem
 									className="danger"
-									onClick={() => {
+									onClick={async () => {
 										setOpen(false);
-										deletePost();
+										await deletePost();
 									}}
 								>
 									Delete

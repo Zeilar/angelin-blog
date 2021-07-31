@@ -5,7 +5,7 @@ export const header = css`
 	font-family: Heebo;
 	letter-spacing: 1px;
 	${props => css`
-		color: hsl(${props.theme.color.get("textStrong")});
+		color: ${props.theme.color.rgb("textStrong")};
 	`}
 `;
 
@@ -13,9 +13,9 @@ export const text = css`
 	font-size: 1rem;
 	font-family: Open Sans;
 	${props => css`
-		color: hsl(${props.theme.color.get("text")});
+		color: ${props.theme.color.rgb("text")};
 		&.muted {
-			color: hsl(${props.theme.color.get("textMuted")});
+			color: ${props.theme.color.rgb("textMuted")};
 		}
 	`}
 `;
@@ -66,9 +66,9 @@ export const A = styled.a`
 	display: inline-flex;
 	font-weight: 600;
 	${props => css`
-		color: hsl(${props.theme.color.get("brand")});
+		color: ${props.theme.color.rgb("brand")};
 		&:hover {
-			color: hsl(${props.theme.color.pick("brand").darken(10).get()});
+			color: ${props.theme.color.rgb("brandDark")};
 		}
 	`}
 `;

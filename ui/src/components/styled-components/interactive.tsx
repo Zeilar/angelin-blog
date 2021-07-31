@@ -13,11 +13,16 @@ export const button = css`
 	justify-content: center;
 	align-items: center;
 	font-weight: 600;
+	width: fit-content;
+	&.block {
+		width: 100%;
+	}
 	${props => css`
-		background-color: hsl(${props.theme.color.get("brand")});
-		color: hsl(${props.theme.color.get("textStrong")});
+		box-shadow: ${props.theme.shadow.pick("spread")};
+		background-color: ${props.theme.color.rgb("brand")};
+		color: ${props.theme.color.rgb("textStrong")};
 		&:hover {
-			background-color: hsl(${props.theme.color.pick("brand").darken().get()});
+			background-color: ${props.theme.color.rgb("brandDark")};
 		}
 	`}
 	&:focus {
@@ -28,9 +33,8 @@ export const button = css`
 		background-color: rgba(0, 0, 0, 0.1);
 		cursor: default;
 		pointer-events: none;
-		border-color: transparent;
 		${props => css`
-			color: hsl(${props.theme.color.get("textMuted")});
+			color: ${props.theme.color.rgb("textMuted")};
 		`}
 	}
 `;
@@ -58,9 +62,7 @@ export const IconButton = styled.button`
 	${props => css`
 		border-radius: ${props.theme.borderRadius}px;
 		&:hover {
-			${props.theme.scheme === "dark"
-				? `background-color: hsl(${props.theme.color.pick("primary").lighten().get()})`
-				: `background-color: hsl(${props.theme.color.get("secondary")})`}
+			background-color: ${props.theme.color.rgb("primary", 3)};
 		}
 	`}
 	& > * {
@@ -74,14 +76,16 @@ export const Input = styled.input`
 	border: 0;
 	min-width: 15rem;
 	padding: 0.75rem;
+	transition: 0.05s;
 	${props => css`
-		background-color: hsl(${props.theme.color.get("primary")});
-		border: 1px solid hsl(${props.theme.color.get("secondary")});
+		box-shadow: ${props.theme.shadow.pick("spread")};
+		background-color: ${props.theme.color.rgb("primary", 2)};
 		&:focus {
-			border-color: hsl(${props.theme.color.get("brand")});
+			background-color: ${props.theme.color.rgb("primary", 3)};
+			box-shadow: 0 0 0 2px ${props.theme.color.rgb("brand")} inset;
 		}
 		&.error {
-			border-color: hsl(${props.theme.color.get("error")});
+			box-shadow: 0 0 0 2px ${props.theme.color.rgb("error")} inset;
 		}
 	`}
 `;
@@ -90,10 +94,10 @@ export const FormError = styled(Styles.P)`
 	width: 100%;
 	padding: 0.75rem;
 	${props => css`
-		background-color: hsla(${props.theme.color.pick("error").get()}, 0.25);
-		box-shadow: ${props.theme.shadow.pick("elevateUnder")};
-		color: hsl(${props.theme.color.get("text")});
-		border-left: 2px solid hsl(${props.theme.color.get("error")});
+		background-color: ${props.theme.color.rgba("error", 0.25)};
+		box-shadow: ${props.theme.shadow.pick("elevate")};
+		color: ${props.theme.color.rgb("text")};
+		border-left: 2px solid ${props.theme.color.rgb("error")};
 		border-radius: ${props.theme.borderRadius}px;
 	`}
 `;
@@ -101,12 +105,12 @@ export const FormError = styled(Styles.P)`
 const StyledInputError = styled(Styles.Span)`
 	font-weight: bold;
 	${props => css`
-		color: hsl(${props.theme.color.get("error")});
+		color: ${props.theme.color.rgb("error")};
 	`}
 `;
 const InputErrorIcon = styled(Icon)`
 	${props => css`
-		color: hsl(${props.theme.color.get("error")});
+		color: ${props.theme.color.rgb("error")};
 	`}
 `;
 export function InputError({ message, ...props }: { message?: string; [key: string]: any }) {

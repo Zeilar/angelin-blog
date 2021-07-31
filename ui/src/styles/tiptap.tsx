@@ -8,14 +8,14 @@ export const editor = css`
 			padding: 1rem;
 			min-height: 400px;
 			${props => css`
-				background-color: hsl(${props.theme.color.get("primary")});
-				border: 1px solid hsl(${props.theme.color.get("secondary")});
+				background-color: ${props.theme.color.rgb("primary", 2)};
+				border: 1px solid transparent;
 			`}
 		}
 
 		${props => css`
 			&.error {
-				border: 1px solid hsl(${props.theme.color.get("error")});
+				border-color: ${props.theme.color.rgb("error")};
 			}
 		`}
 	}
@@ -55,7 +55,7 @@ export const editor = css`
 			padding: 0.75rem 1rem;
 			${props => css`
 				border-radius: ${props.theme.borderRadius}px;
-				color: hsl(${props.theme.color.get("text")});
+				color: ${props.theme.color.rgb("text")};
 			`}
 
 			code {
@@ -73,7 +73,7 @@ export const editor = css`
 			padding: 0.25rem 0 0.25rem 1rem;
 			background-color: rgba(0, 0, 0, 0.1);
 			${props => css`
-				border-left: 2px solid hsl(${props.theme.color.get("brand")});
+				border-left: 2px solid ${props.theme.color.rgb("brand")};
 			`}
 		}
 

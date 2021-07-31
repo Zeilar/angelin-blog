@@ -1,5 +1,6 @@
 import { Args, QueryParams, Body } from "../types/request";
 import { SERVER_URL } from "./constants";
+import { URLHelpers } from "./URLHelpers";
 
 export class Request {
 	public static parseQueryParams(params?: QueryParams) {
@@ -46,22 +47,22 @@ export class Request {
 	}
 
 	public static async tag<T>(args: Args) {
-		args.url = `${SERVER_URL}/api/tags/${args.url}`;
+		args.url = `${URLHelpers.apiTags()}/${args.url}`;
 		return await Request.query<T>({ ...args });
 	}
 
 	public static async comment<T>(args: Args) {
-		args.url = `${SERVER_URL}/api/comments/${args.url}`;
+		args.url = `${URLHelpers.apiComments()}/${args.url}`;
 		return await Request.query<T>({ ...args, withResponse: true });
 	}
 
 	public static async post<T>(args: Args) {
-		args.url = `${SERVER_URL}/api/posts/${args.url}`;
+		args.url = `${URLHelpers.apiPosts()}/${args.url}`;
 		return await Request.query<T>({ ...args, withResponse: true });
 	}
 
 	public static async auth<T>(args: Args) {
-		args.url = `${SERVER_URL}/api/users/${args.url}`;
+		args.url = `${URLHelpers.apiUsers()}/${args.url}`;
 		return await Request.query<T>({ ...args, withResponse: true });
 	}
 }

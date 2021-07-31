@@ -33,7 +33,7 @@ const Wrapper = styled(Row)`
 		&:hover {
 			${Span},
 			${TagIcon} {
-				color: hsl(${props.theme.color.get("brand")});
+				color: ${props.theme.color.rgb("brand")};
 			}
 		}
 	`}

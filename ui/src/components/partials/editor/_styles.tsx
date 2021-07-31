@@ -6,10 +6,10 @@ export const Wrapper = styled(Styles.Row)`
 	flex-wrap: wrap;
 	padding: 0.25rem;
 	width: 100%;
-	margin-bottom: -1px;
+	z-index: 10;
 	${props => css`
-		background-color: hsl(${props.theme.color.get("primary")});
-		border: 1px solid hsl(${props.theme.color.get("secondary")});
+		background-color: ${props.theme.color.rgb("primary")};
+		box-shadow: ${props.theme.shadow.pick("elevate")};
 	`}
 `;
 
@@ -26,10 +26,10 @@ export const ToolbarButton = styled.button.attrs({ tabIndex: -1 })`
 	${props => css`
 		border-radius: ${props.theme.borderRadius}px;
 		&:hover {
-			background-color: hsl(${props.theme.color.get("secondary")});
+			background-color: ${props.theme.color.rgb("primary", 3)};
 		}
 		&.active {
-			background-color: hsl(${props.theme.color.get("brand")});
+			background-color: ${props.theme.color.rgb("brand")};
 		}
 		&:focus {
 			outline: 0;

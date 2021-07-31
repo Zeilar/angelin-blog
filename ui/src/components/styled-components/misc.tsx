@@ -8,8 +8,8 @@ export const PostWrapper = styled(Styles.Col)`
 		margin-top: 0;
 	}
 	${props => css`
-		background-color: hsl(${props.theme.color.get("primary")});
-		border: 1px solid hsl(${props.theme.color.get("secondary")});
+		background-color: ${props.theme.color.rgb("primary")};
+		box-shadow: ${props.theme.shadow.pick("elevate")};
 	`}
 `;
 
@@ -23,7 +23,7 @@ export const PostPreview = styled.article`
 export const PostPreviewHeader = styled(Styles.H4)`
 	${props => css`
 		&:hover {
-			color: hsl(${props.theme.color.get("brand")});
+			color: ${props.theme.color.rgb("brand")};
 		}
 	`}
 `;

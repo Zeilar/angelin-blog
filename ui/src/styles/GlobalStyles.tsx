@@ -7,23 +7,24 @@ export const GlobalStyles = createGlobalStyle`
 
     ${props => css`
 		::placeholder {
-			color: hsl(${props.theme.color.get("textMuted")});
+			color: ${props.theme.color.rgb("textMuted")};
 		}
 
 		::selection {
-			color: hsl(${props.theme.color.get("link")});
+			background-color: ${props.theme.color.rgb("brand")};
+			color: ${props.theme.color.rgb("text")};
 		}
 
 		body,
 		#root {
 			font-family: Open Sans;
-			color: hsl(${props.theme.color.get("text")});
-			background-color: hsl(${props.theme.color.get("body")});
+			color: ${props.theme.color.rgb("text")};
+			background-color: ${props.theme.color.rgb("body")};
 			min-height: 100vh;
 		}
 
 		a {
-			color: hsl(${props.theme.color.get("link")});
+			color: ${props.theme.color.rgb("link")};
 			text-decoration: none;
 		}
 	`}

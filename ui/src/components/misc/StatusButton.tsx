@@ -4,12 +4,12 @@ import { PrimaryButton } from "../styled-components";
 import { mdiClose, mdiCheck, mdiLoading } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";
-import { ModalStatus } from "../../types/modals";
+import { IStatus } from "../../types/modals";
 
 interface Props {
 	className?: string;
 	children: ReactNode;
-	status: ModalStatus;
+	status: IStatus;
 	[key: string]: any;
 }
 
@@ -67,15 +67,15 @@ const StyledButton = styled(PrimaryButton)`
 
 	${props => css`
 		&.success {
-			background-color: hsl(${props.theme.color.get("success")});
+			background-color: ${props.theme.color.rgb("success")};
 		}
 
 		&.error {
-			background-color: hsl(${props.theme.color.get("error")});
+			background-color: ${props.theme.color.rgb("error")};
 		}
 
 		&.loading {
-			background-color: hsla(${props.theme.color.get("brand")}, 0.25);
+			background-color: ${props.theme.color.rgba("brand", 0.25)};
 		}
 	`}
 `;

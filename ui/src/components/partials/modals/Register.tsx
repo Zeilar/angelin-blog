@@ -6,7 +6,7 @@ import * as Styles from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { IUserContext, UserContext } from "../../contexts";
 import classNames from "classnames";
-import { ModalStatus } from "../../../types/modals";
+import { IStatus } from "../../../types/modals";
 import ContainerLoader from "../../misc/ContainerLoader";
 import { RenderProps } from "./";
 import { useContext } from "react";
@@ -28,7 +28,7 @@ export function Register({ open, setOpen, openLogin }: Props) {
 
 	const wrapper = useClickOutside<HTMLDivElement>(() => open && setOpen(false));
 
-	const [status, setStatus] = useState<ModalStatus>(null);
+	const [status, setStatus] = useState<IStatus>(null);
 	const { inputs, onChange, empty } = useInputs<Inputs>({
 		email: "",
 		password: "",
@@ -51,7 +51,7 @@ export function Register({ open, setOpen, openLogin }: Props) {
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}, [loggedIn, empty]);
 
-	function oAuthSubmit() {
+	function OAuthSubmit() {
 		setStatus("loading");
 	}
 
@@ -138,11 +138,11 @@ export function Register({ open, setOpen, openLogin }: Props) {
 						placeholder="••••••••••"
 					/>
 				</Styles.Col>
-				<StatusButton className="w-full" type="submit" status={status}>
+				<StatusButton className="w-full block" type="submit" status={status}>
 					Register
 				</StatusButton>
 				<ModalStyles.LoginDivider />
-				<ModalStyles.GitHubLogin onClick={oAuthSubmit} />
+				<ModalStyles.GitHubLogin className="block" onClick={OAuthSubmit} />
 				<Styles.P className="mt-6 text-center">
 					{"Already a member? "}
 					<Styles.A onClick={openLogin}>Login</Styles.A>

@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import * as Styles from "../../styled-components";
 import Icon from "@mdi/react";
 import { mdiClose, mdiGithub } from "@mdi/js";
-import { SERVER_URL } from "../../../utils";
+import { URLHelpers } from "../../../utils/URLHelpers";
 
 export const Background = styled.div`
 	position: fixed;
@@ -31,7 +31,7 @@ export const Wrapper = styled(Styles.Col)`
 	opacity: 0;
 	transition: 0.25s;
 	${props => css`
-		background-color: hsl(${props.theme.color.get("primary")});
+		background-color: ${props.theme.color.rgb("primary")};
 	`}
 	&.open {
 		pointer-events: all;
@@ -55,7 +55,7 @@ export const CloseButton = styled.button.attrs({ type: "button" })`
 	${props => css`
 		border-radius: ${props.theme.borderRadius}px;
 		&:hover {
-			color: hsl(${props.theme.color.get("brand")});
+			color: ${props.theme.color.rgb("brand")};
 		}
 	`}
 	&:focus {
@@ -67,14 +67,14 @@ const LoginDividerLine = styled.div`
 	height: 1px;
 	width: 100%;
 	${props => css`
-		background-color: hsl(${props.theme.color.get("border")});
+		background-color: ${props.theme.color.rgb("border")};
 	`}
 `;
 const LoginDividerText = styled.span`
 	user-select: none;
 	margin: 0 1rem;
 	${props => css`
-		color: hsl(${props.theme.color.get("textMuted")});
+		color: ${props.theme.color.rgb("textMuted")};
 	`}
 `;
 export function LoginDivider() {
@@ -105,12 +105,12 @@ export const GitHubButton = styled(OAuthButton)`
 
 type OAuthClick = React.MouseEventHandler<HTMLButtonElement> &
 	React.MouseEventHandler<HTMLAnchorElement>;
-export function GitHubLogin({ onClick }: { onClick: OAuthClick }) {
+export function GitHubLogin({ onClick, ...props }: { onClick: OAuthClick; [key: string]: any }) {
 	return (
 		<GitHubButton
+			{...props}
 			as="a"
-			href={`${SERVER_URL}${process.env.REACT_APP_GITHUB_LOGIN_URI}`}
-			onClick={onClick}
+			href={`${URLHelpers.server()}${process.env.REACT_APP_GITHUB_LOGIN_URI}`}
 		>
 			<span>Login with GitHub</span>
 			<OAuthIcon path={mdiGithub} />
@@ -135,7 +135,7 @@ export const Main = styled.form`
 export const Footer = styled.div`
 	padding: 3rem;
 	${props => css`
-		background-color: hsl(${props.theme.color.get("secondary")});
+		background-color: ${props.theme.color.rgb("primary")};
 		box-shadow: ${props.theme.shadow.pick("spread")};
 	`}
 `;

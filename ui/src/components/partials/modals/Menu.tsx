@@ -53,7 +53,7 @@ export const MenuWrapper = styled(Col)`
 	display: none;
 	overflow: hidden;
 	${props => css`
-		background-color: hsl(${props.theme.color.get("primary")});
+		background-color: ${props.theme.color.rgb("primary", 2)};
 		box-shadow: ${props.theme.shadow.pick("elevate")};
 	`}
 	&.open {
@@ -67,12 +67,13 @@ export const MenuItem = styled.div`
 	cursor: pointer;
 	z-index: 50;
 	font-weight: 600;
+	text-align: center;
 	${props => css`
 		&:hover {
-			background-color: hsl(${props.theme.color.get("secondary")});
+			background-color: ${props.theme.color.rgb("primary", 3)};
 		}
 		&.danger {
-			color: hsl(${props.theme.color.get("error")});
+			color: ${props.theme.color.rgb("error")};
 		}
 	`}
 `;

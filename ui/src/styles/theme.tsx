@@ -1,8 +1,8 @@
 interface Colors {
 	body: string;
-	primary: string;
-	secondary: string;
+	primary: string[];
 	brand: string;
+	brandDark: string;
 	text: string;
 	textStrong: string;
 	textSecondary: string;
@@ -17,74 +17,57 @@ interface Colors {
 class Color {
 	constructor(public scheme: "light" | "dark" = "dark") {}
 
-	public selected: string;
-
 	public readonly dark: Colors = {
-		body: "220, 38%, 6%",
-		primary: "222, 21%, 9%",
-		secondary: "216, 45%, 22%",
-		brand: "355, 70%, 50%",
-		text: "0, 0%, 80%",
-		textStrong: "0, 0%, 90%",
-		textSecondary: "0, 0%, 17.5%",
-		textSecondaryStrong: "0, 0%, 0%",
-		textMuted: "0, 0%, 68.5%",
-		border: "0, 0%, 25%",
+		body: "14, 14, 16",
+		primary: ["25, 25, 25", "35, 35, 35", "50, 50, 50"],
+		brand: "220, 40, 50",
+		brandDark: "200, 30, 40",
+		text: "225, 225, 225",
+		textStrong: "255, 255, 255",
+		textSecondary: "50, 50, 50",
+		textSecondaryStrong: "0, 0, 0",
+		textMuted: "175, 175, 175",
+		border: "40, 40, 40",
+		link: "0, 127, 255",
+		error: "200, 0, 0",
+		success: "0, 200, 0",
+	};
+
+	public readonly light: Colors = {
+		body: "14, 14, 16",
+		primary: ["25, 25, 25", "35, 35, 35", "50, 50, 50"],
+		brand: "220, 40, 50",
+		brandDark: "200, 30, 40",
+		text: "225, 225, 225",
+		textStrong: "255, 255, 255",
+		textSecondary: "50, 50, 50",
+		textSecondaryStrong: "0, 0, 0",
+		textMuted: "175, 175, 175",
+		border: "75, 75, 75",
 		link: "210, 100%, 65%",
 		error: "0, 100%, 50%",
 		success: "120, 100%, 35%",
 	};
 
-	public readonly light: Colors = {
-		body: "200, 10%, 90%",
-		primary: "0, 0%, 100%",
-		secondary: "0, 0%, 95%",
-		brand: "150, 65%, 35%",
-		text: "0, 0%, 4%",
-		textStrong: "0, 0%, 0%",
-		textSecondary: "0, 0%, 88%",
-		textSecondaryStrong: "0, 0%, 100%",
-		textMuted: "0, 0%, 60%",
-		border: "0, 0%, 93%",
-		link: "210, 100%, 50%",
-		error: "0, 100%, 60%",
-		success: "120, 100%, 35%",
-	};
-
 	public colors = this[this.scheme];
 
-	public get(color?: keyof Colors) {
-		return color ? this.colors[color] : this.selected;
+	public rgb(color: keyof Colors, level: number = 1) {
+		if (typeof this.colors[color] === "string") {
+			return `rgb(${this.colors[color]})`;
+		}
+		return `rgb(${this.colors[color][level - 1]})`;
 	}
 
-	public pick(key: keyof Colors) {
-		this.selected = this.colors[key];
-		return this;
-	}
-
-	public modify(cb: (h: number, s: number, l: number) => string) {
-		const [h, s, l] = this.selected.split(", ").map((value: string) => parseInt(value));
-		return cb(h, s, l);
-	}
-
-	public lighting(cb: (l: number) => number) {
-		return this.modify((h, s, l) => `${h}, ${s}%, ${cb(l)}%`);
-	}
-
-	public darken(value?: number) {
-		this.selected = this.lighting(lighting => lighting - (value ?? 5));
-		return this;
-	}
-
-	public lighten(value?: number) {
-		this.selected = this.lighting(lighting => lighting + (value ?? 5));
-		return this;
+	/**
+	 * @description Opacity should be a float number between 0-1.
+	 */
+	public rgba(color: keyof Colors, opacity: number, level: number = 0) {
+		return `rgba(${this.rgb(color, level)}, ${opacity})`;
 	}
 }
 
 interface Shadows {
 	elevate: string;
-	elevateUnder: string;
 	spread: string;
 }
 
@@ -94,14 +77,12 @@ class Shadow {
 	public selected: string;
 
 	public readonly dark: Shadows = {
-		elevate: "0 0 4px 0 rgba(0, 0, 0, 0.75)",
-		elevateUnder: "0 3px 6px rgba(0, 0, 0, 0.08)",
-		spread: "0 0 10px 0 rgba(0, 0, 0, 0.15)",
+		elevate: "0 1px 2px 0 rgba(0, 0, 0, 0.9), 0 0 2px 0 rgba(0, 0, 0, 0.9)",
+		spread: "0 0 3px 0 rgba(0, 0, 0, 0.75)",
 	};
 
 	public readonly light: Shadows = {
 		elevate: "0 0 6px 0 rgba(0, 0, 0, 0.08)",
-		elevateUnder: "0 3px 6px rgba(0, 0, 0, 0.08)",
 		spread: "0 0 10px 0 rgba(0, 0, 0, 0.15)",
 	};
 
