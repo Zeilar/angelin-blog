@@ -1,7 +1,6 @@
 import { Request } from "../utils";
 import { Response } from "../types/request";
-import { User, Tag } from "./";
-import { Comment } from "./Comment";
+import { User, Tag, Comment } from "./";
 
 interface PostCredentials {
 	title: string;
@@ -68,6 +67,11 @@ export class Post implements PostProps {
 
 	public static async create(post: PostCredentials) {
 		const query = await Request.post<Post>({ url: "", method: "POST", body: post });
+		return Post.dto(query);
+	}
+
+	public static async edit(id: number, post: PostCredentials) {
+		const query = await Request.post<Post>({ url: `${id}`, method: "PUT", body: post });
 		return Post.dto(query);
 	}
 

@@ -6,7 +6,7 @@ interface Props {
 
 export interface IFetchContext {
 	cached: Map<string, any>;
-	clearCache: (key: string) => void;
+	clearCache: (...keys: string[]) => void;
 }
 
 export const FetchContext = createContext<IFetchContext | null>(null);
@@ -14,16 +14,19 @@ export const FetchContext = createContext<IFetchContext | null>(null);
 export function FetchContextProvider({ children }: Props) {
 	let cached = useRef(new Map<string, any>()).current;
 
-	function clearCache(): void;
-	function clearCache(key?: string): void {
-		if (typeof key !== "string") {
+	function clearCache(...keys: string[]) {
+		if (!keys) return;
+
+		if (keys.length <= 0) {
 			cached = new Map<string, any>();
 			return;
 		}
 
-		if (cached.has(key)) {
-			cached.delete(key);
-		}
+		keys.forEach(key => {
+			if (cached.has(key)) {
+				cached.delete(key);
+			}
+		});
 	}
 
 	const values: IFetchContext = {

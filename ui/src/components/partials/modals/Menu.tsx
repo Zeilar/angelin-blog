@@ -50,6 +50,7 @@ export const MenuWrapper = styled(Col)`
 	position: absolute;
 	right: 0;
 	top: 2.5rem;
+	z-index: 50;
 	display: none;
 	overflow: hidden;
 	${props => css`

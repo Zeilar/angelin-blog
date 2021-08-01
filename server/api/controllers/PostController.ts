@@ -64,9 +64,9 @@ export class PostController extends Controller {
 		}
 
 		// TODO: refactor to only graph fetch if tags were affected
-		return this.json(
-			await res.post.$query().patchAndFetch({ body, title }).withGraphFetched("tags")
-		);
+		return this.json({
+			data: await res.post.$query().patchAndFetch({ body, title }).withGraphFetched("tags"),
+		});
 	}
 
 	@inversify.httpDelete("/:id", getPostOrFail, PostGuard.delete)

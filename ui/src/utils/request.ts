@@ -17,9 +17,10 @@ export class Request {
 
 	public static async query<T>(args: Args) {
 		const params = Request.parseQueryParams(args.params);
-		let data: Body<T> | null = null;
-		let code = 200;
-		let ok = true;
+
+		let data: Body<T> | null = null,
+			code = 200,
+			ok = true;
 
 		try {
 			const response = await fetch(`${args.url}${params}`, {

@@ -28,7 +28,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [title, setTitle] = useState<string>("");
 
-	useTitle("Angelin Blog | Create Post");
+	useTitle("Angelin Blog | Edit Post");
 
 	useEffect(() => {
 		setTitle(post?.title ?? "");
@@ -43,17 +43,19 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	);
 
 	async function submit() {
+		if (!post) return;
+
 		setErrorMessage(null);
 		setStatus("loading");
 
-		const { data, ok, error } = await Post.create({
+		const { data, ok, error } = await Post.edit(post.id, {
 			title,
 			body: editor!.getHTML(), // You can't convince me editor is not null
 		});
 
 		if (ok) {
 			if (!data) return;
-			clearCache(URLHelpers.apiPosts());
+			clearCache(URLHelpers.apiPosts(), URLHelpers.apiPost(data.id));
 			setStatus("success");
 			push(URLHelpers.getPost(data));
 		} else {
@@ -62,11 +64,11 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 			if (typeof error === "string") {
 				setErrorMessage(error);
 			}
-
-			setTimeout(() => {
-				setStatus(null);
-			}, theme.durations.modalsAfterResponse);
 		}
+
+		setTimeout(() => {
+			setStatus(null);
+		}, theme.durations.modalsAfterResponse);
 	}
 
 	return (
@@ -80,7 +82,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 			/>
 			<Editor error={errorMessage} editor={editor} />
 			<StatusButton status={status} className="mt-4" onClick={submit}>
-				Submit
+				Save
 			</StatusButton>
 		</Styles.Container>
 	);

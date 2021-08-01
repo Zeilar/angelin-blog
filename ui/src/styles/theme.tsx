@@ -61,8 +61,11 @@ class Color {
 	/**
 	 * @description Opacity should be a float number between 0-1.
 	 */
-	public rgba(color: keyof Colors, opacity: number, level: number = 0) {
-		return `rgba(${this.rgb(color, level)}, ${opacity})`;
+	public rgba(color: keyof Colors, opacity: number, level: number = 1) {
+		if (typeof this.colors[color] === "string") {
+			return `rgba(${this.colors[color]}, ${opacity})`;
+		}
+		return `rgba(${this.colors[color][level - 1]}, ${opacity})`;
 	}
 }
 

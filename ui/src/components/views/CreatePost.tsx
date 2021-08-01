@@ -33,8 +33,7 @@ export function CreatePost() {
 			body: editor!.getHTML(), // You can't convince me editor is not null
 		});
 
-		if (ok) {
-			if (!data) return;
+		if (ok && data) {
 			clearCache(URLHelpers.apiPosts());
 			setStatus("success");
 			push(URLHelpers.getPost(data));
@@ -44,11 +43,11 @@ export function CreatePost() {
 			if (typeof error === "string") {
 				setErrorMessage(error);
 			}
-
-			setTimeout(() => {
-				setStatus(null);
-			}, theme.durations.modalsAfterResponse);
 		}
+
+		setTimeout(() => {
+			setStatus(null);
+		}, theme.durations.modalsAfterResponse);
 	}
 
 	return (
