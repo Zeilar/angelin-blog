@@ -29,10 +29,10 @@ export function UserContextProvider({ children }: Props) {
 	useEffect(() => {
 		(async () => {
 			const query = await User.authenticate();
-			setLoading(false);
 			if (query.ok && query.data) {
 				setUser(query.data);
 			}
+			setLoading(false);
 		})();
 	}, []);
 

@@ -18,13 +18,14 @@ interface Props {
 }
 
 export default function Editor(props: Props) {
+	const body = props.editor?.getHTML() ?? "";
 	const originalBody = useMemo(() => props.editor?.getHTML(), [props.editor]);
 
 	useEffect(() => {
 		function exitHandler(e: BeforeUnloadEvent) {
 			if (!props.editor) return;
 
-			if (originalBody !== props.editor.getHTML() && props.editor.getHTML().length > 10) {
+			if (originalBody !== body && body.length > 10) {
 				e.returnValue = promptMessage;
 			}
 		}
@@ -34,7 +35,7 @@ export default function Editor(props: Props) {
 		return () => {
 			window.removeEventListener("beforeunload", exitHandler);
 		};
-	}, [props.editor, originalBody]);
+	}, [props.editor, originalBody, body]);
 
 	if (!props.editor) return null;
 
@@ -42,7 +43,7 @@ export default function Editor(props: Props) {
 		<>
 			<Prompt
 				message={promptMessage}
-				when={props.status !== "success" && props.editor.getHTML().length > 10}
+				when={props.status !== "success" && body !== originalBody && body.length > 10}
 			/>
 			<Col {...props} align="flex-start">
 				<Toolbar editor={props.editor} />

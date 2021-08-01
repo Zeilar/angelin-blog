@@ -54,7 +54,7 @@ export const MenuWrapper = styled(Col)`
 	overflow: hidden;
 	${props => css`
 		background-color: ${props.theme.color.rgb("primary", 2)};
-		box-shadow: ${props.theme.shadow.pick("elevate")};
+		box-shadow: ${props.theme.shadow.pick("spread")};
 	`}
 	&.open {
 		display: flex;

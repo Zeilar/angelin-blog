@@ -1,5 +1,4 @@
 import { Args, QueryParams, Body } from "../types/request";
-import { SERVER_URL } from "./constants";
 import { URLHelpers } from "./URLHelpers";
 
 export class Request {

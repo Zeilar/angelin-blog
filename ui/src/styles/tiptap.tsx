@@ -8,6 +8,7 @@ export const editor = css`
 			padding: 1rem;
 			min-height: 400px;
 			${props => css`
+				box-shadow: ${props.theme.shadow.pick("elevate")};
 				background-color: ${props.theme.color.rgb("primary", 2)};
 				border: 1px solid transparent;
 			`}
