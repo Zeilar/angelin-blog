@@ -66,11 +66,11 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 			if (typeof error === "string") {
 				setErrorMessage(error);
 			}
-		}
 
-		setTimeout(() => {
-			setStatus(null);
-		}, theme.durations.modalsAfterResponse);
+			setTimeout(() => {
+				setStatus(null);
+			}, theme.durations.modalsAfterResponse);
+		}
 	}
 
 	return (

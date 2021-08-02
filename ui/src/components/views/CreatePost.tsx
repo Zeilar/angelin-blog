@@ -43,11 +43,11 @@ export function CreatePost() {
 			if (typeof error === "string") {
 				setErrorMessage(error);
 			}
-		}
 
-		setTimeout(() => {
-			setStatus(null);
-		}, theme.durations.modalsAfterResponse);
+			setTimeout(() => {
+				setStatus(null);
+			}, theme.durations.modalsAfterResponse);
+		}
 	}
 
 	return (

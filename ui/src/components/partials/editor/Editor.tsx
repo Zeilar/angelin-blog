@@ -39,18 +39,11 @@ export default function Editor(props: Props) {
 
 	if (!props.editor) return null;
 
-	console.log(props.status);
-
 	return (
 		<>
 			<Prompt
 				message={promptMessage}
-				when={
-					props.status !== "success" &&
-					props.status !== "loading" &&
-					body !== originalBody &&
-					body.length > 10
-				}
+				when={props.status !== "success" && body !== originalBody && body.length > 10}
 			/>
 			<Col {...props} align="flex-start">
 				<Toolbar editor={props.editor} />
