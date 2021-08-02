@@ -38,7 +38,6 @@ export const editor = css`
 		h4,
 		h5,
 		h6 {
-			line-height: 1.1;
 			font-weight: revert;
 			font-size: revert;
 		}

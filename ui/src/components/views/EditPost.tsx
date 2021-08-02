@@ -77,7 +77,12 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 
 	return (
 		<Styles.Container className="my-4">
-			<Styles.A className="mb-2" as={Link} to={URLHelpers.getPost(post)}>
+			<Styles.A
+				className="mb-4"
+				as={Link}
+				to={URLHelpers.getPost(post)}
+				style={{ width: "fit-content" }}
+			>
 				<Icon className="mr-1" size={1} path={mdiKeyboardBackspace} />
 				Back
 			</Styles.A>
