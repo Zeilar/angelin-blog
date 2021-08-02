@@ -29,12 +29,11 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 
 	useTitle(`Angelin Blog | ${post?.title}`);
 
-	if (!query.body?.data) {
-		return null;
-	}
+	if (!post) return null;
 
 	async function deletePost() {
 		const { ok } = await Post.destroy(post!.id);
+
 		if (ok) {
 			clearCache(url);
 			push("/");
@@ -73,8 +72,8 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 						</Options>
 					)}
 				/>
-				<Styles.H4 className="mb-4">{query.body.data.title}</Styles.H4>
-				<ReadOnlyEditor content={query.body.data.body} />
+				<Styles.H4 className="mb-4">{post.title}</Styles.H4>
+				<ReadOnlyEditor content={post.body} />
 			</Styles.PostWrapper>
 		</Styles.Container>
 	);
