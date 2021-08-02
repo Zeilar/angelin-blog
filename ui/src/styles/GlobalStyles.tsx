@@ -5,7 +5,18 @@ import { editor } from "./tiptap";
 export const GlobalStyles = createGlobalStyle`
     ${editor}
 
+    ::-webkit-scrollbar {
+        width: 1rem;
+    }
+
     ${props => css`
+		::-webkit-scrollbar-thumb {
+			background-color: ${props.theme.color.rgb("brand")};
+			background-clip: padding-box;
+			border: 4px solid transparent;
+			border-radius: 100px;
+		}
+
 		::placeholder {
 			color: ${props.theme.color.rgb("textMuted")};
 		}
@@ -54,4 +65,5 @@ export const GlobalStyles = createGlobalStyle`
     code {
         font-family: JetBrains Mono, monospace;
     }
+
 `;

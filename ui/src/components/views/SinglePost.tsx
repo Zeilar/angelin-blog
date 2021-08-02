@@ -34,7 +34,7 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 	}
 
 	async function deletePost() {
-		const { ok, error } = await Post.destroy(post!.id);
+		const { ok } = await Post.destroy(post!.id);
 		if (ok) {
 			clearCache(url);
 			push("/");

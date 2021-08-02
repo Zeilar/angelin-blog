@@ -2,7 +2,7 @@ import Editor from "../partials/editor/Editor";
 import * as Styles from "../styled-components";
 import { FetchContext, IFetchContext, useFetch, useTitle } from "../hooks";
 import { useEditor } from "@tiptap/react";
-import { useHistory, RouteComponentProps } from "react-router-dom";
+import { useHistory, RouteComponentProps, Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import { IStatus } from "../../types/modals";
@@ -11,6 +11,8 @@ import { Post } from "../../models";
 import { StatusButton } from "../misc";
 import { URLHelpers } from "../../utils/URLHelpers";
 import { useEffect } from "react";
+import { mdiKeyboardBackspace } from "@mdi/js";
+import Icon from "@mdi/react";
 
 interface MatchParams {
 	id: string;
@@ -73,6 +75,10 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 
 	return (
 		<Styles.Container className="my-4">
+			<Styles.A className="mb-2" as={Link} to={URLHelpers.getPost(post)}>
+				<Icon className="mr-1" size={1} path={mdiKeyboardBackspace} />
+				Back
+			</Styles.A>
 			<Styles.H3 className="mb-5">Edit post</Styles.H3>
 			<Styles.Input
 				className="mb-2 w-full"
@@ -80,7 +86,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 				onChange={e => setTitle(e.target.value)}
 				placeholder="Title"
 			/>
-			<Editor error={errorMessage} editor={editor} />
+			<Editor status={status} error={errorMessage} editor={editor} />
 			<StatusButton status={status} className="mt-4" onClick={submit}>
 				Save
 			</StatusButton>

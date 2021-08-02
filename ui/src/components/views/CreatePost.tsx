@@ -59,7 +59,7 @@ export function CreatePost() {
 				onChange={e => setTitle(e.target.value)}
 				placeholder="Title"
 			/>
-			<Editor error={errorMessage} editor={editor} />
+			<Editor status={status} error={errorMessage} editor={editor} />
 			<StatusButton status={status} className="mt-4" onClick={submit}>
 				Submit
 			</StatusButton>
