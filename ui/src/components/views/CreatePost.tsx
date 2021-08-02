@@ -24,6 +24,8 @@ export function CreatePost() {
 		extensions: [StarterKit],
 	});
 
+	if (!editor) return null;
+
 	async function submit() {
 		setErrorMessage(null);
 		setStatus("loading");

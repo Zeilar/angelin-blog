@@ -33,4 +33,8 @@ export class URLHelpers {
 	public static getPost(post?: Post | null) {
 		return post ? `/post/${post.id}-${post.title}` : "";
 	}
+
+	public static editPost(post?: Post | null) {
+		return post ? `${this.getPost(post)}/edit` : "";
+	}
 }

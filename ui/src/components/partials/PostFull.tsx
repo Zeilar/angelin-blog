@@ -8,7 +8,7 @@ import Icon from "@mdi/react";
 import styled from "styled-components";
 import classNames from "classnames";
 import { IconButton } from "../styled-components";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { URLHelpers } from "../../utils";
 
@@ -21,7 +21,7 @@ export function PostFull({ post }: Props) {
 	const { push } = useHistory();
 
 	if (!(post instanceof Post)) {
-		console.error("Post must be an instance of class `Post`");
+		console.error("`post` must be an instance of class `Post`");
 		return null;
 	}
 
@@ -45,12 +45,7 @@ export function PostFull({ post }: Props) {
 								<Icon path={mdiDotsVertical} />
 							</Dots>
 							<MenuWrapper className={classNames({ open })}>
-								<MenuItem
-									onClick={() => {
-										setOpen(false);
-										push(`/post/${post.id}-${post.title}/edit`);
-									}}
-								>
+								<MenuItem as={Link} to={URLHelpers.editPost(post)}>
 									Edit
 								</MenuItem>
 								<MenuItem

@@ -70,6 +70,7 @@ export const MenuItem = styled.div`
 	font-weight: 600;
 	text-align: center;
 	${props => css`
+		color: ${props.theme.color.rgb("text")};
 		&:hover {
 			background-color: ${props.theme.color.rgb("primary", 3)};
 		}

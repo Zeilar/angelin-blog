@@ -44,6 +44,8 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 		[post?.body]
 	);
 
+	if (!editor) return null;
+
 	async function submit() {
 		if (!post) return;
 

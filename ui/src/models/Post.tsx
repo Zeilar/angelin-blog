@@ -67,7 +67,7 @@ export class Post implements PostProps {
 
 	public static async create(post: PostCredentials) {
 		const query = await Request.post<Post>({ url: "", method: "POST", body: post });
-		return Post.dto(query);
+		return this.dto(query);
 	}
 
 	public async edit(post: PostCredentials) {
