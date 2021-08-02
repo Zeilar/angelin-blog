@@ -70,12 +70,11 @@ export class Post implements PostProps {
 		return Post.dto(query);
 	}
 
-	public static async edit(id: number, post: PostCredentials) {
-		const query = await Request.post<Post>({ url: `${id}`, method: "PUT", body: post });
-		return Post.dto(query);
+	public async edit(post: PostCredentials) {
+		return await Request.post<Post>({ url: `${this.id}`, method: "PUT", body: post });
 	}
 
-	public static async destroy(id: number) {
-		return await Request.post<Post>({ url: `${id}`, method: "DELETE" });
+	public async destroy() {
+		return await Request.post<Post>({ url: `${this.id}`, method: "DELETE" });
 	}
 }

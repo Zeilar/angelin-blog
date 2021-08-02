@@ -2,11 +2,10 @@ import { Post } from "../../models";
 import * as Styles from "../styled-components";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
-import { HTMLAttributes } from "react";
 import { Tag } from "./";
 import { DateHelpers } from "../../utils";
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
+interface Props {
 	post: Post;
 	[key: string]: any;
 }

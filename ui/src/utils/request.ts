@@ -1,5 +1,5 @@
 import { Args, QueryParams, Body } from "../types/request";
-import { URLHelpers } from "./URLHelpers";
+import { URLHelpers } from "./";
 
 export class Request {
 	public static parseQueryParams(params?: QueryParams) {

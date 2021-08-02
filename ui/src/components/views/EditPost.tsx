@@ -9,7 +9,7 @@ import { IStatus } from "../../types/modals";
 import { theme } from "../../styles/theme";
 import { Post } from "../../models";
 import { StatusButton } from "../misc";
-import { URLHelpers } from "../../utils/URLHelpers";
+import { URLHelpers } from "../../utils";
 import { useEffect } from "react";
 import { mdiKeyboardBackspace } from "@mdi/js";
 import Icon from "@mdi/react";
@@ -22,7 +22,7 @@ interface MatchParams {
 export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	const url = URLHelpers.apiPost(match.params.id);
 	const query = useFetch<{ data: Post }>(url);
-	const post = query.body?.data;
+	const post = query.body?.data ? new Post(query.body.data) : null;
 
 	const { push } = useHistory();
 	const { clearCache } = useContext(FetchContext) as IFetchContext;
@@ -50,7 +50,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 		setErrorMessage(null);
 		setStatus("loading");
 
-		const { data, ok, error } = await Post.edit(post.id, {
+		const { data, ok, error } = await post.edit({
 			title,
 			body: editor!.getHTML(), // You can't convince me editor is not null
 		});

@@ -3,7 +3,7 @@ import { Post } from "../../models";
 import { useFetch, useTitle } from "../hooks";
 import PostThumbnail from "../partials/PostThumbnail";
 import { Filter } from "../partials";
-import { URLHelpers } from "../../utils/URLHelpers";
+import { URLHelpers } from "../../utils";
 
 export function Home() {
 	const query = useFetch<{ data: Post[] }>(URLHelpers.apiPosts());

@@ -9,7 +9,7 @@ import { IStatus } from "../../types/modals";
 import { theme } from "../../styles/theme";
 import { Post } from "../../models";
 import { StatusButton } from "../misc";
-import { URLHelpers } from "../../utils/URLHelpers";
+import { URLHelpers } from "../../utils";
 
 export function CreatePost() {
 	useTitle("Angelin Blog | Create Post");

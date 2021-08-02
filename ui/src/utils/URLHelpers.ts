@@ -30,7 +30,7 @@ export class URLHelpers {
 		return `${this.api()}/users`;
 	}
 
-	public static getPost(post?: Post) {
+	public static getPost(post?: Post | null) {
 		return post ? `/post/${post.id}-${post.title}` : "";
 	}
 }
