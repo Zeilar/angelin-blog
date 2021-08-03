@@ -48,7 +48,7 @@ export function PostFull({ post, preview = false }: Props) {
 						<MenuWrapper className={classNames({ open })}>
 							<MenuItem as={Link} to={URLHelpers.editPost(post)}>
 								Edit
-								<Icon path={mdiPencil} size={1} />
+								<Icon className="ml-4" path={mdiPencil} size={1} />
 							</MenuItem>
 							<MenuItem
 								className="danger"
@@ -58,7 +58,7 @@ export function PostFull({ post, preview = false }: Props) {
 								}}
 							>
 								Delete
-								<Icon path={mdiTrashCan} size={1} />
+								<Icon className="ml-4" path={mdiTrashCan} size={1} />
 							</MenuItem>
 						</MenuWrapper>
 					</Options>
