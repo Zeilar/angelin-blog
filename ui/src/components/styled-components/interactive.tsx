@@ -7,7 +7,7 @@ export const button = css`
 	${Styles.flexbox}
 	font: inherit;
 	border: 0;
-	padding: 0.75rem 1.25rem;
+	padding: 0.75rem 2rem;
 	user-select: none;
 	font-family: Open Sans;
 	justify-content: center;

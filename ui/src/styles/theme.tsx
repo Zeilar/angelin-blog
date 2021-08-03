@@ -81,7 +81,7 @@ class Shadow {
 
 	public readonly dark: Shadows = {
 		elevate: "0 1px 2px 0 rgba(0, 0, 0, 0.9), 0 0 2px 0 rgba(0, 0, 0, 0.9)",
-		spread: "0 0 3px 0 rgba(0, 0, 0, 0.75)",
+		spread: "0 0 5px 0 rgba(0, 0, 0, 0.5)",
 	};
 
 	public readonly light: Shadows = {

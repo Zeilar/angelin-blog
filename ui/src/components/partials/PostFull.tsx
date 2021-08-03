@@ -14,9 +14,10 @@ import { URLHelpers } from "../../utils";
 
 interface Props {
 	post: Post;
+	preview?: boolean;
 }
 
-export function PostFull({ post }: Props) {
+export function PostFull({ post, preview = false }: Props) {
 	const { clearCache } = useContext(FetchContext) as IFetchContext;
 	const { push } = useHistory();
 
@@ -29,38 +30,45 @@ export function PostFull({ post }: Props) {
 		const { ok } = await post.destroy();
 
 		if (ok) {
-			clearCache(URLHelpers.getPost(post));
+			clearCache(URLHelpers.apiPosts(), URLHelpers.apiPost(post.id));
 			push("/");
 			return;
 		}
 	}
 
+	function menuRender() {
+		if (preview) return null;
+		return (
+			<Menu
+				render={(open, setOpen) => (
+					<Options>
+						<Dots onClick={() => setOpen(p => !p)}>
+							<Icon path={mdiDotsVertical} />
+						</Dots>
+						<MenuWrapper className={classNames({ open })}>
+							<MenuItem as={Link} to={URLHelpers.editPost(post)}>
+								Edit
+							</MenuItem>
+							<MenuItem
+								className="danger"
+								onClick={async () => {
+									setOpen(false);
+									await deletePost();
+								}}
+							>
+								Delete
+							</MenuItem>
+						</MenuWrapper>
+					</Options>
+				)}
+			/>
+		);
+	}
+
 	return (
 		<Styles.Container className="my-4" direction="column">
 			<Styles.PostWrapper>
-				<Menu
-					render={(open, setOpen) => (
-						<Options>
-							<Dots onClick={() => setOpen(p => !p)}>
-								<Icon path={mdiDotsVertical} />
-							</Dots>
-							<MenuWrapper className={classNames({ open })}>
-								<MenuItem as={Link} to={URLHelpers.editPost(post)}>
-									Edit
-								</MenuItem>
-								<MenuItem
-									className="danger"
-									onClick={async () => {
-										setOpen(false);
-										await deletePost();
-									}}
-								>
-									Delete
-								</MenuItem>
-							</MenuWrapper>
-						</Options>
-					)}
-				/>
+				{menuRender()}
 				<Styles.H4 className="mb-4">{post.title}</Styles.H4>
 				<ReadOnlyEditor content={post.body} />
 			</Styles.PostWrapper>
