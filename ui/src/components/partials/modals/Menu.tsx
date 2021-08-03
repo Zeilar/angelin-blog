@@ -6,9 +6,10 @@ import {
 	HTMLAttributes,
 	SetStateAction,
 } from "react";
-import { Col } from "../../styled-components";
+import { Col, Row } from "../../styled-components";
 import styled, { css } from "styled-components";
 import { useClickOutside } from "../../hooks";
+import Icon from "@mdi/react";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	render(
@@ -54,6 +55,7 @@ export const MenuWrapper = styled(Col)`
 	display: none;
 	overflow: hidden;
 	padding: 0.5rem;
+	min-width: 12rem;
 	${props => css`
 		border-radius: ${props.theme.borderRadius}px;
 		background-color: ${props.theme.color.rgb("primary", 2)};
@@ -64,9 +66,8 @@ export const MenuWrapper = styled(Col)`
 	}
 `;
 
-export const MenuItem = styled.div`
-	padding: 0.5rem 1.5rem;
-	white-space: nowrap;
+export const MenuItem = styled(Row).attrs({ justify: "space-between" })`
+	padding: 0.5rem;
 	cursor: pointer;
 	z-index: 50;
 	font-weight: 600;

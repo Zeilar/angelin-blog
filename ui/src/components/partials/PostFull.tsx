@@ -3,7 +3,7 @@ import { FetchContext, IFetchContext } from "../hooks";
 import * as Styles from "../styled-components";
 import { ReadOnlyEditor } from "../partials/editor";
 import { Menu, MenuItem, MenuWrapper } from "../partials/modals";
-import { mdiDotsVertical } from "@mdi/js";
+import { mdiDotsVertical, mdiPencil, mdiTrashCan } from "@mdi/js";
 import Icon from "@mdi/react";
 import styled from "styled-components";
 import classNames from "classnames";
@@ -48,6 +48,7 @@ export function PostFull({ post, preview = false }: Props) {
 						<MenuWrapper className={classNames({ open })}>
 							<MenuItem as={Link} to={URLHelpers.editPost(post)}>
 								Edit
+								<Icon path={mdiPencil} size={1} />
 							</MenuItem>
 							<MenuItem
 								className="danger"
@@ -57,6 +58,7 @@ export function PostFull({ post, preview = false }: Props) {
 								}}
 							>
 								Delete
+								<Icon path={mdiTrashCan} size={1} />
 							</MenuItem>
 						</MenuWrapper>
 					</Options>
