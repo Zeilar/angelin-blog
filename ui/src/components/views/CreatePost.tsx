@@ -96,10 +96,10 @@ export function CreatePost() {
 			/>
 			<Editor status={status} error={errorMessage} editor={editor} />
 			<Styles.Row className="mt-4">
-				<StatusButton className="mr-2" status={status} onClick={submit}>
+				<StatusButton status={status} onClick={submit}>
 					Submit
 				</StatusButton>
-				<Styles.PrimaryButton className="dark" onClick={() => setPreview(true)}>
+				<Styles.PrimaryButton className="dark ml-2" onClick={() => setPreview(true)}>
 					Preview
 				</Styles.PrimaryButton>
 			</Styles.Row>

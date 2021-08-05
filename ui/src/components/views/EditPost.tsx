@@ -7,12 +7,14 @@ import { useState, useContext } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import { IStatus } from "../../types/modals";
 import { theme } from "../../styles/theme";
-import { Post } from "../../models";
+import { Post, User } from "../../models";
 import { StatusButton } from "../misc";
 import { URLHelpers } from "../../utils";
 import { useEffect } from "react";
 import { mdiKeyboardBackspace } from "@mdi/js";
 import Icon from "@mdi/react";
+import { PostPreview } from "../partials";
+import { IUserContext, UserContext } from "../contexts";
 
 interface MatchParams {
 	id: string;
@@ -25,10 +27,12 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	const post = query.body?.data ? new Post(query.body.data) : null;
 
 	const { push } = useHistory();
+	const userContext = useContext(UserContext) as IUserContext;
 	const { clearCache } = useContext(FetchContext) as IFetchContext;
 	const [status, setStatus] = useState<IStatus>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [title, setTitle] = useState<string>("");
+	const [preview, setPreview] = useState(false);
 
 	useTitle("Angelin Blog | Edit Post");
 
@@ -45,6 +49,35 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	);
 
 	if (!editor) return null;
+
+	function closePreview() {
+		setPreview(false);
+	}
+
+	if (preview) {
+		const user = userContext.user as User;
+		const now = new Date().toISOString();
+		return (
+			<Styles.Container className="my-8" direction="column">
+				<PostPreview
+					post={
+						new Post({
+							id: 0,
+							title,
+							body: editor.getHTML(),
+							author: user,
+							user_id: user.id,
+							created_at: now,
+							updated_at: now,
+							comments: [],
+							tags: [],
+						})
+					}
+					close={closePreview}
+				/>
+			</Styles.Container>
+		);
+	}
 
 	async function submit() {
 		if (!post) return;
@@ -94,9 +127,14 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 				placeholder="Title"
 			/>
 			<Editor status={status} error={errorMessage} editor={editor} />
-			<StatusButton status={status} className="mt-4" onClick={submit}>
-				Save
-			</StatusButton>
+			<Styles.Row className="mt-4">
+				<StatusButton status={status} onClick={submit}>
+					Save
+				</StatusButton>
+				<Styles.PrimaryButton className="dark ml-2" onClick={() => setPreview(true)}>
+					Preview
+				</Styles.PrimaryButton>
+			</Styles.Row>
 		</Styles.Container>
 	);
 }
