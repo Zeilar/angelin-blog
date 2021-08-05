@@ -3,6 +3,7 @@ import { Post } from "../../models";
 import { useFetch, useTitle } from "../hooks";
 import { URLHelpers } from "../../utils";
 import { PostFull } from "../partials";
+import { Container } from "../styled-components";
 
 interface MatchParams {
 	id: string;
@@ -17,5 +18,9 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 
 	if (!post) return null;
 
-	return <PostFull post={new Post(post)} />;
+	return (
+		<Container className="my-8">
+			<PostFull post={new Post(post)} />
+		</Container>
+	);
 }
