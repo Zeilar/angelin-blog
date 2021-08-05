@@ -8,8 +8,12 @@ export const PostWrapper = styled(Styles.Col)`
 		margin-top: 0;
 	}
 	${props => css`
+		border-radius: ${props.theme.borderRadius}px;
 		background-color: ${props.theme.color.rgb("primary")};
 		box-shadow: ${props.theme.shadow.pick("elevate")};
+		&.thumbnail {
+			border-left: 4px solid ${props.theme.color.rgb("brand")};
+		}
 	`}
 `;
 

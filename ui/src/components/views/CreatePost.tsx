@@ -80,8 +80,8 @@ export function CreatePost() {
 	}
 
 	return (
-		<Styles.Container className="my-4">
-			<Styles.H3 className="mb-5">Create new post</Styles.H3>
+		<Styles.Container className="my-8">
+			<Styles.H2 className="mb-5">Create new post</Styles.H2>
 			<Styles.Input
 				className="mb-2 w-full"
 				value={title}

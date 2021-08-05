@@ -7,6 +7,8 @@ export const editor = css`
 			outline: 0;
 			padding: 1rem;
 			min-height: 400px;
+			overflow-y: auto;
+			resize: vertical;
 			${props => css`
 				box-shadow: ${props.theme.shadow.pick("elevate")};
 				background-color: ${props.theme.color.rgb("primary", 2)};

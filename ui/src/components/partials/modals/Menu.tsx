@@ -67,11 +67,12 @@ export const MenuWrapper = styled(Col)`
 `;
 
 export const MenuItem = styled(Row).attrs({ justify: "space-between" })`
-	padding: 0.5rem;
+	padding: 0.5rem 0.75rem;
 	cursor: pointer;
 	z-index: 50;
 	font-weight: 600;
 	text-align: center;
+	user-select: none;
 	${props => css`
 		border-radius: ${props.theme.borderRadius}px;
 		color: ${props.theme.color.rgb("text")};

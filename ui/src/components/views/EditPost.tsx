@@ -76,7 +76,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	}
 
 	return (
-		<Styles.Container className="my-4">
+		<Styles.Container className="my-8">
 			<Styles.A
 				className="mb-4"
 				as={Link}

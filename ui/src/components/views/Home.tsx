@@ -16,12 +16,12 @@ export function Home() {
 	}
 
 	return (
-		<Styles.Container className="my-4">
+		<Styles.Container className="my-8">
 			<Styles.H1>Angelin Blog</Styles.H1>
 			<Filter />
 			<Styles.Col className="w-full">
 				{posts.map((post: Post) => (
-					<PostThumbnail className="mt-4" post={post} key={post.id} />
+					<PostThumbnail className="mt-4 thumbnail" post={post} key={post.id} />
 				))}
 			</Styles.Col>
 		</Styles.Container>

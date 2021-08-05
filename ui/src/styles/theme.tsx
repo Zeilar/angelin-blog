@@ -29,7 +29,7 @@ class Color {
 		textMuted: "175, 175, 175",
 		border: "40, 40, 40",
 		link: "0, 127, 255",
-		error: "200, 0, 0",
+		error: "200, 50, 50",
 		success: "0, 200, 0",
 	};
 

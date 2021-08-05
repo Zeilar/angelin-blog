@@ -68,10 +68,10 @@ export function PostFull({ post, preview = false }: Props) {
 	}
 
 	return (
-		<Styles.Container className="my-4" direction="column">
+		<Styles.Container className="my-8" direction="column">
 			<Styles.PostWrapper>
 				{menuRender()}
-				<Styles.H4 className="mb-4">{post.title}</Styles.H4>
+				<Styles.H2 className="mb-4">{post.title}</Styles.H2>
 				<ReadOnlyEditor content={post.body} />
 			</Styles.PostWrapper>
 		</Styles.Container>
