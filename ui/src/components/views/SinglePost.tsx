@@ -2,7 +2,7 @@ import { RouteComponentProps } from "../../types/props";
 import { Post } from "../../models";
 import { useFetch, useTitle } from "../hooks";
 import { URLHelpers } from "../../utils";
-import { PostFull } from "../partials/PostFull";
+import { PostFull } from "../partials";
 
 interface MatchParams {
 	id: string;

@@ -14,17 +14,23 @@ export const button = css`
 	align-items: center;
 	font-weight: 600;
 	width: fit-content;
-	&.block {
-		width: 100%;
-	}
 	${props => css`
 		box-shadow: ${props.theme.shadow.pick("spread")};
 		background-color: ${props.theme.color.rgb("brand")};
 		color: ${props.theme.color.rgb("textStrong")};
+		&.dark {
+			background-color: ${props.theme.color.rgb("primary")};
+			&:hover {
+				background-color: ${props.theme.color.rgb("primary", 2)};
+			}
+		}
 		&:hover {
 			background-color: ${props.theme.color.rgb("brandDark")};
 		}
 	`}
+	&.block {
+		width: 100%;
+	}
 	&:focus {
 		outline: 0;
 	}

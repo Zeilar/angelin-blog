@@ -10,8 +10,8 @@ import { theme } from "../../styles/theme";
 import { Post, User } from "../../models";
 import { StatusButton } from "../misc";
 import { URLHelpers } from "../../utils";
-import { PostFull } from "../partials/PostFull";
 import { IUserContext, UserContext } from "../contexts";
+import { PostPreview } from "../partials";
 
 export function CreatePost() {
 	useTitle("Angelin Blog | Create Post");
@@ -30,26 +30,32 @@ export function CreatePost() {
 
 	if (!editor) return null;
 
+	function closePreview() {
+		setPreview(false);
+	}
+
 	if (preview) {
 		const user = userContext.user as User;
 		const now = new Date().toISOString();
 		return (
-			<PostFull
-				post={
-					new Post({
-						id: 0,
-						title,
-						body: editor.getHTML(),
-						author: user,
-						user_id: user.id,
-						created_at: now,
-						updated_at: now,
-						comments: [],
-						tags: [],
-					})
-				}
-				preview={true}
-			/>
+			<Styles.Container className="my-8" direction="column">
+				<PostPreview
+					post={
+						new Post({
+							id: 0,
+							title,
+							body: editor.getHTML(),
+							author: user,
+							user_id: user.id,
+							created_at: now,
+							updated_at: now,
+							comments: [],
+							tags: [],
+						})
+					}
+					close={closePreview}
+				/>
+			</Styles.Container>
 		);
 	}
 
@@ -89,9 +95,14 @@ export function CreatePost() {
 				placeholder="Title"
 			/>
 			<Editor status={status} error={errorMessage} editor={editor} />
-			<StatusButton status={status} className="mt-4" onClick={submit}>
-				Submit
-			</StatusButton>
+			<Styles.Row className="mt-4">
+				<StatusButton className="mr-2" status={status} onClick={submit}>
+					Submit
+				</StatusButton>
+				<Styles.PrimaryButton className="dark" onClick={() => setPreview(true)}>
+					Preview
+				</Styles.PrimaryButton>
+			</Styles.Row>
 		</Styles.Container>
 	);
 }
