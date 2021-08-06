@@ -4,6 +4,7 @@ import { Row, Span } from "../styled-components";
 import { mdiTagOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { HTMLAttributes } from "react";
+import { useHistory } from "react-router-dom";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	tag: ITag;
@@ -11,8 +12,9 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 export function Tag({ tag, ...props }: Props) {
+	const { push } = useHistory();
 	return (
-		<Wrapper {...props} as="span" align="center">
+		<Wrapper {...props} as="span" align="center" onClick={() => push(`/?tag=${tag.name}`)}>
 			<TagIcon path={mdiTagOutline} />
 			<Span>{tag.name}</Span>
 		</Wrapper>
