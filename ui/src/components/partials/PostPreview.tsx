@@ -17,9 +17,6 @@ export function PostPreview({ post, close }: Props) {
 				<Icon path={mdiClose} />
 			</Close>
 			<PostFull post={post} preview={true} />
-			<PrimaryButton className="mt-2 dark" onClick={close}>
-				Close
-			</PrimaryButton>
 		</div>
 	);
 }

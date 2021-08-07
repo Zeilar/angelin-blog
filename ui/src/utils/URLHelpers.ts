@@ -14,8 +14,8 @@ export class URLHelpers {
 		return id ? `${this.api()}/posts/${id}` : "";
 	}
 
-	public static apiPosts() {
-		return `${this.api()}/posts`;
+	public static apiPosts(query: string = "") {
+		return `${this.api()}/posts${query}`;
 	}
 
 	public static apiComments() {
