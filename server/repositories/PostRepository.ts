@@ -1,0 +1,125 @@
+import { Post } from "../db/models";
+import { injectable } from "inversify";
+import { hash } from "bcrypt";
+import { Repository } from "./Repository";
+
+@injectable()
+export class PostRepository extends Repository {
+	constructor() {
+		super();
+	}
+
+	public async all() {
+		try {
+			return await Post.query();
+		} catch (error) {
+			this.errorlog(error);
+			return null;
+		}
+	}
+
+	// public async create(data: CreatePost) {
+	// 	try {
+	// 		return await Post.query().insertGraphAndFetch(data);
+	// 	} catch (error) {
+	// 		this.errorlog(error);
+	// 		return null;
+	// 	}
+	// }
+
+	public async findById(id: number | string) {
+		try {
+			return await Post.query().findById(id);
+		} catch (error) {
+			this.errorlog(error);
+			return null;
+		}
+	}
+
+	public async findOne(column: keyof Post, value: string | number) {
+		try {
+			return await Post.query().findOne(column, value);
+		} catch (error) {
+			this.errorlog(error);
+			return null;
+		}
+	}
+
+	// public async updateById(id: number, data: PostEditable) {
+	// 	if (data.password) {
+	// 		data.password = await hash(data.password, 10);
+	// 	}
+
+	// 	try {
+	// 		return await Post.query().updateAndFetchById(id, data);
+	// 	} catch (error) {
+	// 		this.errorlog(error);
+	// 		return null;
+	// 	}
+	// }
+
+	public async deleteById(id: number | string) {
+		try {
+			await Post.query().deleteById(id);
+			return true;
+		} catch (error) {
+			this.errorlog(error);
+			return false;
+		}
+	}
+
+	public async deleteMany(users: Post[]) {
+		try {
+			for (const user of users) {
+				await this.deleteById(user.id);
+			}
+			return true;
+		} catch (error) {
+			this.errorlog(error);
+			return false;
+		}
+	}
+
+	public async countWhere(column: keyof Post, value: string | number) {
+		try {
+			return await this.DB.count(Post.query().findOne(column, value));
+		} catch (error) {
+			this.errorlog(error);
+			return 0;
+		}
+	}
+
+	public async count() {
+		try {
+			return await this.DB.count(Post.query());
+		} catch (error) {
+			this.errorlog(error);
+			return 0;
+		}
+	}
+
+	/**
+	 * @description Filter posts via search (body, title) or tags
+	 * @example await Post.filter("hello world", ["programming"]);
+	 */
+	public async filter(search?: string, tags?: string[]) {
+		try {
+			let query = Post.query();
+			if (search) {
+				query = query
+					.where("body", "like", `%${search}%`)
+					.orWhere("title", "like", `%${search}%`);
+			}
+			if (tags) {
+				query = query
+					.innerJoin("posts_tags", "posts_tags.post_id", "posts.id")
+					.innerJoin("tags", "tags.id", "posts_tags.tag_id")
+					.whereIn("tags.name", tags);
+			}
+			return await query.withGraphFetched(Post.relationships).execute();
+		} catch (error) {
+			this.errorlog(error);
+			return [];
+		}
+	}
+}

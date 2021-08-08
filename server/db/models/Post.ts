@@ -1,6 +1,5 @@
 import { Model } from "objection";
 import { PostPolicy, PostAction } from "../../api/policies";
-import errorlog from "../../utils/errorlog";
 import { Tag, User, Comment } from "./";
 
 export class Post extends Model {
@@ -61,31 +60,6 @@ export class Post extends Model {
 	 */
 	public static can(user: User, post: Post, ...actions: PostAction[]) {
 		return new PostPolicy(user, post).can(...actions);
-	}
-
-	/**
-	 * @description Filter posts via search (body, title) or tags
-	 * @example await Post.filter("hello world", ["programming"]);
-	 */
-	public static async filter(search?: string, tags?: string[]) {
-		try {
-			let query = Post.query();
-			if (search) {
-				query = query
-					.where("body", "like", `%${search}%`)
-					.orWhere("title", "like", `%${search}%`);
-			}
-			if (tags) {
-				query = query
-					.innerJoin("posts_tags", "posts_tags.post_id", "posts.id")
-					.innerJoin("tags", "tags.id", "posts_tags.tag_id")
-					.whereIn("tags.name", tags);
-			}
-			return await query.withGraphFetched(Post.relationships).execute();
-		} catch (error) {
-			errorlog(error);
-			return [];
-		}
 	}
 
 	public $afterGet() {

@@ -17,7 +17,7 @@ import errorlog from "./utils/errorlog";
 import * as services from "./services";
 import { User } from "./db/models";
 import { development } from "../knexfile";
-import { PasswordResetRepository, UserRepository } from "./repositories";
+import { PasswordResetRepository, PostRepository, UserRepository } from "./repositories";
 import { DateHelpers, ErrorMessages } from "./api/utils";
 
 import "./api/controllers";
@@ -34,6 +34,7 @@ function bootstrap() {
 
 	// Repositories
 	container.bind(UserRepository).toSelf();
+	container.bind(PostRepository).toSelf();
 	container.bind(PasswordResetRepository).toSelf();
 
 	// Services

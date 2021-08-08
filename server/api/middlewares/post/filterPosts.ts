@@ -1,10 +1,13 @@
 import { Request, Response, NextFunction } from "express";
-import { Post } from "../../../db/models";
+import { container } from "../../../bootstrap";
+import { PostRepository } from "../../../repositories";
 
 /**
  * If filter params are provided, run filter instead of get all
  */
 export async function filterPosts(req: Request, res: Response, next: NextFunction) {
+	const postRepository = container.get(PostRepository);
+
 	let { search, tags } = req.query;
 
 	if (!search && !tags) {
@@ -19,5 +22,5 @@ export async function filterPosts(req: Request, res: Response, next: NextFunctio
 		tags = undefined;
 	}
 
-	res.status(200).json({ data: await Post.filter(search, tags?.split(",")) });
+	res.status(200).json({ data: await postRepository.filter(search, tags?.split(",")) });
 }
