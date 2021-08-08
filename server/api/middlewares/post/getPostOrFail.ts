@@ -23,5 +23,6 @@ export async function getPostOrFail(req: Request, res: Response, next: NextFunct
 		const posts = await Post.query().withGraphFetched(Post.relationships).page(page, perPage);
 		res.posts = posts.results;
 	}
+
 	next();
 }

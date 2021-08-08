@@ -11,14 +11,16 @@ import { IconButton } from "../styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { URLHelpers } from "../../utils";
+import { IUserContext, UserContext } from "../contexts";
 
 interface Props {
 	post: Post;
-	preview?: boolean;
+	withMenu?: boolean;
 }
 
-export function PostFull({ post, preview = false }: Props) {
+export function PostFull({ post, withMenu = true }: Props) {
 	const { clearCache } = useContext(FetchContext) as IFetchContext;
+	const { loggedIn } = useContext(UserContext) as IUserContext;
 	const { push } = useHistory();
 
 	if (!(post instanceof Post)) {
@@ -37,7 +39,7 @@ export function PostFull({ post, preview = false }: Props) {
 	}
 
 	function menuRender() {
-		if (preview) return null;
+		if (!loggedIn || !withMenu) return null;
 		return (
 			<Menu
 				render={(open, setOpen) => (

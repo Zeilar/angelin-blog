@@ -3,7 +3,7 @@ import { Post, Tag } from "../../db/models";
 import { ValidateService } from "../../services";
 import { Controller } from "./Controller";
 import * as inversify from "inversify-express-utils";
-import { AuthGuard, getPostOrFail, PostGuard } from "../middlewares";
+import { AuthGuard, filterPosts, getPostOrFail, PostGuard } from "../middlewares";
 import { z } from "zod";
 
 @inversify.controller("/api/posts")
@@ -37,7 +37,7 @@ export class PostController extends Controller {
 		return this.json({ data: { ...post, tags } });
 	}
 
-	@inversify.httpGet("/", getPostOrFail)
+	@inversify.httpGet("/", filterPosts, getPostOrFail)
 	public async index(@inversify.response() res: Response) {
 		return this.json({ data: res.posts });
 	}
