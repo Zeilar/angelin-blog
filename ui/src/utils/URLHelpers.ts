@@ -31,7 +31,7 @@ export class URLHelpers {
 	}
 
 	public static getPost(post?: Post | null) {
-		return post ? `/post/${post.id}-${post.title}` : "";
+		return post ? `/post/${post.id}-${post.title.replaceAll(" ", "-")}` : "";
 	}
 
 	public static editPost(post?: Post | null) {

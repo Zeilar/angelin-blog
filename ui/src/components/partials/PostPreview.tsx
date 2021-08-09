@@ -3,7 +3,6 @@ import { Post } from "../../models";
 import { PostFull } from "./";
 import { Icon as MdiIcon } from "@mdi/react";
 import { mdiClose } from "@mdi/js";
-import { PrimaryButton } from "../styled-components";
 
 interface Props {
 	post: Post;

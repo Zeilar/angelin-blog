@@ -72,7 +72,7 @@ export function PostFull({ post, withMenu = true }: Props) {
 	return (
 		<Styles.PostWrapper as="article">
 			{menuRender()}
-			<Styles.H2 className="mb-4">{post.title}</Styles.H2>
+			<Styles.H3 className="mb-4 mr-12">{post.title}</Styles.H3>
 			<ReadOnlyEditor content={post.body} />
 		</Styles.PostWrapper>
 	);

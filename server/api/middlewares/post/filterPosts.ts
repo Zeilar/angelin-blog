@@ -11,7 +11,8 @@ export async function filterPosts(req: Request, res: Response, next: NextFunctio
 	let { search, tags } = req.query;
 
 	if (!search && !tags) {
-		return next();
+		next();
+		return;
 	}
 
 	if (typeof search !== "string") {

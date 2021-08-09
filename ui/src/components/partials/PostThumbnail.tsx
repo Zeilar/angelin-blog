@@ -3,7 +3,7 @@ import * as Styles from "../styled-components";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 import { Tag } from "./";
-import { DateHelpers } from "../../utils";
+import { DateHelpers, URLHelpers } from "../../utils";
 
 interface Props {
 	post: Post;
@@ -20,7 +20,7 @@ export default function PostThumbnail({ post, ...props }: Props) {
 			<Styles.P className="muted mb-2">
 				{DateHelpers.formatPostDate(post.created_at)}
 			</Styles.P>
-			<Styles.PostPreviewHeader to={`/post/${post.id}-${post.title}`} as={Link}>
+			<Styles.PostPreviewHeader to={URLHelpers.getPost(post)} as={Link}>
 				{post.title}
 			</Styles.PostPreviewHeader>
 			{post.tags.length > 0 && (
