@@ -1,12 +1,16 @@
 import { Request, Response, NextFunction } from "express";
-import { Post } from "../../../db/models";
-import { PAGE_SIZE, NumberHelpers, ErrorMessages } from "../../utils";
+import { container } from "../../../bootstrap";
+import { PostRepository } from "../../../repositories";
+import { NumberHelpers, ErrorMessages } from "../../utils";
 
 export async function getPostOrFail(req: Request, res: Response, next: NextFunction) {
+	const postRepository = container.get(PostRepository);
+
 	const { id } = req.params;
+	const { page, perPage } = req.query;
 
 	if (id) {
-		const post = await Post.query().findById(id).withGraphFetched(Post.relationships);
+		const post = await postRepository.findById(id);
 
 		if (!post) {
 			res.status(404).json({ error: ErrorMessages.NOT_FOUND });
@@ -15,13 +19,9 @@ export async function getPostOrFail(req: Request, res: Response, next: NextFunct
 
 		res.post = post;
 	} else {
-		const { page, perPage } = NumberHelpers.paginate(
-			req.query.page as string,
-			(req.query.perPage as string) ?? PAGE_SIZE
-		);
-
-		const posts = await Post.query().withGraphFetched(Post.relationships).page(page, perPage);
-		res.posts = posts.results;
+		const pagination = NumberHelpers.paginate(page as string, perPage as string);
+		const posts = await postRepository.all(pagination.page, pagination.perPage);
+		res.posts = posts;
 	}
 
 	next();

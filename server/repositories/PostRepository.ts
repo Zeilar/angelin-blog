@@ -2,6 +2,7 @@ import { Post } from "../db/models";
 import { injectable } from "inversify";
 import { hash } from "bcrypt";
 import { Repository } from "./Repository";
+import { PAGE_SIZE } from "../api/utils";
 
 @injectable()
 export class PostRepository extends Repository {
@@ -9,12 +10,15 @@ export class PostRepository extends Repository {
 		super();
 	}
 
-	public async all() {
+	public async all(page: number = 1, perPage: number = PAGE_SIZE) {
 		try {
-			return await Post.query();
+			const { results } = await Post.query()
+				.withGraphFetched(Post.relationships)
+				.page(page, perPage);
+			return results;
 		} catch (error) {
 			this.errorlog(error);
-			return null;
+			return [];
 		}
 	}
 
@@ -29,7 +33,7 @@ export class PostRepository extends Repository {
 
 	public async findById(id: number | string) {
 		try {
-			return await Post.query().findById(id);
+			return await Post.query().findById(id).withGraphFetched(Post.relationships);
 		} catch (error) {
 			this.errorlog(error);
 			return null;
@@ -38,7 +42,7 @@ export class PostRepository extends Repository {
 
 	public async findOne(column: keyof Post, value: string | number) {
 		try {
-			return await Post.query().findOne(column, value);
+			return await Post.query().findOne(column, value).withGraphFetched(Post.relationships);
 		} catch (error) {
 			this.errorlog(error);
 			return null;
@@ -100,9 +104,14 @@ export class PostRepository extends Repository {
 
 	/**
 	 * @description Filter posts via search (body, title) or tags
-	 * @example await Post.filter("hello world", ["programming"]);
+	 * @example await Post.filter("hello world", ["programming"], 1, 20);
 	 */
-	public async filter(search?: string, tags?: string[], page: number = 1, perPage: number = 20) {
+	public async filter(
+		search?: string,
+		tags?: string[],
+		page: number = 1,
+		perPage: number = PAGE_SIZE
+	) {
 		try {
 			let query = Post.query();
 			if (search) {

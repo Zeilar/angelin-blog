@@ -1,3 +1,5 @@
+import { PAGE_SIZE } from "./constants";
+
 export class NumberHelpers {
 	/**
 	 * @description Clamp a value or return it
@@ -30,7 +32,7 @@ export class NumberHelpers {
 	public static paginate(page: unknown, perPage: unknown) {
 		return {
 			page: NumberHelpers.clamp(NumberHelpers.int(page ?? 0) - 1),
-			perPage: NumberHelpers.clamp(NumberHelpers.int(perPage ?? 20)),
+			perPage: NumberHelpers.clamp(NumberHelpers.int(perPage ?? PAGE_SIZE)),
 		};
 	}
 }

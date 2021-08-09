@@ -16,13 +16,8 @@ export async function filterPosts(req: Request, res: Response, next: NextFunctio
 		return;
 	}
 
-	if (typeof search !== "string") {
-		search = undefined;
-	}
-
-	if (typeof tags !== "string") {
-		tags = undefined;
-	}
+	if (typeof search !== "string") search = undefined;
+	if (typeof tags !== "string") tags = undefined;
 
 	const pagination = NumberHelpers.paginate(page as string, perPage as string);
 
