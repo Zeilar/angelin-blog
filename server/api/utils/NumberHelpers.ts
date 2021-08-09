@@ -30,7 +30,7 @@ export class NumberHelpers {
 	public static paginate(page: unknown, perPage: unknown) {
 		return {
 			page: NumberHelpers.clamp(NumberHelpers.int(page ?? 0) - 1),
-			perPage: NumberHelpers.clamp(NumberHelpers.int(perPage ?? 0)),
+			perPage: NumberHelpers.clamp(NumberHelpers.int(perPage ?? 20)),
 		};
 	}
 }

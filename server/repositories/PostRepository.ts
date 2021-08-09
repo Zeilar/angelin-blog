@@ -102,7 +102,7 @@ export class PostRepository extends Repository {
 	 * @description Filter posts via search (body, title) or tags
 	 * @example await Post.filter("hello world", ["programming"]);
 	 */
-	public async filter(search?: string, tags?: string[]) {
+	public async filter(search?: string, tags?: string[], page: number = 1, perPage: number = 20) {
 		try {
 			let query = Post.query();
 			if (search) {
@@ -116,7 +116,11 @@ export class PostRepository extends Repository {
 					.innerJoin("tags", "tags.id", "posts_tags.tag_id")
 					.whereIn("tags.name", tags);
 			}
-			return await query.withGraphFetched(Post.relationships).execute();
+			const { results } = await query
+				.withGraphFetched(Post.relationships)
+				.page(page, perPage)
+				.execute();
+			return results;
 		} catch (error) {
 			this.errorlog(error);
 			return [];
