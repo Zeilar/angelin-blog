@@ -24,6 +24,7 @@ const Container = styled.div`
 	height: 100%;
 	z-index: 1000;
 	display: none;
+	z-index: 50;
 	&.active {
 		display: block;
 		backdrop-filter: saturate(0%) blur(3px);
