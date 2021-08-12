@@ -1,14 +1,12 @@
 import { PasswordReset } from "../db/models";
-import { Repository } from "./Repository";
 import { injectable } from "inversify";
 import { v4 as uuidv4 } from "uuid";
 import { DateHelpers } from "../api/utils";
+import { Logger } from "../utils";
 
 @injectable()
-export class PasswordResetRepository extends Repository {
-	constructor() {
-		super();
-	}
+export class PasswordResetRepository {
+	constructor(public readonly logger: Logger) {}
 
 	public async create(user_id: number) {
 		try {
@@ -17,7 +15,7 @@ export class PasswordResetRepository extends Repository {
 				token: uuidv4(),
 			});
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return null;
 		}
 	}
@@ -28,7 +26,7 @@ export class PasswordResetRepository extends Repository {
 				.findOne(column, value)
 				.withGraphFetched(PasswordReset.relationships);
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return null;
 		}
 	}
@@ -38,7 +36,7 @@ export class PasswordResetRepository extends Repository {
 			await PasswordReset.query().deleteById(id);
 			return true;
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return false;
 		}
 	}
@@ -52,7 +50,7 @@ export class PasswordResetRepository extends Repository {
 				.where("created_at", "<", DateHelpers.subDays(1).getDate())
 				.delete();
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 		}
 	}
 }

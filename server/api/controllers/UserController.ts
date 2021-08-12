@@ -17,6 +17,7 @@ export class UserController extends Controller {
 
 	@inversify.httpGet("/authenticate", AuthGuard.user)
 	public async authenticate(@inversify.request() req: Request) {
+		console.log(await this.userService.userRepository.count());
 		return this.json({ data: req.user?.dto() });
 	}
 

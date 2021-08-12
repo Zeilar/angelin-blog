@@ -1,20 +1,19 @@
 import { User } from "../db/models";
-import { Repository } from "./Repository";
 import { CreateUser, UserEditable } from "../types/user";
 import { injectable } from "inversify";
 import { hash } from "bcrypt";
+import { DB } from "../db/utils/DB";
+import { Logger } from "../utils";
 
 @injectable()
-export class UserRepository extends Repository {
-	constructor() {
-		super();
-	}
+export class UserRepository {
+	constructor(public readonly db: DB, public readonly logger: Logger) {}
 
 	public async all() {
 		try {
 			return await User.query();
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return null;
 		}
 	}
@@ -23,7 +22,7 @@ export class UserRepository extends Repository {
 		try {
 			return await User.query().insertGraphAndFetch(data);
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return null;
 		}
 	}
@@ -32,7 +31,7 @@ export class UserRepository extends Repository {
 		try {
 			return await User.query().findById(id);
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return null;
 		}
 	}
@@ -41,7 +40,7 @@ export class UserRepository extends Repository {
 		try {
 			return await User.query().findOne(column, value);
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return null;
 		}
 	}
@@ -54,7 +53,7 @@ export class UserRepository extends Repository {
 		try {
 			return await User.query().updateAndFetchById(id, data);
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return null;
 		}
 	}
@@ -64,7 +63,7 @@ export class UserRepository extends Repository {
 			await User.query().deleteById(id);
 			return true;
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return false;
 		}
 	}
@@ -76,25 +75,25 @@ export class UserRepository extends Repository {
 			}
 			return true;
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return false;
 		}
 	}
 
 	public async countWhere(column: keyof User, value: string | number) {
 		try {
-			return await this.DB.count(User.query().findOne(column, value));
+			return await this.db.count(User.query().findOne(column, value));
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return 0;
 		}
 	}
 
 	public async count() {
 		try {
-			return await this.DB.count(User.query());
+			return await this.db.count(User.query());
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return 0;
 		}
 	}

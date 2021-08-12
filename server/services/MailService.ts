@@ -1,5 +1,6 @@
-import { Service } from "./Service";
 import { setApiKey, send } from "@sendgrid/mail";
+import { injectable } from "inversify";
+import { Logger } from "../utils";
 
 setApiKey(process.env.SENDGRID_KEY);
 
@@ -11,10 +12,9 @@ interface MailArgs {
 	html: string;
 }
 
-export class MailService extends Service {
-	constructor() {
-		super();
-	}
+@injectable()
+export class MailService {
+	constructor(public readonly logger: Logger) {}
 
 	public async send(args: MailArgs) {
 		try {
@@ -27,7 +27,7 @@ export class MailService extends Service {
 			});
 			return true;
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return false;
 		}
 	}

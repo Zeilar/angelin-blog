@@ -1,5 +1,7 @@
 import { User } from "../../db/models";
-import errorlog from "../../utils/errorlog";
+import { Logger } from "../../utils";
+
+const logger = new Logger();
 
 export interface Policies {
 	[key: string]: () => boolean;
@@ -23,7 +25,7 @@ export class Policy<Action extends string> {
 				if (!this.authorized) break;
 			}
 		} catch (error) {
-			errorlog(error);
+			logger.error(error);
 		} finally {
 			return this.authorized;
 		}

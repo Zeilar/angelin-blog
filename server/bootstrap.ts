@@ -13,12 +13,13 @@ import { Strategy as GitHubStrategy, Profile } from "passport-github2";
 import cookieParser from "cookie-parser";
 import path from "path";
 
-import errorlog from "./utils/errorlog";
 import * as services from "./services";
 import { User } from "./db/models";
 import { development } from "../knexfile";
 import { PasswordResetRepository, PostRepository, UserRepository } from "./repositories";
 import { DateHelpers, ErrorMessages } from "./api/utils";
+import { Logger } from "./utils";
+import { DB } from "./db/utils/DB";
 
 import "./api/controllers";
 
@@ -44,6 +45,10 @@ function bootstrap() {
 	container.bind(services.AuthService).toSelf();
 	container.bind(services.ValidateService).toSelf();
 	container.bind(services.MailService).toSelf();
+
+	// Misc
+	container.bind(Logger).toSelf();
+	container.bind(DB).toSelf();
 
 	const server = new InversifyExpressServer(container);
 
@@ -123,9 +128,11 @@ function bootstrap() {
 		)
 	);
 
+	const logger = container.get(Logger);
+
 	server.setErrorConfig(app => {
 		app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-			errorlog(error);
+			logger.error(error);
 			res.status(500).json({ error: ErrorMessages.DEFAULT });
 		});
 	});
@@ -144,7 +151,7 @@ function bootstrap() {
 	});
 
 	app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-		errorlog(error);
+		logger.error(error);
 		res.status(500).json({ error: "Could not find ui build." });
 	});
 

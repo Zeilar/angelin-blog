@@ -1,15 +1,13 @@
 import { compare, hash } from "bcrypt";
 import { UserRepository } from "../repositories/UserRepository";
-import { Service } from "./Service";
 import { Register } from "../types/user";
 import { injectable } from "inversify";
 import { User } from "../db/models";
+import { Logger } from "../utils";
 
 @injectable()
-export class AuthService extends Service {
-	constructor(public readonly userRepository: UserRepository) {
-		super();
-	}
+export class AuthService {
+	constructor(public readonly userRepository: UserRepository, public readonly logger: Logger) {}
 
 	public async create(data: Register) {
 		try {
@@ -18,7 +16,7 @@ export class AuthService extends Service {
 				password: await hash(data.password, 10),
 			});
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return null;
 		}
 	}
@@ -27,7 +25,7 @@ export class AuthService extends Service {
 		try {
 			return await compare(password, encrypted);
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return false;
 		}
 	}
@@ -40,7 +38,7 @@ export class AuthService extends Service {
 		try {
 			return (await this.userRepository.countWhere(column, value)) > 0;
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return false;
 		}
 	}

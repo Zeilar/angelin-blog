@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import { container } from "../../../bootstrap";
 import { UserRepository } from "../../../repositories";
-import errorlog from "../../../utils/errorlog";
+import { Logger } from "../../../utils";
 import { ErrorMessages } from "../../utils";
 
 export async function getUserOrFail(req: Request, res: Response, next: NextFunction) {
 	const userRepository = container.get(UserRepository);
+	const logger = container.get(Logger);
 	const { id } = req.params;
 
 	try {
@@ -25,7 +26,7 @@ export async function getUserOrFail(req: Request, res: Response, next: NextFunct
 
 		next();
 	} catch (error) {
-		errorlog(error);
+		logger.error(error);
 		res.status(500).json({ error: ErrorMessages.DEFAULT });
 	}
 }

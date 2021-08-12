@@ -1,14 +1,13 @@
 import { Post } from "../db/models";
 import { injectable } from "inversify";
 import { hash } from "bcrypt";
-import { Repository } from "./Repository";
 import { PAGE_SIZE } from "../api/utils";
+import { DB } from "../db/utils/DB";
+import { Logger } from "../utils";
 
 @injectable()
-export class PostRepository extends Repository {
-	constructor() {
-		super();
-	}
+export class PostRepository {
+	constructor(public readonly db: DB, public readonly logger: Logger) {}
 
 	public async all(page: number = 1, perPage: number = PAGE_SIZE) {
 		try {
@@ -17,7 +16,7 @@ export class PostRepository extends Repository {
 				.page(page, perPage);
 			return results;
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return [];
 		}
 	}
@@ -26,7 +25,7 @@ export class PostRepository extends Repository {
 	// 	try {
 	// 		return await Post.query().insertGraphAndFetch(data);
 	// 	} catch (error) {
-	// 		this.errorlog(error);
+	// 		this.logger.error(error);
 	// 		return null;
 	// 	}
 	// }
@@ -35,7 +34,7 @@ export class PostRepository extends Repository {
 		try {
 			return await Post.query().findById(id).withGraphFetched(Post.relationships);
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return null;
 		}
 	}
@@ -44,7 +43,7 @@ export class PostRepository extends Repository {
 		try {
 			return await Post.query().findOne(column, value).withGraphFetched(Post.relationships);
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return null;
 		}
 	}
@@ -57,7 +56,7 @@ export class PostRepository extends Repository {
 	// 	try {
 	// 		return await Post.query().updateAndFetchById(id, data);
 	// 	} catch (error) {
-	// 		this.errorlog(error);
+	// 		this.logger.error(error);
 	// 		return null;
 	// 	}
 	// }
@@ -67,7 +66,7 @@ export class PostRepository extends Repository {
 			await Post.query().deleteById(id);
 			return true;
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return false;
 		}
 	}
@@ -79,25 +78,25 @@ export class PostRepository extends Repository {
 			}
 			return true;
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return false;
 		}
 	}
 
 	public async countWhere(column: keyof Post, value: string | number) {
 		try {
-			return await this.DB.count(Post.query().findOne(column, value));
+			return await this.db.count(Post.query().findOne(column, value));
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return 0;
 		}
 	}
 
 	public async count() {
 		try {
-			return await this.DB.count(Post.query());
+			return await this.db.count(Post.query());
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return 0;
 		}
 	}
@@ -131,7 +130,7 @@ export class PostRepository extends Repository {
 				.execute();
 			return results;
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return [];
 		}
 	}

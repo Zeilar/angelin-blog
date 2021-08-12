@@ -1,5 +1,6 @@
 import { Model } from "objection";
-import errorlog from "../../utils/errorlog";
+import { container } from "../../bootstrap";
+import { Logger } from "../../utils";
 import { Post } from "./";
 
 export class Tag extends Model {
@@ -51,7 +52,9 @@ export class Tag extends Model {
 	public static async findOrCreate(tagsArg: string): Promise<Tag[]>;
 	public static async findOrCreate(tagsArg: string[]): Promise<Tag[]>;
 	public static async findOrCreate(tagsArg: unknown) {
-		const tags = [];
+		const logger = container.get(Logger),
+			tags = [];
+
 		try {
 			if (Array.isArray(tagsArg)) {
 				for (const tag of tagsArg) {
@@ -61,7 +64,7 @@ export class Tag extends Model {
 				tags.push(await Tag.findOrCreateQuery(tagsArg));
 			}
 		} catch (error) {
-			errorlog(error);
+			logger.error(error);
 		} finally {
 			return tags;
 		}

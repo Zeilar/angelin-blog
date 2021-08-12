@@ -1,12 +1,10 @@
 import { difference } from "lodash";
-import { Service } from "./Service";
 import { injectable } from "inversify";
+import { Logger } from "../utils";
 
 @injectable()
-export class ValidateService extends Service {
-	constructor() {
-		super();
-	}
+export class ValidateService {
+	constructor(public readonly logger: Logger) {}
 
 	/**
 	 * @description Compares keys input to body object keys, and return whether they match or not
@@ -35,7 +33,7 @@ export class ValidateService extends Service {
 
 			return difference(keysArr, Object.keys(body)).length === 0;
 		} catch (error) {
-			this.errorlog(error);
+			this.logger.error(error);
 			return false;
 		}
 	}
