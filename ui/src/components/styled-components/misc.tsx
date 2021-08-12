@@ -37,21 +37,22 @@ const loaderShared = css`
 	height: 4rem;
 	border-radius: 50%;
 `;
+const loaderThumbSize = "0.35rem";
 export const Loader = styled.div`
 	${loaderShared}
-	border: 0.35rem solid rgba(255, 255, 255, 0.25);
+	border: ${loaderThumbSize} solid rgba(255, 255, 255, 0.25);
 	animation: spin 1s infinite linear;
 	position: relative;
 
 	&::after {
 		${loaderShared}
-		position: absolute;
-		left: -0.35rem;
-		top: -0.35rem;
 		content: "";
-		border: 0.35rem solid transparent;
+		position: absolute;
+		left: -${loaderThumbSize};
+		top: -${loaderThumbSize};
+		border: ${loaderThumbSize} solid transparent;
 		${props => css`
-			border-left: 0.35rem solid ${props.theme.color.rgb("brand")};
+			border-left: ${loaderThumbSize} solid ${props.theme.color.rgb("brand")};
 		`}
 	}
 
