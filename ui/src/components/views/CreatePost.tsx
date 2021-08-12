@@ -8,7 +8,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { IStatus } from "../../types/modals";
 import { theme } from "../../styles/theme";
 import { Post, User } from "../../models";
-import { StatusButton } from "../misc";
+import { ContainerLoader, StatusButton } from "../misc";
 import { URLHelpers } from "../../utils";
 import { IUserContext, UserContext } from "../contexts";
 import { PostPreview } from "../partials";
@@ -86,7 +86,8 @@ export function CreatePost() {
 	}
 
 	return (
-		<Styles.Container className="my-8">
+		<Styles.Container className="my-8 relative">
+			<ContainerLoader loading={status === "loading"} />
 			<Styles.H2 className="mb-5">Create new post</Styles.H2>
 			<Styles.Input
 				className="mb-2 w-full"

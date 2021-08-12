@@ -8,7 +8,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { IStatus } from "../../types/modals";
 import { theme } from "../../styles/theme";
 import { Post, User } from "../../models";
-import { StatusButton } from "../misc";
+import { ContainerLoader, StatusButton } from "../misc";
 import { URLHelpers } from "../../utils";
 import { useEffect } from "react";
 import { mdiKeyboardBackspace } from "@mdi/js";
@@ -109,7 +109,8 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	}
 
 	return (
-		<Styles.Container className="my-8">
+		<Styles.Container className="my-8 relative">
+			<ContainerLoader loading={status === "loading"} />
 			<Styles.A
 				className="mb-4"
 				as={Link}

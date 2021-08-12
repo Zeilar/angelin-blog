@@ -26,8 +26,7 @@ const Container = styled.div`
 	display: none;
 	&.active {
 		display: block;
-		background-color: rgba(0, 0, 0, 0.5);
-		backdrop-filter: saturate(100%) blur(2px);
+		backdrop-filter: saturate(0%) blur(3px);
 	}
 `;
 
