@@ -36,12 +36,9 @@ export const button = css`
 	}
 	&[disabled] {
 		box-shadow: none;
-		background-color: rgba(0, 0, 0, 0.1);
 		cursor: default;
 		pointer-events: none;
-		${props => css`
-			color: ${props.theme.color.rgb("textMuted")};
-		`}
+		opacity: 0.35;
 	}
 `;
 

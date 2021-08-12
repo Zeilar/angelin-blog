@@ -1,13 +1,12 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import * as ModalStyles from "./_styles";
-import { StatusButton, Input } from "../../misc";
+import { StatusButton, Input, ContainerLoader } from "../../misc";
 import { theme } from "../../../styles/theme";
 import * as Styles from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
 import { IUserContext, UserContext } from "../../contexts";
 import classNames from "classnames";
 import { IStatus } from "../../../types/modals";
-import ContainerLoader from "../../misc/ContainerLoader";
 import { RenderProps } from "./";
 import { useContext } from "react";
 

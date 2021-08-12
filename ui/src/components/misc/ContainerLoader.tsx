@@ -1,17 +1,17 @@
-import { useState, useEffect, ReactNode } from "react";
 import styled from "styled-components";
 import classNames from "classnames";
-import { mdiLoading } from "@mdi/js";
-import Icon from "@mdi/react";
+import { Loader } from "../styled-components";
 
 interface Props {
 	loading: boolean;
 }
 
-export default function ContainerLoader({ loading = false }: Props) {
+export function ContainerLoader({ loading = false }: Props) {
 	return (
 		<Container className={classNames({ active: loading })}>
-			<Loader path={mdiLoading} spin={1} size={2} />
+			<LoaderWrapper>
+				<Loader />
+			</LoaderWrapper>
 		</Container>
 	);
 }
@@ -26,12 +26,12 @@ const Container = styled.div`
 	display: none;
 	&.active {
 		display: block;
-		background-color: rgba(0, 0, 0, 0.25);
-		backdrop-filter: saturate(100%) blur(3px);
+		background-color: rgba(0, 0, 0, 0.5);
+		backdrop-filter: saturate(100%) blur(2px);
 	}
 `;
 
-const Loader = styled(Icon)`
+const LoaderWrapper = styled.div`
 	position: absolute;
 	transform: translate(-50%, -50%);
 	left: 50%;

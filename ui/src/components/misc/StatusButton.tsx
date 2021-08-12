@@ -22,21 +22,20 @@ export function StatusButton(props: Props) {
 			case "success":
 				return <StatusIcon path={mdiCheck} />;
 			case "loading":
-				return <StatusIcon path={mdiLoading} spin={1} />;
+				return null;
 			default:
 				return null;
 		}
 	}
 
 	const classes = classNames(props.className, {
-		active: props.status != null,
+		active: props.status && props.status !== "loading",
 		error: props.status === "error",
-		loading: props.status === "loading",
 		success: props.status === "success" || props.status === "done",
 	});
 
 	return (
-		<StyledButton disabled={props.status != null} {...props} className={classes}>
+		<StyledButton disabled={props.status === "loading"} {...props} className={classes}>
 			{renderIcon()} {props.children}
 		</StyledButton>
 	);
@@ -72,10 +71,6 @@ const StyledButton = styled(PrimaryButton)`
 
 		&.error {
 			background-color: ${props.theme.color.rgb("error")};
-		}
-
-		&.loading {
-			background-color: ${props.theme.color.rgba("brand", 0.25)};
 		}
 	`}
 `;
