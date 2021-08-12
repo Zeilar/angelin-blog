@@ -109,8 +109,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	}
 
 	return (
-		<Styles.Container className="my-8 relative">
-			<ContainerLoader loading={status === "loading"} />
+		<Styles.Container className="my-8">
 			<Styles.A
 				className="mb-4"
 				as={Link}
@@ -121,18 +120,25 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 				Back
 			</Styles.A>
 			<Styles.H3 className="mb-5">Edit post</Styles.H3>
-			<Styles.Input
-				className="mb-2 w-full"
-				value={title}
-				onChange={e => setTitle(e.target.value)}
-				placeholder="Title"
-			/>
-			<Editor status={status} error={errorMessage} editor={editor} />
+			<Styles.Col className="relative">
+				<ContainerLoader loading={status === "loading"} />
+				<Styles.Input
+					className="mb-2 w-full"
+					value={title}
+					onChange={e => setTitle(e.target.value)}
+					placeholder="Title"
+				/>
+				<Editor status={status} error={errorMessage} editor={editor} />
+			</Styles.Col>
 			<Styles.Row className="mt-4">
 				<StatusButton status={status} onClick={submit}>
 					Save
 				</StatusButton>
-				<Styles.PrimaryButton className="dark ml-2" onClick={() => setPreview(true)}>
+				<Styles.PrimaryButton
+					disabled={status === "loading"}
+					className="dark ml-2"
+					onClick={() => setPreview(true)}
+				>
 					Preview
 				</Styles.PrimaryButton>
 			</Styles.Row>

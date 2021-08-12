@@ -86,21 +86,27 @@ export function CreatePost() {
 	}
 
 	return (
-		<Styles.Container className="my-8 relative">
-			<ContainerLoader loading={status === "loading"} />
+		<Styles.Container className="my-8">
 			<Styles.H2 className="mb-5">Create new post</Styles.H2>
-			<Styles.Input
-				className="mb-2 w-full"
-				value={title}
-				onChange={e => setTitle(e.target.value)}
-				placeholder="Title"
-			/>
-			<Editor status={status} error={errorMessage} editor={editor} />
+			<Styles.Col className="relative">
+				<ContainerLoader loading={status === "loading"} />
+				<Styles.Input
+					className="mb-2 w-full"
+					value={title}
+					onChange={e => setTitle(e.target.value)}
+					placeholder="Title"
+				/>
+				<Editor status={status} error={errorMessage} editor={editor} />
+			</Styles.Col>
 			<Styles.Row className="mt-4">
 				<StatusButton status={status} onClick={submit}>
 					Submit
 				</StatusButton>
-				<Styles.PrimaryButton className="dark ml-2" onClick={() => setPreview(true)}>
+				<Styles.PrimaryButton
+					disabled={status === "loading"}
+					className="dark ml-2"
+					onClick={() => setPreview(true)}
+				>
 					Preview
 				</Styles.PrimaryButton>
 			</Styles.Row>
