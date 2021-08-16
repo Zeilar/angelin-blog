@@ -28,6 +28,14 @@ export function Modal({ render, onEscape, altOpen, altSetOpen }: Props) {
 	const [open, setOpen] = useState(false);
 
 	useEffect(() => {
+		const body = document.querySelector("body") as HTMLBodyElement;
+		body.style.overflow = open || altOpen ? "hidden" : "overlay";
+		return () => {
+			body.style.overflow = "overlay";
+		};
+	}, [open, altOpen]);
+
+	useEffect(() => {
 		function keyHandler(e: KeyboardEvent) {
 			if (e.key === "Escape") {
 				setOpen(false);

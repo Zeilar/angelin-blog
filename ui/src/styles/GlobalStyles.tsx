@@ -26,6 +26,10 @@ export const GlobalStyles = createGlobalStyle`
 			color: ${props.theme.color.rgb("text")};
 		}
 
+		body {
+			overflow: overlay;
+		}
+
 		body,
 		#root {
 			font-family: Open Sans;

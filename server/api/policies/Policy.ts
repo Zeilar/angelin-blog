@@ -8,7 +8,6 @@ export interface Policies {
 }
 
 export interface PolicyChild {
-	constructor: Function;
 	policies: Policies;
 	readonly user: User;
 }
