@@ -1,6 +1,6 @@
 import Editor from "../partials/editor/Editor";
 import * as Styles from "../styled-components";
-import { FetchContext, IFetchContext, useFetch, useTitle } from "../hooks";
+import { FetchContext, useFetch, useTitle } from "../hooks";
 import { useEditor } from "@tiptap/react";
 import { useHistory, RouteComponentProps, Link } from "react-router-dom";
 import { useState, useContext } from "react";
@@ -14,7 +14,7 @@ import { useEffect } from "react";
 import { mdiKeyboardBackspace } from "@mdi/js";
 import Icon from "@mdi/react";
 import { PostPreview } from "../partials";
-import { IUserContext, UserContext } from "../contexts";
+import { UserContext } from "../contexts";
 
 interface MatchParams {
 	id: string;
@@ -27,8 +27,8 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	const post = query.body?.data ? new Post(query.body.data) : null;
 
 	const { push } = useHistory();
-	const userContext = useContext(UserContext) as IUserContext;
-	const { clearCache } = useContext(FetchContext) as IFetchContext;
+	const userContext = useContext(UserContext);
+	const { clearCache } = useContext(FetchContext);
 	const [status, setStatus] = useState<IStatus>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [title, setTitle] = useState<string>("");

@@ -20,7 +20,7 @@ interface UserEditable {
 	password?: string;
 }
 
-export const UserContext = createContext<IUserContext | null>(null);
+export const UserContext = createContext<IUserContext>({} as IUserContext);
 
 export function UserContextProvider({ children }: Props) {
 	const [user, setUser] = useState<User | null>(null);

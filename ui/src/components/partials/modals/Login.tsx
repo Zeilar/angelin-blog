@@ -4,7 +4,7 @@ import { StatusButton, Input, ContainerLoader } from "../../misc";
 import { theme } from "../../../styles/theme";
 import * as Styles from "../../styled-components";
 import { useInputs, useClickOutside, useLocalStorage } from "../../hooks";
-import { AuthModalContext, IAuthModalContext, IUserContext, UserContext } from "../../contexts";
+import { AuthModalContext, UserContext } from "../../contexts";
 import classNames from "classnames";
 import { IStatus } from "../../../types/modals";
 import { RenderProps } from "./";
@@ -22,8 +22,8 @@ interface Inputs {
 type InputError = string | null | Record<keyof Inputs, string>;
 
 export function Login({ open, setOpen, openRegister }: Props) {
-	const { login, loggedIn } = useContext(UserContext) as IUserContext;
-	const { mountError } = useContext(AuthModalContext) as IAuthModalContext;
+	const { login, loggedIn } = useContext(UserContext);
+	const { mountError } = useContext(AuthModalContext);
 
 	const wrapper = useClickOutside<HTMLDivElement>(() => open && setOpen(false));
 

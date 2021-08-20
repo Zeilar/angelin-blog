@@ -4,7 +4,7 @@ import { StatusButton, Input, ContainerLoader } from "../../misc";
 import { theme } from "../../../styles/theme";
 import * as Styles from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
-import { IUserContext, UserContext } from "../../contexts";
+import { UserContext } from "../../contexts";
 import classNames from "classnames";
 import { IStatus } from "../../../types/modals";
 import { RenderProps } from "./";
@@ -23,7 +23,7 @@ interface Inputs {
 type InputError = string | null | Record<keyof Inputs, string>;
 
 export function Register({ open, setOpen, openLogin }: Props) {
-	const { register, loggedIn } = useContext(UserContext) as IUserContext;
+	const { register, loggedIn } = useContext(UserContext);
 
 	const wrapper = useClickOutside<HTMLDivElement>(() => open && setOpen(false));
 

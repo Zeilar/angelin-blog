@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import { Redirect } from "react-router";
-import { IUserContext, UserContext } from "../contexts";
+import { UserContext } from "../contexts";
 
 interface Props {
 	children: JSX.Element;
 }
 
 export function AuthRoute({ children }: Props) {
-	const { loggedIn, loading } = useContext(UserContext) as IUserContext;
+	const { loggedIn, loading } = useContext(UserContext);
 	if (loading) return null;
 	return loggedIn ? children : <Redirect to="/" />;
 }

@@ -13,7 +13,7 @@ export interface IAuthModalContext {
 	mountError: string | null;
 }
 
-export const AuthModalContext = createContext<IAuthModalContext | null>(null);
+export const AuthModalContext = createContext<IAuthModalContext>({} as IAuthModalContext);
 
 export function AuthModalContextProvider({ children }: Props) {
 	const [activeModal, setActiveModal] = useState<ActiveModal>(null);

@@ -7,10 +7,10 @@ interface Props {
 
 interface IPopupContext {}
 
-export const PopupContext = createContext(null);
+export const PopupContext = createContext({} as IPopupContext);
 
 export function PopupContextProvider({ children }: Props) {
 	const values = {};
 
-	return <PopupContext.Provider value={null}>{children}</PopupContext.Provider>;
+	return <PopupContext.Provider value={values}>{children}</PopupContext.Provider>;
 }

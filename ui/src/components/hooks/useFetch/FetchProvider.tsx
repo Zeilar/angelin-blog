@@ -9,7 +9,7 @@ export interface IFetchContext {
 	clearCache: (...keys: string[]) => void;
 }
 
-export const FetchContext = createContext<IFetchContext | null>(null);
+export const FetchContext = createContext<IFetchContext>({} as IFetchContext);
 
 export function FetchContextProvider({ children }: Props) {
 	let cached = useRef(new Map<string, any>()).current;

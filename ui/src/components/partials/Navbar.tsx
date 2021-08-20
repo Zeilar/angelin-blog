@@ -2,13 +2,13 @@ import { useContext } from "react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { IUserContext, UserContext } from "../contexts";
+import { UserContext } from "../contexts";
 import * as Styles from "../styled-components";
 import { Login, Register } from "./modals";
 import { Modal } from "./modals/Modal";
 
 export function Navbar() {
-	const { loggedIn, loading, logout, user } = useContext(UserContext) as IUserContext;
+	const { loggedIn, loading, logout, user } = useContext(UserContext);
 
 	const [loginModalOpen, setLoginModalOpen] = useState(false);
 	const [registerModalOpen, setRegisterModalOpen] = useState(false);

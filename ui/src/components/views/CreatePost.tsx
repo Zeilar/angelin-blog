@@ -10,7 +10,7 @@ import { theme } from "../../styles/theme";
 import { Post, User } from "../../models";
 import { ContainerLoader, StatusButton } from "../misc";
 import { URLHelpers } from "../../utils";
-import { IUserContext, UserContext } from "../contexts";
+import { UserContext } from "../contexts";
 import { PostPreview } from "../partials";
 
 export function CreatePost() {
@@ -18,7 +18,7 @@ export function CreatePost() {
 
 	const { push } = useHistory();
 	const { clearCache } = useContext(FetchContext) as IFetchContext;
-	const userContext = useContext(UserContext) as IUserContext;
+	const userContext = useContext(UserContext);
 	const [status, setStatus] = useState<IStatus>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [title, setTitle] = useState("");

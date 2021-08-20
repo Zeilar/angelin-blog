@@ -1,5 +1,5 @@
 import { Post } from "../../models";
-import { FetchContext, IFetchContext } from "../hooks";
+import { FetchContext } from "../hooks";
 import * as Styles from "../styled-components";
 import { ReadOnlyEditor } from "../partials/editor";
 import { Menu, MenuItem, MenuWrapper } from "../partials/modals";
@@ -11,7 +11,7 @@ import { IconButton } from "../styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { URLHelpers } from "../../utils";
-import { IUserContext, UserContext } from "../contexts";
+import { UserContext } from "../contexts";
 
 interface Props {
 	post: Post;
@@ -19,8 +19,8 @@ interface Props {
 }
 
 export function PostFull({ post, withMenu = true }: Props) {
-	const { clearCache } = useContext(FetchContext) as IFetchContext;
-	const { loggedIn } = useContext(UserContext) as IUserContext;
+	const { clearCache } = useContext(FetchContext);
+	const { loggedIn } = useContext(UserContext);
 	const { push } = useHistory();
 
 	if (!(post instanceof Post)) {
