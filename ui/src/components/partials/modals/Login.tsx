@@ -119,8 +119,9 @@ export function Login({ open, setOpen, openRegister }: Props) {
 						containerClass="mb-2"
 						forwardRef={firstInput}
 						value={inputs.email}
-						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "email")}
+						onChange={onChange}
 						type="text"
+						name="email"
 						title="Email"
 						label="Email"
 						placeholder="john.smith@gmail.com"
@@ -129,8 +130,9 @@ export function Login({ open, setOpen, openRegister }: Props) {
 						error={getInputError("password")}
 						forwardRef={secondInput}
 						value={inputs.password}
-						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "password")}
+						onChange={onChange}
 						type="password"
+						name="password"
 						title="Password"
 						label="Password"
 						placeholder="••••••••••"

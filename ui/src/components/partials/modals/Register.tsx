@@ -109,8 +109,9 @@ export function Register({ open, setOpen, openLogin }: Props) {
 						containerClass="mb-2"
 						forwardRef={firstInput}
 						value={inputs.email}
-						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "email")}
+						onChange={onChange}
 						type="text"
+						name="email"
 						title="Email"
 						label="Email"
 						placeholder="john.smith@gmail.com"
@@ -119,8 +120,9 @@ export function Register({ open, setOpen, openLogin }: Props) {
 						error={getInputError("password")}
 						containerClass="mb-2"
 						value={inputs.password}
-						onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e, "password")}
+						onChange={onChange}
 						type="password"
+						name="password"
 						title="Password"
 						label="Password"
 						placeholder="••••••••••"
@@ -128,10 +130,9 @@ export function Register({ open, setOpen, openLogin }: Props) {
 					<Input
 						error={getInputError("passwordConfirm")}
 						value={inputs.passwordConfirm}
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							onChange(e, "passwordConfirm")
-						}
+						onChange={onChange}
 						type="password"
+						name="passwordConfirmation"
 						title="Password Confirmation"
 						label="Password Confirmation"
 						placeholder="••••••••••"
