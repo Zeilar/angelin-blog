@@ -4,9 +4,18 @@ import { useFetch, useTitle } from "../hooks";
 import PostThumbnail from "../partials/PostThumbnail";
 import { Filter } from "../partials";
 import { URLHelpers } from "../../utils";
+import { RouteComponentProps } from "react-router-dom";
+import { useMemo } from "react";
 
-export function Home() {
-	const query = useFetch<{ data: Post[] }>(URLHelpers.apiPosts());
+export function Home({ location }: RouteComponentProps) {
+	const searchQuery = useMemo(() => new URLSearchParams(location.search), [location.search]);
+	const params: Record<string, string> = {};
+
+	[...searchQuery].forEach(([key, value]) => {
+		params[key] = value;
+	});
+
+	const query = useFetch<{ data: Post[] }>(URLHelpers.apiPosts(), { params });
 	const posts = query.body?.data.map((post: Post) => new Post(post)) ?? [];
 
 	useTitle("Angelin Blog");

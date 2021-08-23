@@ -3,10 +3,9 @@ import { Tag as ITag } from "../../models";
 import { Row, Span } from "../styled-components";
 import { mdiTagOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import { HTMLAttributes } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
+interface Props {
 	tag: ITag;
 	[key: string]: any;
 }
@@ -14,7 +13,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 export function Tag({ tag, ...props }: Props) {
 	const { push } = useHistory();
 	return (
-		<Wrapper {...props} as="span" align="center" onClick={() => push(`/?tag=${tag.name}`)}>
+		<Wrapper {...props} as={Link} to={`/?tags=${tag.name}`}>
 			<TagIcon path={mdiTagOutline} />
 			<Span>{tag.name}</Span>
 		</Wrapper>
@@ -27,14 +26,16 @@ const TagIcon = styled(Icon)`
 	margin-right: 0.25rem;
 `;
 
-const Wrapper = styled(Row)`
+const Wrapper = styled(Row).attrs({ align: "center" })`
 	cursor: pointer;
 	user-select: none;
 	font-weight: 600;
 	${props => css`
+		${TagIcon} {
+			color: ${props.theme.color.rgb("brand")};
+		}
 		&:hover {
-			${Span},
-			${TagIcon} {
+			${Span} {
 				color: ${props.theme.color.rgb("brand")};
 			}
 		}
