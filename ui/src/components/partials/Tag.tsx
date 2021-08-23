@@ -3,7 +3,7 @@ import { Tag as ITag } from "../../models";
 import { Row, Span } from "../styled-components";
 import { mdiTagOutline } from "@mdi/js";
 import Icon from "@mdi/react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface Props {
 	tag: ITag;
@@ -11,7 +11,6 @@ interface Props {
 }
 
 export function Tag({ tag, ...props }: Props) {
-	const { push } = useHistory();
 	return (
 		<Wrapper {...props} as={Link} to={`/?tags=${tag.name}`}>
 			<TagIcon path={mdiTagOutline} />

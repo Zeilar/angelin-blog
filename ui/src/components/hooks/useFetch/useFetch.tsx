@@ -55,6 +55,8 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 					signal: abortController.signal,
 				};
 
+				setStatus("loading");
+
 				const response = await fetch(fullUrl, options);
 
 				if (!response.ok)
@@ -66,8 +68,8 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 
 				cachedData.set(fullUrl, data);
 
-				setStatus("success");
 				setData(data);
+				setStatus("success");
 
 				if (callback) callback(data);
 			} catch (error) {
