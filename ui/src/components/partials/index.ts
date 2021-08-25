@@ -5,3 +5,4 @@ export * from "./PostPreview";
 export * from "./PostFull";
 export * from "./Tag";
 export * from "./Filter";
+export * from "./ErrorPage";

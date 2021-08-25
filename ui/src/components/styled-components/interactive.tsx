@@ -45,7 +45,7 @@ export const button = css`
 export const PrimaryButton = styled.button`
 	${button}
 	min-width: 5rem;
-	height: 3rem;
+	min-height: 3rem;
 `;
 
 export const SecondaryButton = styled.button`
@@ -53,7 +53,7 @@ export const SecondaryButton = styled.button`
 	width: fit-content;
 	border-radius: 10px;
 	padding: 0.5rem 0.75rem;
-	height: 2.5rem;
+	min-height: 2.5rem;
 `;
 
 export const IconButton = styled.button`

@@ -2,7 +2,7 @@ import * as Styles from "../styled-components";
 import { Post } from "../../models";
 import { useFetch, useTitle } from "../hooks";
 import PostThumbnail from "../partials/PostThumbnail";
-import { Filter } from "../partials";
+import { ErrorPage, Filter } from "../partials";
 import { URLHelpers } from "../../utils";
 import { RouteComponentProps } from "react-router-dom";
 import { useMemo, useState } from "react";
@@ -15,20 +15,16 @@ export function Home({ location }: RouteComponentProps) {
 	const [params, setParams] = useState<Params>({});
 
 	useEffect(() => {
-		const params: Params = {};
-		[...searchQuery].forEach(([key, value]) => {
-			params[key] = value;
-		});
-		setParams(params);
+		setParams(Object.fromEntries([...searchQuery]));
 	}, [searchQuery]);
 
-	const query = useFetch<{ data: Post[] }>(URLHelpers.apiPosts(), { params });
-	const posts = query.body?.data.map((post: Post) => new Post(post)) ?? [];
+	const postQuery = useFetch<{ data: Post[] }>(URLHelpers.apiPosts(), { params });
+	const posts = postQuery.body?.data.map(post => new Post(post)) ?? [];
 
 	useTitle("Angelin Blog");
 
-	if (query.isError) {
-		return <p>Oh dear something went wrong</p>;
+	if (postQuery.isError) {
+		return <ErrorPage />;
 	}
 
 	return (
