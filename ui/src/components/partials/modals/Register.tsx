@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import * as ModalStyles from "./_styles";
 import { StatusButton, Input, ContainerLoader } from "../../misc";
 import { theme } from "../../../styles/theme";

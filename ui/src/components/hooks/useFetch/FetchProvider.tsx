@@ -15,9 +15,7 @@ export function FetchContextProvider({ children }: Props) {
 	let cached = useRef(new Map<string, any>()).current;
 
 	function clearCache(...keys: string[]) {
-		if (!keys) return;
-
-		if (keys.length <= 0) {
+		if (!keys?.length) {
 			cached = new Map<string, any>();
 			return;
 		}

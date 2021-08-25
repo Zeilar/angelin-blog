@@ -5,15 +5,22 @@ import PostThumbnail from "../partials/PostThumbnail";
 import { Filter } from "../partials";
 import { URLHelpers } from "../../utils";
 import { RouteComponentProps } from "react-router-dom";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { useEffect } from "react";
+
+type Params = Record<string, string>;
 
 export function Home({ location }: RouteComponentProps) {
 	const searchQuery = useMemo(() => new URLSearchParams(location.search), [location.search]);
-	const params: Record<string, string> = {};
+	const [params, setParams] = useState<Params>({});
 
-	[...searchQuery].forEach(([key, value]) => {
-		params[key] = value;
-	});
+	useEffect(() => {
+		const params: Params = {};
+		[...searchQuery].forEach(([key, value]) => {
+			params[key] = value;
+		});
+		setParams(params);
+	}, [searchQuery]);
 
 	const query = useFetch<{ data: Post[] }>(URLHelpers.apiPosts(), { params });
 	const posts = query.body?.data.map((post: Post) => new Post(post)) ?? [];
