@@ -18,7 +18,7 @@ export function parseQueryParams(params?: { [key: string]: string }) {
 
 export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => void) {
 	const [data, setData] = useState<T | null>(null);
-	const [status, setStatus] = useState<Status>("loading");
+	const [status, setStatus] = useState<Status | null>(null);
 	const [memoArgs, setMemoArgs] = useState<Args>();
 
 	const fetchContext = useFetchContext();

@@ -16,10 +16,13 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 
 	useTitle(`Angelin Blog | ${post?.title ?? ""}`);
 
-	if (query.isError) {
+	if (query.isLoading) {
+		return <p>Loading...</p>;
+	} else if (query.isError) {
 		return <ErrorPage />;
 	} else if (!post) {
-		return <p>fkpos</p>;
+		// TODO: 404 page
+		return <p></p>;
 	}
 
 	return (
