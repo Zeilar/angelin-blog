@@ -1,5 +1,7 @@
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Highlight from "react-highlight";
+import "../../../styles/hljs.css";
 
 interface Props {
 	content: string;
@@ -13,5 +15,9 @@ export function ReadOnlyEditor(props: Props) {
 		editable: false,
 	});
 
-	return <EditorContent className="w-full" editor={editor} />;
+	return (
+		<Highlight className="javascript tiptap" innerHTML={true}>
+			{editor?.getHTML()}
+		</Highlight>
+	);
 }
