@@ -1,11 +1,12 @@
-import * as Styles from "../styled-components";
+import * as Styles from "../sc";
 import { Post } from "../../models";
 import { useFetch, useTitle } from "../hooks";
-import { ErrorPage, Filter, PostThumbnail } from "../partials";
+import { ErrorPage, Filter } from "../partials";
 import { URLHelpers } from "../../utils";
 import { RouteComponentProps } from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
-import { PostThumbnailSkeleton } from "../misc";
+import { PostThumbnail } from "../post";
+import { PostThumbnailSkeleton } from "../skeleton";
 
 type Params = Record<string, string>;
 

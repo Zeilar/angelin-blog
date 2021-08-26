@@ -1,5 +1,5 @@
-import Editor from "../partials/editor/Editor";
-import * as Styles from "../styled-components";
+import Editor from "../editor/Editor";
+import * as Styles from "../sc";
 import { useFetch, useFetchContext, useTitle } from "../hooks";
 import { useEditor } from "@tiptap/react";
 import { useHistory, RouteComponentProps, Link } from "react-router-dom";
@@ -7,13 +7,13 @@ import StarterKit from "@tiptap/starter-kit";
 import { IStatus } from "../../types/modals";
 import { theme } from "../../styles/theme";
 import { Post, User } from "../../models";
-import { ContainerLoader, StatusButton } from "../misc";
+import { ContainerLoader, StatusButton } from "../form";
 import { URLHelpers } from "../../utils";
 import { useEffect, useState } from "react";
 import { mdiKeyboardBackspace } from "@mdi/js";
 import Icon from "@mdi/react";
-import { PostPreview } from "../partials";
 import { useUserContext } from "../contexts";
+import { PostPreview } from "../post";
 
 interface MatchParams {
 	id: string;

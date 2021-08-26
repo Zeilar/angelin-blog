@@ -1,8 +1,8 @@
 import { EditorContent, Editor as IEditor } from "@tiptap/react";
-import { Toolbar } from "./";
-import { IStatus } from "../../../types/modals";
+import { Toolbar } from ".";
+import { IStatus } from "../../types/modals";
 import classNames from "classnames";
-import { Col, InputError } from "../../styled-components";
+import { Col, InputError } from "../sc";
 import { Prompt } from "react-router-dom";
 import { useMemo, useEffect } from "react";
 

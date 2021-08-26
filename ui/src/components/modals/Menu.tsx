@@ -6,9 +6,9 @@ import {
 	HTMLAttributes,
 	SetStateAction,
 } from "react";
-import { Col, Row } from "../../styled-components";
+import { Col, Row } from "../sc";
 import styled, { css } from "styled-components";
-import { useClickOutside } from "../../hooks";
+import { useClickOutside } from "../hooks";
 import Icon from "@mdi/react";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {

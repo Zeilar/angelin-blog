@@ -2,8 +2,8 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useUserContext } from "../contexts";
-import * as Styles from "../styled-components";
-import { Login, Register, Modal } from "./modals";
+import * as Styles from "../sc";
+import { Login, Register, Modal } from "../modals";
 
 export function Navbar() {
 	const { loggedIn, loading, logout, user } = useUserContext();

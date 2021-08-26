@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import classNames from "classnames";
-import { Loader } from "../styled-components";
+import { Loader } from "../sc";
 
 interface Props {
 	loading: boolean;

@@ -1,9 +1,9 @@
 import { Route, Switch } from "react-router-dom";
-import { Home, SinglePost, CreatePost, EditPost } from "./views";
-import { AdminRoute } from "./misc";
-import { Navbar } from "./partials";
+import { Home, SinglePost, CreatePost, EditPost } from "../views";
+import { AdminRoute } from "./";
+import { Navbar } from "../partials";
 
-export default function Router() {
+export function Router() {
 	return (
 		<>
 			<Navbar />

@@ -1,13 +1,13 @@
 import { Post } from "../../models";
 import { useFetchContext } from "../hooks";
-import * as Styles from "../styled-components";
-import { ReadOnlyEditor } from "../partials/editor";
-import { Menu, MenuItem, MenuWrapper } from "../partials/modals";
+import * as Styles from "../sc";
+import { ReadOnlyEditor } from "../editor";
+import { Menu, MenuItem, MenuWrapper } from "../modals";
 import { mdiDotsVertical, mdiPencil, mdiTrashCan } from "@mdi/js";
 import Icon from "@mdi/react";
 import styled from "styled-components";
 import classNames from "classnames";
-import { IconButton } from "../styled-components";
+import { IconButton } from "../sc";
 import { Link, useHistory } from "react-router-dom";
 import { URLHelpers } from "../../utils";
 import { useUserContext } from "../contexts";

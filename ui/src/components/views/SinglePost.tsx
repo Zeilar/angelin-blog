@@ -2,8 +2,9 @@ import { RouteComponentProps } from "../../types/props";
 import { Post } from "../../models";
 import { useFetch, useTitle } from "../hooks";
 import { URLHelpers } from "../../utils";
-import { ErrorPage, PostFull } from "../partials";
-import { Container } from "../styled-components";
+import { ErrorPage } from "../partials";
+import { Container } from "../sc";
+import { PostFull } from "../post";
 
 interface MatchParams {
 	id: string;

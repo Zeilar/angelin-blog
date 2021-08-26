@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import * as Styles from "./";
+import * as Styles from ".";
 import { mdiAlertCircleOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 

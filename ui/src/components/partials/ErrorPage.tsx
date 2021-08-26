@@ -1,4 +1,4 @@
-import * as Styles from "../styled-components";
+import * as Styles from "../sc";
 
 export function ErrorPage() {
 	return (

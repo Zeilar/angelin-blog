@@ -1,5 +1,5 @@
 import { RefObject } from "react";
-import * as Styles from "../styled-components";
+import * as Styles from "../sc";
 import classNames from "classnames";
 import { InputHTMLAttributes } from "react";
 

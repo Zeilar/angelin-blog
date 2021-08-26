@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Tag as ITag } from "../../models";
-import { Row, Span } from "../styled-components";
+import { Row, Span } from "../sc";
 import { mdiTagOutline } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Link } from "react-router-dom";

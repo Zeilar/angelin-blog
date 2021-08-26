@@ -1,8 +1,8 @@
 import * as Models from "../../models";
-import * as Styles from "../styled-components";
+import * as Styles from "../sc";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
-import { Tag } from "./";
+import { Tag } from "../partials";
 import { DateHelpers, URLHelpers } from "../../utils";
 
 interface Props {

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import Icon from "@mdi/react";
-import * as Styles from "../../styled-components";
+import * as Styles from "../sc";
 
 export const Wrapper = styled(Styles.Row)`
 	flex-wrap: wrap;

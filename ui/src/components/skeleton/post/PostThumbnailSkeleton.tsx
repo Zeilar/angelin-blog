@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { HTMLAttributes } from "react";
 import styled from "styled-components";
-import * as Styles from "../../../styled-components";
+import * as Styles from "../../sc";
 import { SkeletonText } from "../";
 import { skeleton } from "../_styles";
 

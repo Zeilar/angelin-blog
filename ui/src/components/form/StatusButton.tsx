@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import styled, { css } from "styled-components";
-import { PrimaryButton } from "../styled-components";
+import { PrimaryButton } from "../sc";
 import { mdiClose, mdiCheck, mdiLoading } from "@mdi/js";
 import Icon from "@mdi/react";
 import classNames from "classnames";

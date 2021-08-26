@@ -1,64 +1,53 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import * as ModalStyles from "./_styles";
-import { StatusButton, Input, ContainerLoader } from "../../misc";
-import { theme } from "../../../styles/theme";
-import * as Styles from "../../styled-components";
-import { useInputs, useClickOutside, useLocalStorage } from "../../hooks";
-import { useAuthModalContext, useUserContext } from "../../contexts";
+import { StatusButton, Input, ContainerLoader } from "../form";
+import { theme } from "../../styles/theme";
+import * as Styles from "../sc";
+import { useInputs, useClickOutside } from "../hooks";
+import { useUserContext } from "../contexts";
 import classNames from "classnames";
-import { IStatus } from "../../../types/modals";
-import { RenderProps } from "./";
+import { IStatus } from "../../types/modals";
+import { RenderProps } from ".";
 
 interface Props extends RenderProps {
-	openRegister(): void;
+	openLogin(): void;
 }
 
 interface Inputs {
 	email: string;
 	password: string;
+	passwordConfirm: string;
 }
 
 type InputError = string | null | Record<keyof Inputs, string>;
 
-export function Login({ open, setOpen, openRegister }: Props) {
-	const { login, loggedIn } = useUserContext();
-	const { mountError } = useAuthModalContext();
+export function Register({ open, setOpen, openLogin }: Props) {
+	const { register, loggedIn } = useUserContext();
 
 	const wrapper = useClickOutside<HTMLDivElement>(() => open && setOpen(false));
 
 	const [status, setStatus] = useState<IStatus>(null);
-	const [cached, setCached] = useLocalStorage<Inputs>("login");
-	const { inputs, onChange } = useInputs<Inputs>({
-		email: cached?.email ?? "",
+	const { inputs, onChange, empty } = useInputs<Inputs>({
+		email: "",
 		password: "",
+		passwordConfirm: "",
 	});
 	const [errors, setErrors] = useState<InputError>(null);
 
 	const firstInput = useRef<HTMLInputElement>(null);
-	const secondInput = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		// mountError should only ever change once
-		// But this useEffect is required, as the first render mountError will be null
-		setErrors(mountError);
-	}, [mountError]);
-
-	useEffect(() => {
-		if (!open) return;
-		if (cached?.email) {
-			secondInput.current?.focus();
-		} else {
-			firstInput.current?.focus();
+		if (open && firstInput.current) {
+			firstInput.current.focus();
 		}
-	}, [open, cached?.email]);
+	}, [open]);
 
 	useEffect(() => {
-		if (loggedIn) {
-			setTimeout(() => {
-				setErrors(null);
-			}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
-		}
-	}, [loggedIn]);
+		setTimeout(() => {
+			empty();
+			setErrors(null);
+		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
+	}, [loggedIn, empty]);
 
 	function OAuthSubmit() {
 		setStatus("loading");
@@ -71,13 +60,13 @@ export function Login({ open, setOpen, openRegister }: Props) {
 		setStatus("loading");
 		setErrors(null);
 
-		const { error, ok } = await login({
+		const { ok, error } = await register({
 			email: inputs.email,
 			password: inputs.password,
+			passwordConfirm: inputs.passwordConfirm,
 		});
 
 		if (ok) {
-			setCached({ email: inputs.email, password: "" });
 			setErrors(null);
 			setStatus("success");
 
@@ -92,6 +81,7 @@ export function Login({ open, setOpen, openRegister }: Props) {
 
 		setTimeout(() => {
 			setStatus(null);
+			if (ok) empty();
 		}, theme.durations.modalsAfterResponse + theme.durations.modalsFade);
 	}
 
@@ -108,7 +98,7 @@ export function Login({ open, setOpen, openRegister }: Props) {
 				<ContainerLoader loading={status === "loading"} />
 				<ModalStyles.Close onClick={() => setOpen(false)} />
 				<Styles.H4 className="mb-2 text-center">Angelin Blog</Styles.H4>
-				<Styles.H6 className="mb-6 text-center">Login</Styles.H6>
+				<Styles.H6 className="mb-6 text-center">Register</Styles.H6>
 				{typeof errors === "string" && (
 					<Styles.FormError className="mb-2">{errors}</Styles.FormError>
 				)}
@@ -127,7 +117,7 @@ export function Login({ open, setOpen, openRegister }: Props) {
 					/>
 					<Input
 						error={getInputError("password")}
-						forwardRef={secondInput}
+						containerClass="mb-2"
 						value={inputs.password}
 						onChange={onChange}
 						type="password"
@@ -136,15 +126,25 @@ export function Login({ open, setOpen, openRegister }: Props) {
 						label="Password"
 						placeholder="••••••••••"
 					/>
+					<Input
+						error={getInputError("passwordConfirm")}
+						value={inputs.passwordConfirm}
+						onChange={onChange}
+						type="password"
+						name="passwordConfirmation"
+						title="Password Confirmation"
+						label="Password Confirmation"
+						placeholder="••••••••••"
+					/>
 				</Styles.Col>
 				<StatusButton className="w-full block" type="submit" status={status}>
-					Login
+					Register
 				</StatusButton>
 				<ModalStyles.LoginDivider />
 				<ModalStyles.GitHubLogin className="block" onClick={OAuthSubmit} />
 				<Styles.P className="mt-6 text-center">
-					{"Not a member? "}
-					<Styles.A onClick={openRegister}>Register</Styles.A>
+					{"Already a member? "}
+					<Styles.A onClick={openLogin}>Login</Styles.A>
 				</Styles.P>
 			</ModalStyles.Main>
 		</ModalStyles.Wrapper>

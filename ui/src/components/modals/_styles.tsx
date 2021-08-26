@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import * as Styles from "../../styled-components";
+import * as Styles from "../sc";
 import Icon from "@mdi/react";
 import { mdiClose, mdiGithub } from "@mdi/js";
-import { URLHelpers } from "../../../utils";
+import { URLHelpers } from "../../utils";
 
 export const Background = styled.div`
 	position: fixed;

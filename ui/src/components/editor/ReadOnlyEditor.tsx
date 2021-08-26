@@ -1,7 +1,7 @@
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Highlight from "react-highlight";
-import "../../../styles/hljs.css";
+import "../../styles/hljs.css";
 
 interface Props {
 	content: string;

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import * as Styles from "./";
+import * as Styles from ".";
 
 export const PostWrapper = styled(Styles.Col)`
 	padding: 1rem;
