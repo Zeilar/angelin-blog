@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
 import { LoginCredentials, RegisterCredentials, Response } from "../../types/request";
 import { User } from "../../models/User";
+import { useContext } from "react";
 
 interface Props {
 	children: ReactNode;
@@ -21,6 +22,10 @@ interface UserEditable {
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
+
+export function useUserContext() {
+	return useContext(UserContext);
+}
 
 export function UserContextProvider({ children }: Props) {
 	const [user, setUser] = useState<User | null>(null);

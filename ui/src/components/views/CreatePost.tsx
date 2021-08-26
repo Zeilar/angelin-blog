@@ -1,24 +1,24 @@
 import Editor from "../partials/editor/Editor";
 import * as Styles from "../styled-components";
-import { FetchContext, IFetchContext, useTitle } from "../hooks";
+import { useFetchContext, useTitle } from "../hooks";
 import { useEditor } from "@tiptap/react";
 import { useHistory } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import { IStatus } from "../../types/modals";
 import { theme } from "../../styles/theme";
 import { Post, User } from "../../models";
 import { ContainerLoader, StatusButton } from "../misc";
 import { URLHelpers } from "../../utils";
-import { UserContext } from "../contexts";
+import { useUserContext } from "../contexts";
 import { PostPreview } from "../partials";
 
 export function CreatePost() {
 	useTitle("Angelin Blog | Create Post");
 
 	const { push } = useHistory();
-	const { clearCache } = useContext(FetchContext) as IFetchContext;
-	const userContext = useContext(UserContext);
+	const { clearCache } = useFetchContext();
+	const userContext = useUserContext();
 	const [status, setStatus] = useState<IStatus>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [title, setTitle] = useState("");

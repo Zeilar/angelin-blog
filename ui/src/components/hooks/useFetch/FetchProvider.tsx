@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { createContext, ReactNode, useRef } from "react";
 
 interface Props {
@@ -10,6 +11,10 @@ export interface IFetchContext {
 }
 
 export const FetchContext = createContext<IFetchContext>({} as IFetchContext);
+
+export function useFetchContext() {
+	return useContext(FetchContext);
+}
 
 export function FetchContextProvider({ children }: Props) {
 	let cached = useRef(new Map<string, any>()).current;

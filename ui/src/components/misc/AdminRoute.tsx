@@ -1,14 +1,13 @@
 import { Redirect, Route, RouteProps } from "react-router";
-import { UserContext } from "../contexts";
+import { useUserContext } from "../contexts";
 import { ComponentType } from "react";
-import { useContext } from "react";
 
 type Props = RouteProps & {
 	component: ComponentType<any>;
 };
 
 export function AdminRoute({ component: Component, ...rest }: Props) {
-	const { loggedIn, loading, user } = useContext(UserContext);
+	const { loggedIn, loading, user } = useUserContext();
 
 	if (loading) return null;
 

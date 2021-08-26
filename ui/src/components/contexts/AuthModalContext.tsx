@@ -2,6 +2,7 @@ import { createContext, useState, ReactNode } from "react";
 import { ActiveModal } from "../../types/modals";
 import { useHistory } from "react-router";
 import { useEffect } from "react";
+import { useContext } from "react";
 
 interface Props {
 	children: ReactNode;
@@ -14,6 +15,10 @@ export interface IAuthModalContext {
 }
 
 export const AuthModalContext = createContext<IAuthModalContext>({} as IAuthModalContext);
+
+export function useAuthModalContext() {
+	return useContext(AuthModalContext);
+}
 
 export function AuthModalContextProvider({ children }: Props) {
 	const [activeModal, setActiveModal] = useState<ActiveModal>(null);

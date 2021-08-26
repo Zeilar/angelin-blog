@@ -4,11 +4,10 @@ import { StatusButton, Input, ContainerLoader } from "../../misc";
 import { theme } from "../../../styles/theme";
 import * as Styles from "../../styled-components";
 import { useInputs, useClickOutside } from "../../hooks";
-import { UserContext } from "../../contexts";
+import { useUserContext } from "../../contexts";
 import classNames from "classnames";
 import { IStatus } from "../../../types/modals";
 import { RenderProps } from "./";
-import { useContext } from "react";
 
 interface Props extends RenderProps {
 	openLogin(): void;
@@ -23,7 +22,7 @@ interface Inputs {
 type InputError = string | null | Record<keyof Inputs, string>;
 
 export function Register({ open, setOpen, openLogin }: Props) {
-	const { register, loggedIn } = useContext(UserContext);
+	const { register, loggedIn } = useUserContext();
 
 	const wrapper = useClickOutside<HTMLDivElement>(() => open && setOpen(false));
 

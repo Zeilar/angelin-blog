@@ -1,6 +1,6 @@
 import { isEqual } from "lodash";
-import { useState, useEffect, useContext } from "react";
-import { FetchContext } from "./FetchProvider";
+import { useState, useEffect } from "react";
+import { useFetchContext } from "./FetchProvider";
 import { Args, Options, Status } from "./types";
 
 export function parseQueryParams(params?: { [key: string]: string }) {
@@ -21,7 +21,7 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 	const [status, setStatus] = useState<Status>("loading");
 	const [memoArgs, setMemoArgs] = useState<Args>();
 
-	const fetchContext = useContext(FetchContext);
+	const fetchContext = useFetchContext();
 
 	// This is to avoid infinite loops in the useEffect as args contains nested objects
 	useEffect(() => {
@@ -34,8 +34,6 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 		const abortController = new AbortController();
 
 		(async () => {
-			if (!fetchContext) return;
-
 			const fullUrl = `${url}${parseQueryParams(memoArgs?.params)}`,
 				cachedData = fetchContext.cached,
 				cached = cachedData.get(fullUrl),

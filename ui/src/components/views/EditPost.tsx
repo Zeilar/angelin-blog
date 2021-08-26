@@ -1,20 +1,19 @@
 import Editor from "../partials/editor/Editor";
 import * as Styles from "../styled-components";
-import { FetchContext, useFetch, useTitle } from "../hooks";
+import { useFetch, useFetchContext, useTitle } from "../hooks";
 import { useEditor } from "@tiptap/react";
 import { useHistory, RouteComponentProps, Link } from "react-router-dom";
-import { useState, useContext } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import { IStatus } from "../../types/modals";
 import { theme } from "../../styles/theme";
 import { Post, User } from "../../models";
 import { ContainerLoader, StatusButton } from "../misc";
 import { URLHelpers } from "../../utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { mdiKeyboardBackspace } from "@mdi/js";
 import Icon from "@mdi/react";
 import { PostPreview } from "../partials";
-import { UserContext } from "../contexts";
+import { useUserContext } from "../contexts";
 
 interface MatchParams {
 	id: string;
@@ -27,8 +26,8 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	const post = query.body?.data ? new Post(query.body.data) : null;
 
 	const { push } = useHistory();
-	const userContext = useContext(UserContext);
-	const { clearCache } = useContext(FetchContext);
+	const userContext = useUserContext();
+	const { clearCache } = useFetchContext();
 	const [status, setStatus] = useState<IStatus>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [title, setTitle] = useState<string>("");
