@@ -1,6 +1,6 @@
 import { useState, useEffect, ReactNode } from "react";
 import styled from "styled-components";
 
-export default function PostSkeleton() {
+export function PostSkeleton() {
 	return <div></div>;
 }

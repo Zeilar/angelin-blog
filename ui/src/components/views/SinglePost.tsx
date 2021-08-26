@@ -2,7 +2,7 @@ import { RouteComponentProps } from "../../types/props";
 import { Post } from "../../models";
 import { useFetch, useTitle } from "../hooks";
 import { URLHelpers } from "../../utils";
-import { PostFull } from "../partials";
+import { ErrorPage, PostFull } from "../partials";
 import { Container } from "../styled-components";
 
 interface MatchParams {
@@ -16,7 +16,11 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 
 	useTitle(`Angelin Blog | ${post?.title ?? ""}`);
 
-	if (!post) return null;
+	if (query.isError) {
+		return <ErrorPage />;
+	} else if (!post) {
+		return <p>fkpos</p>;
+	}
 
 	return (
 		<Container className="my-8">

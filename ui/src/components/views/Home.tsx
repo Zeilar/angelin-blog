@@ -1,12 +1,11 @@
 import * as Styles from "../styled-components";
 import { Post } from "../../models";
 import { useFetch, useTitle } from "../hooks";
-import PostThumbnail from "../partials/PostThumbnail";
-import { ErrorPage, Filter } from "../partials";
+import { ErrorPage, Filter, PostThumbnail } from "../partials";
 import { URLHelpers } from "../../utils";
 import { RouteComponentProps } from "react-router-dom";
-import { useMemo, useState } from "react";
-import { useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { PostThumbnailSkeleton } from "../misc";
 
 type Params = Record<string, string>;
 
@@ -32,9 +31,13 @@ export function Home({ location }: RouteComponentProps) {
 			<Styles.H1>Angelin Blog</Styles.H1>
 			<Filter />
 			<Styles.Col className="w-full">
-				{posts.map((post: Post) => (
-					<PostThumbnail className="mt-4 thumbnail" post={post} key={post.id} />
-				))}
+				{postQuery.isLoading
+					? Array(5)
+							.fill(null)
+							.map((_, i) => <PostThumbnailSkeleton className="mt-4" key={i} />)
+					: posts.map((post: Post) => (
+							<PostThumbnail className="mt-4" post={post} key={post.id} />
+					  ))}
 			</Styles.Col>
 		</Styles.Container>
 	);

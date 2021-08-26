@@ -69,5 +69,4 @@ export const GlobalStyles = createGlobalStyle`
     code {
         font-family: JetBrains Mono, monospace;
     }
-
 `;

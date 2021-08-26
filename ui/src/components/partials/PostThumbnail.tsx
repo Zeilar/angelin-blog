@@ -1,4 +1,4 @@
-import { Post } from "../../models";
+import * as Models from "../../models";
 import * as Styles from "../styled-components";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
@@ -6,11 +6,11 @@ import { Tag } from "./";
 import { DateHelpers, URLHelpers } from "../../utils";
 
 interface Props {
-	post: Post;
+	post: Models.Post;
 	[key: string]: any;
 }
 
-export default function PostThumbnail({ post, ...props }: Props) {
+export function PostThumbnail({ post, ...props }: Props) {
 	return (
 		<Styles.PostWrapper
 			{...props}
@@ -25,7 +25,7 @@ export default function PostThumbnail({ post, ...props }: Props) {
 			</Styles.PostPreviewHeader>
 			{post.tags.length > 0 && (
 				<Styles.Row className="mt-2">
-					{post.tags.map(tag => (
+					{post.tags.map((tag: Models.Tag) => (
 						<Tag className="mr-4" key={tag.id} tag={tag} />
 					))}
 				</Styles.Row>
