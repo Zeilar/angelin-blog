@@ -11,7 +11,9 @@ export function ErrorPage({ code }: Props) {
 			<Styles.H2>It seems I may have screwed up</Styles.H2>
 			<Styles.Row as={Styles.H5} align="center">
 				<span>If the issue persists, please contact me at</span>
-				<Styles.SecondaryButton className="ml-3">admin@angelin.dev</Styles.SecondaryButton>
+				<Styles.SecondaryButton as="a" className="ml-3" href="mailto:admin@angelin.dev">
+					admin@angelin.dev
+				</Styles.SecondaryButton>
 			</Styles.Row>
 		</Styles.Container>
 	);
