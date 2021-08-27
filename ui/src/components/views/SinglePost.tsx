@@ -2,9 +2,9 @@ import { RouteComponentProps } from "../../types/props";
 import { Post } from "../../models";
 import { useFetch, useTitle } from "../hooks";
 import { URLHelpers } from "../../utils";
-import { ErrorPage } from "../partials";
 import { Container } from "../sc";
 import { PostFull } from "../post";
+import { ErrorPage } from "./";
 
 interface MatchParams {
 	id: string;
@@ -20,7 +20,7 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 	if (query.isLoading) {
 		return <p>Loading...</p>;
 	} else if (query.isError) {
-		return <ErrorPage />;
+		return <ErrorPage code={query.code} />;
 	} else if (!post) {
 		// TODO: 404 page
 		return <p></p>;

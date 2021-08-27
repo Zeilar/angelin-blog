@@ -1,12 +1,13 @@
 import * as Styles from "../sc";
 import { Post } from "../../models";
 import { useFetch, useTitle } from "../hooks";
-import { ErrorPage, Filter } from "../partials";
+import { Filter } from "../partials";
 import { URLHelpers } from "../../utils";
 import { RouteComponentProps } from "react-router-dom";
 import { useMemo, useState, useEffect } from "react";
 import { PostThumbnail } from "../post";
 import { PostThumbnailSkeleton } from "../skeleton";
+import { ErrorPage } from "./";
 
 type Params = Record<string, string>;
 
@@ -24,7 +25,7 @@ export function Home({ location }: RouteComponentProps) {
 	useTitle("Angelin Blog");
 
 	if (postQuery.isError) {
-		return <ErrorPage />;
+		return <ErrorPage code={postQuery.code} />;
 	}
 
 	return (

@@ -19,6 +19,7 @@ export function parseQueryParams(params?: { [key: string]: string }) {
 export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => void) {
 	const [data, setData] = useState<T | null>(null);
 	const [status, setStatus] = useState<Status | null>(null);
+	const [code, setCode] = useState<number>(200);
 	const [memoArgs, setMemoArgs] = useState<Args>();
 
 	const fetchContext = useFetchContext();
@@ -57,6 +58,8 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 
 				const response = await fetch(fullUrl, options);
 
+				setCode(response.status);
+
 				if (!response.ok)
 					throw new Error(
 						`Failed to ${method} ${url} ${response.status} ${response.statusText}`
@@ -86,6 +89,7 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 	return {
 		body: data,
 		status,
+		code,
 		isLoading: status === "loading",
 		isError: status === "error",
 		isSuccess: status === "success",
