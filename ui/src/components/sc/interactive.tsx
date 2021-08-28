@@ -124,3 +124,37 @@ export function InputError({ message, ...props }: { message?: string; [key: stri
 		</Styles.Row>
 	);
 }
+
+const loaderShared = css`
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+`;
+const loaderThumbSize = "0.35rem";
+export const Loader = styled.div`
+	${loaderShared}
+	border: ${loaderThumbSize} solid rgba(255, 255, 255, 0.25);
+	animation: spin 1s infinite linear;
+	position: relative;
+
+	&::after {
+		${loaderShared}
+		content: "";
+		position: absolute;
+		left: -${loaderThumbSize};
+		top: -${loaderThumbSize};
+		border: ${loaderThumbSize} solid transparent;
+		${props => css`
+			border-left: ${loaderThumbSize} solid ${props.theme.color.rgb("brand")};
+		`}
+	}
+
+	@keyframes spin {
+		from {
+			transform: rotate(0);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+`;
