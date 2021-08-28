@@ -1,5 +1,5 @@
 import * as Styles from "../../sc";
-import * as Views from "./";
+import * as Errors from "./";
 
 interface Props {
 	code: number;
@@ -9,13 +9,13 @@ export function ErrorPage({ code }: Props) {
 	function pageToRender() {
 		switch (code) {
 			case 401:
-				return <Views.Unauthorized />;
+				return <Errors.Unauthorized />;
 			case 403:
-				return <Views.Forbidden />;
+				return <Errors.Forbidden />;
 			case 404:
-				return <Views.NotFound />;
+				return <Errors.NotFound />;
 			default:
-				return <Views.ServerError />;
+				return <Errors.ServerError />;
 		}
 	}
 
