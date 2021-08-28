@@ -19,9 +19,9 @@ export const button = css`
 		background-color: ${props.theme.color.rgb("brand")};
 		color: ${props.theme.color.rgb("textStrong")};
 		&.dark {
-			background-color: ${props.theme.color.rgb("primary")};
+			background-color: ${props.theme.color.rgb("primary", 2)};
 			&:hover {
-				background-color: ${props.theme.color.rgb("primary", 2)};
+				background-color: ${props.theme.color.rgb("primary", 3)};
 			}
 		}
 		&:hover {

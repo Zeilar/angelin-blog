@@ -35,7 +35,7 @@ export function Navbar() {
 		} else {
 			return (
 				<>
-					<Item className="mr-10">
+					<Item className="mr-8">
 						<ModalButton onClick={() => setLoginModalOpen(true)}>Login</ModalButton>
 					</Item>
 					<Item>
@@ -52,9 +52,9 @@ export function Navbar() {
 		<Wrapper as="header" align="center">
 			<Styles.Container as="nav">
 				<Styles.Row as="ul">
-					<Item className="mr-10">
+					<Item className="mr-8">
 						<Link to="/" exact>
-							Home
+							Start
 						</Link>
 					</Item>
 					{!loading && user?.is_admin && (
