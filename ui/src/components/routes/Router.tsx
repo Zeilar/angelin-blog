@@ -1,5 +1,5 @@
 import { Route, Switch } from "react-router-dom";
-import { Home, SinglePost, CreatePost, EditPost } from "../views";
+import * as Views from "../views";
 import { AdminRoute } from "./";
 import { Navbar } from "../partials";
 
@@ -8,13 +8,13 @@ export function Router() {
 		<>
 			<Navbar />
 			<Switch>
-				<Route component={Home} path="/" exact />
-				<AdminRoute component={CreatePost} path="/post/new" exact />
-				<AdminRoute component={EditPost} path="/post/:id-:title?/edit" exact />
-				<Route component={SinglePost} path="/post/:id-:title?" exact />
-				<AdminRoute component={CreatePost} path="/post/:id-:title?/edit" exact />
+				<Route component={Views.Home} path="/" exact />
+				<AdminRoute component={Views.CreatePost} path="/post/new" exact />
+				<AdminRoute component={Views.EditPost} path="/post/:id-:title?/edit" exact />
+				<Route component={Views.SinglePost} path="/post/:id-:title?" exact />
+				<AdminRoute component={Views.CreatePost} path="/post/:id-:title?/edit" exact />
 				<Route>
-					<h1>404</h1>
+					<Views.ErrorPage code={404} />
 				</Route>
 			</Switch>
 		</>

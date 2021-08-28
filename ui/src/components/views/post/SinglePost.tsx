@@ -1,10 +1,10 @@
-import { RouteComponentProps } from "../../types/props";
-import { Post } from "../../models";
-import { useFetch, useTitle } from "../hooks";
-import { URLHelpers } from "../../utils";
-import { Container } from "../sc";
-import { PostFull } from "../post";
-import { ErrorPage } from "./";
+import { RouteComponentProps } from "../../../types/props";
+import { Post } from "../../../models";
+import { useFetch, useTitle } from "../../hooks";
+import { URLHelpers } from "../../../utils";
+import { Container } from "../../sc";
+import { PostFull } from "../../post";
+import { ErrorPage } from "../";
 
 interface MatchParams {
 	id: string;

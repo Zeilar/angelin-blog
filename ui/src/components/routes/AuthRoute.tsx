@@ -1,5 +1,5 @@
-import { Redirect } from "react-router";
 import { useUserContext } from "../contexts";
+import { ErrorPage } from "../views";
 
 interface Props {
 	children: JSX.Element;
@@ -8,5 +8,5 @@ interface Props {
 export function AuthRoute({ children }: Props) {
 	const { loggedIn, loading } = useUserContext();
 	if (loading) return null;
-	return loggedIn ? children : <Redirect to="/" />;
+	return loggedIn ? children : <ErrorPage code={401} />;
 }

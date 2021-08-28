@@ -16,7 +16,7 @@ export function ReadOnlyEditor(props: Props) {
 	});
 
 	return (
-		<Highlight className="javascript tiptap" innerHTML={true}>
+		<Highlight className="tiptap" innerHTML={true}>
 			{editor?.getHTML()}
 		</Highlight>
 	);

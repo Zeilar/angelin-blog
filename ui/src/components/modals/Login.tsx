@@ -27,8 +27,8 @@ export function Login({ open, setOpen, openRegister }: Props) {
 	const wrapper = useClickOutside<HTMLDivElement>(() => open && setOpen(false));
 
 	const [status, setStatus] = useState<IStatus>(null);
-	const [cached, setCached] = useLocalStorage<Inputs>("login");
-	const { inputs, onChange } = useInputs<Inputs>({
+	const [cached, setCached] = useLocalStorage<{ email: string }>("login");
+	const { inputs, onChange, update } = useInputs<Inputs>({
 		email: cached?.email ?? "",
 		password: "",
 	});
@@ -44,7 +44,6 @@ export function Login({ open, setOpen, openRegister }: Props) {
 	}, [mountError]);
 
 	useEffect(() => {
-		if (!open) return;
 		if (cached?.email) {
 			secondInput.current?.focus();
 		} else {
@@ -77,7 +76,7 @@ export function Login({ open, setOpen, openRegister }: Props) {
 		});
 
 		if (ok) {
-			setCached({ email: inputs.email, password: "" });
+			setCached({ email: inputs.email });
 			setErrors(null);
 			setStatus("success");
 

@@ -23,9 +23,7 @@ type InputError = string | null | Record<keyof Inputs, string>;
 
 export function Register({ open, setOpen, openLogin }: Props) {
 	const { register, loggedIn } = useUserContext();
-
 	const wrapper = useClickOutside<HTMLDivElement>(() => open && setOpen(false));
-
 	const [status, setStatus] = useState<IStatus>(null);
 	const { inputs, onChange, empty } = useInputs<Inputs>({
 		email: "",
@@ -33,7 +31,6 @@ export function Register({ open, setOpen, openLogin }: Props) {
 		passwordConfirm: "",
 	});
 	const [errors, setErrors] = useState<InputError>(null);
-
 	const firstInput = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
@@ -131,7 +128,7 @@ export function Register({ open, setOpen, openLogin }: Props) {
 						value={inputs.passwordConfirm}
 						onChange={onChange}
 						type="password"
-						name="passwordConfirmation"
+						name="passwordConfirm"
 						title="Password Confirmation"
 						label="Password Confirmation"
 						placeholder="••••••••••"

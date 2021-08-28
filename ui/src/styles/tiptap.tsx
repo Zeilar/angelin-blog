@@ -32,6 +32,15 @@ export const editor = css`
 		ul,
 		ol {
 			padding: 0 1rem;
+			margin-left: 1rem;
+		}
+
+		ol {
+			list-style-type: decimal;
+		}
+
+		ul {
+			list-style-type: disc;
 		}
 
 		h1,

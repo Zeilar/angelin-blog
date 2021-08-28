@@ -11,9 +11,16 @@ export function useInputs<T>(defaultInputs: Record<keyof T, string>) {
 		setInputs(emptyInputs);
 	}).current;
 
-	const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-		setInputs(inputs => ({ ...inputs, [e.target.name]: e.target.value }));
+	const update = useCallback((key: keyof T, value: string) => {
+		setInputs(inputs => ({ ...inputs, [key]: value }));
 	}, []);
 
-	return { inputs, onChange, empty };
+	const onChange = useCallback(
+		(e: ChangeEvent<HTMLInputElement>) => {
+			update(e.target.name as keyof T, e.target.value);
+		},
+		[update]
+	);
+
+	return { inputs, onChange, empty, update };
 }

@@ -1,51 +1,32 @@
-import Editor from "../editor/Editor";
-import * as Styles from "../sc";
-import { useFetch, useFetchContext, useTitle } from "../hooks";
+import Editor from "../../editor/Editor";
+import * as Styles from "../../sc";
+import { useFetchContext, useTitle } from "../../hooks";
 import { useEditor } from "@tiptap/react";
-import { useHistory, RouteComponentProps, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useState } from "react";
 import StarterKit from "@tiptap/starter-kit";
-import { IStatus } from "../../types/modals";
-import { theme } from "../../styles/theme";
-import { Post, User } from "../../models";
-import { ContainerLoader, StatusButton } from "../form";
-import { URLHelpers } from "../../utils";
-import { useEffect, useState } from "react";
-import { mdiKeyboardBackspace } from "@mdi/js";
-import Icon from "@mdi/react";
-import { useUserContext } from "../contexts";
-import { PostPreview } from "../post";
+import { IStatus } from "../../../types/modals";
+import { theme } from "../../../styles/theme";
+import { Post, User } from "../../../models";
+import { ContainerLoader, StatusButton } from "../../form";
+import { URLHelpers } from "../../../utils";
+import { useUserContext } from "../../contexts";
+import { PostPreview } from "../../post";
 
-interface MatchParams {
-	id: string;
-	title?: string;
-}
-
-export function EditPost({ match }: RouteComponentProps<MatchParams>) {
-	const url = URLHelpers.apiPost(match.params.id);
-	const query = useFetch<{ data: Post }>(url);
-	const post = query.body?.data ? new Post(query.body.data) : null;
+export function CreatePost() {
+	useTitle("Angelin Blog | Create Post");
 
 	const { push } = useHistory();
-	const userContext = useUserContext();
 	const { clearCache } = useFetchContext();
+	const userContext = useUserContext();
 	const [status, setStatus] = useState<IStatus>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
-	const [title, setTitle] = useState<string>("");
+	const [title, setTitle] = useState("");
 	const [preview, setPreview] = useState(false);
 
-	useTitle("Angelin Blog | Edit Post");
-
-	useEffect(() => {
-		setTitle(post?.title ?? "");
-	}, [post?.title]);
-
-	const editor = useEditor(
-		{
-			extensions: [StarterKit],
-			content: post?.body,
-		},
-		[post?.body]
-	);
+	const editor = useEditor({
+		extensions: [StarterKit],
+	});
 
 	if (!editor) return null;
 
@@ -79,19 +60,16 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	}
 
 	async function submit() {
-		if (!post) return;
-
 		setErrorMessage(null);
 		setStatus("loading");
 
-		const { data, ok, error } = await post.edit({
+		const { data, ok, error } = await Post.create({
 			title,
 			body: editor!.getHTML(), // You can't convince me editor is not null
 		});
 
-		if (ok) {
-			if (!data) return;
-			clearCache(URLHelpers.apiPosts(), URLHelpers.apiPost(data.id));
+		if (ok && data) {
+			clearCache(URLHelpers.apiPosts());
 			setStatus("success");
 			push(URLHelpers.getPost(data));
 		} else {
@@ -109,16 +87,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 
 	return (
 		<Styles.Container className="my-8">
-			<Styles.A
-				className="mb-4"
-				as={Link}
-				to={URLHelpers.getPost(post)}
-				style={{ width: "fit-content" }}
-			>
-				<Icon className="mr-1" size={1} path={mdiKeyboardBackspace} />
-				Back
-			</Styles.A>
-			<Styles.H3 className="mb-5">Edit post</Styles.H3>
+			<Styles.H2 className="mb-5">Create new post</Styles.H2>
 			<Styles.Col className="relative">
 				<ContainerLoader loading={status === "loading"} />
 				<Styles.Input
@@ -131,7 +100,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 			</Styles.Col>
 			<Styles.Row className="mt-4">
 				<StatusButton status={status} onClick={submit}>
-					Save
+					Submit
 				</StatusButton>
 				<Styles.PrimaryButton
 					disabled={status === "loading"}

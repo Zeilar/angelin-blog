@@ -6,7 +6,7 @@ import { mdiClose } from "@mdi/js";
 
 interface Props {
 	post: Post;
-	close: () => void;
+	close(): void;
 }
 
 export function PostPreview({ post, close }: Props) {
