@@ -14,6 +14,8 @@ export function ErrorPage({ code }: Props) {
 				return <Errors.Forbidden />;
 			case 404:
 				return <Errors.NotFound />;
+			case 500:
+				return <Errors.ServerError />;
 			default:
 				return <Errors.ServerError />;
 		}
