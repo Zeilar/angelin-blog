@@ -12,8 +12,8 @@ export function PostThumbnailSkeleton(props: HTMLAttributes<HTMLDivElement>) {
 			className={classNames("items-start", props.className)}
 			as="article"
 		>
-			<SkeletonText className="mb-4" size={1} width={8} />
-			<SkeletonText size={1.5} />
+			<SkeletonText className="mb-4" size={0.75} width={8} />
+			<SkeletonText size={1.25} />
 			<Styles.Row className="mt-4 w-full">
 				<SkeletonText className="mr-4" width={5} />
 				<SkeletonText width={5} />
