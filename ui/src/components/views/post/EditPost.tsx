@@ -53,31 +53,6 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 		setPreview(false);
 	}
 
-	if (preview) {
-		const user = userContext.user as User;
-		const now = new Date().toISOString();
-		return (
-			<Styles.Container className="my-8" direction="column">
-				<PostPreview
-					post={
-						new Post({
-							id: 0,
-							title,
-							body: editor.getHTML(),
-							author: user,
-							user_id: user.id,
-							created_at: now,
-							updated_at: now,
-							comments: [],
-							tags: [],
-						})
-					}
-					close={closePreview}
-				/>
-			</Styles.Container>
-		);
-	}
-
 	async function submit() {
 		if (!post) return;
 
@@ -107,6 +82,42 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 		}
 	}
 
+	function renderEditor() {
+		const user = userContext.user as User;
+		const now = new Date().toISOString();
+		if (preview) {
+			return (
+				<PostPreview
+					post={
+						new Post({
+							id: 0,
+							title,
+							body: editor!.getHTML(),
+							author: user,
+							user_id: user.id,
+							created_at: now,
+							updated_at: now,
+							comments: [],
+							tags: [],
+						})
+					}
+					close={closePreview}
+				/>
+			);
+		}
+		return (
+			<>
+				<Styles.Input
+					className="mb-2 w-full"
+					value={title}
+					onChange={e => setTitle(e.target.value)}
+					placeholder="Title"
+				/>
+				<Editor status={status} error={errorMessage} editor={editor} />
+			</>
+		);
+	}
+
 	return (
 		<Styles.Container className="my-8">
 			<Styles.A
@@ -121,25 +132,21 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 			<Styles.H3 className="mb-5">Edit post</Styles.H3>
 			<Styles.Col className="relative">
 				<ContainerLoader loading={status === "loading"} />
-				<Styles.Input
-					className="mb-2 w-full"
-					value={title}
-					onChange={e => setTitle(e.target.value)}
-					placeholder="Title"
-				/>
-				<Editor status={status} error={errorMessage} editor={editor} />
+				{renderEditor()}
 			</Styles.Col>
 			<Styles.Row className="mt-4">
 				<StatusButton status={status} onClick={submit}>
 					Save
 				</StatusButton>
-				<Styles.PrimaryButton
-					disabled={status === "loading"}
-					className="dark ml-2"
-					onClick={() => setPreview(true)}
-				>
-					Preview
-				</Styles.PrimaryButton>
+				{!preview && (
+					<Styles.PrimaryButton
+						disabled={status === "loading"}
+						className="dark ml-2"
+						onClick={() => setPreview(true)}
+					>
+						Preview
+					</Styles.PrimaryButton>
+				)}
 			</Styles.Row>
 		</Styles.Container>
 	);
