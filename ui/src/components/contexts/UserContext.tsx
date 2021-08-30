@@ -61,7 +61,7 @@ export function UserContextProvider({ children }: Props) {
 	}
 
 	const values: IUserContext = {
-		loggedIn: Boolean(user),
+		loggedIn: user instanceof User,
 		user,
 		login,
 		logout,

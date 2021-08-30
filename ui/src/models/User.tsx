@@ -73,7 +73,7 @@ export class User implements UserProps {
 			method: "POST",
 			body: user,
 		});
-		return User.dto(query);
+		return this.dto(query);
 	}
 
 	public static async register(user: LoginCredentials) {
@@ -82,12 +82,12 @@ export class User implements UserProps {
 			method: "POST",
 			body: user,
 		});
-		return User.dto(query);
+		return this.dto(query);
 	}
 
 	public static async authenticate() {
 		const query = await Request.auth<User>({ url: "authenticate" });
-		return User.dto(query);
+		return this.dto(query);
 	}
 
 	public static async logout() {
