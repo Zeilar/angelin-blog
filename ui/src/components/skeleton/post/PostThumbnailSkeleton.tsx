@@ -21,9 +21,3 @@ export function PostThumbnailSkeleton(props: HTMLAttributes<HTMLDivElement>) {
 		</Styles.PostWrapper>
 	);
 }
-
-const PostPreviewHeader = styled(Styles.PostPreviewHeader)`
-	${skeleton}
-	line-height: 0.7;
-	width: 100%;
-`;
