@@ -34,6 +34,10 @@ export function CreatePost() {
 		setPreview(false);
 	}
 
+	function openPreview() {
+		setPreview(true);
+	}
+
 	async function submit() {
 		setErrorMessage(null);
 		setStatus("loading");
@@ -98,23 +102,13 @@ export function CreatePost() {
 				<StatusButton status={status} onClick={submit}>
 					Submit
 				</StatusButton>
-				{preview ? (
-					<Styles.PrimaryButton
-						disabled={status === "loading"}
-						className="dark ml-2"
-						onClick={closePreview}
-					>
-						Close
-					</Styles.PrimaryButton>
-				) : (
-					<Styles.PrimaryButton
-						disabled={status === "loading"}
-						className="dark ml-2"
-						onClick={() => setPreview(true)}
-					>
-						Preview
-					</Styles.PrimaryButton>
-				)}
+				<Styles.PrimaryButton
+					disabled={status === "loading"}
+					className="dark ml-2"
+					onClick={preview ? closePreview : openPreview}
+				>
+					{preview ? "Close" : "Preview"}
+				</Styles.PrimaryButton>
 			</Styles.Row>
 		</Styles.Container>
 	);
