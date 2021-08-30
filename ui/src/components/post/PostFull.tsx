@@ -17,7 +17,7 @@ interface Props {
 	withMenu?: boolean;
 }
 
-export function PostFull({ post, withMenu = true }: Props) {
+export function PostFull({ post, withMenu = false }: Props) {
 	const { clearCache } = useFetchContext();
 	const { loggedIn } = useUserContext();
 	const { push } = useHistory();
@@ -74,15 +74,15 @@ export function PostFull({ post, withMenu = true }: Props) {
 			<Styles.P className="muted mb-2">
 				{DateHelpers.formatPostDate(post.created_at)}
 			</Styles.P>
-			<Styles.H3 className="mb-4 mr-12">{post.title}</Styles.H3>
+			<Styles.H3 className="mr-12">{post.title}</Styles.H3>
 			{post.tags.length > 0 && (
-				<Styles.Row className="mt-2">
+				<Styles.Row>
 					{post.tags.map(tag => (
 						<Tag className="mr-4" key={tag.id} tag={tag} />
 					))}
 				</Styles.Row>
 			)}
-			<ReadOnlyEditor content={post.body} />
+			<ReadOnlyEditor className="mt-8" content={post.body} />
 		</Styles.PostWrapper>
 	);
 }

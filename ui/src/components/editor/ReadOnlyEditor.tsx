@@ -1,22 +1,23 @@
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import classNames from "classnames";
+import { HTMLAttributes } from "react";
 import Highlight from "react-highlight";
 import "../../styles/hljs.css";
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
 	content: string;
-	className?: string;
 }
 
-export function ReadOnlyEditor(props: Props) {
+export function ReadOnlyEditor({ content, className, ...props }: Props) {
 	const editor = useEditor({
 		extensions: [StarterKit],
-		content: props.content,
+		content,
 		editable: false,
 	});
 
 	return (
-		<Highlight className="tiptap" innerHTML={true}>
+		<Highlight {...props} className={classNames("tiptap", className)} innerHTML={true}>
 			{editor?.getHTML()}
 		</Highlight>
 	);
