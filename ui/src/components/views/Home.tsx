@@ -36,7 +36,7 @@ export function Home({ location }: RouteComponentProps) {
 				{postQuery.isLoading
 					? Array(5)
 							.fill(null)
-							.map((_, i) => <PostThumbnailSkeleton className="mt-4" key={i} />)
+							.map((_, i) => <PostThumbnailSkeleton className="mt-4 p-4" key={i} />)
 					: posts.map((post: Post) => (
 							<PostThumbnail className="mt-4" post={post} key={post.id} />
 					  ))}
