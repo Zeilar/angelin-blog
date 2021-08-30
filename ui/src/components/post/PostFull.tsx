@@ -1,4 +1,4 @@
-import { Post } from "../../models";
+import * as Models from "../../models";
 import { useFetchContext } from "../hooks";
 import * as Styles from "../sc";
 import { ReadOnlyEditor } from "../editor";
@@ -7,13 +7,13 @@ import { mdiDotsVertical, mdiPencil, mdiTrashCan } from "@mdi/js";
 import Icon from "@mdi/react";
 import styled from "styled-components";
 import classNames from "classnames";
-import { IconButton } from "../sc";
 import { Link, useHistory } from "react-router-dom";
-import { URLHelpers } from "../../utils";
+import { DateHelpers, URLHelpers } from "../../utils";
 import { useUserContext } from "../contexts";
+import { Tag } from "../partials";
 
 interface Props {
-	post: Post;
+	post: Models.Post;
 	withMenu?: boolean;
 }
 
@@ -22,7 +22,7 @@ export function PostFull({ post, withMenu = true }: Props) {
 	const { loggedIn } = useUserContext();
 	const { push } = useHistory();
 
-	if (!(post instanceof Post)) {
+	if (!(post instanceof Models.Post)) {
 		console.error("`post` must be an instance of class `Post`");
 		return null;
 	}
@@ -71,7 +71,17 @@ export function PostFull({ post, withMenu = true }: Props) {
 	return (
 		<Styles.PostWrapper className="p-8" as="article">
 			{menuRender()}
+			<Styles.P className="muted mb-2">
+				{DateHelpers.formatPostDate(post.created_at)}
+			</Styles.P>
 			<Styles.H3 className="mb-4 mr-12">{post.title}</Styles.H3>
+			{post.tags.length > 0 && (
+				<Styles.Row className="mt-2">
+					{post.tags.map(tag => (
+						<Tag className="mr-4" key={tag.id} tag={tag} />
+					))}
+				</Styles.Row>
+			)}
 			<ReadOnlyEditor content={post.body} />
 		</Styles.PostWrapper>
 	);
@@ -83,7 +93,7 @@ const Options = styled.div`
 	top: 0.75rem;
 `;
 
-const Dots = styled(IconButton)`
+const Dots = styled(Styles.IconButton)`
 	position: absolute;
 	width: 2rem;
 	height: 2rem;
