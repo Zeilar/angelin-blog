@@ -19,6 +19,12 @@ interface PostProps {
 	comments: Comment[];
 }
 
+interface FakePostProps {
+	title: string;
+	body: string;
+	author: User;
+}
+
 export class Post implements PostProps {
 	public get id() {
 		return this._props.id;
@@ -63,6 +69,21 @@ export class Post implements PostProps {
 			query.data = new Post(query.data);
 		}
 		return query;
+	}
+
+	public static fake({ title, body, author }: FakePostProps) {
+		const now = new Date().toISOString();
+		return new Post({
+			id: 0,
+			title,
+			body,
+			author,
+			user_id: author.id,
+			created_at: now,
+			updated_at: now,
+			comments: [],
+			tags: [],
+		});
 	}
 
 	public static async create(post: PostCredentials) {

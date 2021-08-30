@@ -62,23 +62,14 @@ export function CreatePost() {
 
 	function renderEditor() {
 		const user = userContext.user as User;
-		const now = new Date().toISOString();
 		if (preview) {
 			return (
 				<PostPreview
-					post={
-						new Post({
-							id: 0,
-							title,
-							body: editor!.getHTML(),
-							author: user,
-							user_id: user.id,
-							created_at: now,
-							updated_at: now,
-							comments: [],
-							tags: [],
-						})
-					}
+					post={Post.fake({
+						title,
+						body: editor!.getHTML(),
+						author: user,
+					})}
 					close={closePreview}
 				/>
 			);
