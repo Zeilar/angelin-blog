@@ -129,7 +129,15 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 				<StatusButton status={status} onClick={submit}>
 					Save
 				</StatusButton>
-				{!preview && (
+				{preview ? (
+					<Styles.PrimaryButton
+						disabled={status === "loading"}
+						className="dark ml-2"
+						onClick={closePreview}
+					>
+						Close
+					</Styles.PrimaryButton>
+				) : (
 					<Styles.PrimaryButton
 						disabled={status === "loading"}
 						className="dark ml-2"

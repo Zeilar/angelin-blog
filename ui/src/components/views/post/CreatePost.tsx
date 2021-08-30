@@ -98,7 +98,15 @@ export function CreatePost() {
 				<StatusButton status={status} onClick={submit}>
 					Submit
 				</StatusButton>
-				{!preview && (
+				{preview ? (
+					<Styles.PrimaryButton
+						disabled={status === "loading"}
+						className="dark ml-2"
+						onClick={closePreview}
+					>
+						Close
+					</Styles.PrimaryButton>
+				) : (
 					<Styles.PrimaryButton
 						disabled={status === "loading"}
 						className="dark ml-2"
