@@ -45,13 +45,17 @@ export function UserContextProvider({ children }: Props) {
 
 	async function login(credentials: LoginCredentials) {
 		const query = await User.login(credentials);
-		if (query.ok && query.data) setUser(query.data);
+		if (query.ok && query.data) {
+			setUser(query.data);
+		}
 		return query;
 	}
 
 	async function register(credentials: LoginCredentials) {
 		const query = await User.register(credentials);
-		if (query.ok && query.data) setUser(query.data);
+		if (query.ok && query.data) {
+			setUser(query.data);
+		}
 		return query;
 	}
 
