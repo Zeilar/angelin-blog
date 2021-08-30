@@ -34,30 +34,32 @@ export function CreatePost() {
 		setPreview(false);
 	}
 
-	if (preview) {
-		const user = userContext.user as User;
-		const now = new Date().toISOString();
-		return (
-			<Styles.Container className="my-8" direction="column">
-				<PostPreview
-					post={
-						new Post({
-							id: 0,
-							title,
-							body: editor.getHTML(),
-							author: user,
-							user_id: user.id,
-							created_at: now,
-							updated_at: now,
-							comments: [],
-							tags: [],
-						})
-					}
-					close={closePreview}
-				/>
-			</Styles.Container>
-		);
-	}
+	const user = userContext.user as User;
+	const now = new Date().toISOString();
+	// if (preview) {
+	// 	const user = userContext.user as User;
+	// 	const now = new Date().toISOString();
+	// 	return (
+	// 		<Styles.Container className="my-8" direction="column">
+	// 			<PostPreview
+	// 				post={
+	// 					new Post({
+	// 						id: 0,
+	// 						title,
+	// 						body: editor.getHTML(),
+	// 						author: user,
+	// 						user_id: user.id,
+	// 						created_at: now,
+	// 						updated_at: now,
+	// 						comments: [],
+	// 						tags: [],
+	// 					})
+	// 				}
+	// 				close={closePreview}
+	// 			/>
+	// 		</Styles.Container>
+	// 	);
+	// }
 
 	async function submit() {
 		setErrorMessage(null);
@@ -89,26 +91,52 @@ export function CreatePost() {
 		<Styles.Container className="my-8">
 			<Styles.H2 className="mb-5">Create new post</Styles.H2>
 			<Styles.Col className="relative">
-				<ContainerLoader loading={status === "loading"} />
-				<Styles.Input
-					className="mb-2 w-full"
-					value={title}
-					onChange={e => setTitle(e.target.value)}
-					placeholder="Title"
-				/>
-				<Editor status={status} error={errorMessage} editor={editor} />
+				{preview ? (
+					<>
+						<ContainerLoader loading={status === "loading"} />
+						<PostPreview
+							post={
+								new Post({
+									id: 0,
+									title,
+									body: editor.getHTML(),
+									author: user,
+									user_id: user.id,
+									created_at: now,
+									updated_at: now,
+									comments: [],
+									tags: [],
+								})
+							}
+							close={closePreview}
+						/>
+					</>
+				) : (
+					<>
+						<ContainerLoader loading={status === "loading"} />
+						<Styles.Input
+							className="mb-2 w-full"
+							value={title}
+							onChange={e => setTitle(e.target.value)}
+							placeholder="Title"
+						/>
+						<Editor status={status} error={errorMessage} editor={editor} />
+					</>
+				)}
 			</Styles.Col>
 			<Styles.Row className="mt-4">
 				<StatusButton status={status} onClick={submit}>
 					Submit
 				</StatusButton>
-				<Styles.PrimaryButton
-					disabled={status === "loading"}
-					className="dark ml-2"
-					onClick={() => setPreview(true)}
-				>
-					Preview
-				</Styles.PrimaryButton>
+				{!preview && (
+					<Styles.PrimaryButton
+						disabled={status === "loading"}
+						className="dark ml-2"
+						onClick={() => setPreview(true)}
+					>
+						Preview
+					</Styles.PrimaryButton>
+				)}
 			</Styles.Row>
 		</Styles.Container>
 	);

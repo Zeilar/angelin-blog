@@ -1,11 +1,13 @@
+import classNames from "classnames";
+import { HTMLAttributes } from "react";
 import * as Styles from "../../sc";
 import * as Errors from "./";
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
 	code: number;
 }
 
-export function ErrorPage({ code }: Props) {
+export function ErrorPage({ code, ...props }: Props) {
 	function pageToRender() {
 		switch (code) {
 			case 401:
@@ -22,7 +24,12 @@ export function ErrorPage({ code }: Props) {
 	}
 
 	return (
-		<Styles.Container className="mt-40" justify="center" align="center">
+		<Styles.Container
+			{...props}
+			className={classNames("mt-40", props.className)}
+			justify="center"
+			align="center"
+		>
 			{pageToRender()}
 		</Styles.Container>
 	);

@@ -1,6 +1,6 @@
 import { useState, useEffect, ReactNode } from "react";
 import styled from "styled-components";
-import { Container, H1, H5 } from "../../sc";
+import { H1, H5 } from "../../sc";
 
 export function NotFound() {
 	return (

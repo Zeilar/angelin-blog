@@ -1,14 +1,15 @@
 import styled from "styled-components";
 import classNames from "classnames";
 import { Loader } from "../sc";
+import { HTMLAttributes } from "react";
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
 	loading: boolean;
 }
 
-export function ContainerLoader({ loading = false }: Props) {
+export function ContainerLoader({ loading = false, ...props }: Props) {
 	return (
-		<Container className={classNames({ active: loading })}>
+		<Container {...props} className={classNames({ active: loading }, props.className)}>
 			<LoaderWrapper>
 				<Loader />
 			</LoaderWrapper>
@@ -24,7 +25,6 @@ const Container = styled.div`
 	height: 100%;
 	z-index: 1000;
 	display: none;
-	z-index: 50;
 	&.active {
 		display: block;
 		backdrop-filter: saturate(0%) blur(3px);

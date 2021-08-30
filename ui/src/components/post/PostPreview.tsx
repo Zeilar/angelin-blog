@@ -3,15 +3,16 @@ import { Post } from "../../models";
 import { PostFull } from "./";
 import { Icon as MdiIcon } from "@mdi/react";
 import { mdiClose } from "@mdi/js";
+import { HTMLAttributes } from "react";
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
 	post: Post;
 	close(): void;
 }
 
-export function PostPreview({ post, close }: Props) {
+export function PostPreview({ post, close, ...props }: Props) {
 	return (
-		<div>
+		<div {...props}>
 			<Close onClick={close} title="Close preview">
 				<Icon path={mdiClose} />
 			</Close>
