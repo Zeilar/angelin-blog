@@ -34,33 +34,6 @@ export function CreatePost() {
 		setPreview(false);
 	}
 
-	const user = userContext.user as User;
-	const now = new Date().toISOString();
-	// if (preview) {
-	// 	const user = userContext.user as User;
-	// 	const now = new Date().toISOString();
-	// 	return (
-	// 		<Styles.Container className="my-8" direction="column">
-	// 			<PostPreview
-	// 				post={
-	// 					new Post({
-	// 						id: 0,
-	// 						title,
-	// 						body: editor.getHTML(),
-	// 						author: user,
-	// 						user_id: user.id,
-	// 						created_at: now,
-	// 						updated_at: now,
-	// 						comments: [],
-	// 						tags: [],
-	// 					})
-	// 				}
-	// 				close={closePreview}
-	// 			/>
-	// 		</Styles.Container>
-	// 	);
-	// }
-
 	async function submit() {
 		setErrorMessage(null);
 		setStatus("loading");
@@ -87,42 +60,48 @@ export function CreatePost() {
 		}
 	}
 
+	function renderEditor() {
+		const user = userContext.user as User;
+		const now = new Date().toISOString();
+		if (preview) {
+			return (
+				<PostPreview
+					post={
+						new Post({
+							id: 0,
+							title,
+							body: editor!.getHTML(),
+							author: user,
+							user_id: user.id,
+							created_at: now,
+							updated_at: now,
+							comments: [],
+							tags: [],
+						})
+					}
+					close={closePreview}
+				/>
+			);
+		}
+		return (
+			<>
+				<Styles.Input
+					className="mb-2 w-full"
+					value={title}
+					onChange={e => setTitle(e.target.value)}
+					placeholder="Title"
+				/>
+				<Editor status={status} error={errorMessage} editor={editor} />
+			</>
+		);
+	}
+
 	return (
 		<Styles.Container className="my-8">
 			<Styles.H2 className="mb-5">Create new post</Styles.H2>
 			<Styles.Col className="relative">
-				{preview ? (
-					<>
-						<ContainerLoader loading={status === "loading"} />
-						<PostPreview
-							post={
-								new Post({
-									id: 0,
-									title,
-									body: editor.getHTML(),
-									author: user,
-									user_id: user.id,
-									created_at: now,
-									updated_at: now,
-									comments: [],
-									tags: [],
-								})
-							}
-							close={closePreview}
-						/>
-					</>
-				) : (
-					<>
-						<ContainerLoader loading={status === "loading"} />
-						<Styles.Input
-							className="mb-2 w-full"
-							value={title}
-							onChange={e => setTitle(e.target.value)}
-							placeholder="Title"
-						/>
-						<Editor status={status} error={errorMessage} editor={editor} />
-					</>
-				)}
+				<ContainerLoader loading={status === "loading"} />
+				{renderEditor()}
 			</Styles.Col>
 			<Styles.Row className="mt-4">
 				<StatusButton status={status} onClick={submit}>
