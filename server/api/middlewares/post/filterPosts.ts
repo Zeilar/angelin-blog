@@ -22,11 +22,11 @@ export async function filterPosts(req: Request, res: Response, next: NextFunctio
 	const pagination = NumberHelpers.paginate(page as string, perPage as string);
 
 	res.status(200).json({
-		data: await postRepository.filter(
+		data: await postRepository.filter({
 			search,
-			tags?.split(","),
-			pagination.page,
-			pagination.perPage
-		),
+			tags: tags?.split(","),
+			page: pagination.page,
+			perPage: pagination.perPage,
+		}),
 	});
 }

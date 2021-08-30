@@ -103,30 +103,24 @@ export class PostRepository {
 
 	/**
 	 * @description Filter posts via search (body, title) or tags
-	 * @example await Post.filter("hello world", ["programming"], 1, 20);
 	 */
-	public async filter(
-		search?: string,
-		tags?: string[],
-		page: number = 1,
-		perPage: number = PAGE_SIZE
-	) {
+	public async filter(args: { search?: string; tags?: string[]; page: number; perPage: number }) {
 		try {
 			let query = Post.query();
-			if (search) {
+			if (args.search) {
 				query = query
-					.where("body", "like", `%${search}%`)
-					.orWhere("title", "like", `%${search}%`);
+					.where("body", "like", `%${args.search}%`)
+					.orWhere("title", "like", `%${args.search}%`);
 			}
-			if (tags) {
+			if (args.tags) {
 				query = query
 					.innerJoin("posts_tags", "posts_tags.post_id", "posts.id")
 					.innerJoin("tags", "tags.id", "posts_tags.tag_id")
-					.whereIn("tags.name", tags);
+					.whereIn("tags.name", args.tags);
 			}
 			const { results } = await query
 				.withGraphFetched(Post.relationships)
-				.page(page, perPage)
+				.page(args.page, args.perPage)
 				.execute();
 			return results;
 		} catch (error) {
