@@ -4,7 +4,6 @@ export function useTitle(input: string | (() => string), f?: string) {
 	const fallback = useRef(f).current;
 
 	function setTitle(title: string) {
-		console.log("set to", title);
 		document.title = title;
 	}
 

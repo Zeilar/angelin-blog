@@ -25,7 +25,7 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 
 	return (
 		<Container className="my-8">
-			{query.isLoading && <PostSkeleton />}
+			{query.isLoading && <PostSkeleton className="p-4" />}
 			{query.isSuccess && post && <PostFull post={new Post(post)} />}
 		</Container>
 	);
