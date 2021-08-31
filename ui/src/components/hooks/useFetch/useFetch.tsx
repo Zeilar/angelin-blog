@@ -34,6 +34,8 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 	useEffect(() => {
 		const abortController = new AbortController();
 
+		// TODO: make "isOld" function to clear cache automatically if it's old enough
+
 		(async () => {
 			const fullUrl = `${url}${parseQueryParams(memoArgs?.params)}`,
 				cachedData = fetchContext.cached,
