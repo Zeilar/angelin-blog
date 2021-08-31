@@ -37,7 +37,7 @@ export function PostFull({ post, withMenu = false }: Props) {
 		}
 	}
 
-	function menuRender() {
+	function renderMenu() {
 		if (!loggedIn || !withMenu) return null;
 		return (
 			<Menu
@@ -70,7 +70,7 @@ export function PostFull({ post, withMenu = false }: Props) {
 
 	return (
 		<Styles.PostWrapper className="p-8" as="article">
-			{menuRender()}
+			{renderMenu()}
 			<Styles.P className="muted mb-2">
 				{DateHelpers.formatPostDate(post.created_at)}
 			</Styles.P>

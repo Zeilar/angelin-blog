@@ -15,12 +15,12 @@ export function Home({ location }: RouteComponentProps) {
 	const searchQuery = useMemo(() => new URLSearchParams(location.search), [location.search]);
 	const [params, setParams] = useState<Params>({});
 
+	const postQuery = useFetch<{ data: Post[] }>(URLHelpers.apiPosts(), { params });
+	const posts = postQuery.body?.data.map(post => new Post(post)) ?? [];
+
 	useEffect(() => {
 		setParams(Object.fromEntries([...searchQuery]));
 	}, [searchQuery]);
-
-	const postQuery = useFetch<{ data: Post[] }>(URLHelpers.apiPosts(), { params });
-	const posts = postQuery.body?.data.map(post => new Post(post)) ?? [];
 
 	useTitle("Angelin Blog");
 

@@ -5,6 +5,8 @@ import { URLHelpers } from "../../../utils";
 import { Container } from "../../sc";
 import { PostFull } from "../../post";
 import { ErrorPage } from "../";
+import { useMemo } from "react";
+import { PostSkeleton } from "../../skeleton";
 
 interface MatchParams {
 	id: string;
@@ -13,22 +15,18 @@ interface MatchParams {
 
 export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 	const query = useFetch<{ data: Post }>(URLHelpers.apiPost(match.params.id));
-	const post = query.body?.data;
+	const post = useMemo(() => query.body?.data, [query.body?.data]);
 
-	useTitle(`Angelin Blog | ${post?.title ?? ""}`);
+	useTitle(query.isSuccess ? `Angelin Blog | ${post?.title}` : "Angelin Blog");
 
-	if (query.isLoading) {
-		return <p>Loading...</p>;
-	} else if (query.isError) {
+	if (query.isError) {
 		return <ErrorPage code={query.code} />;
-	} else if (!post) {
-		// TODO: 404 page
-		return <p></p>;
 	}
 
 	return (
 		<Container className="my-8">
-			<PostFull post={new Post(post)} />
+			{query.isLoading && <PostSkeleton />}
+			{query.isSuccess && post && <PostFull post={new Post(post)} />}
 		</Container>
 	);
 }

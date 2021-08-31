@@ -1,21 +1,17 @@
 import { useEffect, useRef } from "react";
 
-export function useTitle(title: string, f?: string) {
-	const fallback = useRef(f);
+export function useTitle(input: string | (() => string), f?: string) {
+	const fallback = useRef(f).current;
 
 	function setTitle(title: string) {
+		console.log("set to", title);
 		document.title = title;
 	}
 
 	useEffect(() => {
-		setTitle(title);
-		const fallbackTitle = fallback.current;
+		setTitle(typeof input === "function" ? input() : input);
 		return () => {
-			if (fallbackTitle) {
-				setTitle(fallbackTitle);
-			}
+			if (fallback) setTitle(fallback);
 		};
-	}, [title]);
-
-	return { title, setTitle };
+	}, [input, fallback]);
 }

@@ -1,6 +1,5 @@
 import { isEqual } from "lodash";
-import { useRef } from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useFetchContext } from "./FetchProvider";
 import { Args, Options, Status } from "./types";
 
@@ -63,8 +62,11 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 
 				setCode(response.status);
 
-				if (!response.ok)
-					throw new Error(`${method} ${url} ${response.status} ${response.statusText}`);
+				if (!response.ok) {
+					// throw new Error(`${method} ${url} ${response.status} ${response.statusText}`);
+					setStatus("error");
+					return;
+				}
 
 				const data = await response.json();
 
@@ -76,9 +78,7 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 				if (callback) callback(data);
 			} catch (error) {
 				console.error(error);
-				if (!(error instanceof DOMException)) {
-					setStatus("error");
-				}
+				setStatus("error");
 			}
 		})();
 	}, [url, callback, memoArgs, cache, abortController.signal]);
@@ -93,7 +93,7 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 		body: data,
 		status,
 		code,
-		isLoading: status === "loading",
+		isLoading: status === "loading" || status === null,
 		isError: status === "error",
 		isSuccess: status === "success",
 	};

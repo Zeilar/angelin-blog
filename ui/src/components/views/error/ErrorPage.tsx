@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { HTMLAttributes } from "react";
-import * as Styles from "../../sc";
+import { useTitle } from "../../hooks";
+import { Container } from "../../sc";
 import * as Errors from "./";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -8,7 +9,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 export function ErrorPage({ code, ...props }: Props) {
-	function pageToRender() {
+	function renderPage() {
 		switch (code) {
 			case 401:
 				return <Errors.Unauthorized />;
@@ -23,14 +24,16 @@ export function ErrorPage({ code, ...props }: Props) {
 		}
 	}
 
+	useTitle(`Angelin Blog | ${code}`);
+
 	return (
-		<Styles.Container
+		<Container
 			{...props}
 			className={classNames("mt-40", props.className)}
 			justify="center"
 			align="center"
 		>
-			{pageToRender()}
-		</Styles.Container>
+			{renderPage()}
+		</Container>
 	);
 }
