@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { useFetchContext } from "./FetchProvider";
 import { Args, Options, Status } from "./types";
 
-export function parseQueryParams(params?: { [key: string]: string }) {
-	if (!params || !Object.keys(params).length) {
+export function parseQueryParams(params?: Record<string, string>) {
+	if (!params || Object.keys(params).length <= 0) {
 		return "";
 	}
 
