@@ -83,8 +83,6 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 		})();
 	}, [url, callback, memoArgs, cache, abortController.signal]);
 
-	console.log("render useFetch");
-
 	useEffect(() => {
 		return () => {
 			abortController.abort();
