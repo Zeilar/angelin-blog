@@ -1,4 +1,5 @@
 import { isEqual } from "lodash";
+import { useRef } from "react";
 import { useState, useEffect } from "react";
 import { useFetchContext } from "./FetchProvider";
 import { Args, Options, Status } from "./types";
@@ -22,6 +23,8 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 	const [code, setCode] = useState<number>(200);
 	const [memoArgs, setMemoArgs] = useState<Args | undefined>(args);
 
+	const abortController = useRef(new AbortController()).current;
+
 	const fetchContext = useFetchContext();
 
 	// This is to avoid infinite loops in the useEffect dependencies
@@ -33,7 +36,7 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 	}, [args, memoArgs]);
 
 	useEffect(() => {
-		const abortController = new AbortController();
+		// const abortController = new AbortController();
 
 		// TODO: make "isOld" function to clear cache automatically if it's old enough
 
@@ -83,11 +86,13 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 				}
 			}
 		})();
+	}, [url, callback, memoArgs, fetchContext, abortController.signal]);
 
+	useEffect(() => {
 		return () => {
 			abortController.abort();
 		};
-	}, [url, callback, memoArgs, fetchContext]);
+	}, [abortController]);
 
 	return {
 		body: data,
