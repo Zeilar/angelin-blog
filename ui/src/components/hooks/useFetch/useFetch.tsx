@@ -8,7 +8,7 @@ export function parseQueryParams(params?: Record<string, string>) {
 		return "";
 	}
 
-	// Parse { key: value } to `&key=value` strings pairs and combine them
+	// Parse { key: value } to `&key=value` string pairs and combine them
 	const queries = Object.entries(params)
 		.map(([key, val]) => `${key}=${val}`)
 		.join("&");
