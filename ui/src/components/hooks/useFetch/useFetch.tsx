@@ -22,10 +22,8 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 	const [status, setStatus] = useState<Status | null>(null);
 	const [code, setCode] = useState<number>(200);
 	const [memoArgs, setMemoArgs] = useState<Args | undefined>(args);
-
 	const abortController = useRef(new AbortController()).current;
-
-	const fetchContext = useFetchContext();
+	const { cache } = useFetchContext();
 
 	// This is to avoid infinite loops in the useEffect dependencies
 	// Due to args containing nested objects
@@ -42,8 +40,7 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 
 		(async () => {
 			const fullUrl = `${url}${parseQueryParams(memoArgs?.params)}`,
-				cachedData = fetchContext.cached,
-				cached = cachedData.get(fullUrl),
+				cached = cache.get(fullUrl),
 				method = memoArgs?.method ?? "GET";
 
 			if (cached) {
@@ -73,7 +70,7 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 
 				const data = await response.json();
 
-				cachedData.set(fullUrl, data);
+				cache.set(fullUrl, data);
 
 				setData(data);
 				setStatus("success");
@@ -86,7 +83,9 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 				}
 			}
 		})();
-	}, [url, callback, memoArgs, fetchContext, abortController.signal]);
+	}, [url, callback, memoArgs, cache, abortController.signal]);
+
+	console.log("render useFetch");
 
 	useEffect(() => {
 		return () => {
