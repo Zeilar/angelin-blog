@@ -20,7 +20,7 @@ export function FetchContextProvider({ children }: Props) {
 
 	function clearCache(...keys: string[]) {
 		if (keys?.length <= 0) {
-			cache = new Map<string, any>();
+			cache.clear();
 			return;
 		}
 
