@@ -25,9 +25,7 @@ export function FetchContextProvider({ children }: Props) {
 		}
 
 		keys.forEach(key => {
-			if (cached.has(key)) {
-				cached.delete(key);
-			}
+			cached.delete(key);
 		});
 	}
 
