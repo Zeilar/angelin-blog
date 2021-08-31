@@ -24,7 +24,8 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 
 	const fetchContext = useFetchContext();
 
-	// This is to avoid infinite loops in the useEffect as args contains nested objects
+	// This is to avoid infinite loops in the useEffect dependencies
+	// Due to args containing nested objects
 	useEffect(() => {
 		if (!isEqual(memoArgs, args)) {
 			setMemoArgs(args);
