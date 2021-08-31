@@ -20,7 +20,7 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 	const [data, setData] = useState<T | null>(null);
 	const [status, setStatus] = useState<Status | null>(null);
 	const [code, setCode] = useState<number>(200);
-	const [memoArgs, setMemoArgs] = useState<Args>();
+	const [memoArgs, setMemoArgs] = useState<Args | undefined>(args);
 
 	const fetchContext = useFetchContext();
 
