@@ -14,6 +14,7 @@ import { mdiKeyboardBackspace } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useUserContext } from "../../contexts";
 import { PostPreview } from "../../post";
+import { useMemo } from "react";
 
 interface MatchParams {
 	id: string;
@@ -23,7 +24,8 @@ interface MatchParams {
 export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	const url = URLHelpers.apiPost(match.params.id);
 	const query = useFetch<{ data: Post }>(url);
-	const post = query.body?.data ? new Post(query.body.data) : null;
+	const data = query.body?.data;
+	const post = useMemo(() => (data ? new Post(data) : null), [data]);
 
 	const { push } = useHistory();
 	const userContext = useUserContext();
@@ -113,6 +115,8 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 		);
 	}
 
+	const isLoading = status === "loading" || query.isLoading;
+
 	return (
 		<Styles.Container className="my-8">
 			<Styles.A
@@ -126,15 +130,15 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 			</Styles.A>
 			<Styles.H3 className="mb-5">Edit post</Styles.H3>
 			<Styles.Col className="relative">
-				<ContainerLoader loading={status === "loading"} />
+				<ContainerLoader loading={isLoading} />
 				{renderEditor()}
 			</Styles.Col>
 			<Styles.Row className="mt-4">
-				<StatusButton status={status} onClick={submit}>
+				<StatusButton disabled={isLoading} status={status} onClick={submit}>
 					Save
 				</StatusButton>
 				<Styles.PrimaryButton
-					disabled={status === "loading"}
+					disabled={isLoading}
 					className="dark ml-2"
 					onClick={preview ? closePreview : openPreview}
 				>
