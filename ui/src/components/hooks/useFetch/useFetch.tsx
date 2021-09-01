@@ -93,7 +93,7 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 		body: data,
 		status,
 		code,
-		isLoading: status === "loading" || status === null,
+		isLoading: status === "loading",
 		isError: status === "error",
 		isSuccess: status === "success",
 	};

@@ -1,4 +1,4 @@
-import { Post } from "./";
+import { Post } from ".";
 import { Response } from "../types/request";
 
 interface TagProps {

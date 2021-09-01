@@ -28,7 +28,6 @@ const TagIcon = styled(Icon)`
 const Wrapper = styled(Row).attrs({ align: "center" })`
 	cursor: pointer;
 	user-select: none;
-	font-weight: 600;
 	${props => css`
 		${TagIcon} {
 			color: ${props.theme.color.rgb("brand")};
@@ -37,6 +36,9 @@ const Wrapper = styled(Row).attrs({ align: "center" })`
 			${Span} {
 				color: ${props.theme.color.rgb("brand")};
 			}
+		}
+		${Span} {
+			font-weight: 700;
 		}
 	`}
 `;

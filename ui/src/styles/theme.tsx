@@ -20,8 +20,8 @@ class Color {
 	public readonly dark: Colors = {
 		body: "14, 14, 16",
 		primary: ["25, 25, 25", "35, 35, 35", "50, 50, 50"],
-		brand: "220, 40, 50",
-		brandDark: "200, 30, 40",
+		brand: "0, 175, 100",
+		brandDark: "0, 150, 75",
 		text: "225, 225, 225",
 		textStrong: "255, 255, 255",
 		textSecondary: "50, 50, 50",

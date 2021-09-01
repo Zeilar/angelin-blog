@@ -1,6 +1,6 @@
 import { Request } from "../utils";
 import { Response } from "../types/request";
-import { User, Tag, Comment } from "./";
+import { User, Tag, Comment } from ".";
 
 interface PostCredentials {
 	title: string;
