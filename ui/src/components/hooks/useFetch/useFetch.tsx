@@ -63,9 +63,7 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 				setCode(response.status);
 
 				if (!response.ok) {
-					// throw new Error(`${method} ${url} ${response.status} ${response.statusText}`);
-					setStatus("error");
-					return;
+					throw new Error(`${method} ${url} ${response.status} ${response.statusText}`);
 				}
 
 				const data = await response.json();
