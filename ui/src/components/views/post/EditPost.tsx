@@ -72,7 +72,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 			if (!data) return;
 			clearCache(URLHelpers.apiPosts(), URLHelpers.apiPost(data.id));
 			setStatus("success");
-			push(URLHelpers.getPost(data));
+			push(URLHelpers.viewPost(data));
 		} else {
 			setStatus("error");
 
@@ -120,7 +120,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 			<Styles.A
 				className="mb-4"
 				as={Link}
-				to={URLHelpers.getPost(post)}
+				to={URLHelpers.viewPost(post)}
 				style={{ width: "fit-content" }}
 			>
 				<Icon className="mr-1" size={1} path={mdiKeyboardBackspace} />

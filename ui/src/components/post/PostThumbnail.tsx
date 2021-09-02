@@ -20,7 +20,7 @@ export function PostThumbnail({ post, ...props }: Props) {
 			<Styles.P className="muted mb-2">
 				{DateHelpers.formatPostDate(post.created_at)}
 			</Styles.P>
-			<Styles.PostPreviewHeader to={URLHelpers.getPost(post)} as={Link}>
+			<Styles.PostPreviewHeader to={URLHelpers.viewPost(post)} as={Link}>
 				{post.title}
 			</Styles.PostPreviewHeader>
 			{post.tags.length > 0 && (

@@ -50,7 +50,7 @@ export function CreatePost() {
 		if (ok && data) {
 			clearCache(URLHelpers.apiPosts());
 			setStatus("success");
-			push(URLHelpers.getPost(data));
+			push(URLHelpers.viewPost(data));
 		} else {
 			setStatus("error");
 

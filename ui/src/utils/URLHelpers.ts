@@ -30,11 +30,11 @@ export class URLHelpers {
 		return `${this.api()}/users`;
 	}
 
-	public static getPost(post?: Post | null) {
+	public static viewPost(post?: Post | null) {
 		return post ? `/post/${post.id}-${post.title.replaceAll(" ", "-")}` : "";
 	}
 
-	public static editPost(post?: Post | null) {
-		return post ? `${this.getPost(post)}/edit` : "";
+	public static viewPostEdit(post?: Post | null) {
+		return post ? `${this.viewPost(post)}/edit` : "";
 	}
 }

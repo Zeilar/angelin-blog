@@ -47,7 +47,7 @@ export function PostFull({ post, withMenu = false }: Props) {
 							<Icon path={mdiDotsVertical} />
 						</Dots>
 						<MenuWrapper className={classNames({ open })}>
-							<MenuItem as={Link} to={URLHelpers.editPost(post)}>
+							<MenuItem as={Link} to={URLHelpers.viewPostEdit(post)}>
 								Edit
 								<Icon className="ml-4" path={mdiPencil} size={1} />
 							</MenuItem>
