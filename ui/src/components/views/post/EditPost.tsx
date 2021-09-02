@@ -1,4 +1,4 @@
-import Editor from "../../editor/Editor";
+import { Editor } from "../../editor";
 import * as Styles from "../../sc";
 import { useFetch, useFetchContext, useTitle } from "../../hooks";
 import { useEditor } from "@tiptap/react";
@@ -9,12 +9,11 @@ import { theme } from "../../../styles/theme";
 import { Post, User } from "../../../models";
 import { ContainerLoader, StatusButton } from "../../form";
 import { URLHelpers } from "../../../utils";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { mdiKeyboardBackspace } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useUserContext } from "../../contexts";
 import { PostPreview } from "../../post";
-import { useMemo } from "react";
 
 interface MatchParams {
 	id: string;
@@ -22,8 +21,7 @@ interface MatchParams {
 }
 
 export function EditPost({ match }: RouteComponentProps<MatchParams>) {
-	const url = URLHelpers.apiPost(match.params.id);
-	const query = useFetch<{ data: Post }>(url);
+	const query = useFetch<{ data: Post }>(URLHelpers.apiPost(match.params.id));
 	const data = query.body?.data;
 	const post = useMemo(() => (data ? new Post(data) : null), [data]);
 

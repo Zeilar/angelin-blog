@@ -17,7 +17,7 @@ interface Props {
 	[key: string]: any;
 }
 
-export default function Editor(props: Props) {
+export function Editor(props: Props) {
 	const body = props.editor?.getHTML() ?? "";
 	const originalBody = useMemo(() => props.editor?.getHTML(), [props.editor]);
 

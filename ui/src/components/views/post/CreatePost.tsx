@@ -1,4 +1,4 @@
-import Editor from "../../editor/Editor";
+import { Editor } from "../../editor";
 import * as Styles from "../../sc";
 import { useFetchContext, useTitle } from "../../hooks";
 import { useEditor } from "@tiptap/react";
