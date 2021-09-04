@@ -60,15 +60,17 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 
 				setCode(response.status);
 
+				let data = null;
+				if (response.headers.get("Content-Type")?.includes("application/json")) {
+					data = await response.json();
+					cache.set(fullUrl, data);
+					setData(data);
+				}
+
 				if (!response.ok) {
 					throw new Error(`${method} ${url} ${response.status} ${response.statusText}`);
 				}
 
-				const data = await response.json();
-
-				cache.set(fullUrl, data);
-
-				setData(data);
 				setStatus("success");
 
 				if (callback) callback(data);
