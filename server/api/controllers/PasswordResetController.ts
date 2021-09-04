@@ -2,7 +2,6 @@ import { Controller } from "./Controller";
 import { AuthService, ValidateService, UserService, MailService } from "../../services";
 import * as inversify from "inversify-express-utils";
 import { AuthGuard } from "../middlewares";
-import { DateHelpers } from "../utils";
 import { z } from "zod";
 
 @inversify.controller("/api/password")
@@ -22,19 +21,9 @@ export class PasswordResetController extends Controller {
 			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
 		}
 
-		const user = await this.authService.userRepository.findOne("email", body.email);
-		if (!user) return this.json({ error: this.ErrorMessages.NOT_FOUND }, 404);
+		const result = await this.userService.sendPasswordReset(body.email);
 
-		const pwReset = await this.userService.passwordResetRepository.create(user.id);
-		if (!pwReset) throw new Error(`Password reset could not be generated for user ${user.id}.`);
-
-		const success = await this.mailService.sendPasswordReset(user.email, pwReset.token);
-		if (!success)
-			throw new Error(
-				`Could not send password reset mail to ${user.email} with token ${pwReset.token}.`
-			);
-
-		return;
+		return this.json(result.content, result.code);
 	}
 
 	@inversify.httpPost("/reset/:token", AuthGuard.guest)
