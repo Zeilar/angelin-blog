@@ -33,8 +33,6 @@ export function useFetch<T>(url: string, args?: Args, callback?: (data: T) => vo
 	}, [args, memoArgs]);
 
 	useEffect(() => {
-		// const abortController = new AbortController();
-
 		// TODO: make "isOld" function to clear cache automatically if it's old enough
 
 		(async () => {

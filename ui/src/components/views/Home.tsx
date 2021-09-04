@@ -9,18 +9,12 @@ import { PostThumbnail } from "../post";
 import { PostThumbnailSkeleton } from "../skeleton";
 import { ErrorPage } from "./";
 
-type Params = Record<string, string>;
-
 export function Home({ location }: RouteComponentProps) {
 	const searchQuery = useMemo(() => new URLSearchParams(location.search), [location.search]);
-	const [params, setParams] = useState<Params>({});
-
-	const postQuery = useFetch<{ data: Post[] }>(URLHelpers.apiPosts(), { params });
+	const postQuery = useFetch<{ data: Post[] }>(URLHelpers.apiPosts(), {
+		params: Object.fromEntries([...searchQuery]),
+	});
 	const posts = postQuery.body?.data.map(post => new Post(post)) ?? [];
-
-	useEffect(() => {
-		setParams(Object.fromEntries([...searchQuery]));
-	}, [searchQuery]);
 
 	useTitle("Angelin Blog");
 
