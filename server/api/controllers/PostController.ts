@@ -1,8 +1,7 @@
 import { HTTPError } from "./../../utils/HTTPError";
-import { PostRepository } from "./../../repositories/PostRepository";
 import { TagRepository } from "./../../repositories/TagRepository";
 import { Request, Response } from "express";
-import { Post, Tag } from "../../db/models";
+import { Post } from "../../db/models";
 import { PostService, ValidateService } from "../../services";
 import { Controller } from "./Controller";
 import * as inversify from "inversify-express-utils";
