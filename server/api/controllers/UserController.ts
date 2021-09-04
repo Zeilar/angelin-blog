@@ -1,3 +1,4 @@
+import { HTTPError } from "./../../utils/HTTPError";
 import { Request, Response } from "express";
 import { Controller } from "./Controller";
 import { AuthService, ValidateService, UserService } from "../../services";
@@ -40,9 +41,11 @@ export class UserController extends Controller {
 			passwordConfirm,
 		});
 
-		if (!user) throw new Error(`Failed creating user with email ${email} upon registration.`);
+		if (!user) {
+			throw new HTTPError(`Failed creating user with email ${email} upon registration.`);
+		}
 
-		req.login(user, (error?: Error) => {
+		req.login(user, (error?: HTTPError) => {
 			if (error) throw error;
 		});
 

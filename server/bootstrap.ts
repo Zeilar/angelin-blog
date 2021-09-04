@@ -18,7 +18,7 @@ import { User } from "./db/models";
 import { development } from "../knexfile";
 import * as Repositories from "./repositories";
 import { DateHelpers, ErrorMessages } from "./api/utils";
-import { Logger } from "./utils";
+import { Logger, HTTPError } from "./utils";
 import { DB } from "./db/utils/DB";
 
 import "./api/controllers";
@@ -132,9 +132,9 @@ function bootstrap() {
 	const logger = container.get(Logger);
 
 	server.setErrorConfig(app => {
-		app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+		app.use((error: HTTPError, req: Request, res: Response, next: NextFunction) => {
 			logger.error(error);
-			res.status(500).json({ error: ErrorMessages.DEFAULT });
+			res.status(500).json({ error: error.message || ErrorMessages.DEFAULT });
 		});
 	});
 
@@ -151,7 +151,7 @@ function bootstrap() {
 		res.sendFile(`${uiPath}/index.html`);
 	});
 
-	app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+	app.use((error: HTTPError, req: Request, res: Response, next: NextFunction) => {
 		logger.error(error);
 		res.status(500).json({ error: "Could not find ui build." });
 	});

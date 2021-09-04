@@ -1,3 +1,4 @@
+import { HTTPError } from "./HTTPError";
 import { join } from "path";
 import fs from "fs";
 import dayjs from "dayjs";
@@ -28,7 +29,8 @@ export class Logger {
 		}
 	}
 
-	public error(error: Error) {
+	public error(error: HTTPError) {
+		console.log(error.code);
 		this.log("errors", error?.stack ?? "");
 	}
 

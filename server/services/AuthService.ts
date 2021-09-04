@@ -7,27 +7,17 @@ import { Logger } from "../utils";
 
 @injectable()
 export class AuthService {
-	constructor(public readonly userRepository: UserRepository, public readonly logger: Logger) {}
+	constructor(public readonly userRepository: UserRepository) {}
 
 	public async create(data: Register) {
-		try {
-			return this.userRepository.create({
-				email: data.email,
-				password: await hash(data.password, 10),
-			});
-		} catch (error) {
-			this.logger.error(error);
-			return null;
-		}
+		return this.userRepository.create({
+			email: data.email,
+			password: await hash(data.password, 10),
+		});
 	}
 
-	public async check(password: string, encrypted: string) {
-		try {
-			return compare(password, encrypted);
-		} catch (error) {
-			this.logger.error(error);
-			return false;
-		}
+	public check(password: string, encrypted: string) {
+		return compare(password, encrypted);
 	}
 
 	public validateRegister(data: Register) {
@@ -35,11 +25,6 @@ export class AuthService {
 	}
 
 	public async userExists(column: keyof User, value: any) {
-		try {
-			return (await this.userRepository.countWhere(column, value)) > 0;
-		} catch (error) {
-			this.logger.error(error);
-			return false;
-		}
+		return (await this.userRepository.countWhere(column, value)) > 0;
 	}
 }

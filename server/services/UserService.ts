@@ -1,3 +1,4 @@
+import { HTTPError } from "./../utils/HTTPError";
 import { injectable } from "inversify";
 import { DateHelpers, ErrorMessages } from "../api/utils";
 import { PasswordResetRepository, UserRepository } from "../repositories";
@@ -13,60 +14,33 @@ export class UserService {
 
 	public async sendPasswordReset(email: string) {
 		const user = await this.userRepository.findOne("email", email);
-		if (!user)
-			return {
-				content: { error: ErrorMessages.NOT_FOUND },
-				code: 404,
-			};
+
+		if (!user) {
+			throw new HTTPError(ErrorMessages.NOT_FOUND, 404);
+		}
 
 		const pwReset = await this.passwordResetRepository.create(user.id);
-		if (!pwReset) {
-			throw new Error(`Password reset could not be generated for user ${user.id}.`);
-		}
-
-		const success = await this.mailService.sendPasswordReset(user.email, pwReset.token);
-		if (!success) {
-			throw new Error(
-				`Could not send password reset to ${user.email} with token ${pwReset.token}.`
-			);
-		}
-
-		return { content: null, code: 204 };
+		this.mailService.sendPasswordReset(user.email, pwReset.token);
 	}
 
 	public async resetPassword(token: string, password: string) {
 		const dbToken = await this.passwordResetRepository.findOne("token", token);
 
 		if (!dbToken) {
-			return {
-				content: { error: ErrorMessages.NOT_FOUND },
-				code: 404,
-			};
+			throw new HTTPError(ErrorMessages.NOT_FOUND, 404);
 		}
 
 		if (!dbToken.user) {
-			throw new Error("Invalid token encountered, no user is attached.");
+			throw new HTTPError(
+				`Invalid token encountered with id ${dbToken.id}, no user is attached.`
+			);
 		}
 
 		if (DateHelpers.subDays(1).getDate() >= DateHelpers.getDate(dbToken.created_at)) {
-			return {
-				content: { error: ErrorMessages.FORBIDDEN },
-				code: 403,
-			};
+			throw new HTTPError(ErrorMessages.FORBIDDEN, 403);
 		}
 
-		if (!(await this.passwordResetRepository.deleteById(dbToken.id))) {
-			throw new Error(`Could not remove password reset token ${dbToken.id}.`);
-		}
-
-		const user = await this.userRepository.updateById(dbToken.user.id, {
-			password,
-		});
-
-		if (!user) {
-			throw new Error(`Could not reset password on user ${dbToken.user.id}`);
-		}
-
-		return { content: null, code: 204 };
+		await this.passwordResetRepository.deleteById(dbToken.id);
+		await this.userRepository.updateById(dbToken.user.id, { password });
 	}
 }

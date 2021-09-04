@@ -1,65 +1,35 @@
+import { HTTPError } from "./../utils/HTTPError";
 import { Tag } from "../db/models";
 import { CreateTag } from "../types/tag";
 import { injectable } from "inversify";
 import { DB } from "../db/utils/DB";
-import { Logger } from "../utils";
 
 @injectable()
 export class TagRepository {
-	constructor(public readonly db: DB, public readonly logger: Logger) {}
+	constructor(public readonly db: DB) {}
 
 	public all() {
-		try {
-			return Tag.query();
-		} catch (error) {
-			this.logger.error(error);
-			return [];
-		}
+		return Tag.query();
 	}
 
 	public create(data: CreateTag) {
-		try {
-			return Tag.query().insertGraphAndFetch(data);
-		} catch (error) {
-			this.logger.error(error);
-			return null;
-		}
+		return Tag.query().insertGraphAndFetch(data);
 	}
 
 	public findById(id: number | string) {
-		try {
-			return Tag.query().findById(id);
-		} catch (error) {
-			this.logger.error(error);
-			return null;
-		}
+		return Tag.query().findById(id);
 	}
 
 	public findOne(column: keyof Tag, value: string | number) {
-		try {
-			return Tag.query().findOne(column, value);
-		} catch (error) {
-			this.logger.error(error);
-			return null;
-		}
+		return Tag.query().findOne(column, value);
 	}
 
 	public countWhere(column: keyof Tag, value: string | number) {
-		try {
-			return this.db.count(Tag.query().findOne(column, value));
-		} catch (error) {
-			this.logger.error(error);
-			return 0;
-		}
+		return this.db.count(Tag.query().findOne(column, value));
 	}
 
 	public count() {
-		try {
-			return this.db.count(Tag.query());
-		} catch (error) {
-			this.logger.error(error);
-			return 0;
-		}
+		return this.db.count(Tag.query());
 	}
 
 	// This has to be done one at a time in order to work outside PostgresQL
@@ -69,7 +39,7 @@ export class TagRepository {
 			tag = await Tag.query().insertAndFetch({ name: tagArg });
 		}
 		if (!tag) {
-			throw new Error(`Could not create or find tag: ${tag}`);
+			throw new HTTPError(`Could not create or find tag: ${tag}`);
 		}
 		return tag;
 	}
@@ -82,18 +52,13 @@ export class TagRepository {
 	public async findOrCreate(tagsArg: string[]): Promise<Tag[]>;
 	public async findOrCreate(tagsArg: unknown) {
 		const tags = [];
-		try {
-			if (Array.isArray(tagsArg)) {
-				for (const tag of tagsArg) {
-					tags.push(await this.findOrCreateQuery(tag));
-				}
-			} else if (typeof tagsArg === "string") {
-				tags.push(await this.findOrCreateQuery(tagsArg));
+		if (Array.isArray(tagsArg)) {
+			for (const tag of tagsArg) {
+				tags.push(await this.findOrCreateQuery(tag));
 			}
-		} catch (error) {
-			this.logger.error(error);
-		} finally {
-			return tags;
+		} else if (typeof tagsArg === "string") {
+			tags.push(await this.findOrCreateQuery(tagsArg));
 		}
+		return tags;
 	}
 }

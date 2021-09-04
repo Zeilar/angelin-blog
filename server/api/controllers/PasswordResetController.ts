@@ -21,9 +21,9 @@ export class PasswordResetController extends Controller {
 			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
 		}
 
-		const result = await this.userService.sendPasswordReset(body.email);
+		await this.userService.sendPasswordReset(body.email);
 
-		return this.json(result.content, result.code);
+		return;
 	}
 
 	@inversify.httpPost("/reset/:token", AuthGuard.guest)
@@ -35,8 +35,8 @@ export class PasswordResetController extends Controller {
 			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
 		}
 
-		const result = await this.userService.resetPassword(token, body.password);
+		await this.userService.resetPassword(token, body.password);
 
-		return this.json(result.content, result.code);
+		return;
 	}
 }

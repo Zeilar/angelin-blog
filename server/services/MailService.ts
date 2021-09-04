@@ -1,6 +1,5 @@
 import { setApiKey, send } from "@sendgrid/mail";
 import { injectable } from "inversify";
-import { Logger } from "../utils";
 
 setApiKey(process.env.SENDGRID_KEY);
 
@@ -14,26 +13,18 @@ interface MailArgs {
 
 @injectable()
 export class MailService {
-	constructor(public readonly logger: Logger) {}
-
-	public async send(args: MailArgs) {
-		try {
-			await send({
-				from: args.from ?? "admin@angelin.dev",
-				to: args.to,
-				subject: args.subject,
-				text: args.text,
-				html: args.html,
-			});
-			return true;
-		} catch (error) {
-			this.logger.error(error);
-			return false;
-		}
+	public send(args: MailArgs) {
+		send({
+			from: args.from ?? "admin@angelin.dev",
+			to: args.to,
+			subject: args.subject,
+			text: args.text,
+			html: args.html,
+		});
 	}
 
-	public async sendPasswordReset(recipient: string, token: string) {
-		return this.send({
+	public sendPasswordReset(recipient: string, token: string) {
+		this.send({
 			to: recipient,
 			subject: "Reset your password",
 			text: `You have requested to reset your password`,

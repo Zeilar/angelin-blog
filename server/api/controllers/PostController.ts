@@ -1,3 +1,4 @@
+import { HTTPError } from "./../../utils/HTTPError";
 import { PostRepository } from "./../../repositories/PostRepository";
 import { TagRepository } from "./../../repositories/TagRepository";
 import { Request, Response } from "express";
@@ -37,7 +38,7 @@ export class PostController extends Controller {
 		const fetchedTags = await this.tagRepository.findOrCreate(tags);
 
 		for (const tag of fetchedTags) {
-			await post.$relatedQuery("tags").relate(tag);
+			await this.postService.postRepository.relateTag(post, tag);
 		}
 
 		return this.json({ data: { ...post, tags } });
@@ -62,9 +63,7 @@ export class PostController extends Controller {
 		const { title, body, tags } = req.body;
 
 		if (tags) {
-			if (!(await this.postService.postRepository.addTags(res.post, tags))) {
-				throw new Error(`Failed updating post with id ${res.post.id}`);
-			}
+			await this.postService.postRepository.addTags(res.post, tags);
 		}
 
 		// TODO: refactor to only graph fetch if tags were affected
@@ -75,8 +74,6 @@ export class PostController extends Controller {
 
 	@inversify.httpDelete("/:id", getPostOrFail, PostGuard.delete)
 	public async delete(@inversify.response() res: Response) {
-		if (!(await this.postService.deleteById(res.post.id))) {
-			throw new Error(`Failed deleting post with id ${res.post.id}`);
-		}
+		await this.postService.deleteById(res.post.id);
 	}
 }

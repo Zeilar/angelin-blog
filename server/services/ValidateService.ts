@@ -1,11 +1,10 @@
+import { HTTPError } from "./../utils/HTTPError";
 import { difference } from "lodash";
 import { injectable } from "inversify";
-import { Logger } from "../utils";
+import { ErrorMessages } from "../api/utils";
 
 @injectable()
 export class ValidateService {
-	constructor(public readonly logger: Logger) {}
-
 	/**
 	 * @description Compares keys input to body object keys, and return whether they match or not
 	 * @example requestBody(["username", "email"], { username: "john" ); // expected output: false
@@ -20,22 +19,17 @@ export class ValidateService {
 
 		let keysArr;
 
-		try {
-			if (typeof keys === "string") {
-				keysArr = [keys];
-			} else if (Array.isArray(keys)) {
-				keysArr = keys;
-			} else if (typeof keys === "object") {
-				keysArr = Object.keys(keys as object);
-			} else {
-				throw new Error("Invalid keys argument.");
-			}
-
-			return difference(keysArr, Object.keys(body)).length === 0;
-		} catch (error) {
-			this.logger.error(error);
-			return false;
+		if (typeof keys === "string") {
+			keysArr = [keys];
+		} else if (Array.isArray(keys)) {
+			keysArr = keys;
+		} else if (typeof keys === "object") {
+			keysArr = Object.keys(keys as object);
+		} else {
+			throw new HTTPError(ErrorMessages.INVALID_INPUT, 400);
 		}
+
+		return difference(keysArr, Object.keys(body)).length === 0;
 	}
 
 	public register() {
