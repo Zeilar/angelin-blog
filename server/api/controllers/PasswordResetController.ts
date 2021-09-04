@@ -46,22 +46,8 @@ export class PasswordResetController extends Controller {
 			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
 		}
 
-		const dbToken = await this.userService.passwordResetRepository.findOne("token", token);
-		if (!dbToken) return this.json({ error: this.ErrorMessages.NOT_FOUND }, 404);
+		const result = await this.userService.resetPassword(token, body.password);
 
-		if (DateHelpers.subDays(1).getDate() >= DateHelpers.getDate(dbToken.created_at)) {
-			return this.json({ error: this.ErrorMessages.FORBIDDEN }, 403);
-		}
-
-		const deletedToken = await this.userService.passwordResetRepository.deleteById(dbToken.id);
-		if (!deletedToken) throw new Error(`Could not remove password reset token ${dbToken.id}`);
-
-		const user = await this.userService.userRepository.updateById(dbToken.user!.id, {
-			password: body.password,
-		});
-
-		if (!user) throw new Error(`Could not reset password on user ${dbToken?.user?.id}`);
-
-		return;
+		return this.json(result.content, result.code);
 	}
 }
