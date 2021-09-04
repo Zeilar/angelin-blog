@@ -22,7 +22,7 @@ export class PostController extends Controller {
 	@inversify.httpPost("/", AuthGuard.user, AuthGuard.admin)
 	public async create(@inversify.request() req: Request) {
 		if (!this.validateService.requestBody(["body", "title"], req.body)) {
-			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
+			throw new HTTPError(this.ErrorMessages.INVALID_INPUT, 400);
 		}
 
 		const { body, title, tags } = req.body;
@@ -57,7 +57,7 @@ export class PostController extends Controller {
 	@inversify.httpPut("/:id", getPostOrFail, PostGuard.edit)
 	public async edit(@inversify.request() req: Request, @inversify.response() res: Response) {
 		if (!this.validateService.requestBody(["body", "title"], req.body)) {
-			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
+			throw new HTTPError(this.ErrorMessages.INVALID_INPUT, 400);
 		}
 
 		const { title, body, tags } = req.body;

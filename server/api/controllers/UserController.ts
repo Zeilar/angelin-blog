@@ -81,7 +81,7 @@ export class UserController extends Controller {
 		}
 
 		req.login(user, (error?: Error) => {
-			if (error) throw error;
+			if (error) throw new HTTPError(error.message);
 		});
 
 		return this.json({ data: user.dto() });

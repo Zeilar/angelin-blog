@@ -1,3 +1,4 @@
+import { HTTPError } from "./../../utils/HTTPError";
 import { Request, Response } from "express";
 import { Comment } from "../../db/models";
 import { ValidateService } from "../../services";
@@ -15,7 +16,7 @@ export class CommentController extends Controller {
 	@inversify.httpPost("/", AuthGuard.user)
 	public async create(@inversify.request() req: Request) {
 		if (!this.validateService.requestBody("body", req.body)) {
-			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
+			throw new HTTPError(this.ErrorMessages.INVALID_INPUT, 400);
 		}
 
 		const { post_id, body } = req.body;

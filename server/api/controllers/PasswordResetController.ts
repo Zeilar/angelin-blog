@@ -1,3 +1,4 @@
+import { HTTPError } from "./../../utils/HTTPError";
 import { Controller } from "./Controller";
 import { AuthService, ValidateService, UserService, MailService } from "../../services";
 import * as inversify from "inversify-express-utils";
@@ -18,7 +19,7 @@ export class PasswordResetController extends Controller {
 	@inversify.httpPost("/reset", AuthGuard.guest)
 	public async createAndSendToken(@inversify.requestBody() body: { email: string }) {
 		if (!this.validateService.requestBody("email", body)) {
-			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
+			throw new HTTPError(this.ErrorMessages.INVALID_INPUT, 400);
 		}
 
 		await this.userService.sendPasswordReset(body.email);
@@ -32,7 +33,7 @@ export class PasswordResetController extends Controller {
 		@inversify.requestBody() body: { password: string }
 	) {
 		if (!token || !this.validateService.requestBody("password", body)) {
-			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
+			throw new HTTPError(this.ErrorMessages.INVALID_INPUT, 400);
 		}
 
 		await this.userService.resetPassword(token, body.password);
