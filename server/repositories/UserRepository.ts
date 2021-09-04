@@ -14,7 +14,7 @@ export class UserRepository {
 			return await User.query();
 		} catch (error) {
 			this.logger.error(error);
-			return null;
+			return [];
 		}
 	}
 

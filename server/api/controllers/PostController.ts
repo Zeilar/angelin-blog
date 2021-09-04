@@ -1,3 +1,4 @@
+import { TagRepository } from "./../../repositories/TagRepository";
 import { Request, Response } from "express";
 import { Post, Tag } from "../../db/models";
 import { ValidateService } from "../../services";
@@ -8,7 +9,10 @@ import { z } from "zod";
 
 @inversify.controller("/api/posts")
 export class PostController extends Controller {
-	constructor(public readonly validateService: ValidateService) {
+	constructor(
+		public readonly validateService: ValidateService,
+		public readonly tagRepository: TagRepository
+	) {
 		super();
 	}
 
@@ -28,7 +32,7 @@ export class PostController extends Controller {
 			body,
 		});
 
-		const fetchedTags = await Tag.findOrCreate(tags);
+		const fetchedTags = await this.tagRepository.findOrCreate(tags);
 
 		for (const tag of fetchedTags) {
 			await post.$relatedQuery("tags").relate(tag);
@@ -57,7 +61,7 @@ export class PostController extends Controller {
 
 		if (tags) {
 			await res.post.$relatedQuery("tags").unrelate();
-			const fetchedTags = await Tag.findOrCreate(tags);
+			const fetchedTags = await this.tagRepository.findOrCreate(tags);
 			for (const tag of fetchedTags) {
 				await res.post.$relatedQuery("tags").relate(tag);
 			}

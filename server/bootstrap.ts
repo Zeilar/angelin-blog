@@ -16,7 +16,7 @@ import path from "path";
 import * as services from "./services";
 import { User } from "./db/models";
 import { development } from "../knexfile";
-import { PasswordResetRepository, PostRepository, UserRepository } from "./repositories";
+import * as Repositories from "./repositories";
 import { DateHelpers, ErrorMessages } from "./api/utils";
 import { Logger } from "./utils";
 import { DB } from "./db/utils/DB";
@@ -34,9 +34,10 @@ function bootstrap() {
 	const container = new Container();
 
 	// Repositories
-	container.bind(UserRepository).toSelf();
-	container.bind(PostRepository).toSelf();
-	container.bind(PasswordResetRepository).toSelf();
+	container.bind(Repositories.UserRepository).toSelf();
+	container.bind(Repositories.TagRepository).toSelf();
+	container.bind(Repositories.PostRepository).toSelf();
+	container.bind(Repositories.PasswordResetRepository).toSelf();
 
 	// Services
 	container.bind(services.PostService).toSelf();
@@ -84,7 +85,7 @@ function bootstrap() {
 		);
 	});
 
-	const userRepository = container.get(UserRepository);
+	const userRepository = container.get(Repositories.UserRepository);
 
 	passport.serializeUser((user, done) => {
 		done(null, user);
@@ -139,7 +140,7 @@ function bootstrap() {
 
 	// Runs Monday-Saturday 00:00
 	cron.schedule("0 0 * * 1-6", async () => {
-		await container.get(PasswordResetRepository).deleteInactive();
+		await container.get(Repositories.PasswordResetRepository).deleteInactive();
 	});
 
 	const app = server.build();
