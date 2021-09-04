@@ -6,8 +6,8 @@ import { useHistory, RouteComponentProps, Link } from "react-router-dom";
 import StarterKit from "@tiptap/starter-kit";
 import { IStatus } from "../../../types/modals";
 import { theme } from "../../../styles/theme";
-import { Post, User } from "../../../models";
-import { ContainerLoader, StatusButton } from "../../form";
+import { Post, Tag, User } from "../../../models";
+import { ContainerLoader, StatusButton, TagsInput } from "../../form";
 import { URLHelpers } from "../../../utils";
 import { useEffect, useState, useMemo } from "react";
 import { mdiKeyboardBackspace } from "@mdi/js";
@@ -31,6 +31,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	const [status, setStatus] = useState<IStatus>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [title, setTitle] = useState<string>("");
+	const [tags, setTags] = useState<Tag[]>([Tag.fake({ name: "some tag" })]);
 	const [preview, setPreview] = useState(false);
 
 	useTitle("Angelin Blog | Edit Post");
@@ -95,6 +96,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 						title,
 						body: editor!.getHTML(),
 						author: user,
+						tags,
 					})}
 					close={closePreview}
 				/>
@@ -131,6 +133,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 				<ContainerLoader loading={isLoading} />
 				{renderEditor()}
 			</Styles.Col>
+			<TagsInput defaultTags={tags} onChange={tags => {}} />
 			<Styles.Row className="mt-4">
 				<StatusButton disabled={isLoading} status={status} onClick={submit}>
 					Save

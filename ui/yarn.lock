@@ -2339,6 +2339,14 @@
     "anymatch" "^3.0.0"
     "source-map" "^0.6.0"
 
+"@types/yaireo__tagify@*", "@types/yaireo__tagify@^4.7.0":
+  "integrity" "sha512-4PeGSqkX9IMCOkaKS2RqQBnvOuxh6up+YrKO+SS5RCmTVKX6JeGpAgaWwgKSOULe4nPRKqPXQCcAzk6ypDZQXQ=="
+  "resolved" "https://registry.npmjs.org/@types/yaireo__tagify/-/yaireo__tagify-4.7.0.tgz"
+  "version" "4.7.0"
+  dependencies:
+    "@types/react" "*"
+    "@types/yaireo__tagify" "*"
+
 "@types/yargs-parser@*":
   "integrity" "sha512-37RSHht+gzzgYeobbG+KWryeAW8J33Nhr69cjTqSYymXVZEN9NbRYWoYlRtDhHKPVT1FyNKwaTPC1NynKZpzRA=="
   "resolved" "https://registry.npmjs.org/@types/yargs-parser/-/yargs-parser-20.2.0.tgz"
@@ -2618,6 +2626,11 @@
   "integrity" "sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ=="
   "resolved" "https://registry.npmjs.org/@xtuc/long/-/long-4.2.2.tgz"
   "version" "4.2.2"
+
+"@yaireo/tagify@^4.7.2":
+  "integrity" "sha512-05pyg5EPZ/Wvl6ZcDjvlhnaQa/kTgcjyzbfrTHPh9xkrcO6JYiZuoD1nghqTn2z/c4vLX7PDvybPJoQJELNVMA=="
+  "resolved" "https://registry.npmjs.org/@yaireo/tagify/-/tagify-4.7.2.tgz"
+  "version" "4.7.2"
 
 "abab@^2.0.3", "abab@^2.0.5":
   "integrity" "sha512-9IK9EadsbHo6jLWIpxpR6pL0sazTXV6+SQv25ZB+F7Bj9mJNaOc4nCRabwd5M/JwmUa8idz6Eci6eKfJryPs6Q=="

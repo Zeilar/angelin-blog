@@ -1,6 +1,6 @@
 import { Request } from "../utils";
 import { Response } from "../types/request";
-import { User, Tag, Comment } from ".";
+import { User, Tag, Comment } from "./";
 
 interface PostCredentials {
 	title: string;
@@ -23,6 +23,8 @@ interface FakePostProps {
 	title: string;
 	body: string;
 	author: User;
+	tags?: Tag[];
+	comments?: Comment[];
 }
 
 export class Post implements PostProps {
@@ -71,7 +73,7 @@ export class Post implements PostProps {
 		return query;
 	}
 
-	public static fake({ title, body, author }: FakePostProps) {
+	public static fake({ title, body, author, tags = [], comments = [] }: FakePostProps) {
 		const now = new Date().toISOString();
 		return new Post({
 			id: 0,
@@ -81,8 +83,8 @@ export class Post implements PostProps {
 			user_id: author.id,
 			created_at: now,
 			updated_at: now,
-			comments: [],
-			tags: [],
+			comments,
+			tags,
 		});
 	}
 

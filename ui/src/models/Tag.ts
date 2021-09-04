@@ -38,4 +38,14 @@ export class Tag implements TagProps {
 		}
 		return query;
 	}
+
+	public static fake({ name }: { name: string }) {
+		const now = new Date().toISOString();
+		return new Tag({
+			id: 0,
+			name,
+			created_at: now,
+			updated_at: now,
+		});
+	}
 }

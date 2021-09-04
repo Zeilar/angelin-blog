@@ -62,7 +62,9 @@ export class PostController extends Controller {
 		const { title, body, tags } = req.body;
 
 		if (tags) {
-			await this.postService.postRepository.addTags(res.post, tags);
+			if (!(await this.postService.postRepository.addTags(res.post, tags))) {
+				throw new Error(`Failed updating post with id ${res.post.id}`);
+			}
 		}
 
 		// TODO: refactor to only graph fetch if tags were affected
@@ -73,6 +75,8 @@ export class PostController extends Controller {
 
 	@inversify.httpDelete("/:id", getPostOrFail, PostGuard.delete)
 	public async delete(@inversify.response() res: Response) {
-		await this.postService.deleteById(res.post.id);
+		if (!(await this.postService.deleteById(res.post.id))) {
+			throw new Error(`Failed deleting post with id ${res.post.id}`);
+		}
 	}
 }
