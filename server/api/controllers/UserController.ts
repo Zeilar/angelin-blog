@@ -50,7 +50,7 @@ export class UserController extends Controller {
 	}
 
 	@inversify.httpPost("/login", AuthGuard.guest)
-	public async login(@inversify.request() req: Request, @inversify.response() res: Response) {
+	public async login(@inversify.request() req: Request) {
 		if (!this.validateService.requestBody(["email", "password"], req.body)) {
 			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
 		}
@@ -78,7 +78,7 @@ export class UserController extends Controller {
 			);
 		}
 
-		req.login(user, (error: Error) => {
+		req.login(user, (error?: Error) => {
 			if (error) throw error;
 		});
 
