@@ -1,13 +1,19 @@
-import { Post } from "../db/models";
+import { TagRepository } from "./TagRepository";
+import { Post, Tag } from "../db/models";
 import { injectable } from "inversify";
 import { hash } from "bcrypt";
 import { PAGE_SIZE } from "../api/utils";
 import { DB } from "../db/utils/DB";
 import { Logger } from "../utils";
+// import { CreatePost} from "../types/post"
 
 @injectable()
 export class PostRepository {
-	constructor(public readonly db: DB, public readonly logger: Logger) {}
+	constructor(
+		public readonly db: DB,
+		public readonly logger: Logger,
+		public readonly tagRepository: TagRepository
+	) {}
 
 	public async all(page: number = 1, perPage: number = PAGE_SIZE) {
 		try {
@@ -126,6 +132,44 @@ export class PostRepository {
 		} catch (error) {
 			this.logger.error(error);
 			return [];
+		}
+	}
+
+	public async unrelateTags(post: Post) {
+		try {
+			await post.$relatedQuery("tags").unrelate();
+			return true;
+		} catch (error) {
+			this.logger.error(error);
+			return false;
+		}
+	}
+
+	public async relateTag(post: Post, tag: Tag) {
+		try {
+			await post.$relatedQuery("tags").relate(tag);
+			return true;
+		} catch (error) {
+			this.logger.error(error);
+			return false;
+		}
+	}
+
+	public async addTags(post: Post, tags: string[]) {
+		try {
+			if (!(await this.unrelateTags(post))) {
+				throw new Error(`Failed to unrelate tags for post ${post}.`);
+			}
+			const fetchedTags = await this.tagRepository.findOrCreate(tags);
+			for (const tag of fetchedTags) {
+				if (!(await this.relateTag(post, tag))) {
+					throw new Error(`Failed to relate tag: ${tag} on post ${post}.`);
+				}
+			}
+			return true;
+		} catch (error) {
+			this.logger.error(error);
+			return false;
 		}
 	}
 }
