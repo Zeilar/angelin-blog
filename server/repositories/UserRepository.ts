@@ -60,7 +60,11 @@ export class UserRepository {
 
 	public async deleteById(id: number | string) {
 		try {
-			await User.query().deleteById(id);
+			const user = await this.findById(id);
+			if (!user) {
+				throw new Error(`Failed deleting user with id ${id}, not found.`);
+			}
+			await user.$query().delete();
 			return true;
 		} catch (error) {
 			this.logger.error(error);
@@ -71,7 +75,9 @@ export class UserRepository {
 	public async deleteMany(users: User[]) {
 		try {
 			for (const user of users) {
-				await this.deleteById(user.id);
+				if (!(await this.deleteById(user.id))) {
+					throw new Error(`Failed deleting user with id ${user?.id}`);
+				}
 			}
 			return true;
 		} catch (error) {

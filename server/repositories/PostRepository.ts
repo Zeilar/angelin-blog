@@ -5,7 +5,7 @@ import { hash } from "bcrypt";
 import { PAGE_SIZE } from "../api/utils";
 import { DB } from "../db/utils/DB";
 import { Logger } from "../utils";
-// import { CreatePost} from "../types/post"
+// import { CreatePost } from "../types/post"
 
 @injectable()
 export class PostRepository {
@@ -82,10 +82,12 @@ export class PostRepository {
 		}
 	}
 
-	public async deleteMany(users: Post[]) {
+	public async deleteMany(posts: Post[]) {
 		try {
-			for (const user of users) {
-				await this.deleteById(user.id);
+			for (const post of posts) {
+				if (!(await this.deleteById(post.id))) {
+					throw new Error(`Failed deleting post with id ${post?.id}`);
+				}
 			}
 			return true;
 		} catch (error) {
