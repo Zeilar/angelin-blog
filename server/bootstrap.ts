@@ -134,7 +134,7 @@ function bootstrap() {
 	server.setErrorConfig(app => {
 		app.use((error: HTTPError, req: Request, res: Response, next: NextFunction) => {
 			if (error instanceof HTTPError) {
-				res.status(error.code).json({ error: error.message });
+				res.status(error.code).json(error.advancedResponse ?? { error: error.message });
 			} else {
 				logger.error(error);
 				res.status(500).json({ error: ErrorMessages.DEFAULT });

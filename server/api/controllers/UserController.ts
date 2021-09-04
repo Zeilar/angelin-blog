@@ -70,15 +70,14 @@ export class UserController extends Controller {
 			throw new HTTPError(this.ErrorMessages.USER_NOT_EXISTS, 422);
 		}
 
-		if (!user.password || user.isOAuth()) {
+		if (user.isOAuth()) {
 			throw new HTTPError("You must login via OAuth.", 405);
 		}
 
 		if (!(await this.authService.check(password, user.password))) {
-			return this.json(
-				{ error: { password: this.ErrorMessages.INCORRECT_CREDENTIALS } },
-				422
-			);
+			throw new HTTPError("", 422, {
+				error: { password: this.ErrorMessages.INCORRECT_CREDENTIALS },
+			});
 		}
 
 		req.login(user, (error?: Error) => {

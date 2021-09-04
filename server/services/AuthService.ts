@@ -16,7 +16,8 @@ export class AuthService {
 		});
 	}
 
-	public check(password: string, encrypted: string) {
+	public check(password: string, encrypted?: string | null) {
+		if (!encrypted) return false;
 		return compare(password, encrypted);
 	}
 
