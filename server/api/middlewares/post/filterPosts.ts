@@ -21,12 +21,16 @@ export async function filterPosts(req: Request, res: Response, next: NextFunctio
 
 	const pagination = NumberHelpers.paginate(page as string, perPage as string);
 
-	res.status(200).json({
-		data: await postRepository.filter({
-			search,
-			tags: tags?.split(","),
-			page: pagination.page,
-			perPage: pagination.perPage,
-		}),
-	});
+	try {
+		res.status(200).json({
+			data: await postRepository.filter({
+				search,
+				tags: tags?.split(","),
+				page: pagination.page,
+				perPage: pagination.perPage,
+			}),
+		});
+	} catch (error) {
+		next(error);
+	}
 }

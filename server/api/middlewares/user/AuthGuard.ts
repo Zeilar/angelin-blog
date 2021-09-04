@@ -1,28 +1,38 @@
+import { HTTPError } from "./../../../utils/HTTPError";
 import { Request, Response, NextFunction } from "express";
 import { ErrorMessages } from "../../utils";
 
 export class AuthGuard {
 	public static async user(req: Request, res: Response, next: NextFunction) {
-		if (!req.isAuthenticated()) {
-			res.status(401).json({ error: ErrorMessages.UNAUTHORIZED });
-			return;
+		try {
+			if (!req.isAuthenticated()) {
+				throw new HTTPError(ErrorMessages.UNAUTHORIZED, 401);
+			}
+			next();
+		} catch (error) {
+			next(error);
 		}
-		next();
 	}
 
 	public static async guest(req: Request, res: Response, next: NextFunction) {
-		if (req.isAuthenticated()) {
-			res.status(403).json({ error: ErrorMessages.LOGGED_IN });
-			return;
+		try {
+			if (req.isAuthenticated()) {
+				throw new HTTPError(ErrorMessages.FORBIDDEN, 403);
+			}
+			next();
+		} catch (error) {
+			next(error);
 		}
-		next();
 	}
 
 	public static async admin(req: Request, res: Response, next: NextFunction) {
-		if (!req.user?.is_admin) {
-			res.status(403).json({ error: ErrorMessages.FORBIDDEN });
-			return;
+		try {
+			if (!req.user?.is_admin) {
+				throw new HTTPError(ErrorMessages.FORBIDDEN, 403);
+			}
+			next();
+		} catch (error) {
+			next(error);
 		}
-		next();
 	}
 }

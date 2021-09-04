@@ -29,12 +29,11 @@ export class Logger {
 		}
 	}
 
-	public error(error: HTTPError) {
-		console.log(error.code);
+	public error(error: HTTPError | Error) {
 		this.log("errors", error?.stack ?? "");
 	}
 
-	public warning(message: string) {
-		this.log("warnings", message);
+	public warning(warning: HTTPError | Error) {
+		this.log("warnings", warning.message);
 	}
 }

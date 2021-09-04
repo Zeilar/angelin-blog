@@ -4,7 +4,7 @@ import { ValidateService } from "../../services";
 import { Controller } from "./Controller";
 import * as inversify from "inversify-express-utils";
 import { AuthGuard } from "../middlewares";
-import { CommentGuard } from "../middlewares/comment/commentGuard";
+import { CommentGuard } from "../middlewares/comment/CommentGuard";
 
 @inversify.controller("/api/commments", AuthGuard.user)
 export class CommentController extends Controller {

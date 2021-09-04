@@ -55,23 +55,23 @@ export class UserController extends Controller {
 	@inversify.httpPost("/login", AuthGuard.guest)
 	public async login(@inversify.request() req: Request) {
 		if (!this.validateService.requestBody(["email", "password"], req.body)) {
-			return this.json({ error: this.ErrorMessages.INVALID_INPUT }, 400);
+			throw new HTTPError(this.ErrorMessages.INVALID_INPUT, 400);
 		}
 
 		const { email, password } = req.body;
 
 		if (req.isAuthenticated()) {
-			return this.json({ error: this.ErrorMessages.LOGGED_IN }, 405);
+			throw new HTTPError(this.ErrorMessages.LOGGED_IN, 405);
 		}
 
 		const user = await this.authService.userRepository.findOne("email", email);
 
 		if (!user) {
-			return this.json({ error: { email: this.ErrorMessages.USER_NOT_EXISTS } }, 422);
+			throw new HTTPError(this.ErrorMessages.USER_NOT_EXISTS, 422);
 		}
 
 		if (!user.password || user.isOAuth()) {
-			return this.json({ error: "You must login via OAuth." }, 405);
+			throw new HTTPError("You must login via OAuth.", 405);
 		}
 
 		if (!(await this.authService.check(password, user.password))) {

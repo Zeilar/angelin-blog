@@ -27,7 +27,7 @@ export class MailService {
 		this.send({
 			to: recipient,
 			subject: "Reset your password",
-			text: `You have requested to reset your password`,
+			text: "You have requested to reset your password",
 			html: `You have requested to reset your password, you can do so here: <a href="http://blog.angelin.dev/password/reset/${token}">http://localhost:3030/password/reset/${token}</a>`,
 		});
 	}
