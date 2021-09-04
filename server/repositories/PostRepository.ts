@@ -69,7 +69,12 @@ export class PostRepository {
 
 	public async deleteById(id: number | string) {
 		try {
-			await Post.query().deleteById(id);
+			const post = await this.findById(id);
+			if (!post) {
+				throw new Error(`Failed deleting post with id ${id}, not found.`);
+			}
+			await this.unrelateTags(post);
+			await post.$query().delete();
 			return true;
 		} catch (error) {
 			this.logger.error(error);

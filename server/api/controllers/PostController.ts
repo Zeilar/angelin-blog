@@ -73,7 +73,6 @@ export class PostController extends Controller {
 
 	@inversify.httpDelete("/:id", getPostOrFail, PostGuard.delete)
 	public async delete(@inversify.response() res: Response) {
-		await res.post!.$relatedQuery("tags").unrelate();
-		await res.post!.$query().delete();
+		await this.postRepository.deleteById(res.post.id);
 	}
 }
