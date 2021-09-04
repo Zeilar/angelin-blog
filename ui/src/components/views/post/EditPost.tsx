@@ -133,7 +133,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 				<ContainerLoader loading={isLoading} />
 				{renderEditor()}
 			</Styles.Col>
-			<TagsInput defaultTags={tags} onChange={tags => {}} />
+			{/* <TagsInput defaultTags={tags} onChange={tags => {}} /> */}
 			<Styles.Row className="mt-4">
 				<StatusButton disabled={isLoading} status={status} onClick={submit}>
 					Save

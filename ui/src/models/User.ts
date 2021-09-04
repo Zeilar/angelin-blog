@@ -91,6 +91,6 @@ export class User implements UserProps {
 	}
 
 	public static async logout() {
-		return await Request.auth<User>({ url: "logout" });
+		return Request.auth<User>({ url: "logout" });
 	}
 }

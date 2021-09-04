@@ -11,7 +11,7 @@ export class UserRepository {
 
 	public async all() {
 		try {
-			return await User.query();
+			return User.query();
 		} catch (error) {
 			this.logger.error(error);
 			return [];
@@ -20,7 +20,7 @@ export class UserRepository {
 
 	public async create(data: CreateUser) {
 		try {
-			return await User.query().insertGraphAndFetch(data);
+			return User.query().insertGraphAndFetch(data);
 		} catch (error) {
 			this.logger.error(error);
 			return null;
@@ -29,7 +29,7 @@ export class UserRepository {
 
 	public async findById(id: number | string) {
 		try {
-			return await User.query().findById(id);
+			return User.query().findById(id);
 		} catch (error) {
 			this.logger.error(error);
 			return null;
@@ -38,7 +38,7 @@ export class UserRepository {
 
 	public async findOne(column: keyof User, value: string | number) {
 		try {
-			return await User.query().findOne(column, value);
+			return User.query().findOne(column, value);
 		} catch (error) {
 			this.logger.error(error);
 			return null;
@@ -51,7 +51,7 @@ export class UserRepository {
 		}
 
 		try {
-			return await User.query().updateAndFetchById(id, data);
+			return User.query().updateAndFetchById(id, data);
 		} catch (error) {
 			this.logger.error(error);
 			return null;
@@ -88,7 +88,7 @@ export class UserRepository {
 
 	public async countWhere(column: keyof User, value: string | number) {
 		try {
-			return await this.db.count(User.query().findOne(column, value));
+			return this.db.count(User.query().findOne(column, value));
 		} catch (error) {
 			this.logger.error(error);
 			return 0;
@@ -97,7 +97,7 @@ export class UserRepository {
 
 	public async count() {
 		try {
-			return await this.db.count(User.query());
+			return this.db.count(User.query());
 		} catch (error) {
 			this.logger.error(error);
 			return 0;

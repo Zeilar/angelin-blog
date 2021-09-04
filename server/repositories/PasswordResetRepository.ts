@@ -10,7 +10,7 @@ export class PasswordResetRepository {
 
 	public async create(user_id: number) {
 		try {
-			return await PasswordReset.query().insertAndFetch({
+			return PasswordReset.query().insertAndFetch({
 				user_id,
 				token: uuidv4(),
 			});
@@ -22,7 +22,7 @@ export class PasswordResetRepository {
 
 	public async findOne(column: keyof PasswordReset, value: string | number) {
 		try {
-			return await PasswordReset.query()
+			return PasswordReset.query()
 				.findOne(column, value)
 				.withGraphFetched(PasswordReset.relationships);
 		} catch (error) {

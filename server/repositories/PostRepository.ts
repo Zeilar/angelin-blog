@@ -5,6 +5,7 @@ import { hash } from "bcrypt";
 import { PAGE_SIZE } from "../api/utils";
 import { DB } from "../db/utils/DB";
 import { Logger } from "../utils";
+import { Transaction } from "objection";
 // import { CreatePost } from "../types/post"
 
 @injectable()
@@ -29,7 +30,7 @@ export class PostRepository {
 
 	// public async create(data: CreatePost) {
 	// 	try {
-	// 		return await Post.query().insertGraphAndFetch(data);
+	// 		return Post.query().insertGraphAndFetch(data);
 	// 	} catch (error) {
 	// 		this.logger.error(error);
 	// 		return null;
@@ -38,7 +39,7 @@ export class PostRepository {
 
 	public async findById(id: number | string) {
 		try {
-			return await Post.query().findById(id).withGraphFetched(Post.relationships);
+			return Post.query().findById(id).withGraphFetched(Post.relationships);
 		} catch (error) {
 			this.logger.error(error);
 			return null;
@@ -47,7 +48,7 @@ export class PostRepository {
 
 	public async findOne(column: keyof Post, value: string | number) {
 		try {
-			return await Post.query().findOne(column, value).withGraphFetched(Post.relationships);
+			return Post.query().findOne(column, value).withGraphFetched(Post.relationships);
 		} catch (error) {
 			this.logger.error(error);
 			return null;
@@ -60,19 +61,19 @@ export class PostRepository {
 	// 	}
 
 	// 	try {
-	// 		return await Post.query().updateAndFetchById(id, data);
+	// 		return Post.query().updateAndFetchById(id, data);
 	// 	} catch (error) {
 	// 		this.logger.error(error);
 	// 		return null;
 	// 	}
 	// }
 
-	public async deleteById(post: Post | number | string) {
+	public async deleteById(post: Post | number | string, trx?: Transaction) {
 		try {
 			if (typeof post === "object") {
-				await post.$query().delete();
+				await post.$query(trx).delete();
 			} else {
-				await Post.query().deleteById(post);
+				await Post.query(trx).deleteById(post);
 			}
 			return true;
 		} catch (error) {
@@ -97,7 +98,7 @@ export class PostRepository {
 
 	public async countWhere(column: keyof Post, value: string | number) {
 		try {
-			return await this.db.count(Post.query().findOne(column, value));
+			return this.db.count(Post.query().findOne(column, value));
 		} catch (error) {
 			this.logger.error(error);
 			return 0;
@@ -106,7 +107,7 @@ export class PostRepository {
 
 	public async count() {
 		try {
-			return await this.db.count(Post.query());
+			return this.db.count(Post.query());
 		} catch (error) {
 			this.logger.error(error);
 			return 0;
@@ -141,9 +142,9 @@ export class PostRepository {
 		}
 	}
 
-	public async unrelateTags(post: Post) {
+	public async unrelateTags(post: Post, trx?: Transaction) {
 		try {
-			await post.$relatedQuery("tags").unrelate();
+			await post.$relatedQuery("tags", trx).unrelate();
 			return true;
 		} catch (error) {
 			this.logger.error(error);
@@ -173,6 +174,23 @@ export class PostRepository {
 				}
 			}
 			return true;
+		} catch (error) {
+			this.logger.error(error);
+			return false;
+		}
+	}
+
+	public async deleteAndUnrelateById(id: number | string) {
+		try {
+			const post = await this.findById(id);
+			if (!post) {
+				throw new Error(`Failed deleting post with id ${id}, not found.`);
+			}
+			return Post.transaction(async trx => {
+				await this.unrelateTags(post, trx);
+				await this.deleteById(post);
+				return true;
+			});
 		} catch (error) {
 			this.logger.error(error);
 			return false;

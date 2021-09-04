@@ -48,21 +48,21 @@ export class Request {
 
 	public static async tag<T>(args: Args) {
 		args.url = `${URLHelpers.apiTags()}/${args.url}`;
-		return await Request.query<T>({ ...args });
+		return Request.query<T>({ ...args });
 	}
 
 	public static async comment<T>(args: Args) {
 		args.url = `${URLHelpers.apiComments()}/${args.url}`;
-		return await Request.query<T>({ ...args, withResponse: true });
+		return Request.query<T>({ ...args, withResponse: true });
 	}
 
 	public static async post<T>(args: Args) {
 		args.url = `${URLHelpers.apiPosts()}/${args.url}`;
-		return await Request.query<T>({ ...args, withResponse: true });
+		return Request.query<T>({ ...args, withResponse: true });
 	}
 
 	public static async auth<T>(args: Args) {
 		args.url = `${URLHelpers.apiUsers()}/${args.url}`;
-		return await Request.query<T>({ ...args, withResponse: true });
+		return Request.query<T>({ ...args, withResponse: true });
 	}
 }

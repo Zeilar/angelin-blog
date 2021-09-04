@@ -11,7 +11,7 @@ export class AuthService {
 
 	public async create(data: Register) {
 		try {
-			return await this.userRepository.create({
+			return this.userRepository.create({
 				email: data.email,
 				password: await hash(data.password, 10),
 			});
@@ -23,7 +23,7 @@ export class AuthService {
 
 	public async check(password: string, encrypted: string) {
 		try {
-			return await compare(password, encrypted);
+			return compare(password, encrypted);
 		} catch (error) {
 			this.logger.error(error);
 			return false;

@@ -94,10 +94,10 @@ export class Post implements PostProps {
 	}
 
 	public async edit(post: PostCredentials) {
-		return await Request.post<Post>({ url: `${this.id}`, method: "PUT", body: post });
+		return Request.post<Post>({ url: `${this.id}`, method: "PUT", body: post });
 	}
 
 	public async destroy() {
-		return await Request.post<Post>({ url: `${this.id}`, method: "DELETE" });
+		return Request.post<Post>({ url: `${this.id}`, method: "DELETE" });
 	}
 }

@@ -61,7 +61,7 @@ export function UserContextProvider({ children }: Props) {
 
 	async function logout() {
 		setUser(null);
-		return await User.logout();
+		return User.logout();
 	}
 
 	const values: IUserContext = {

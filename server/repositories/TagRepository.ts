@@ -10,7 +10,7 @@ export class TagRepository {
 
 	public async all() {
 		try {
-			return await Tag.query();
+			return Tag.query();
 		} catch (error) {
 			this.logger.error(error);
 			return [];
@@ -19,7 +19,7 @@ export class TagRepository {
 
 	public async create(data: CreateTag) {
 		try {
-			return await Tag.query().insertGraphAndFetch(data);
+			return Tag.query().insertGraphAndFetch(data);
 		} catch (error) {
 			this.logger.error(error);
 			return null;
@@ -28,7 +28,7 @@ export class TagRepository {
 
 	public async findById(id: number | string) {
 		try {
-			return await Tag.query().findById(id);
+			return Tag.query().findById(id);
 		} catch (error) {
 			this.logger.error(error);
 			return null;
@@ -37,7 +37,7 @@ export class TagRepository {
 
 	public async findOne(column: keyof Tag, value: string | number) {
 		try {
-			return await Tag.query().findOne(column, value);
+			return Tag.query().findOne(column, value);
 		} catch (error) {
 			this.logger.error(error);
 			return null;
@@ -46,7 +46,7 @@ export class TagRepository {
 
 	public async countWhere(column: keyof Tag, value: string | number) {
 		try {
-			return await this.db.count(Tag.query().findOne(column, value));
+			return this.db.count(Tag.query().findOne(column, value));
 		} catch (error) {
 			this.logger.error(error);
 			return 0;
@@ -55,7 +55,7 @@ export class TagRepository {
 
 	public async count() {
 		try {
-			return await this.db.count(Tag.query());
+			return this.db.count(Tag.query());
 		} catch (error) {
 			this.logger.error(error);
 			return 0;

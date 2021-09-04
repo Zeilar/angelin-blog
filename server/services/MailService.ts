@@ -33,7 +33,7 @@ export class MailService {
 	}
 
 	public async sendPasswordReset(recipient: string, token: string) {
-		return await this.send({
+		return this.send({
 			to: recipient,
 			subject: "Reset your password",
 			text: `You have requested to reset your password`,
