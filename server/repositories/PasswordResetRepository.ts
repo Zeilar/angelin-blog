@@ -8,7 +8,7 @@ import { Logger } from "../utils";
 export class PasswordResetRepository {
 	constructor(public readonly logger: Logger) {}
 
-	public async create(user_id: number) {
+	public create(user_id: number) {
 		try {
 			return PasswordReset.query().insertAndFetch({
 				user_id,
@@ -20,7 +20,7 @@ export class PasswordResetRepository {
 		}
 	}
 
-	public async findOne(column: keyof PasswordReset, value: string | number) {
+	public findOne(column: keyof PasswordReset, value: string | number) {
 		try {
 			return PasswordReset.query()
 				.findOne(column, value)

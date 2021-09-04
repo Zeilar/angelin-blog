@@ -9,7 +9,7 @@ import { Logger } from "../utils";
 export class UserRepository {
 	constructor(public readonly db: DB, public readonly logger: Logger) {}
 
-	public async all() {
+	public all() {
 		try {
 			return User.query();
 		} catch (error) {
@@ -18,7 +18,7 @@ export class UserRepository {
 		}
 	}
 
-	public async create(data: CreateUser) {
+	public create(data: CreateUser) {
 		try {
 			return User.query().insertGraphAndFetch(data);
 		} catch (error) {
@@ -27,7 +27,7 @@ export class UserRepository {
 		}
 	}
 
-	public async findById(id: number | string) {
+	public findById(id: number | string) {
 		try {
 			return User.query().findById(id);
 		} catch (error) {
@@ -36,7 +36,7 @@ export class UserRepository {
 		}
 	}
 
-	public async findOne(column: keyof User, value: string | number) {
+	public findOne(column: keyof User, value: string | number) {
 		try {
 			return User.query().findOne(column, value);
 		} catch (error) {
@@ -86,7 +86,7 @@ export class UserRepository {
 		}
 	}
 
-	public async countWhere(column: keyof User, value: string | number) {
+	public countWhere(column: keyof User, value: string | number) {
 		try {
 			return this.db.count(User.query().findOne(column, value));
 		} catch (error) {
@@ -95,7 +95,7 @@ export class UserRepository {
 		}
 	}
 
-	public async count() {
+	public count() {
 		try {
 			return this.db.count(User.query());
 		} catch (error) {

@@ -28,7 +28,7 @@ export class PostRepository {
 		}
 	}
 
-	// public async create(data: CreatePost) {
+	// public create(data: CreatePost) {
 	// 	try {
 	// 		return Post.query().insertGraphAndFetch(data);
 	// 	} catch (error) {
@@ -37,7 +37,7 @@ export class PostRepository {
 	// 	}
 	// }
 
-	public async findById(id: number | string) {
+	public findById(id: number | string) {
 		try {
 			return Post.query().findById(id).withGraphFetched(Post.relationships);
 		} catch (error) {
@@ -46,7 +46,7 @@ export class PostRepository {
 		}
 	}
 
-	public async findOne(column: keyof Post, value: string | number) {
+	public findOne(column: keyof Post, value: string | number) {
 		try {
 			return Post.query().findOne(column, value).withGraphFetched(Post.relationships);
 		} catch (error) {
@@ -96,7 +96,7 @@ export class PostRepository {
 		}
 	}
 
-	public async countWhere(column: keyof Post, value: string | number) {
+	public countWhere(column: keyof Post, value: string | number) {
 		try {
 			return this.db.count(Post.query().findOne(column, value));
 		} catch (error) {
@@ -105,7 +105,7 @@ export class PostRepository {
 		}
 	}
 
-	public async count() {
+	public count() {
 		try {
 			return this.db.count(Post.query());
 		} catch (error) {

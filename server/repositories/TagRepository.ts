@@ -8,7 +8,7 @@ import { Logger } from "../utils";
 export class TagRepository {
 	constructor(public readonly db: DB, public readonly logger: Logger) {}
 
-	public async all() {
+	public all() {
 		try {
 			return Tag.query();
 		} catch (error) {
@@ -17,7 +17,7 @@ export class TagRepository {
 		}
 	}
 
-	public async create(data: CreateTag) {
+	public create(data: CreateTag) {
 		try {
 			return Tag.query().insertGraphAndFetch(data);
 		} catch (error) {
@@ -26,7 +26,7 @@ export class TagRepository {
 		}
 	}
 
-	public async findById(id: number | string) {
+	public findById(id: number | string) {
 		try {
 			return Tag.query().findById(id);
 		} catch (error) {
@@ -35,7 +35,7 @@ export class TagRepository {
 		}
 	}
 
-	public async findOne(column: keyof Tag, value: string | number) {
+	public findOne(column: keyof Tag, value: string | number) {
 		try {
 			return Tag.query().findOne(column, value);
 		} catch (error) {
@@ -44,7 +44,7 @@ export class TagRepository {
 		}
 	}
 
-	public async countWhere(column: keyof Tag, value: string | number) {
+	public countWhere(column: keyof Tag, value: string | number) {
 		try {
 			return this.db.count(Tag.query().findOne(column, value));
 		} catch (error) {
@@ -53,7 +53,7 @@ export class TagRepository {
 		}
 	}
 
-	public async count() {
+	public count() {
 		try {
 			return this.db.count(Tag.query());
 		} catch (error) {
