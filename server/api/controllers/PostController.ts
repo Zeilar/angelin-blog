@@ -2,7 +2,7 @@ import { PostRepository } from "./../../repositories/PostRepository";
 import { TagRepository } from "./../../repositories/TagRepository";
 import { Request, Response } from "express";
 import { Post, Tag } from "../../db/models";
-import { ValidateService } from "../../services";
+import { PostService, ValidateService } from "../../services";
 import { Controller } from "./Controller";
 import * as inversify from "inversify-express-utils";
 import { AuthGuard, filterPosts, getPostOrFail, PostGuard } from "../middlewares";
@@ -13,7 +13,7 @@ export class PostController extends Controller {
 	constructor(
 		public readonly validateService: ValidateService,
 		public readonly tagRepository: TagRepository,
-		public readonly postRepository: PostRepository
+		public readonly postService: PostService
 	) {
 		super();
 	}
@@ -62,7 +62,7 @@ export class PostController extends Controller {
 		const { title, body, tags } = req.body;
 
 		if (tags) {
-			await this.postRepository.addTags(res.post, tags);
+			await this.postService.postRepository.addTags(res.post, tags);
 		}
 
 		// TODO: refactor to only graph fetch if tags were affected
@@ -73,6 +73,6 @@ export class PostController extends Controller {
 
 	@inversify.httpDelete("/:id", getPostOrFail, PostGuard.delete)
 	public async delete(@inversify.response() res: Response) {
-		await this.postRepository.deleteById(res.post.id);
+		await this.postService.deleteById(res.post.id);
 	}
 }

@@ -67,14 +67,13 @@ export class PostRepository {
 	// 	}
 	// }
 
-	public async deleteById(id: number | string) {
+	public async deleteById(post: Post | number | string) {
 		try {
-			const post = await this.findById(id);
-			if (!post) {
-				throw new Error(`Failed deleting post with id ${id}, not found.`);
+			if (typeof post === "object") {
+				await post.$query().delete();
+			} else {
+				await Post.query().deleteById(post);
 			}
-			await this.unrelateTags(post);
-			await post.$query().delete();
 			return true;
 		} catch (error) {
 			this.logger.error(error);
@@ -85,7 +84,7 @@ export class PostRepository {
 	public async deleteMany(posts: Post[]) {
 		try {
 			for (const post of posts) {
-				if (!(await this.deleteById(post.id))) {
+				if (!(await this.deleteById(post))) {
 					throw new Error(`Failed deleting post with id ${post?.id}`);
 				}
 			}
