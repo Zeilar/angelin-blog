@@ -21,9 +21,12 @@ interface MatchParams {
 }
 
 export function EditPost({ match }: RouteComponentProps<MatchParams>) {
-	const query = useFetch<{ data: Post }>(URLHelpers.apiPost(match.params.id));
-	const data = query.body?.data;
-	const post = useMemo(() => (data ? new Post(data) : null), [data]);
+	const postQuery = useFetch<{ data: Post }>(URLHelpers.apiPost(match.params.id));
+	const postData = postQuery.body?.data;
+	const post = useMemo(() => (postData ? new Post(postData) : null), [postData]);
+    
+	const tagsQuery = useFetch<{ data: Tag[] }>(URLHelpers.apiTags());
+    const allTags = tagsQuery.body?.data;
 
 	const { push } = useHistory();
 	const userContext = useUserContext();
@@ -31,14 +34,24 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	const [status, setStatus] = useState<IStatus>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [title, setTitle] = useState<string>("");
-	const [tags, setTags] = useState<Tag[]>([]);
+	const [tags, setTags] = useState<Tag[]>(post?.tags ?? []);
 	const [preview, setPreview] = useState(false);
+
+	const isLoading = status === "loading" || postQuery.isLoading;
 
 	useTitle("Angelin Blog | Edit Post");
 
 	useEffect(() => {
-		setTitle(post?.title ?? "");
+		if (post?.title) {
+			setTitle(post.title);
+		}
 	}, [post?.title]);
+
+	useEffect(() => {
+		if (post?.tags) {
+			setTags(post.tags);
+		}
+	}, [post?.tags]);
 
 	const editor = useEditor(
 		{
@@ -120,8 +133,6 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 		);
 	}
 
-	const isLoading = status === "loading" || query.isLoading;
-
 	return (
 		<Styles.Container className="my-8">
 			<Styles.A
@@ -138,7 +149,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 				<ContainerLoader loading={isLoading} />
 				{renderEditor()}
 			</Styles.Col>
-			<TagsInput defaultTags={tags} onChange={onChange} />
+			<TagsInput allTags={allTags} defaultTags={tags} onChange={onChange} />
 			<Styles.Row className="mt-4">
 				<StatusButton disabled={isLoading} status={status} onClick={submit}>
 					Save
