@@ -24,9 +24,9 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	const postQuery = useFetch<{ data: Post }>(URLHelpers.apiPost(match.params.id));
 	const postData = postQuery.body?.data;
 	const post = useMemo(() => (postData ? new Post(postData) : null), [postData]);
-    
+
 	const tagsQuery = useFetch<{ data: Tag[] }>(URLHelpers.apiTags());
-    const allTags = tagsQuery.body?.data;
+	const allTags = tagsQuery.body?.data;
 
 	const { push } = useHistory();
 	const userContext = useUserContext();
@@ -37,7 +37,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	const [tags, setTags] = useState<Tag[]>(post?.tags ?? []);
 	const [preview, setPreview] = useState(false);
 
-	const isLoading = status === "loading" || postQuery.isLoading;
+	const isLoading = status === "loading" || postQuery.isLoading || tagsQuery.isLoading;
 
 	useTitle("Angelin Blog | Edit Post");
 
