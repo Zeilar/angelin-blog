@@ -14,7 +14,7 @@ export function PostThumbnail({ post, ...props }: Props) {
 	return (
 		<Styles.PostWrapper
 			{...props}
-			className={classNames("items-start p-4", props.className)}
+			className={classNames("items-start", props.className)}
 			as="article"
 		>
 			<Styles.P className="muted mb-2">

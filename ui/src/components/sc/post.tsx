@@ -1,8 +1,10 @@
 import styled, { css } from "styled-components";
 import * as Styles from "./";
+import { phone } from "./layout";
 
 export const PostWrapper = styled(Styles.Col)`
 	position: relative;
+	padding: 2rem;
 	&:first-child {
 		margin-top: 0;
 	}
@@ -11,6 +13,9 @@ export const PostWrapper = styled(Styles.Col)`
 		background-color: ${props.theme.color.rgb("primary")};
 		box-shadow: ${props.theme.shadow.pick("elevate")};
 	`}
+	${phone} {
+		padding: 1rem;
+	}
 `;
 
 export const PostPreview = styled.article`
