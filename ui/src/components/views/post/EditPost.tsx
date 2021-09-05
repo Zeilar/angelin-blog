@@ -58,15 +58,20 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 		setPreview(true);
 	}
 
+	function onChange(tags: string[]) {
+		setTags(tags.map(tag => Tag.fake({ name: tag })));
+	}
+
 	async function submit() {
-		if (!post) return;
+		if (!post || !editor) return;
 
 		setErrorMessage(null);
 		setStatus("loading");
 
 		const { data, ok, error } = await post.edit({
 			title,
-			body: editor!.getHTML(), // You can't convince me editor is not null
+			body: editor.getHTML(),
+			tags: tags.map(tag => tag.name),
 		});
 
 		if (ok) {
@@ -133,7 +138,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 				<ContainerLoader loading={isLoading} />
 				{renderEditor()}
 			</Styles.Col>
-			{/* <TagsInput defaultTags={tags} onChange={tags => {}} /> */}
+			<TagsInput defaultTags={tags} onChange={onChange} />
 			<Styles.Row className="mt-4">
 				<StatusButton disabled={isLoading} status={status} onClick={submit}>
 					Save

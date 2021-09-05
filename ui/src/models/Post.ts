@@ -5,6 +5,7 @@ import { User, Tag, Comment } from "./";
 interface PostCredentials {
 	title: string;
 	body: string;
+	tags?: string[];
 }
 
 interface PostProps {

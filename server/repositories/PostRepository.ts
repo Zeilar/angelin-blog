@@ -106,7 +106,7 @@ export class PostRepository {
 		if (!post) {
 			throw new HTTPError(`Failed deleting post with id ${id}, not found.`, 404);
 		}
-		Post.transaction(async trx => {
+		await Post.transaction(async trx => {
 			await this.unrelateTags(post, trx);
 			await this.deleteById(post);
 		});

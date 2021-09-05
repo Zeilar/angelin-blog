@@ -112,6 +112,8 @@ function bootstrap() {
 
 				let user = await userRepository.findOne("github_id", profile.id);
 
+				// TODO: check if email/avatar has changed and update this user with the new one(s) if they have
+
 				if (!user) {
 					if ((await userRepository.countWhere("email", profile._json.email)) > 0) {
 						return done(new Error(ErrorMessages.EMAIL_TAKEN), null);

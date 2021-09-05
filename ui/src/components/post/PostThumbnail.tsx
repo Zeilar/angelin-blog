@@ -25,7 +25,7 @@ export function PostThumbnail({ post, ...props }: Props) {
 			</Styles.PostPreviewHeader>
 			{post.tags.length > 0 && (
 				<Styles.Row className="mt-2">
-					{post.tags.map((tag: Models.Tag) => (
+					{post.tags.map(tag => (
 						<Tag className="mr-4" key={tag.id} tag={tag} />
 					))}
 				</Styles.Row>
