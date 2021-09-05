@@ -2,11 +2,12 @@ import { RouteComponentProps } from "../../../types/props";
 import { Post } from "../../../models";
 import { useFetch, useTitle } from "../../hooks";
 import { URLHelpers } from "../../../utils";
-import { Container } from "../../sc";
+import { Container, tablet } from "../../sc";
 import { PostFull } from "../../post";
 import { ErrorPage } from "../";
 import { useMemo } from "react";
 import { PostSkeleton } from "../../skeleton";
+import styled from "styled-components";
 
 interface MatchParams {
 	id: string;
@@ -24,9 +25,18 @@ export function SinglePost({ match }: RouteComponentProps<MatchParams>) {
 	}
 
 	return (
-		<Container className="my-8">
+		<PostContainer>
 			{query.isLoading && <PostSkeleton className="p-4" />}
 			{query.isSuccess && post && <PostFull withMenu={true} post={new Post(post)} />}
-		</Container>
+		</PostContainer>
 	);
 }
+
+const PostContainer = styled(Container)`
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	${tablet} {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	}
+`;

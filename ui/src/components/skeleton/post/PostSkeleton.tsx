@@ -4,6 +4,19 @@ import * as Styles from "../../sc";
 import { SkeletonText } from "../";
 
 export function PostSkeleton(props: HTMLAttributes<HTMLDivElement>) {
+	function renderParagraph() {
+		return (
+			<>
+				{Array(4)
+					.fill(null)
+					.map((_, i) => (
+						<SkeletonText className="mt-4" key={i} />
+					))}
+				<SkeletonText className="mt-4" width={25} />
+			</>
+		);
+	}
+
 	return (
 		<Styles.PostWrapper
 			{...props}
@@ -16,6 +29,10 @@ export function PostSkeleton(props: HTMLAttributes<HTMLDivElement>) {
 				<SkeletonText className="mr-4" width={5} />
 				<SkeletonText width={5} />
 			</Styles.Row>
+			<Styles.Col className="mt-8 w-full">
+				{renderParagraph()}
+				<Styles.Col className="mt-8">{renderParagraph()}</Styles.Col>
+			</Styles.Col>
 		</Styles.PostWrapper>
 	);
 }
