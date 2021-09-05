@@ -63,7 +63,11 @@ export class Post extends Model {
 	}
 
 	public $afterGet() {
-		if (!this.author) return;
-		this.author = this.author.dto();
+		if (this.author) {
+			this.author = this.author.dto();
+		}
+		if (this.tags) {
+			this.tags = this.tags?.reverse();
+		}
 	}
 }

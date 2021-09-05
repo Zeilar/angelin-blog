@@ -40,7 +40,7 @@ export class PostController extends Controller {
 			await this.postService.postRepository.relateTag(post, tag);
 		}
 
-		return this.json({ data: { ...post, tags } });
+		return this.json({ data: { ...post, fetchedTags } });
 	}
 
 	@inversify.httpGet("/", filterPosts, getPostOrFail)
