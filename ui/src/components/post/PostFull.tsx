@@ -77,8 +77,8 @@ export function PostFull({ post, withMenu = false }: Props) {
 			<Styles.H3 className="mr-12">{post.title}</Styles.H3>
 			{post.tags.length > 0 && (
 				<Styles.Row>
-					{post.tags.map(tag => (
-						<Tag className="mr-4" key={tag.id} tag={tag} />
+					{post.tags.map((tag, i) => (
+						<Tag className="mr-4" key={i} tag={tag} />
 					))}
 				</Styles.Row>
 			)}

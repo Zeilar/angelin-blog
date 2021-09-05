@@ -67,7 +67,7 @@ export class User extends Model {
 
 	/**
 	 * @description Uses the policy class system
-	 * @example can(user, model, "edit") // expected output: boolean
+	 * @example can(user, model, "edit")
 	 */
 	public static can(user: User, model: User, ...actions: UserAction[]) {
 		return new UserPolicy(user, model).can(...actions);
