@@ -31,7 +31,7 @@ export function EditPost({ match }: RouteComponentProps<MatchParams>) {
 	const [status, setStatus] = useState<IStatus>(null);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const [title, setTitle] = useState<string>("");
-	const [tags, setTags] = useState<Tag[]>([Tag.fake({ name: "some tag" })]);
+	const [tags, setTags] = useState<Tag[]>([]);
 	const [preview, setPreview] = useState(false);
 
 	useTitle("Angelin Blog | Edit Post");
