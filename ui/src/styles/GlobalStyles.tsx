@@ -1,9 +1,11 @@
 import "./fonts.css";
 import { createGlobalStyle, css } from "styled-components";
-import { editor } from "./tiptap";
+import { tiptap, hljs, tagify } from "./";
 
 export const GlobalStyles = createGlobalStyle`
-    ${editor}
+    ${tiptap}
+    ${hljs}
+    ${tagify}
 
     ::-webkit-scrollbar {
         width: 1rem;

@@ -1,6 +1,6 @@
 import { css } from "styled-components";
 
-export const editor = css`
+export const tiptap = css`
 	.editing {
 		.ProseMirror,
 		.tiptap {

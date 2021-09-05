@@ -3,7 +3,7 @@ import StarterKit from "@tiptap/starter-kit";
 import classNames from "classnames";
 import { HTMLAttributes } from "react";
 import Highlight from "react-highlight";
-import "../../styles/hljs.css";
+import "../../styles/hljs.tsx";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	content: string;
