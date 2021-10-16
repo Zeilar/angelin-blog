@@ -4,17 +4,17 @@ import { useFetch, useTitle } from "../hooks";
 import { Filter } from "../partials";
 import { URLHelpers } from "../../utils";
 import { RouteComponentProps } from "react-router-dom";
-import { useMemo, useState, useEffect } from "react";
 import { PostThumbnail } from "../post";
 import { PostThumbnailSkeleton } from "../skeleton";
 import { ErrorPage } from "./";
 
 export function Home({ location }: RouteComponentProps) {
-	const searchQuery = useMemo(() => new URLSearchParams(location.search), [location.search]);
+	const searchQuery = new URLSearchParams(location.search)
+
 	const postQuery = useFetch<{ data: Post[] }>(URLHelpers.apiPosts(), {
 		params: Object.fromEntries([...searchQuery]),
 	});
-	const posts = postQuery.body?.data.map(post => new Post(post)) ?? [];
+	const posts = postQuery.body?.data?.map(post => new Post(post)) ?? [];
 
 	useTitle("Angelin Blog");
 
